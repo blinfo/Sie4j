@@ -9,7 +9,7 @@ import java.io.InputStream;
  *
  * @author Håkan Lidén
  */
-public class SieService {
+public class Sie4j {
 
     public static String asJson(InputStream input) {
         return Serializer.asJson(input);

@@ -1,6 +1,5 @@
 package sie.domain;
 
-import sie.SieParser;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
@@ -10,6 +9,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.Helper;
+import sie.Sie4j;
 
 /**
  *
@@ -26,7 +26,7 @@ public class MetaDataTest extends Helper {
 
     @Test
     public void test_Document_isRead() {
-        Document doc = SieParser.parse(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI"));
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI"));
         assertTrue("Document should be signaled as read", doc.getMetaData().isRead());
     }
 

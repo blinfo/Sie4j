@@ -1,7 +1,7 @@
 package sie.fake;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import sie.SieService;
+import sie.Sie4j;
 import sie.domain.Account;
 import sie.domain.AccountingPlan;
 import sie.domain.Address;
@@ -235,6 +235,6 @@ public class FakeDocumentGenerator {
         System.out.println(doc.getMetaData());
         File file = new File(System.getProperty("user.home") + "/SIE-test-data/" + doc.getMetaData().getCompany().getName() + " - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".SE");
         file.getParentFile().mkdirs();
-        SieService.fromDocument(doc, file);
+        Sie4j.fromDocument(doc, file);
     }
 }

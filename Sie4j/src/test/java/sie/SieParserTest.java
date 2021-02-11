@@ -34,9 +34,9 @@ public class SieParserTest {
     @Test
     public void test_checkSumForDocument() {
         String expectedChecksum = "B46D053906DE60431B15CA0F5DD18353";
-        Document cp437doc = SieService.toDocument(getStream(""));
-        Document utf8doc = SieService.toDocument(getStream("_UTF_8"));
-        Document iso8859doc = SieService.toDocument(getStream("_ISO_8859_15"));
+        Document cp437doc = Sie4j.toDocument(getStream(""));
+        Document utf8doc = Sie4j.toDocument(getStream("_UTF_8"));
+        Document iso8859doc = Sie4j.toDocument(getStream("_ISO_8859_15"));
         assertTrue("Document checksum should exist", cp437doc.getChecksum().isPresent());
         assertTrue("Document checksum should exist", utf8doc.getChecksum().isPresent());
         assertTrue("Document checksum should exist", iso8859doc.getChecksum().isPresent());

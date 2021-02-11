@@ -8,7 +8,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.Helper;
-import sie.SieParser;
+import sie.Sie4j;
 import static sie.domain.Entity.ROUNDING_MODE;
 import static sie.domain.Entity.SCALE;
 
@@ -27,7 +27,7 @@ public class VoucherTest extends Helper {
                     assertTrue("Voucher has transactions", v.getTransactions().size() > 0);
                 });
 
-        Document doc = SieParser.parse(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI"));
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI"));
         assertFalse("Document contains unbalanced voucchers", doc.isBalanced());
         Integer expectedNumberOfVouchers = 2;
         BigDecimal expectedFirstDiff = new BigDecimal(0.55).setScale(SCALE, ROUNDING_MODE);

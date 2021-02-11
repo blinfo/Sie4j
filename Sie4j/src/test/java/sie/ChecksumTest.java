@@ -11,7 +11,7 @@ import sie.domain.Document;
  */
 public class ChecksumTest {
     
-    private static final Document DOCUMENT = SieService.toDocument(ChecksumTest.class.getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
+    private static final Document DOCUMENT = Sie4j.toDocument(ChecksumTest.class.getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
     
     private static InputStream getStream() {
         return ChecksumTest.class.getResourceAsStream("/sample/BLBLOV_SIE1.SE");

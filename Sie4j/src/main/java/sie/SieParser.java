@@ -12,7 +12,7 @@ import java.util.List;
  * @author Håkan Lidén
  *
  */
-public class SieParser {
+class SieParser {
 
     private static final List<String> BOX_DRAWING_CHARS = List.of("─", "━", "│",
             "┃", "┄", "┅", "┆", "┇", "┈", "┉", "┊", "┋", "┌", "┍", "┎", "┏", "┐",
