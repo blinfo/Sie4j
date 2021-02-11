@@ -95,9 +95,64 @@ public class Document {
         }
     }
 
+    /**
+     * The type of document.
+     * <p>
+     * The SIE standard has five types of documents:
+     * <ul>
+     * <li>E1 - Export of balances for annual accounts
+     * <li>E2 - Export of balances for periodical accounts
+     * <li>E3 - Export of balances for object accounts
+     * <li>E4 - Export of accounts, vouchers and transactions
+     * <li>I4 - Import of accounts, vouchers and transactions
+     * </ul>
+     * <p>
+     * If the type is omitted it is assumed that the type in question is E1.
+     * <p>
+     * Default is Document.Type.E1
+     *
+     */
     public enum Type {
-        E1, E2, E3, E4, I4;
+        /**
+         * Export of balances for annual accounts.
+         * <p>
+         * This type is typically used for exporting data to systems handling
+         * tax returns et al.
+         */
+        E1,
+        /**
+         * Export of balances for periodical accounts.
+         */
+        E2,
+        /**
+         * Export of balances for object accounts.
+         */
+        E3,
+        /**
+         * Export of accounts, vouchers and transactions.
+         * <p>
+         * This type contains the most complete representation of the accounting
+         * data.
+         */
+        E4,
+        /**
+         * Import of accounts, vouchers and transactions.
+         * <p>
+         * Accounts are optional for documents of this type.
+         */
+        I4;
 
+        /**
+         * Returns the number part of the type.
+         * <p>
+         * Values are number 1 through 4. Note that E4 and I4 returns the same
+         * number.
+         * <p>
+         * This type is most commonly used by external pre-processing systems,
+         * i.e. invoicing-programs, cashier-systems et al.
+         *
+         * @return The number part of the Type
+         */
         public String getNumber() {
             return name().replaceAll("\\D", "");
         }
