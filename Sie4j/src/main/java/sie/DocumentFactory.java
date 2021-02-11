@@ -45,21 +45,11 @@ class DocumentFactory {
     static Document parse(String content) {
         DocumentFactory factory = new DocumentFactory(content);
         Document.Builder builder = Document.builder();
-        builder.checksum(getChecksum(content));
+        builder.checksum(Checksum.calculate(content));
         builder.metaData(factory.getMetaData());
         builder.vouchers(factory.getVouchers());
         builder.accountingPlan(factory.getAccountingPlan());
         return builder.apply();
-    }
-
-    private static String getChecksum(String content) {
-        try {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            md5.update(content.getBytes(StandardCharsets.UTF_8));
-            return DatatypeConverter.printHexBinary(md5.digest());
-        } catch (NoSuchAlgorithmException ex) {
-            throw new SieException(ex);
-        }
     }
 
     private MetaData getMetaData() {

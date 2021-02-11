@@ -42,8 +42,19 @@ public class SieService {
     public static File fromDocument(Document input, File target) {
         return SieWriter.write(input, target);
     }
-    
+
     public static Document fakeDocument() {
         return FakeDocumentGenerator.generate();
+    }
+
+    public static String calculateChecksum(String input) {
+        return Checksum.calculate(input);
+    }
+    
+    public static String calculateChecksum(Document input) {
+        return Checksum.calculate(input);
+    }
+    public static String calculateChecksum(InputStream input) {
+        return Checksum.calculate(input);
     }
 }
