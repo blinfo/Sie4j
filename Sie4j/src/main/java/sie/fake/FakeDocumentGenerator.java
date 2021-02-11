@@ -36,9 +36,23 @@ import java.util.stream.Collectors;
 /**
  *
  * @author Håkan Lidén
- *
  * <p>
- * Data generated at <a href="https://fejk.company/">https://fejk.company/</a>
+ * This class generates SIE documents populated with fake/fabricated data.
+ * <p>
+ * Sample:  <code><pre>
+ * Document doc = FakeDocumentGenerator.generate();
+ * File file = new File(System.getProperty("user.home") + "/"
+ *     + doc.getMetaData().getCompany().getName() + " - "
+ *     + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".SE");
+ * Sie4j.fromDocument(doc, file);
+ * </pre></code>
+ * <p>
+ * The sample code will write to a file in your home directory, for example
+ * "Sverige & Foodservice - 20210211131407.SE" The data is intended for test
+ * purposes, any similarities with existing people or companies are
+ * unintentional.
+ * <p>
+ * The source data was generated at <a href="https://fejk.company/">https://fejk.company/</a>
  */
 public class FakeDocumentGenerator {
 
@@ -48,6 +62,15 @@ public class FakeDocumentGenerator {
             "L", "Leverantörsfaktura",
             "T", "Temp");
 
+    /**
+     * Generates a fake Document.
+     * <p>
+     * Will generate a document populated with fabricated data. Currently only
+     * documents of type E4 are supported.
+     *
+     *
+     * @return Document - a fabricated document.
+     */
     public static Document generate() {
         return Document.builder()
                 .metaData(getMetaData())
@@ -67,7 +90,7 @@ public class FakeDocumentGenerator {
                 .currency("SEK")
                 .financialYears(createYears())
                 .taxationYear(Year.now().minusYears(1))
-                .program(Program.of("SieService", "1.0 - Build: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MMdd-HHmmss.SSSSSS"))))
+                .program(Program.of("Sie4j", "1.0 - Build: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MMdd-HHmmss.SSSSSS"))))
                 .sieType(Document.Type.E4)
                 .generated(Generated.of(LocalDate.now(), generator.getName() + " " + generator.getEmail()));
         return builder.apply();
@@ -228,13 +251,5 @@ public class FakeDocumentGenerator {
 
     private static Integer getRandom(Integer max) {
         return new Random().nextInt(max);
-    }
-
-    public static void main(String[] args) {
-        Document doc = FakeDocumentGenerator.generate();
-        System.out.println(doc.getMetaData());
-        File file = new File(System.getProperty("user.home") + "/SIE-test-data/" + doc.getMetaData().getCompany().getName() + " - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".SE");
-        file.getParentFile().mkdirs();
-        Sie4j.fromDocument(doc, file);
     }
 }
