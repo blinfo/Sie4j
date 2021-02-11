@@ -1,0 +1,83 @@
+[
+    {
+        "name": "Romeo Mellberg",
+        "image": "https://fejk.company/static/img/profile_EpBLO-yt9_v_bAZjMgnUs.jpg",
+        "pin": "189408279819",
+        "email": "romeo.mellberg@hatpost.tk",
+        "address": "Järnvägsgränden 18F,\nRÅNÄS, 4518",
+        "phone": "071-81073013",
+        "password": "yankees1"
+    },
+    {
+        "name": "Balthazar Liljegren",
+        "image": "https://fejk.company/static/img/profile_G4AWMmadqvQ5csBB9rPeN.jpg",
+        "pin": "201306012384",
+        "email": "balthazar.liljegren@sogetthis.com",
+        "address": "Stationsbranten 18,\nSUNDSVALL, 5073",
+        "phone": "071-43560952",
+        "password": "bubbles"
+    },
+    {
+        "name": "Elvi Ivarsson",
+        "image": "https://fejk.company/static/img/profile_yPP0Xp45HmmXDm0wr14Lc.jpg",
+        "pin": "192802286886",
+        "email": "elvi.ivarsson@tellmeaboutit.com",
+        "address": "Österstigen 132,\nVELLINGE, 1389",
+        "phone": "071-15583507",
+        "password": "kristin"
+    },
+    {
+        "name": "Vigbjörn Näsman",
+        "image": "https://fejk.company/static/img/profile_sdpnCRi0QXomv_S-ViUD3.jpg",
+        "pin": "189508129815",
+        "email": "vigbjorn.nasman@sogetthis.com",
+        "address": "Grangränd 147,\nGÄVLE, 4725",
+        "phone": "071-59473240",
+        "password": "blaster"
+    },
+    {
+        "name": "Ulrik Wihlborg",
+        "image": "https://fejk.company/static/img/profile_LUnAFrhUIMz6w2SnZpCDa.jpg",
+        "pin": "189808169818",
+        "email": "ulrik.wihlborg@ebrev.dk",
+        "address": "Fabriksgatan 188D,\nHYLTEBRUK, 1997",
+        "phone": "071-75927944",
+        "password": "123456654321"
+    },
+    {
+        "name": "Ethel Rahm",
+        "image": "https://fejk.company/static/img/profile_fZT3_g3y4VLUtGHtT3hoi.jpg",
+        "pin": "199207102386",
+        "email": "ethel.rahm@ebrev.dk",
+        "address": "Ringbranten 178,\nÖREBRO, 4081",
+        "phone": "073-22190715",
+        "password": "randy1"
+    },
+    {
+        "name": "Gurli Dahlström",
+        "image": "https://fejk.company/static/img/profile_ZbNA3vmYiu_HCXQK6rORX.jpg",
+        "pin": "189808159801",
+        "email": "krazygurl_77@hatpost.tk",
+        "address": "Stationsgränden 41,\nKNISLINGE, 1834",
+        "phone": "074-55938585",
+        "password": "picasso"
+    },
+    {
+        "name": "Jusee Nelson",
+        "image": "https://fejk.company/static/img/profile_oTy_6Z2ZwCMujYHwKsJEk.jpg",
+        "pin": "189309219815",
+        "email": "jusee.nelson@spamherelots.com",
+        "address": "Nybranten 114,\nGÄVLE, 4698",
+        "phone": "076-94692039",
+        "password": "cardinal"
+    },
+    {
+        "name": "Arnold Ekblad",
+        "image": "https://fejk.company/static/img/profile_gyluaN7DJwEYsyW02iiaD.jpg",
+        "pin": "201009072388",
+        "email": "arnold.ekblad@notmale.com",
+        "address": "Granvägen 66A,\nBRÄKNE-HOBY, 2186",
+        "phone": "072-65857113",
+        "password": "robin1"
+    }
+]

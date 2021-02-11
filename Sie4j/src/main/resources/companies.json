@@ -1,0 +1,93 @@
+[
+    {
+        "companyName": "Lokaltrafik & Persson",
+        "orgNum": "277038-6650",
+        "vatCode": "SE277038665001",
+        "address": "Björkbranten 123,\nBRUNFLO, 5005",
+        "bankgiro": "544-7313",
+        "contact": "Vigdis Grönvall",
+        "contactEmail": "vigdis.gronvall@lokaltrafik&persson.org",
+        "contactPhone": "072-29441879"
+    },
+    {
+        "companyName": "Tistron Ericsson",
+        "orgNum": "426021-1430",
+        "vatCode": "SE426021143001",
+        "address": "Furugränd 105,\nGRYT, 3641",
+        "bankgiro": "7757-6767",
+        "contact": "Bernhard Wik",
+        "contactEmail": "bernhard.wik@tistronericsson.com",
+        "contactPhone": "072-34144873"
+    },
+    {
+        "companyName": "XL-BYGG Göteborg NetOnNet Aktiebolag",
+        "orgNum": "455620-3786",
+        "vatCode": "SE455620378601",
+        "address": "Kvarngränd 141,\nFÄRENTUNA, 928",
+        "bankgiro": "4844-2784",
+        "contact": "Hilda Malmberg",
+        "contactEmail": "hilda.malmberg@xl-bygggoteborgnetonnet.org",
+        "contactPhone": "074-70123489"
+    }, 
+    {
+        "companyName": "Liljedahl St Sweden Ekonomisk förening",
+        "orgNum": "582840-1173",
+        "vatCode": "SE582840117301",
+        "address": "Åkerstigen 112J,\nLANDFJÄRDEN, 661",
+        "bankgiro": "2886-3710",
+        "contact": "Ulrika Helander",
+        "contactEmail": "ulrika.helander@liljedahlstswedenekonomisk.org",
+        "contactPhone": "071-90885997"
+    },
+    {
+        "companyName": "Group Thule PeJo Ekonomisk förening",
+        "orgNum": "444048-8213",
+        "vatCode": "SE444048821301",
+        "address": "Björkstigen 121H,\nLUDVIGSBORG, 1438",
+        "bankgiro": "556-2533",
+        "contact": "Tordis Markström",
+        "contactEmail": "tordis.markstrom@groupthulepejoekonomisk.xyz",
+        "contactPhone": "076-67277878"
+    },
+    {
+        "companyName": "Innovation Persson Sverige",
+        "orgNum": "863941-9772",
+        "vatCode": "SE863941977201",
+        "address": "Järnvägsgränden 131,\nVÄRNAMO, 2016",
+        "bankgiro": "4300-4654",
+        "contact": "Oden Brodén",
+        "contactEmail": "army_barbi@innovationpersson.fi",
+        "contactPhone": "076-40594758"
+    },
+    {
+        "companyName": "Sverige HIG Group",
+        "orgNum": "784779-8456",
+        "vatCode": "SE784779845601",
+        "address": "Östervägen 27H,\nMALMÖ, 1118",
+        "bankgiro": "121-3669",
+        "contact": "Bernhard Kristoffersson",
+        "contactEmail": "bernhard.kristoffersson@sverigehiggroup.com",
+        "contactPhone": "071-76796738"
+    },
+    {
+        "companyName": "Sverige Derome Upplands",
+        "orgNum": "727334-4999",
+        "vatCode": "SE727334499901",
+        "address": "Trädgårdsgränden 58F,\nSUNDSBRUK, 5097",
+        "bankgiro": "870-1534",
+        "contact": "Chris Knutsson",
+        "contactEmail": "chris.knutsson@sverigederomeupplands.org",
+        "contactPhone": "077-53042441"
+    },
+    {
+        "companyName": "Sverige & Foodservice",
+        "orgNum": "762925-8596",
+        "vatCode": "SE762925859601",
+        "address": "Ringbranten 77,\nHELSINGBORG, 1569",
+        "bankgiro": "4425-0660",
+        "contact": "Kaspar Östman",
+        "contactEmail": "kaspar.ostman@sverige&foodservice.tk",
+        "contactPhone": "073-61131795"
+    }
+
+]
