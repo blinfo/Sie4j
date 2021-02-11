@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
 
 /**
  *
- * @author Håkan Lidén -
- * <a href="mailto:hl@hex.nu">hl@hex.nu</a>
+ * @author Håkan Lidén
+ *
  * <p>
  * Data generated at <a href="https://fejk.company/">https://fejk.company/</a>
  */

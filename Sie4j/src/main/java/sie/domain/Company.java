@@ -4,8 +4,8 @@ import java.util.Optional;
 
 /**
  *
- * @author Håkan Lidén - 
- * <a href="mailto:hl@hex.nu">hl@hex.nu</a>
+ * @author Håkan Lidén 
+ *
  */
 public class Company implements Entity {
 

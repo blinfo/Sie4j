@@ -5,12 +5,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.Helper;
-import static sie.Helper.getDocument;
 
 /**
  *
- * @author Håkan Lidén - 
- * <a href="mailto:hl@hex.nu">hl@hex.nu</a>
+ * @author Håkan Lidén 
+ *
  */
 public class GeneratedTest extends Helper {
 

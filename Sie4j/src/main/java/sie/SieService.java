@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 /**
  *
- * @author hakan
+ * @author Håkan Lidén
  */
 public class SieService {
 

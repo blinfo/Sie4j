@@ -2,8 +2,8 @@ package sie;
 
 /**
  *
- * @author Håkan Lidén - 
- * <a href="mailto:hl@hex.nu">hl@hex.nu</a>
+ * @author Håkan Lidén 
+ *
  */
 public class SieException extends RuntimeException {
 

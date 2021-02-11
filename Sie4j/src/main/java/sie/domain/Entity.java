@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 /**
  *
- * @author Håkan Lidén - 
- * <a href="mailto:hl@hex.nu">hl@hex.nu</a>
+ * @author Håkan Lidén 
+ *
  */
 public interface Entity {
     public static final String ACCOUNT = "KONTO";

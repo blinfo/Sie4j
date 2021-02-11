@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 /**
  *
- * @author Håkan Lidén - 
- * <a href="mailto:hl@hex.nu">hl@hex.nu</a>
+ * @author Håkan Lidén 
+ *
  */
 public class FinancialYear implements Entity, Comparable<FinancialYear> {
 

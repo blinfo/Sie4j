@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 /**
  *
- * @author Håkan Lidén -
- * <a href="mailto:hl@hex.nu">hl@hex.nu</a>
+ * @author Håkan Lidén
+ *
  */
 public class Document {
 

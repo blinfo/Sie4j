@@ -13,8 +13,8 @@ import java.util.stream.Stream;
 
 /**
  *
- * @author Håkan Lidén - 
- * <a href="mailto:hl@hex.nu">hl@hex.nu</a>
+ * @author Håkan Lidén 
+ *
  */
 class SieStringBuilder {
 

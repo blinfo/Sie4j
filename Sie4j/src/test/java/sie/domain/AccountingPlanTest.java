@@ -6,14 +6,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.Helper;
-import static sie.Helper.getDocument;
 import static sie.domain.Entity.ROUNDING_MODE;
 import static sie.domain.Entity.SCALE;
 
 /**
  *
- * @author Håkan Lidén -
- * <a href="mailto:hl@hex.nu">hl@hex.nu</a>
+ * @author Håkan Lidén
+ *
  */
 public class AccountingPlanTest extends Helper {
 
