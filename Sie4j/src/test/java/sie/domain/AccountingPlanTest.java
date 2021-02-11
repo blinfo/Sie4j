@@ -19,7 +19,9 @@ public class AccountingPlanTest extends Helper {
     @Test
     public void test_AccountingPlan_accounts() {
         Integer expectedNumber = 202;
-        AccountingPlan accountingPlan = getDocument(4, 'E').getAccountingPlan();
+        Document document = getDocument(4, 'E');
+        assertTrue("Accounting plan should exist", document.getAccountingPlan().isPresent());
+        AccountingPlan accountingPlan = document.getAccountingPlan().get();
         assertEquals("Accounting plan should contain " + expectedNumber + " accounts", expectedNumber, Integer.valueOf(accountingPlan.getAccounts().size()));
     }
 
@@ -29,7 +31,9 @@ public class AccountingPlanTest extends Helper {
         String expectedLabel = "Bilar och andra transportmedel";
         String expectedSruCode = "7215";
         BigDecimal expectedFirstOpeningBalance = new BigDecimal(10000.00).setScale(SCALE, ROUNDING_MODE);
-        Account account = getDocument(4, 'E').getAccountingPlan().getAccounts().get(5);
+        Document document = getDocument(4, 'E');
+        assertTrue("AccountingPlan should exist", document.getAccountingPlan().isPresent());
+        Account account = document.getAccountingPlan().get().getAccounts().get(5);
         assertEquals("Account should have number " + expectedNumber, expectedNumber, account.getNumber());
         assertTrue("Account should have a label", account.getLabel().isPresent());
         assertEquals("Account label should be" + expectedLabel, expectedLabel, account.getLabel().get());
@@ -42,12 +46,14 @@ public class AccountingPlanTest extends Helper {
 
     @Test
     public void test_Account_balances() {
-        Account account = getDocument(4, 'E').getAccountingPlan().getAccounts().get(6);
         String accountNumber = "1249";
         BigDecimal firstOpeningBalance = new BigDecimal(-71667).setScale(SCALE, ROUNDING_MODE);
         BigDecimal secondOpeningBalance = new BigDecimal(-51667).setScale(SCALE, ROUNDING_MODE);
         BigDecimal firstClosingBalance = new BigDecimal(-91667).setScale(SCALE, ROUNDING_MODE);
         BigDecimal secondClosingBalance = new BigDecimal(-71667).setScale(SCALE, ROUNDING_MODE);
+        Document document = getDocument(4, 'E');
+        assertTrue("AccountingPlan should exist", document.getAccountingPlan().isPresent());
+        Account account = document.getAccountingPlan().get().getAccounts().get(6);
         assertEquals("Account number should be " + accountNumber, accountNumber, account.getNumber());
         assertEquals("First opening balance should be " + firstOpeningBalance, firstOpeningBalance, account.getOpeningBalances().get(0).getAmount());
         assertEquals("Second opening balance should be " + secondOpeningBalance, secondOpeningBalance, account.getOpeningBalances().get(1).getAmount());
@@ -59,8 +65,10 @@ public class AccountingPlanTest extends Helper {
 
     @Test
     public void test_Account_results() {
-        Account account = getDocument(4, 'E').getAccountingPlan().getAccounts().get(75);
         String accountNumber = "3010";
+        Document document = getDocument(4, 'E');
+        assertTrue("AccountingPlan should exist", document.getAccountingPlan().isPresent());
+        Account account = document.getAccountingPlan().get().getAccounts().get(75);
         BigDecimal firstResult = new BigDecimal(-6700).setScale(SCALE, ROUNDING_MODE);
         BigDecimal secondResult = new BigDecimal(-85064.80).setScale(SCALE, ROUNDING_MODE);
         assertEquals("Account number should be " + accountNumber, accountNumber, account.getNumber());
@@ -70,8 +78,10 @@ public class AccountingPlanTest extends Helper {
 
     @Test
     public void test_Account_periodicalBudgets() {
-        Account account = getDocument(4, 'E').getAccountingPlan().getAccounts().get(1);
         String accountNumber = "1119";
+        Document document = getDocument(4, 'E');
+        assertTrue("AccountingPlan should exist", document.getAccountingPlan().isPresent());
+        Account account = document.getAccountingPlan().get().getAccounts().get(1);
         BigDecimal firstBudgetAmount = new BigDecimal(-1666).setScale(SCALE, ROUNDING_MODE);
         YearMonth firstBudgetPeriod = YearMonth.parse("2017-01");
         BigDecimal lastBudgetAmount = new BigDecimal(-1667).setScale(SCALE, ROUNDING_MODE);

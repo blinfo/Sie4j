@@ -32,8 +32,8 @@ public class Document {
         return metaData;
     }
 
-    public AccountingPlan getAccountingPlan() {
-        return accountingPlan;
+    public Optional<AccountingPlan> getAccountingPlan() {
+        return Optional.ofNullable(accountingPlan);
     }
 
     public List<Voucher> getVouchers() {

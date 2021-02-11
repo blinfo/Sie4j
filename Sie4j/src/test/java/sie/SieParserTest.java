@@ -33,7 +33,7 @@ public class SieParserTest {
 
     @Test
     public void test_checkSumForDocument() {
-        String expectedChecksum = "D2FEFEAF915BA2617D0F19503E8CF796";
+        String expectedChecksum = "B46D053906DE60431B15CA0F5DD18353";
         Document cp437doc = SieService.toDocument(getStream(""));
         Document utf8doc = SieService.toDocument(getStream("_UTF_8"));
         Document iso8859doc = SieService.toDocument(getStream("_ISO_8859_15"));

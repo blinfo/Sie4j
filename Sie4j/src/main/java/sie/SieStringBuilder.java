@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 /**
  *
- * @author Håkan Lidén 
+ * @author Håkan Lidén
  *
  */
 class SieStringBuilder {
@@ -61,43 +61,45 @@ class SieStringBuilder {
     }
 
     private void addAccountingPlan() {
-        List<Account> accounts = document.getAccountingPlan().getAccounts();
-        accounts.forEach(account -> {
-            add(Entity.ACCOUNT, account.getNumber(), account.getLabel().map(l -> "\"" + l + "\"").orElse("\"\""));
-        });
-        accounts.stream().filter(account -> account.getType().isPresent()).forEach(account -> {
-            add(Entity.ACCOUNT_TYPE, account.getNumber(), account.getType().get().name());
-        });
-        accounts.stream().filter(account -> account.getUnit().isPresent()).forEach(account -> {
-            add(Entity.ACCOUNT_TYPE, account.getNumber(), "\"" + account.getUnit().get() + "\"");
-        });
-        accounts.stream().filter(account -> !account.getSruCodes().isEmpty()).forEach(account -> {
-            account.getSruCodes().forEach(sru -> add(Entity.SRU, account.getNumber(), sru));
-        });
-        if (!document.getMetaData().getSieType().equals(Document.Type.I4)) {
-            accounts.stream().filter(account -> !account.getOpeningBalances().isEmpty()).forEach(account -> {
-                account.getOpeningBalances().forEach(balance -> {
-                    add(Entity.OPENING_BALANCE, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
-                });
+        document.getAccountingPlan().ifPresent(ac -> {
+            List<Account> accounts = ac.getAccounts();
+            accounts.forEach(account -> {
+                add(Entity.ACCOUNT, account.getNumber(), account.getLabel().map(l -> "\"" + l + "\"").orElse("\"\""));
             });
-            accounts.stream().filter(account -> !account.getClosingBalances().isEmpty()).forEach(account -> {
-                account.getClosingBalances().forEach(balance -> {
-                    add(Entity.CLOSING_BALANCE, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
-                });
+            accounts.stream().filter(account -> account.getType().isPresent()).forEach(account -> {
+                add(Entity.ACCOUNT_TYPE, account.getNumber(), account.getType().get().name());
             });
-            accounts.stream().filter(account -> !account.getResults().isEmpty()).forEach(account -> {
-                account.getResults().forEach(balance -> {
-                    add(Entity.RESULT, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
-                });
+            accounts.stream().filter(account -> account.getUnit().isPresent()).forEach(account -> {
+                add(Entity.ACCOUNT_TYPE, account.getNumber(), "\"" + account.getUnit().get() + "\"");
             });
-            if (!document.getMetaData().getSieType().equals(Document.Type.E1)) {
-                accounts.stream().filter(account -> !account.getPeriodicalBudgets().isEmpty()).forEach(account -> {
-                    account.getPeriodicalBudgets().forEach(budg -> {
-                        add(Entity.PERIODICAL_BUDGET, budg.getYearIndex().toString(), account.getNumber(), budg.getPeriod().format(Entity.YEAR_MONTH_FORMAT), budg.getAmount().toString());
+            accounts.stream().filter(account -> !account.getSruCodes().isEmpty()).forEach(account -> {
+                account.getSruCodes().forEach(sru -> add(Entity.SRU, account.getNumber(), sru));
+            });
+            if (!document.getMetaData().getSieType().equals(Document.Type.I4)) {
+                accounts.stream().filter(account -> !account.getOpeningBalances().isEmpty()).forEach(account -> {
+                    account.getOpeningBalances().forEach(balance -> {
+                        add(Entity.OPENING_BALANCE, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
                     });
                 });
+                accounts.stream().filter(account -> !account.getClosingBalances().isEmpty()).forEach(account -> {
+                    account.getClosingBalances().forEach(balance -> {
+                        add(Entity.CLOSING_BALANCE, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
+                    });
+                });
+                accounts.stream().filter(account -> !account.getResults().isEmpty()).forEach(account -> {
+                    account.getResults().forEach(balance -> {
+                        add(Entity.RESULT, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
+                    });
+                });
+                if (!document.getMetaData().getSieType().equals(Document.Type.E1)) {
+                    accounts.stream().filter(account -> !account.getPeriodicalBudgets().isEmpty()).forEach(account -> {
+                        account.getPeriodicalBudgets().forEach(budg -> {
+                            add(Entity.PERIODICAL_BUDGET, budg.getYearIndex().toString(), account.getNumber(), budg.getPeriod().format(Entity.YEAR_MONTH_FORMAT), budg.getAmount().toString());
+                        });
+                    });
+                }
             }
-        }
+        });
     }
 
     private void addMetaData() {
@@ -116,7 +118,9 @@ class SieStringBuilder {
         if (!data.getSieType().equals(Document.Type.E1) && !data.getSieType().equals(Document.Type.I4)) {
             data.getPeriodRange().ifPresent(period -> add(Entity.PERIOD_RANGE, period.format(Entity.DATE_FORMAT)));
         }
-        document.getAccountingPlan().getType().ifPresent(type -> add(Entity.ACCOUNTING_PLAN_TYPE, "\"" + type + "\""));
+        document.getAccountingPlan().ifPresent(ac -> {
+            ac.getType().ifPresent(type -> add(Entity.ACCOUNTING_PLAN_TYPE, "\"" + type + "\""));
+        });
         data.getCurrency().ifPresent(curr -> add(Entity.CURRENCY, curr));
     }
 

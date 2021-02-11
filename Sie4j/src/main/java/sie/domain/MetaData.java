@@ -5,6 +5,7 @@ import sie.io.JsonDateSerializer;
 import sie.io.JsonYearSerializer;
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -137,7 +138,7 @@ public class MetaData implements Entity {
         private String comments;
         private Company company;
         private Year taxationYear;
-        private List<FinancialYear> financialYears;
+        private final List<FinancialYear> financialYears = new ArrayList<>();
         private LocalDate periodRange;
         private String currency;
 
@@ -260,7 +261,7 @@ public class MetaData implements Entity {
          * @return MetaData.Builder
          */
         public Builder financialYears(List<FinancialYear> financialYears) {
-            this.financialYears = financialYears;
+            this.financialYears.addAll(financialYears);
             return this;
         }
 
