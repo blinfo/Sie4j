@@ -163,15 +163,15 @@ class DocumentFactory {
                         switch (l.get(0).replaceAll("#", "")) {
                             case Entity.OPENING_BALANCE:
                                 Balance opening = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
-                                accountBuilder.openingBalance(opening);
+                                accountBuilder.addOpeningBalance(opening);
                                 break;
                             case Entity.CLOSING_BALANCE:
                                 Balance closing = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
-                                accountBuilder.closingBalance(closing);
+                                accountBuilder.addClosingBalance(closing);
                                 break;
                             case Entity.RESULT:
                                 Balance result = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
-                                accountBuilder.result(result);
+                                accountBuilder.addResult(result);
                                 break;
                         }
                     });
@@ -180,7 +180,7 @@ class DocumentFactory {
                             case Entity.PERIODICAL_BUDGET:
                                 PeriodicalBudget budget = PeriodicalBudget.of(Integer.valueOf(l.get(1)),
                                         YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT), new BigDecimal(l.get(l.size() - 1)));
-                                accountBuilder.periodicalBudget(budget);
+                                accountBuilder.addPeriodicalBudget(budget);
                                 break;
                         }
                     });
