@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
  * Document doc = FakeDocumentGenerator.generate();
  * File file = new File(System.getProperty("user.home") + "/"
  *     + doc.getMetaData().getCompany().getName() + " - "
- *     + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".SE");
+ *     + LocalDateTime.now().format(Entity.DATE_TIME_FORMAT) + ".SE");
  * Sie4j.fromDocument(doc, file);
  * </pre></code>
  * <p>
@@ -52,7 +52,8 @@ import java.util.stream.Collectors;
  * purposes, any similarities with existing people or companies are
  * unintentional.
  * <p>
- * The source data was generated at <a href="https://fejk.company/">https://fejk.company/</a>
+ * The source data was generated at
+ * <a href="https://fejk.company/">https://fejk.company/</a>
  */
 public class FakeDocumentGenerator {
 
@@ -185,35 +186,35 @@ public class FakeDocumentGenerator {
                         if (vat) {
                             builder.transaction(Transaction.builder().accountNumber("1910")
                                     .amount(amount.setScale(Entity.SCALE, Entity.ROUNDING_MODE))
-                                    .date(dayDate).signature(person.initials()).apply());
+                                    .date(dayDate).apply());
                             builder.transaction(Transaction.builder()
                                     .accountNumber("2610").amount(amount.multiply(BigDecimal.valueOf(0.25).negate()).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
-                                    .date(dayDate).signature(person.initials()).apply());
+                                    .date(dayDate).apply());
                             builder.transaction(Transaction.builder()
                                     .accountNumber("3010").amount(amount.multiply(BigDecimal.valueOf(0.75).negate()).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
-                                    .date(dayDate).signature(person.initials()).apply());
+                                    .date(dayDate).apply());
                         } else {
                             builder.transaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
                                     .amount(amount.multiply(BigDecimal.valueOf(0.8)).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
-                                    .date(dayDate).signature(person.initials()).apply());
+                                    .date(dayDate).apply());
                             int noOfTrans = getRandom(2) + 1;
                             for (int i = 0; i < noOfTrans; i++) {
                                 builder.transaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
                                         .amount(amount.multiply(BigDecimal.valueOf(0.3).negate()).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
-                                        .date(dayDate).signature(person.initials()).apply());
+                                        .date(dayDate).apply());
                             }
                             double rest = 1 - (noOfTrans * 0.3);
                             builder.transaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
                                     .amount(amount.multiply(BigDecimal.valueOf(rest).negate()).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
-                                    .date(dayDate).signature(person.initials()).apply());
+                                    .date(dayDate).apply());
                             builder.transaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
                                     .amount(amount.multiply(BigDecimal.valueOf(0.2)).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
-                                    .date(dayDate).signature(person.initials()).apply());
+                                    .date(dayDate).apply());
                         }
                         Voucher v = builder.apply();
                         if (!v.isBalanced()) {
                             builder.transaction(Transaction.builder().accountNumber("3740").amount(v.getDiff().negate())
-                                    .date(dayDate).signature(person.initials()).apply());
+                                    .date(dayDate).apply());
                         }
                         vouchers.add(builder.apply());
                     }
@@ -251,5 +252,15 @@ public class FakeDocumentGenerator {
 
     private static Integer getRandom(Integer max) {
         return new Random().nextInt(max);
+    }
+
+    public static void main(String[] args) {
+        Document doc = FakeDocumentGenerator.generate();
+        File file = new File(System.getProperty("user.home") + "/SIE-test-data/"
+                + doc.getMetaData().getCompany().getName() + " - "
+                + LocalDateTime.now().format(Entity.DATE_TIME_FORMAT)
+                + ".SE");
+        file.getParentFile().mkdirs();
+        Sie4j.fromDocument(doc, file);
     }
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * @author Håkan Lidén
  *
  */
-public class Document {
+public class Document implements Entity {
 
     private final MetaData metaData;
     private final AccountingPlan accountingPlan;

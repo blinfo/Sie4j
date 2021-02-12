@@ -126,7 +126,7 @@ class DocumentFactory {
                             .ifPresent(tb::text);
                 }
                 if (parts.size() > 6) {
-                    Optional.ofNullable(parts.get(6) == null || parts.get(6).isBlank() ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
+                    Optional.ofNullable(parts.get(6) == null || parts.get(6).isBlank() || parts.get(6).equals("\"\"") ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
                             .map(Double::valueOf).ifPresent(tb::quantity);
                 }
                 if (parts.size() > 7) {
