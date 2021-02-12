@@ -5,6 +5,7 @@ import sie.domain.Entity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 class SieParser {
 
-    private static final List<String> BOX_DRAWING_CHARS = List.of("─", "━", "│",
+    private static final List<String> BOX_DRAWING_CHARS = Arrays.asList("─", "━", "│",
             "┃", "┄", "┅", "┆", "┇", "┈", "┉", "┊", "┋", "┌", "┍", "┎", "┏", "┐",
             "┑", "┒", "┓", "└", "┕", "┖", "┗", "┘", "┙", "┚", "┛", "├", "┝", "┞",
             "┟", "┠", "┡", "┢", "┣", "┤", "┥", "┦", "┧", "┨", "┩", "┪", "┫", "┬",

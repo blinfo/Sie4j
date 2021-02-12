@@ -15,9 +15,6 @@ import sie.domain.Program;
 import sie.domain.Transaction;
 import sie.domain.Voucher;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
@@ -26,7 +23,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -91,22 +87,22 @@ class DocumentFactory {
                     vouchers.add(builder.apply());
                 }
                 builder = Voucher.builder();
-                Optional.ofNullable(parts.get(1) == null || parts.get(1).isBlank() ? null : parts.get(1).replaceAll(REPLACE_STRING, ""))
+                Optional.ofNullable(parts.get(1) == null || parts.get(1).isEmpty() ? null : parts.get(1).replaceAll(REPLACE_STRING, ""))
                         .ifPresent(builder::series);
-                Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isBlank()
+                Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
                         ? null : parts.get(2).replaceAll(REPLACE_STRING, ""))
                         .map(Integer::valueOf).ifPresent(builder::number);
                 builder.date(LocalDate.parse(parts.get(3).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT));
                 if (parts.size() > 4) {
-                    Optional.ofNullable(parts.get(4) == null || parts.get(4).isBlank() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
+                    Optional.ofNullable(parts.get(4) == null || parts.get(4).isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
                             .ifPresent(builder::text);
                 }
                 if (parts.size() > 5) {
-                    Optional.ofNullable(parts.get(5) == null || parts.get(5).isBlank() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
+                    Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
                             .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(builder::registrationDate);
                 }
                 if (parts.size() > 6) {
-                    Optional.ofNullable(parts.get(6) == null || parts.get(6).isBlank() ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
+                    Optional.ofNullable(parts.get(6) == null || parts.get(6).isEmpty() ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
                             .ifPresent(builder::signature);
                 }
             }
@@ -118,19 +114,19 @@ class DocumentFactory {
                 tb.accountNumber(parts.get(1).replaceAll(REPLACE_STRING, ""));
                 tb.amount(new BigDecimal(parts.get(3)));
                 if (parts.size() > 4) {
-                    Optional.ofNullable(parts.get(4) == null || parts.get(4).isBlank() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
+                    Optional.ofNullable(parts.get(4) == null || parts.get(4).isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
                             .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(tb::date);
                 }
                 if (parts.size() > 5) {
-                    Optional.ofNullable(parts.get(5) == null || parts.get(5).isBlank() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
+                    Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
                             .ifPresent(tb::text);
                 }
                 if (parts.size() > 6) {
-                    Optional.ofNullable(parts.get(6) == null || parts.get(6).isBlank() || parts.get(6).equals("\"\"") ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
+                    Optional.ofNullable(parts.get(6) == null || parts.get(6).isEmpty() || parts.get(6).equals("\"\"") ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
                             .map(Double::valueOf).ifPresent(tb::quantity);
                 }
                 if (parts.size() > 7) {
-                    Optional.ofNullable(parts.get(7) == null || parts.get(7).isBlank() ? null : parts.get(7).replaceAll(REPLACE_STRING, ""))
+                    Optional.ofNullable(parts.get(7) == null || parts.get(7).isEmpty() ? null : parts.get(7).replaceAll(REPLACE_STRING, ""))
                             .ifPresent(tb::signature);
                 }
                 builder.transaction(tb.apply());
@@ -152,37 +148,40 @@ class DocumentFactory {
                     Optional.ofNullable(accountParts.get(2)).map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
                     getLineParts(accountParts.get(1), 1, Entity.SRU, Entity.ACCOUNT_TYPE, Entity.UNIT).stream().forEach(l -> {
                         switch (l.get(0).replaceAll("#", "")) {
-                            case Entity.SRU ->
+                            case Entity.SRU:
                                 accountBuilder.sruCode(l.get(2).replaceAll(REPLACE_STRING, ""));
-                            case Entity.UNIT ->
+                                break;
+                            case Entity.UNIT:
                                 accountBuilder.unit(l.get(2).replaceAll(REPLACE_STRING, ""));
-                            case Entity.ACCOUNT_TYPE ->
+                                break;
+                            case Entity.ACCOUNT_TYPE:
                                 Account.Type.find(l.get(2)).ifPresent(accountBuilder::type);
+                                break;
                         }
                     });
                     getLineParts(accountParts.get(1), 2, Entity.OPENING_BALANCE, Entity.CLOSING_BALANCE, Entity.RESULT).stream().forEach(l -> {
                         switch (l.get(0).replaceAll("#", "")) {
-                            case Entity.OPENING_BALANCE -> {
+                            case Entity.OPENING_BALANCE:
                                 Balance opening = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
                                 accountBuilder.openingBalance(opening);
-                            }
-                            case Entity.CLOSING_BALANCE -> {
+                                break;
+                            case Entity.CLOSING_BALANCE:
                                 Balance closing = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
                                 accountBuilder.closingBalance(closing);
-                            }
-                            case Entity.RESULT -> {
+                                break;
+                            case Entity.RESULT:
                                 Balance result = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
                                 accountBuilder.result(result);
-                            }
+                                break;
                         }
                     });
                     getLineParts(accountParts.get(1), 3, Entity.PERIODICAL_BUDGET).stream().forEach(l -> {
                         switch (l.get(0).replaceAll("#", "")) {
-                            case Entity.PERIODICAL_BUDGET -> {
+                            case Entity.PERIODICAL_BUDGET:
                                 PeriodicalBudget budget = PeriodicalBudget.of(Integer.valueOf(l.get(1)),
                                         YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT), new BigDecimal(l.get(l.size() - 1)));
                                 accountBuilder.periodicalBudget(budget);
-                            }
+                                break;
                         }
                     });
                     return accountBuilder.apply();

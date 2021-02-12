@@ -155,7 +155,7 @@ class SieStringBuilder {
 
     private void add(String prefix, String... parts) {
         result.append("#").append(prefix).append(" ")
-                .append(Stream.of(parts).filter(p -> p != null && !p.isBlank()).collect(Collectors.joining(" ")))
+                .append(Stream.of(parts).filter(p -> p != null && !p.isEmpty()).collect(Collectors.joining(" ")))
                 .append("\n");
     }
 }

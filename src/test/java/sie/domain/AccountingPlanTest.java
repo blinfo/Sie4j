@@ -37,8 +37,8 @@ public class AccountingPlanTest extends Helper {
         assertEquals("Account should have number " + expectedNumber, expectedNumber, account.getNumber());
         assertTrue("Account should have a label", account.getLabel().isPresent());
         assertEquals("Account label should be" + expectedLabel, expectedLabel, account.getLabel().get());
-        assertTrue("Account should not have Type", account.getType().isEmpty());
-        assertTrue("Account should not have Unit", account.getUnit().isEmpty());
+        assertTrue("Account should not have Type", !account.getType().isPresent());
+        assertTrue("Account should not have Unit", !account.getUnit().isPresent());
         assertEquals("Account should have one SRU code", 1, account.getSruCodes().size());
         assertEquals("SRU code should be " + expectedSruCode, expectedSruCode, account.getSruCodes().get(0));
         assertEquals("First opening balance should be " + expectedFirstOpeningBalance, expectedFirstOpeningBalance, account.getOpeningBalances().get(0).getAmount());

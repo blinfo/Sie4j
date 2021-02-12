@@ -28,6 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -58,10 +59,14 @@ import java.util.stream.Collectors;
 public class FakeDocumentGenerator {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static final Map<String, String> SERIES = Map.of("A", "Huvudserie",
-            "K", "Kundfaktura",
-            "L", "Leverantörsfaktura",
-            "T", "Temp");
+    private static final Map<String, String> SERIES = new HashMap<>();
+
+    static {
+        SERIES.put("A", "Huvudserie");
+        SERIES.put("K", "Kundfaktura");
+        SERIES.put("L", "Leverantörsfaktura");
+        SERIES.put("T", "Temp");
+    }
 
     /**
      * Generates a fake Document.
@@ -228,7 +233,7 @@ public class FakeDocumentGenerator {
         String street = input.substring(0, input.indexOf("\n") - 1).trim();
         String city = input.substring(input.indexOf("\n") + 1, input.lastIndexOf(",")).trim();
         String zip = input.substring(input.lastIndexOf(",") + 1).trim();
-        return List.of(street, (zip + zip + zip).substring(0, 5), city);
+        return Arrays.asList(street, (zip + zip + zip).substring(0, 5), city);
     }
 
     private static class KeyValue {

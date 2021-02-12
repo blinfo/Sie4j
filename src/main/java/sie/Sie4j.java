@@ -41,6 +41,12 @@ import java.io.InputStream;
  */
 public class Sie4j {
 
+    /**
+     * Convert SIE data to JSON
+     * 
+     * @param input
+     * @return 
+     */
     public static String asJson(InputStream input) {
         return Serializer.asJson(input);
     }
