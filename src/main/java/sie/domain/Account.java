@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import sie.SieException;
 
 /**
  *
@@ -65,12 +66,24 @@ public class Account implements Entity, Comparable<Account> {
         return openingBalances;
     }
 
+    public Balance getOpeningBalanceByYearIndex(Integer yearIndex) {
+        return openingBalances.stream().filter(b -> b.getYearIndex().equals(yearIndex)).findFirst().orElseThrow(() -> new SieException("No Closing Balance for year " + yearIndex));
+    }
+
     public List<Balance> getClosingBalances() {
         return closingBalances;
     }
 
+    public Balance getClosingBalanceByYearIndex(Integer yearIndex) {
+        return closingBalances.stream().filter(b -> b.getYearIndex().equals(yearIndex)).findFirst().orElseThrow(() -> new SieException("No Closing Balance for year " + yearIndex));
+    }
+
     public List<Balance> getResults() {
         return results;
+    }
+
+    public Balance getResultByYearIndex(Integer yearIndex) {
+        return results.stream().filter(b -> b.getYearIndex().equals(yearIndex)).findFirst().orElseThrow(() -> new SieException("No Result for year " + yearIndex));
     }
 
     public List<PeriodicalBudget> getPeriodicalBudgets() {
