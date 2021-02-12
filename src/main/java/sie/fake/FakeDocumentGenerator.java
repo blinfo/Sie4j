@@ -189,36 +189,36 @@ public class FakeDocumentGenerator {
                         BigDecimal amount = new BigDecimal(Double.valueOf(sumInt + "." + sumDouble)).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
                         boolean vat = (dayDate.getDayOfMonth() + 1) % (getRandom(3) + 2) == 0;
                         if (vat) {
-                            builder.transaction(Transaction.builder().accountNumber("1910")
+                            builder.addTransaction(Transaction.builder().accountNumber("1910")
                                     .amount(amount.setScale(Entity.SCALE, Entity.ROUNDING_MODE))
                                     .date(dayDate).apply());
-                            builder.transaction(Transaction.builder()
+                            builder.addTransaction(Transaction.builder()
                                     .accountNumber("2610").amount(amount.multiply(BigDecimal.valueOf(0.25).negate()).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
                                     .date(dayDate).apply());
-                            builder.transaction(Transaction.builder()
+                            builder.addTransaction(Transaction.builder()
                                     .accountNumber("3010").amount(amount.multiply(BigDecimal.valueOf(0.75).negate()).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
                                     .date(dayDate).apply());
                         } else {
-                            builder.transaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
+                            builder.addTransaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
                                     .amount(amount.multiply(BigDecimal.valueOf(0.8)).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
                                     .date(dayDate).apply());
                             int noOfTrans = getRandom(2) + 1;
                             for (int i = 0; i < noOfTrans; i++) {
-                                builder.transaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
+                                builder.addTransaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
                                         .amount(amount.multiply(BigDecimal.valueOf(0.3).negate()).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
                                         .date(dayDate).apply());
                             }
                             double rest = 1 - (noOfTrans * 0.3);
-                            builder.transaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
+                            builder.addTransaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
                                     .amount(amount.multiply(BigDecimal.valueOf(rest).negate()).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
                                     .date(dayDate).apply());
-                            builder.transaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
+                            builder.addTransaction(Transaction.builder().accountNumber(accounts.get(getRandom(accounts.size())).getNumber())
                                     .amount(amount.multiply(BigDecimal.valueOf(0.2)).setScale(Entity.SCALE, Entity.ROUNDING_MODE))
                                     .date(dayDate).apply());
                         }
                         Voucher v = builder.apply();
                         if (!v.isBalanced()) {
-                            builder.transaction(Transaction.builder().accountNumber("3740").amount(v.getDiff().negate())
+                            builder.addTransaction(Transaction.builder().accountNumber("3740").amount(v.getDiff().negate())
                                     .date(dayDate).apply());
                         }
                         vouchers.add(builder.apply());

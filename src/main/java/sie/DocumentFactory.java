@@ -129,7 +129,7 @@ class DocumentFactory {
                     Optional.ofNullable(parts.get(7) == null || parts.get(7).isEmpty() ? null : parts.get(7).replaceAll(REPLACE_STRING, ""))
                             .ifPresent(tb::signature);
                 }
-                builder.transaction(tb.apply());
+                builder.addTransaction(tb.apply());
             }
         }
         if (builder != null) {
@@ -149,7 +149,7 @@ class DocumentFactory {
                     getLineParts(accountParts.get(1), 1, Entity.SRU, Entity.ACCOUNT_TYPE, Entity.UNIT).stream().forEach(l -> {
                         switch (l.get(0).replaceAll("#", "")) {
                             case Entity.SRU:
-                                accountBuilder.sruCode(l.get(2).replaceAll(REPLACE_STRING, ""));
+                                accountBuilder.addSruCode(l.get(2).replaceAll(REPLACE_STRING, ""));
                                 break;
                             case Entity.UNIT:
                                 accountBuilder.unit(l.get(2).replaceAll(REPLACE_STRING, ""));

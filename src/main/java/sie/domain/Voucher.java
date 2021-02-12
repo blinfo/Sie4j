@@ -151,7 +151,7 @@ public class Voucher implements Entity, Comparable<Voucher> {
             return this;
         }
 
-        public Builder transaction(Transaction transaction) {
+        public Builder addTransaction(Transaction transaction) {
             this.transactions.add(transaction);
             return this;
         }

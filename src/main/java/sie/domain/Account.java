@@ -3,6 +3,7 @@ package sie.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
  */
 public class Account implements Entity, Comparable<Account> {
 
+    private static final Pattern NUMBER = Pattern.compile("\\d+");
     private final String number;
     private final String label;
     private final Type type;
@@ -43,6 +45,10 @@ public class Account implements Entity, Comparable<Account> {
 
     public String getNumber() {
         return number;
+    }
+
+    public Optional<Integer> getNumberAsInteger() {
+        return Optional.ofNullable(NUMBER.matcher(number).matches() ? Integer.valueOf(number) : null);
     }
 
     public Optional<String> getLabel() {
@@ -143,7 +149,7 @@ public class Account implements Entity, Comparable<Account> {
             return this;
         }
 
-        public Builder sruCode(String sruCode) {
+        public Builder addSruCode(String sruCode) {
             this.sruCodes.add(sruCode);
             return this;
         }
