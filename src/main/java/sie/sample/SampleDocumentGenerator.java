@@ -1,4 +1,4 @@
-package sie.fake;
+package sie.sample;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import sie.Sie4j;
@@ -41,12 +41,12 @@ import java.util.stream.Collectors;
  * This class generates SIE documents populated with fake/fabricated data.
  * <p>
  * Sample:  <code><pre>
- * Document doc = FakeDocumentGenerator.generate();
- * File file = new File(System.getProperty("user.home") + "/"
- *     + doc.getMetaData().getCompany().getName() + " - "
- *     + LocalDateTime.now().format(Entity.DATE_TIME_FORMAT) + ".SE");
- * Sie4j.fromDocument(doc, file);
- * </pre></code>
+ Document doc = SampleDocumentGenerator.generate();
+ File file = new File(System.getProperty("user.home") + "/"
+     + doc.getMetaData().getCompany().getName() + " - "
+     + LocalDateTime.now().format(Entity.DATE_TIME_FORMAT) + ".SE");
+ Sie4j.fromDocument(doc, file);
+ </pre></code>
  * <p>
  * The sample code will write to a file in your home directory, for example
  * "Sverige & Foodservice - 20210211131407.SE" The data is intended for test
@@ -56,7 +56,7 @@ import java.util.stream.Collectors;
  * The source data was generated at
  * <a href="https://fejk.company/">https://fejk.company/</a>
  */
-public class FakeDocumentGenerator {
+public class SampleDocumentGenerator {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final Map<String, String> SERIES = new HashMap<>();
@@ -87,9 +87,9 @@ public class FakeDocumentGenerator {
 
     private static MetaData getMetaData() {
         MetaData.Builder builder = MetaData.builder();
-        List<FakeCompany> companies = getCompanies();
-        List<FakePerson> people = getPeople();
-        FakePerson generator = people.get(getRandom(people.size()));
+        List<SampleCompany> companies = getCompanies();
+        List<SamplePerson> people = getPeople();
+        SamplePerson generator = people.get(getRandom(people.size()));
         builder.read(Boolean.FALSE)
                 .comments("Fabricerat test data i SIE-4E format, skapat " + LocalDate.now().format(DateTimeFormatter.ISO_DATE) + ".")
                 .company(createCompany(companies.get(getRandom(companies.size()))))
@@ -102,32 +102,32 @@ public class FakeDocumentGenerator {
         return builder.apply();
     }
 
-    private static List<FakeCompany> getCompanies() {
+    private static List<SampleCompany> getCompanies() {
         try {
-            InputStream stream = FakeDocumentGenerator.class.getResourceAsStream("/companies.json");
-            return Arrays.asList(MAPPER.readValue(stream, FakeCompany[].class));
+            InputStream stream = SampleDocumentGenerator.class.getResourceAsStream("/companies.json");
+            return Arrays.asList(MAPPER.readValue(stream, SampleCompany[].class));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    private static List<FakePerson> getPeople() {
+    private static List<SamplePerson> getPeople() {
         try {
-            InputStream stream = FakeDocumentGenerator.class.getResourceAsStream("/people.json");
-            return Arrays.asList(MAPPER.readValue(stream, FakePerson[].class));
+            InputStream stream = SampleDocumentGenerator.class.getResourceAsStream("/people.json");
+            return Arrays.asList(MAPPER.readValue(stream, SamplePerson[].class));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    private static Company createCompany(FakeCompany fc) {
+    private static Company createCompany(SampleCompany fc) {
         List<String> lines = getAddressLines(fc.getAddress());
         Address address = Address.builder().contact(fc.getContact())
                 .phone(fc.getContactPhone())
                 .streetAddress(lines.get(0))
                 .postalAddress(lines.get(1) + " " + lines.get(2))
                 .apply();
-        return Company.builder().name(fc.getCompanyName())
+        return Company.builder(fc.getCompanyName())
                 .address(address).corporateID(fc.getOrgNum())
                 .id(fc.getContactEmail().substring(fc.getContactEmail().indexOf("@") + 1))
                 .apply();
@@ -135,14 +135,14 @@ public class FakeDocumentGenerator {
 
     private static List<Account> createAccounts() {
         try {
-            InputStream input = FakeDocumentGenerator.class.getResourceAsStream("/accounting-plan.csv");
+            InputStream input = SampleDocumentGenerator.class.getResourceAsStream("/accounting-plan.csv");
             byte[] buffer = new byte[input.available()];
             input.read(buffer);
             String result = new String(buffer, StandardCharsets.UTF_8);
             return Arrays.stream(result.split("\n"))
                     .map(KeyValue::new)
                     .map(kv -> {
-                        return Account.builder().number(kv.getKey()).label(kv.getValue()).apply();
+                        return Account.builder(kv.getKey()).label(kv.getValue()).apply();
                     })
                     .collect(Collectors.toList());
         } catch (IOException ex) {
@@ -165,7 +165,7 @@ public class FakeDocumentGenerator {
         List<KeyValue> series = SERIES.entrySet().stream().map(e -> new KeyValue(e.getKey() + ";" + e.getValue())).collect(Collectors.toList());
         List<Account> accounts = createAccounts();
         List<Voucher> vouchers = new ArrayList<>();
-        List<FakePerson> people = getPeople();
+        List<SamplePerson> people = getPeople();
         int currentYear = Year.now().getValue() - 1;
         int noOfMonths = 8 + getRandom(8);
         for (int month = 0; month < noOfMonths; month++) {
@@ -176,7 +176,7 @@ public class FakeDocumentGenerator {
                     for (int rand = 0; rand < getRandom(5); rand++) {
                         Integer userId = getRandom(people.size()) + 1;
                         KeyValue kv = series.get(series.size() - 1);
-                        FakePerson person = people.get(userId - 1);
+                        SamplePerson person = people.get(userId - 1);
                         Integer num = vouchers.stream().filter(v -> v.getSeries().get().equals(kv.getKey())).collect(Collectors.toList()).size() + 1;
                         Voucher.Builder builder = Voucher.builder();
                         builder.date(dayDate);
@@ -260,7 +260,7 @@ public class FakeDocumentGenerator {
     }
 
     public static void main(String[] args) {
-        Document doc = FakeDocumentGenerator.generate();
+        Document doc = SampleDocumentGenerator.generate();
         File file = new File(System.getProperty("user.home") + "/SIE-test-data/"
                 + doc.getMetaData().getCompany().getName() + " - "
                 + LocalDateTime.now().format(Entity.DATE_TIME_FORMAT)

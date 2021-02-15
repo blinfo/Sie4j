@@ -1,11 +1,11 @@
-package sie.fake;
+package sie.sample;
 
 /**
  *
  * @author Håkan Lidén
  *
  */
-class FakeCompany {
+class SampleCompany {
 
     private String companyName;
     private String orgNum;
@@ -16,7 +16,7 @@ class FakeCompany {
     private String contactEmail;
     private String contactPhone;
 
-    public FakeCompany() {
+    public SampleCompany() {
     }
 
     public String getCompanyName() {

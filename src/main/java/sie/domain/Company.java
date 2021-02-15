@@ -1,10 +1,11 @@
 package sie.domain;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
  *
- * @author Håkan Lidén 
+ * @author Håkan Lidén
  *
  */
 public class Company implements Entity {
@@ -17,7 +18,7 @@ public class Company implements Entity {
     private final Address address;
 
     private Company(String name, String id, Type type, String corporateID, String sniCode, Address address) {
-        this.name = name;
+        this.name = Objects.requireNonNull(name);
         this.id = id;
         this.type = type;
         this.corporateId = corporateID;
@@ -25,8 +26,8 @@ public class Company implements Entity {
         this.address = address;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(String name) {
+        return new Builder(name);
     }
 
     public String getName() {
@@ -55,7 +56,7 @@ public class Company implements Entity {
 
     @Override
     public String toString() {
-        return "Company{" 
+        return "Company{"
                 + "name=" + name + ", "
                 + "id=" + id + ", "
                 + "type=" + type + ", "
@@ -66,16 +67,15 @@ public class Company implements Entity {
 
     public static class Builder {
 
-        private String name;
+        private final String name;
         private String id;
         private Type type;
         private String corporateID;
         private String sniCode;
         private Address address;
 
-        public Builder name(String name) {
+        private Builder(String name) {
             this.name = name;
-            return this;
         }
 
         public Builder id(String id) {

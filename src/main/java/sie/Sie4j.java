@@ -1,6 +1,6 @@
 package sie;
 
-import sie.fake.FakeDocumentGenerator;
+import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
 import java.io.File;
 import java.io.InputStream;
@@ -21,9 +21,9 @@ import java.io.InputStream;
  * <th align="left">sie.domain<td>Contains all the domain entities and
  * their builders
  * <tr>
- * <th align="left">sie.fake<td>Contains a single class, FakeDocumentGenerator. Use
- * it to generate sample SIE data.
- * <tr>
+ * <th align="left">sie.fake<td>Contains a single class, SampleDocumentGenerator. Use
+ it to generate sample SIE data.
+ <tr>
  * <th align="left">sie.io<td>Serializers for java.time
  * </table>
  * <p>
@@ -80,7 +80,7 @@ public class Sie4j {
     }
 
     public static Document fakeDocument() {
-        return FakeDocumentGenerator.generate();
+        return SampleDocumentGenerator.generate();
     }
 
     public static String calculateChecksum(String input) {

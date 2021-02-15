@@ -22,11 +22,16 @@ public interface Entity {
     public static final String COMPANY_TYPE = "FTYP";
     public static final String CORPORATE_ID = "ORGNR";
     public static final String CURRENCY = "VALUTA";
+    public static final String DIMENSION = "DIM";
     public static final String FINANCIAL_YEAR = "RAR";
     public static final String FORMAT = "FORMAT";
     public static final String GENERATED = "GEN";
+    public static final String OBJECT = "OBJEKT";
+    public static final String OBJECT_CLOSING_BALANCE = "OUB";
+    public static final String OBJECT_OPENING_BALANCE = "OIB";
     public static final String OPENING_BALANCE = "IB";
     public static final String PERIOD_RANGE = "OMFATTN";
+    public static final String PERIODICAL_BALANCE = "PSALDO";
     public static final String PERIODICAL_BUDGET = "PBUDGET";
     public static final String PROGRAM = "PROGRAM";
     public static final String READ = "FLAGGA";

@@ -2,9 +2,11 @@ package sie.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import sie.SieException;
 
 /**
  *
@@ -22,12 +24,18 @@ public class Account implements Entity, Comparable<Account> {
     private final List<Balance> openingBalances;
     private final List<Balance> closingBalances;
     private final List<Balance> results;
+    private final List<ObjectBalance> objectOpeningBalances;
+    private final List<ObjectBalance> objectClosingBalances;
     private final List<PeriodicalBudget> periodicalBudgets;
+    private final List<PeriodicalBalance> periodicalBalances;
 
     private Account(String number, String label, Type type, String unit,
             List<String> sruCodes, List<Balance> openingBalances,
             List<Balance> closingBalances, List<Balance> results,
-            List<PeriodicalBudget> periodicalBudgets) {
+            List<ObjectBalance> objectOpeningBalances,
+            List<ObjectBalance> objectClosingBalances,
+            List<PeriodicalBudget> periodicalBudgets,
+            List<PeriodicalBalance> periodicalBalances) {
         this.number = number;
         this.label = label;
         this.type = type;
@@ -36,17 +44,46 @@ public class Account implements Entity, Comparable<Account> {
         this.openingBalances = openingBalances;
         this.closingBalances = closingBalances;
         this.results = results;
+        this.objectClosingBalances = objectClosingBalances;
         this.periodicalBudgets = periodicalBudgets;
+        this.periodicalBalances = periodicalBalances;
+        this.objectOpeningBalances = objectOpeningBalances;
     }
 
     /**
      * Static instantiation of the Account.Builder.
      * <p>
+     * Required - Account number.
+     * <p>
+     * Account numbers are most commonly 4 digits, but other "numbers" are
+     * allowed, such as a combination of numbers and letters.
+     * <p>
+     * SIE: <code>#KONTO <b>1910</b> Kassa</code>
      *
+     * @param number the account number: number("1910")
      * @return Account.Builder
+     * @throws SieException if the number is empty/null
      */
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(String number) {
+        return new Builder(number);
+    }
+
+    /**
+     * Static instantiation of the Account.Builder.
+     * <p>
+     * Required - Account number.
+     * <p>
+     * Convenience method for accounts consisting of integers. Uses "toString"
+     * method on the number.
+     * <p>
+     * SIE: <code>#KONTO <b>1910</b> Kassa</code>
+     *
+     * @param number the account number: number(1910)
+     * @return Account.Builder
+     * @throws SieException if the number is null
+     */
+    public static Builder builder(Integer number) {
+        return new Builder(number.toString());
     }
 
     /**
@@ -143,7 +180,7 @@ public class Account implements Entity, Comparable<Account> {
      * <sup>*</sup> Opening balances should be provided for all SIE types except
      * for type I4, where they are not allowed.
      *
-     * @param Integer yearIndex
+     * @param yearIndex Integer - current year: 0, previous year: -1 ...
      * @return Optional of the Balance
      */
     public Optional<Balance> getOpeningBalanceByYearIndex(Integer yearIndex) {
@@ -176,7 +213,7 @@ public class Account implements Entity, Comparable<Account> {
      * <sup>*</sup> Closing balances should be provided for all SIE types except
      * for type I4, where they are not allowed.
      *
-     * @param Integer yearIndex
+     * @param yearIndex Integer - current year: 0, previous year: -1 ...
      * @return Optional of the balance
      */
     public Optional<Balance> getClosingBalanceByYearIndex(Integer yearIndex) {
@@ -208,11 +245,19 @@ public class Account implements Entity, Comparable<Account> {
      * <sup>*</sup> Results should be provided for all SIE types except for type
      * I4, where they are not allowed.
      *
-     * @param Integer yearIndex
+     * @param yearIndex Integer - current year: 0, previous year: -1 ...
      * @return Optional of the result
      */
     public Optional<Balance> getResultByYearIndex(Integer yearIndex) {
         return results.stream().filter(b -> b.getYearIndex().equals(yearIndex)).findFirst();
+    }
+
+    public List<ObjectBalance> getObjectOpeningBalances() {
+        return objectOpeningBalances;
+    }
+
+    public List<ObjectBalance> getObjectClosingBalances() {
+        return objectClosingBalances;
     }
 
     /**
@@ -225,6 +270,10 @@ public class Account implements Entity, Comparable<Account> {
      */
     public List<PeriodicalBudget> getPeriodicalBudgets() {
         return periodicalBudgets.stream().sorted().collect(Collectors.toList());
+    }
+
+    public List<PeriodicalBalance> getPeriodicalBalances() {
+        return periodicalBalances;
     }
 
     @Override
@@ -243,12 +292,13 @@ public class Account implements Entity, Comparable<Account> {
                 + "openingBalances=" + openingBalances + ", "
                 + "closingBalances=" + closingBalances + ", "
                 + "results=" + results + ", "
-                + "periodicalBudgets=" + periodicalBudgets + '}';
+                + "periodicalBudgets=" + periodicalBudgets + ", "
+                + "periodicalBalances=" + periodicalBalances + '}';
     }
 
     public static class Builder {
 
-        private String number;
+        private final String number;
         private String label;
         private Type type;
         private String unit;
@@ -256,39 +306,16 @@ public class Account implements Entity, Comparable<Account> {
         private final List<Balance> openingBalances = new ArrayList<>();
         private final List<Balance> closingBalances = new ArrayList<>();
         private final List<Balance> results = new ArrayList<>();
+        private final List<ObjectBalance> objectOpeningBalances = new ArrayList<>();
+        private final List<ObjectBalance> objectClosingBalances = new ArrayList<>();
         private final List<PeriodicalBudget> periodicalBudgets = new ArrayList<>();
+        private final List<PeriodicalBalance> periodicalBalances = new ArrayList<>();
 
-        private Builder() {
-        }
-
-        /**
-         * Required - Account number.
-         * <p>
-         * Account numbers are most commonly 4 digits, but other "numbers" are
-         * allowed, such as a combination of numbers and letters.
-         * <p>
-         * SIE: <code>#KONTO <b>1910</b> Kassa</code>
-         *
-         * @param number the account number: number("1910")
-         * @return Account.Builder
-         */
-        public Builder number(String number) {
+        private Builder(String number) {
+            if (number == null || number.isEmpty()) {
+                throw new SieException("Account number must not be null or empty");
+            }
             this.number = number;
-            return this;
-        }
-
-        /**
-         * Required - Account number.
-         * <p>
-         * Convenience method for account numbers that are Integers. This method
-         * calls the number(String number) method with toString on the integer.
-         * Use either of them, not both.
-         *
-         * @param number the account number: number(1910)
-         * @return Account.Builder
-         */
-        public Builder number(Integer number) {
-            return number(number.toString());
         }
 
         /**
@@ -419,6 +446,16 @@ public class Account implements Entity, Comparable<Account> {
             return this;
         }
 
+        public Builder addObjectOpeningBalance(ObjectBalance balance) {
+            objectOpeningBalances.add(balance);
+            return this;
+        }
+
+        public Builder addObjectClosingBalance(ObjectBalance balance) {
+            objectClosingBalances.add(balance);
+            return this;
+        }
+
         /**
          * Optional<sup>*</sup> - Periodical Budget.
          * <p>
@@ -426,14 +463,32 @@ public class Account implements Entity, Comparable<Account> {
          * and are not allowed in Types E1 and I4.
          *
          * <p>
-         * SIE: <code>#PBUDGET 0 200801 3011 {} -1243.50 -415</code><br/>
+         * SIE: <code>#PBUDGET 0 200801 3011 {} -1243.50 -415</code><br>
          * SIE: <code>#PBUDGET 0 200801 5010 {1 "0123"} 3411.80</code>
          *
          * @param budget
-         * @return
+         * @return Account.Builder
          */
         public Builder addPeriodicalBudget(PeriodicalBudget budget) {
             periodicalBudgets.add(budget);
+            return this;
+        }
+
+        /**
+         * Optional<sup>*</sup> - Periodical Balance.
+         * <p>
+         * <sup>*</sup> Must be present in Types E2 and E3, may occur in Type E4
+         * and are not allowed in Types E1 and I4.
+         *
+         * <p>
+         * SIE: <code>#PSALDO 0 200801 4010 {} -1243.50 321</code><br>
+         * SIE: <code>#PSALDO 0 200801 4010 {21 "0123"} 3411.80</code>
+         *
+         * @param balance
+         * @return Account.Builder
+         */
+        public Builder addPeriodicalBalance(PeriodicalBalance balance) {
+            periodicalBalances.add(balance);
             return this;
         }
 
@@ -442,28 +497,39 @@ public class Account implements Entity, Comparable<Account> {
          * @return Account representing the data in the builder.
          */
         public Account apply() {
-            return new Account(number, label, type, unit, sruCodes, openingBalances, closingBalances, results, periodicalBudgets);
+            return new Account(number, label, type, unit, sruCodes,
+                    openingBalances, closingBalances, results,
+                    objectOpeningBalances, objectClosingBalances,
+                    periodicalBudgets, periodicalBalances);
         }
 
     }
 
     public enum Type {
         /**
+         * Asset (Tillgång)
+         * <p>
+         * Usually accounts 1000 through 1999
+         */
+        T,
+        /**
+         * Debt (Skuld)
+         * <p>
+         * Usually accounts 2000 through 2999
+         */
+        S,
+        /**
          * Income (Intäkt)
+         * <p>
+         * Usually accounts 3000 through 3999
          */
         I,
         /**
          * Cost (Kostnad)
+         * <p>
+         * Usually accounts 4000 through 7999
          */
-        K,
-        /**
-         * Debt (Skuld)
-         */
-        S,
-        /**
-         * Asset (Tillgång)
-         */
-        T;
+        K;
 
         /**
          * Find type by string.
@@ -476,10 +542,38 @@ public class Account implements Entity, Comparable<Account> {
          */
         public static Optional<Type> find(String string) {
             try {
-                return Optional.of(valueOf(string));
+                return Optional.of(valueOf(string.toUpperCase()));
             } catch (IllegalArgumentException | NullPointerException ex) {
                 return Optional.empty();
             }
+        }
+    }
+
+    public static class ObjectId {
+
+        private final Integer dimensionId;
+        private final String objectNumber;
+
+        private ObjectId(Integer dimensionId, String objectNumber) {
+            this.dimensionId = dimensionId;
+            this.objectNumber = objectNumber;
+        }
+
+        public static ObjectId of(Integer dimensionId, String objectNumber) {
+            return new ObjectId(dimensionId, objectNumber);
+        }
+
+        public Integer getDimensionId() {
+            return dimensionId;
+        }
+
+        public String getObjectNumber() {
+            return objectNumber;
+        }
+
+        @Override
+        public String toString() {
+            return "ObjectId{" + "dimensionId=" + dimensionId + ", objectNumber=" + objectNumber + '}';
         }
     }
 }

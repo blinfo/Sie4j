@@ -15,12 +15,18 @@ public class Document implements Entity {
     private final MetaData metaData;
     private final AccountingPlan accountingPlan;
     private final List<Voucher> vouchers;
+    private final List<AccountingDimension> dimensions;
+    private final List<AccountingObject> objects;
     private final String checksum;
 
-    private Document(MetaData metaData, AccountingPlan accountingPlan, List<Voucher> vouchers, String checksum) {
+    private Document(MetaData metaData, AccountingPlan accountingPlan,
+            List<Voucher> vouchers, List<AccountingDimension> dimensions,
+            List<AccountingObject> objects, String checksum) {
         this.metaData = metaData;
         this.accountingPlan = accountingPlan;
         this.vouchers = vouchers;
+        this.dimensions = dimensions;
+        this.objects = objects;
         this.checksum = checksum;
     }
 
@@ -48,6 +54,14 @@ public class Document implements Entity {
         return getImbalancedVouchers().isEmpty();
     }
 
+    public List<AccountingDimension> getDimensions() {
+        return dimensions;
+    }
+
+    public List<AccountingObject> getObjects() {
+        return objects;
+    }
+
     public Optional<String> getChecksum() {
         return Optional.ofNullable(checksum);
     }
@@ -65,6 +79,8 @@ public class Document implements Entity {
         private MetaData metaData;
         private AccountingPlan accountingPlan;
         private List<Voucher> vouchers = new ArrayList<>();
+        private List<AccountingDimension> dimensions = new ArrayList<>();
+        private List<AccountingObject> objects = new ArrayList<>();
         private String checksum;
 
         public Builder() {
@@ -85,13 +101,23 @@ public class Document implements Entity {
             return this;
         }
 
+        public Builder dimensions(List<AccountingDimension> dimensions) {
+            this.dimensions = dimensions;
+            return this;
+        }
+
+        public Builder objects(List<AccountingObject> objects) {
+            this.objects = objects;
+            return this;
+        }
+
         public Builder checksum(String checksum) {
             this.checksum = checksum;
             return this;
         }
 
         public Document apply() {
-            return new Document(metaData, accountingPlan, vouchers, checksum);
+            return new Document(metaData, accountingPlan, vouchers, dimensions, objects, checksum);
         }
     }
 

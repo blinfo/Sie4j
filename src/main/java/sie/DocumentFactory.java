@@ -1,6 +1,7 @@
 package sie;
 
 import sie.domain.Account;
+import sie.domain.AccountingDimension;
 import sie.domain.AccountingPlan;
 import sie.domain.Address;
 import sie.domain.Balance;
@@ -21,8 +22,13 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import sie.domain.AccountingObject;
+import sie.domain.ObjectBalance;
+import sie.domain.PeriodicalBalance;
 
 /**
  *
@@ -31,8 +37,10 @@ import java.util.stream.Stream;
  */
 class DocumentFactory {
 
+    private static final Pattern OBJECT_ID_PATTERN = Pattern.compile("(\"?(\\d+)\"?\\s\"?(\\d+)\"?)+");
     private static final String REPLACE_STRING = "[\"\\{\\}]";
     private final String content;
+    private final List<FinancialYear> years = new ArrayList<>();
 
     private DocumentFactory(String content) {
         this.content = content;
@@ -40,10 +48,12 @@ class DocumentFactory {
 
     static Document parse(String content) {
         DocumentFactory factory = new DocumentFactory(content);
-        Document.Builder builder = Document.builder();
-        builder.metaData(factory.getMetaData());
-        builder.vouchers(factory.getVouchers());
-        builder.accountingPlan(factory.getAccountingPlan());
+        Document.Builder builder = Document.builder()
+                .metaData(factory.getMetaData())
+                .accountingPlan(factory.getAccountingPlan())
+                .dimensions(factory.getDimensions())
+                .objects(factory.getObjects())
+                .vouchers(factory.getVouchers());
         Document doc = builder.apply();
         builder.checksum(Checksum.calculate(doc));
         return builder.apply();
@@ -112,6 +122,10 @@ class DocumentFactory {
                 }
                 Transaction.Builder tb = Transaction.builder();
                 tb.accountNumber(parts.get(1).replaceAll(REPLACE_STRING, ""));
+                Matcher matcher = OBJECT_ID_PATTERN.matcher(parts.get(2));
+                while (matcher.find()) {
+                    tb.addObjectId(Account.ObjectId.of(Integer.valueOf(matcher.group(2)), matcher.group(3)));
+                }
                 tb.amount(new BigDecimal(parts.get(3)));
                 if (parts.size() > 4) {
                     Optional.ofNullable(parts.get(4) == null || parts.get(4).isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
@@ -143,8 +157,7 @@ class DocumentFactory {
                 .filter(line -> line.startsWith("#" + Entity.ACCOUNT))
                 .map(line -> {
                     List<String> accountParts = getParts(line);
-                    Account.Builder accountBuilder = Account.builder();
-                    accountBuilder.number(accountParts.get(1));
+                    Account.Builder accountBuilder = Account.builder(accountParts.get(1));
                     Optional.ofNullable(accountParts.get(2)).map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
                     getLineParts(accountParts.get(1), 1, Entity.SRU, Entity.ACCOUNT_TYPE, Entity.UNIT).stream().forEach(l -> {
                         switch (l.get(0).replaceAll("#", "")) {
@@ -160,18 +173,36 @@ class DocumentFactory {
                         }
                     });
                     getLineParts(accountParts.get(1), 2, Entity.OPENING_BALANCE, Entity.CLOSING_BALANCE, Entity.RESULT).stream().forEach(l -> {
+                        Balance balance = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
                         switch (l.get(0).replaceAll("#", "")) {
                             case Entity.OPENING_BALANCE:
-                                Balance opening = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
-                                accountBuilder.addOpeningBalance(opening);
+                                accountBuilder.addOpeningBalance(balance);
                                 break;
                             case Entity.CLOSING_BALANCE:
-                                Balance closing = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
-                                accountBuilder.addClosingBalance(closing);
+                                accountBuilder.addClosingBalance(balance);
                                 break;
                             case Entity.RESULT:
-                                Balance result = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
-                                accountBuilder.addResult(result);
+                                accountBuilder.addResult(balance);
+                                break;
+                        }
+                    });
+                    getLineParts(accountParts.get(1), 2, Entity.OBJECT_OPENING_BALANCE, Entity.OBJECT_CLOSING_BALANCE).stream().forEach(l -> {
+                        ObjectBalance.Builder obBuilder = ObjectBalance.builder()
+                                .amount(new BigDecimal(l.get(4)))
+                                .yearIndex(Integer.valueOf(l.get(1)));
+                        Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(3));
+                        if (matcher.find()) {
+                            obBuilder.objectId(Integer.valueOf(matcher.group(2)), matcher.group(3));
+                        }
+                        if (l.size() > 5) {
+                            obBuilder.quantity(Double.valueOf(l.get(5)));
+                        }
+                        switch (l.get(0).replaceAll("#", "")) {
+                            case Entity.OBJECT_OPENING_BALANCE:
+                                accountBuilder.addObjectOpeningBalance(obBuilder.apply());
+                                break;
+                            case Entity.OBJECT_CLOSING_BALANCE:
+                                accountBuilder.addObjectOpeningBalance(obBuilder.apply());
                                 break;
                         }
                     });
@@ -182,6 +213,28 @@ class DocumentFactory {
                                         YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT), new BigDecimal(l.get(l.size() - 1)));
                                 accountBuilder.addPeriodicalBudget(budget);
                                 break;
+                        }
+                    });
+                    getLineParts(accountParts.get(1), 3, Entity.PERIODICAL_BALANCE).stream().forEach(l -> {
+                        switch (l.get(0).replaceAll("#", "")) {
+                            case Entity.PERIODICAL_BALANCE:
+                                YearMonth period = YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT);
+                                // Ensure the right year index is provided
+                                Integer yearIndex = findFinancialYearByPeriod(period).map(FinancialYear::getIndex).orElse(Integer.valueOf(l.get(1)));
+                                PeriodicalBalance.Builder pbBuilder = PeriodicalBalance.builder()
+                                        .yearIndex(yearIndex)
+                                        .period(period)
+                                        .amount(new BigDecimal(l.get(5)));
+                                Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(4));
+                                while (matcher.find()) {
+                                    pbBuilder.specification(Integer.valueOf(matcher.group(2)), matcher.group(3));
+                                }
+                                if (l.size() > 6) {
+                                    pbBuilder.quantity(Double.valueOf(l.get(6)));
+                                }
+                                accountBuilder.addPeriodicalBalance(pbBuilder.apply());
+                                break;
+
                         }
                     });
                     return accountBuilder.apply();
@@ -197,6 +250,21 @@ class DocumentFactory {
         return builder.apply();
     }
 
+    private List<AccountingDimension> getDimensions() {
+        return getLinesParts(Entity.DIMENSION).stream().map(line -> {
+            if (line.size() > 3) {
+                return AccountingDimension.of(Integer.valueOf(line.get(1)), line.get(2), Integer.valueOf(line.get(3)));
+            }
+            return AccountingDimension.of(Integer.valueOf(line.get(1)), line.get(2));
+        }).collect(Collectors.toList());
+    }
+
+    private List<AccountingObject> getObjects() {
+        return getLinesParts(Entity.OBJECT).stream().map(line -> {
+            return AccountingObject.of(Integer.valueOf(line.get(1)), line.get(2), line.get(3));
+        }).collect(Collectors.toList());
+    }
+
     private Program getProgram() {
         List<String> lineParts = getLineParts(Entity.PROGRAM);
         String version = Optional.ofNullable(lineParts.get(2)).map(s -> s.replaceAll(REPLACE_STRING, "")).orElse(null);
@@ -210,8 +278,7 @@ class DocumentFactory {
     }
 
     private Company getCompany() {
-        Company.Builder builder = Company.builder();
-        builder.name(getLineAsString(Entity.COMPANY_NAME));
+        Company.Builder builder = Company.builder(getLineAsString(Entity.COMPANY_NAME));
         if (hasLine(Entity.COMPANY_ID)) {
             builder.id(getLineAsString(Entity.COMPANY_ID));
         }
@@ -242,9 +309,19 @@ class DocumentFactory {
     }
 
     private List<FinancialYear> getFinancialYears() {
-        return getLinesParts(Entity.FINANCIAL_YEAR).stream()
-                .map(this::create)
-                .collect(Collectors.toList());
+        if (years.isEmpty()) {
+            years.addAll(getLinesParts(Entity.FINANCIAL_YEAR).stream()
+                    .map(this::create)
+                    .collect(Collectors.toList()));
+        }
+        return years;
+    }
+
+    private Optional<FinancialYear> findFinancialYearByPeriod(YearMonth period) {
+        LocalDate date = LocalDate.of(period.getYear(), period.getMonth(), 5);
+        return getFinancialYears().stream().filter(fy -> {
+            return fy.getStartDate().isBefore(date) && fy.getEndDate().isAfter(date);
+        }).findFirst();
     }
 
     private FinancialYear create(List<String> parts) {

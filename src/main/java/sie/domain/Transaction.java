@@ -4,11 +4,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import sie.io.JsonDateSerializer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import sie.domain.Account.ObjectId;
 
 /**
  *
- * @author Håkan Lidén 
+ * @author Håkan Lidén
  *
  */
 public class Transaction implements Entity {
@@ -20,14 +23,16 @@ public class Transaction implements Entity {
     private final String text;
     private final Double quantity;
     private final String signature;
+    private final List<ObjectId> objectIds;
 
-    private Transaction(String accountNumber, BigDecimal amount, LocalDate date, String text, Double quantity, String signature) {
+    private Transaction(String accountNumber, BigDecimal amount, LocalDate date, String text, Double quantity, String signature, List<ObjectId> objectIds) {
         this.accountNumber = accountNumber;
         this.amount = amount;
         this.date = date;
         this.text = text;
         this.quantity = quantity;
         this.signature = signature;
+        this.objectIds = objectIds;
     }
 
     public static Builder builder() {
@@ -58,15 +63,19 @@ public class Transaction implements Entity {
         return Optional.ofNullable(signature);
     }
 
+    public List<ObjectId> getObjectIds() {
+        return objectIds;
+    }
+
     @Override
     public String toString() {
-        return "Transaction{" 
-                + "accountNumber=" + accountNumber + ", "
+        return "Transaction{" + "accountNumber=" + accountNumber + ", "
                 + "amount=" + amount + ", "
                 + "date=" + date + ", "
                 + "text=" + text + ", "
                 + "quantity=" + quantity + ", "
-                + "signature=" + signature + '}';
+                + "signature=" + signature + ", "
+                + "objectIds=" + objectIds + '}';
     }
 
     public static class Builder {
@@ -77,6 +86,7 @@ public class Transaction implements Entity {
         private String text;
         private Double quantity;
         private String signature;
+        private final List<ObjectId> objectIds = new ArrayList<>();
 
         public Builder accountNumber(String accountNumber) {
             this.accountNumber = accountNumber;
@@ -108,8 +118,13 @@ public class Transaction implements Entity {
             return this;
         }
 
+        public Builder addObjectId(ObjectId id) {
+            objectIds.add(id);
+            return this;
+        }
+
         public Transaction apply() {
-            return new Transaction(accountNumber, amount, date, text, quantity, signature);
+            return new Transaction(accountNumber, amount, date, text, quantity, signature, objectIds);
         }
     }
 

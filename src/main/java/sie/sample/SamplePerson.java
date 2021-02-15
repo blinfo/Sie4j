@@ -1,4 +1,4 @@
-package sie.fake;
+package sie.sample;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  * @author Håkan Lidén 
  *
  */
-class FakePerson {
+class SamplePerson {
 
     private String name;
     private String image;
@@ -18,7 +18,7 @@ class FakePerson {
     private String phone;
     private String password;
 
-    public FakePerson() {
+    public SamplePerson() {
     }
 
     public String getName() {
