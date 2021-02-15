@@ -53,10 +53,30 @@ public class AccountingPlan implements Entity {
         return accounts.stream().sorted().collect(Collectors.toList());
     }
 
+    /**
+     * Getter for a specific account.
+     * <p>
+     * Returns an optional of the account with the specified number, or an empty
+     * optional if no account is found.
+     *
+     * @param number String representing the number of the account.
+     * @return Optional of the Account with the provided number, or an empty
+     * optional if not found.
+     */
     public Optional<Account> getAccountByNumber(String number) {
         return accounts.stream().filter(a -> a.getNumber().equals(number)).findFirst();
     }
 
+    /**
+     * Getter for a specific account.
+     * <p>
+     * Returns an optional of the account with the specified number, or an empty
+     * optional if no account is found.
+     *
+     * @param number Integer representing the number of the account.
+     * @return Optional of the Account with the provided number, or an empty
+     * optional if not found.
+     */
     public Optional<Account> getAccountByNumber(Integer number) {
         return getAccountByNumber(number.toString());
     }
