@@ -20,6 +20,17 @@ pipeline {
            }
        }
     }
+    stage('Deploy Artifacts') {
+        agent {
+          docker {
+            image 'blinfo/maven:3.6.1-jdk-8-alpine'
+            args '-e MAVEN_CONFIG=/home/jenkins/.m2'
+          }
+        }
+        steps {
+            sh "mvn -B deploy -DskipTests"
+       }
+    }
   }
   post {
     failure {
