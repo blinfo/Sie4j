@@ -24,31 +24,43 @@
         </dependency>
     </dependencies>
     <build>
-        <plugins>
-            <!--TODO: Fix javadoc for 1.8-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <nohelp>false</nohelp>
-                    <!--<additionalOptions>-Xdoclint:none</additionalOptions>-->
-                    <!--<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>-->
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>    
+<!--        <plugins>-->
+<!--            &lt;!&ndash;TODO: Fix javadoc for 1.8&ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--                <version>3.2.0</version>-->
+<!--                <configuration>-->
+<!--                    <nohelp>false</nohelp>-->
+<!--                    <additionalOptions>-Xdoclint:none</additionalOptions>-->
+<!--                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>attach-javadocs</id>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>    -->
     </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <distributionManagement>
+        <repository>
+            <id>repos.blinfo.se</id>
+            <name>repos.blinfo.se-releases</name>
+            <url>http://repos.blinfo.se/artifactory/libs-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>repos.blinfo.se</id>
+            <name>repos.blinfo.se-snapshots</name>
+            <url>http://repos.blinfo.se/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
