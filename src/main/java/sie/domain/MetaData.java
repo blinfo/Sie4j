@@ -106,6 +106,10 @@ public class MetaData implements Entity {
         return financialYears.stream().sorted().collect(Collectors.toList());
     }
 
+    public Optional<FinancialYear> getFinancialYearByIndex(Integer index) {
+        return financialYears.stream().filter(fy -> fy.getIndex().equals(index)).findFirst();
+    }
+
     public Optional<LocalDate> getPeriodRange() {
         return Optional.ofNullable(periodRange);
     }
