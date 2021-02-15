@@ -53,6 +53,14 @@ public class AccountingPlan implements Entity {
         return accounts.stream().sorted().collect(Collectors.toList());
     }
 
+    public Optional<Account> getByNumber(String number) {
+        return accounts.stream().filter(a -> a.getNumber().equals(number)).findFirst();
+    }
+
+    public Optional<Account> getByNumber(Integer number) {
+        return getByNumber(number.toString());
+    }
+
     @Override
     public String toString() {
         return "AccountingPlan{" + "accounts=" + accounts + '}';
