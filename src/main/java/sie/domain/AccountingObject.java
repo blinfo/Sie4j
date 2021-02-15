@@ -2,7 +2,7 @@ package sie.domain;
 
 /**
  *
- * @author hakan
+ * @author Håkan Lidén
  */
 public class AccountingObject {
 

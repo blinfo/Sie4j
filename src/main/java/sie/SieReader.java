@@ -1,11 +1,10 @@
 package sie;
 
-import sie.SieParser;
-import sie.domain.Document;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import sie.domain.Document;
 
 /**
  *

@@ -1,9 +1,9 @@
 package sie;
 
-import sie.sample.SampleDocumentGenerator;
-import sie.domain.Document;
 import java.io.File;
 import java.io.InputStream;
+import sie.sample.SampleDocumentGenerator;
+import sie.domain.Document;
 
 /**
  * A java parser for SIE data.

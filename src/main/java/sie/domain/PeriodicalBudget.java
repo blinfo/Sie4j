@@ -1,9 +1,9 @@
 package sie.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import sie.io.JsonYearMonthSerializer;
 import java.math.BigDecimal;
 import java.time.YearMonth;
+import sie.io.JsonYearMonthSerializer;
 
 /**
  *

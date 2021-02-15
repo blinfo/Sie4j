@@ -7,7 +7,7 @@ import sie.domain.Account.ObjectId;
 
 /**
  *
- * @author hakan
+ * @author Håkan Lidén
  */
 public class PeriodicalBalance {
 

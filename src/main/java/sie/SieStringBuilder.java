@@ -1,5 +1,8 @@
 package sie;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import sie.domain.Account;
 import sie.domain.Company;
 import sie.domain.Document;
@@ -7,9 +10,6 @@ import sie.domain.Entity;
 import sie.domain.Generated;
 import sie.domain.MetaData;
 import sie.domain.Program;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  *

@@ -1,8 +1,8 @@
 package sie.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import sie.io.JsonDateSerializer;
 import java.time.LocalDate;
+import sie.io.JsonDateSerializer;
 
 /**
  *
