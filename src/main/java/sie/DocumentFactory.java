@@ -92,64 +92,73 @@ class DocumentFactory {
         Voucher.Builder builder = null;
         for (String line : lines) {
             List<String> parts = getParts(line.trim());
-            if (line.startsWith("#" + Entity.VOUCHER)) {
-                if (builder != null) {
-                    vouchers.add(builder.apply());
-                }
-                builder = Voucher.builder();
-                Optional.ofNullable(parts.get(1) == null || parts.get(1).isEmpty() ? null : parts.get(1).replaceAll(REPLACE_STRING, ""))
-                        .ifPresent(builder::series);
-                Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
-                        ? null : parts.get(2).replaceAll(REPLACE_STRING, ""))
-                        .map(Integer::valueOf).ifPresent(builder::number);
-                builder.date(LocalDate.parse(parts.get(3).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT));
-                if (parts.size() > 4) {
-                    Optional.ofNullable(parts.get(4) == null || parts.get(4).isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
-                            .ifPresent(builder::text);
-                }
-                if (parts.size() > 5) {
-                    Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
-                            .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(builder::registrationDate);
-                }
-                if (parts.size() > 6) {
-                    Optional.ofNullable(parts.get(6) == null || parts.get(6).isEmpty() ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
-                            .ifPresent(builder::signature);
-                }
-            }
-            if (line.trim().startsWith("#" + Entity.TRANSACTION)) {
-                if (builder == null) {
-                    throw new SieException("No current voucher builder");
-                }
-                Transaction.Builder tb = Transaction.builder();
-                tb.accountNumber(parts.get(1).replaceAll(REPLACE_STRING, ""));
-                Matcher matcher = OBJECT_ID_PATTERN.matcher(parts.get(2));
-                while (matcher.find()) {
-                    tb.addObjectId(Account.ObjectId.of(Integer.valueOf(matcher.group(2)), matcher.group(3)));
-                }
-                tb.amount(new BigDecimal(parts.get(3)));
-                if (parts.size() > 4) {
-                    Optional.ofNullable(parts.get(4) == null || parts.get(4).isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
-                            .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(tb::date);
-                }
-                if (parts.size() > 5) {
-                    Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
-                            .ifPresent(tb::text);
-                }
-                if (parts.size() > 6) {
-                    Optional.ofNullable(parts.get(6) == null || parts.get(6).isEmpty() || parts.get(6).equals("\"\"") ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
-                            .map(Double::valueOf).ifPresent(tb::quantity);
-                }
-                if (parts.size() > 7) {
-                    Optional.ofNullable(parts.get(7) == null || parts.get(7).isEmpty() ? null : parts.get(7).replaceAll(REPLACE_STRING, ""))
-                            .ifPresent(tb::signature);
-                }
-                builder.addTransaction(tb.apply());
-            }
+            builder = handleVoucher(line, builder, vouchers, parts);
+            handleTransaction(line, builder, parts);
         }
         if (builder != null) {
             vouchers.add(builder.apply());
         }
         return vouchers;
+    }
+
+    private Voucher.Builder handleVoucher(String line, Voucher.Builder builder, List<Voucher> vouchers, List<String> parts) {
+        if (line.startsWith("#" + Entity.VOUCHER)) {
+            if (builder != null) {
+                vouchers.add(builder.apply());
+            }
+            builder = Voucher.builder();
+            Optional.ofNullable(parts.get(1) == null || parts.get(1).isEmpty() ? null : parts.get(1).replaceAll(REPLACE_STRING, ""))
+                    .ifPresent(builder::series);
+            Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
+                    ? null : parts.get(2).replaceAll(REPLACE_STRING, ""))
+                    .map(Integer::valueOf).ifPresent(builder::number);
+            builder.date(LocalDate.parse(parts.get(3).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT));
+            if (parts.size() > 4) {
+                Optional.ofNullable(parts.get(4) == null || parts.get(4).isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
+                        .ifPresent(builder::text);
+            }
+            if (parts.size() > 5) {
+                Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
+                        .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(builder::registrationDate);
+            }
+            if (parts.size() > 6) {
+                Optional.ofNullable(parts.get(6) == null || parts.get(6).isEmpty() ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
+                        .ifPresent(builder::signature);
+            }
+        }
+        return builder;
+    }
+
+    private void handleTransaction(String line, Voucher.Builder builder, List<String> parts) throws SieException, NumberFormatException {
+        if (line.trim().startsWith("#" + Entity.TRANSACTION)) {
+            if (builder == null) {
+                throw new SieException("No current voucher builder");
+            }
+            Transaction.Builder tb = Transaction.builder();
+            tb.accountNumber(parts.get(1).replaceAll(REPLACE_STRING, ""));
+            Matcher matcher = OBJECT_ID_PATTERN.matcher(parts.get(2));
+            while (matcher.find()) {
+                tb.addObjectId(Account.ObjectId.of(Integer.valueOf(matcher.group(2)), matcher.group(3)));
+            }
+            tb.amount(new BigDecimal(parts.get(3)));
+            if (parts.size() > 4) {
+                Optional.ofNullable(parts.get(4) == null || parts.get(4).isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
+                        .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(tb::date);
+            }
+            if (parts.size() > 5) {
+                Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
+                        .ifPresent(tb::text);
+            }
+            if (parts.size() > 6) {
+                Optional.ofNullable(parts.get(6) == null || parts.get(6).isEmpty() || parts.get(6).equals("\"\"") ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
+                        .map(Double::valueOf).ifPresent(tb::quantity);
+            }
+            if (parts.size() > 7) {
+                Optional.ofNullable(parts.get(7) == null || parts.get(7).isEmpty() ? null : parts.get(7).replaceAll(REPLACE_STRING, ""))
+                        .ifPresent(tb::signature);
+            }
+            builder.addTransaction(tb.apply());
+        }
     }
 
     private AccountingPlan getAccountingPlan() {
@@ -158,85 +167,11 @@ class DocumentFactory {
                 .map(line -> {
                     List<String> accountParts = getParts(line);
                     Account.Builder accountBuilder = Account.builder(accountParts.get(1));
-                    Optional.ofNullable(accountParts.get(2)).map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
-                    getLineParts(accountParts.get(1), 1, Entity.SRU, Entity.ACCOUNT_TYPE, Entity.UNIT).stream().forEach(l -> {
-                        switch (l.get(0).replaceAll("#", "")) {
-                            case Entity.SRU:
-                                accountBuilder.addSruCode(l.get(2).replaceAll(REPLACE_STRING, ""));
-                                break;
-                            case Entity.UNIT:
-                                accountBuilder.unit(l.get(2).replaceAll(REPLACE_STRING, ""));
-                                break;
-                            case Entity.ACCOUNT_TYPE:
-                                Account.Type.find(l.get(2)).ifPresent(accountBuilder::type);
-                                break;
-                        }
-                    });
-                    getLineParts(accountParts.get(1), 2, Entity.OPENING_BALANCE, Entity.CLOSING_BALANCE, Entity.RESULT).stream().forEach(l -> {
-                        Balance balance = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
-                        switch (l.get(0).replaceAll("#", "")) {
-                            case Entity.OPENING_BALANCE:
-                                accountBuilder.addOpeningBalance(balance);
-                                break;
-                            case Entity.CLOSING_BALANCE:
-                                accountBuilder.addClosingBalance(balance);
-                                break;
-                            case Entity.RESULT:
-                                accountBuilder.addResult(balance);
-                                break;
-                        }
-                    });
-                    getLineParts(accountParts.get(1), 2, Entity.OBJECT_OPENING_BALANCE, Entity.OBJECT_CLOSING_BALANCE).stream().forEach(l -> {
-                        ObjectBalance.Builder obBuilder = ObjectBalance.builder()
-                                .amount(new BigDecimal(l.get(4)))
-                                .yearIndex(Integer.valueOf(l.get(1)));
-                        Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(3));
-                        if (matcher.find()) {
-                            obBuilder.objectId(Integer.valueOf(matcher.group(2)), matcher.group(3));
-                        }
-                        if (l.size() > 5) {
-                            obBuilder.quantity(Double.valueOf(l.get(5)));
-                        }
-                        switch (l.get(0).replaceAll("#", "")) {
-                            case Entity.OBJECT_OPENING_BALANCE:
-                                accountBuilder.addObjectOpeningBalance(obBuilder.apply());
-                                break;
-                            case Entity.OBJECT_CLOSING_BALANCE:
-                                accountBuilder.addObjectOpeningBalance(obBuilder.apply());
-                                break;
-                        }
-                    });
-                    getLineParts(accountParts.get(1), 3, Entity.PERIODICAL_BUDGET).stream().forEach(l -> {
-                        switch (l.get(0).replaceAll("#", "")) {
-                            case Entity.PERIODICAL_BUDGET:
-                                PeriodicalBudget budget = PeriodicalBudget.of(Integer.valueOf(l.get(1)),
-                                        YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT), new BigDecimal(l.get(l.size() - 1)));
-                                accountBuilder.addPeriodicalBudget(budget);
-                                break;
-                        }
-                    });
-                    getLineParts(accountParts.get(1), 3, Entity.PERIODICAL_BALANCE).stream().forEach(l -> {
-                        switch (l.get(0).replaceAll("#", "")) {
-                            case Entity.PERIODICAL_BALANCE:
-                                YearMonth period = YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT);
-                                // Ensure the right year index is provided
-                                Integer yearIndex = findFinancialYearByPeriod(period).map(FinancialYear::getIndex).orElse(Integer.valueOf(l.get(1)));
-                                PeriodicalBalance.Builder pbBuilder = PeriodicalBalance.builder()
-                                        .yearIndex(yearIndex)
-                                        .period(period)
-                                        .amount(new BigDecimal(l.get(5)));
-                                Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(4));
-                                while (matcher.find()) {
-                                    pbBuilder.specification(Integer.valueOf(matcher.group(2)), matcher.group(3));
-                                }
-                                if (l.size() > 6) {
-                                    pbBuilder.quantity(Double.valueOf(l.get(6)));
-                                }
-                                accountBuilder.addPeriodicalBalance(pbBuilder.apply());
-                                break;
-
-                        }
-                    });
+                    handleSruAccountTypeAndUnit(accountParts, accountBuilder);
+                    handleAccountBalanceAndResult(accountParts, accountBuilder);
+                    handleAccountObjectBalance(accountParts, accountBuilder);
+                    handleAccountPeriodicalBudget(accountParts, accountBuilder);
+                    handleAccountPeriodicalBalance(accountParts, accountBuilder);
                     return accountBuilder.apply();
                 }).collect(Collectors.toList());
         if (accounts == null || accounts.isEmpty()) {
@@ -248,6 +183,100 @@ class DocumentFactory {
         }
         builder.accounts(accounts);
         return builder.apply();
+    }
+
+    private void handleSruAccountTypeAndUnit(List<String> accountParts, Account.Builder accountBuilder) {
+        Optional.ofNullable(accountParts.get(2)).map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
+        getLineParts(accountParts.get(1), 1, Entity.SRU, Entity.ACCOUNT_TYPE, Entity.UNIT).stream().forEach(l -> {
+            switch (l.get(0).replaceAll("#", "")) {
+                case Entity.SRU:
+                    accountBuilder.addSruCode(l.get(2).replaceAll(REPLACE_STRING, ""));
+                    break;
+                case Entity.UNIT:
+                    accountBuilder.unit(l.get(2).replaceAll(REPLACE_STRING, ""));
+                    break;
+                case Entity.ACCOUNT_TYPE:
+                    Account.Type.find(l.get(2)).ifPresent(accountBuilder::type);
+                    break;
+            }
+        });
+    }
+
+    private void handleAccountPeriodicalBalance(List<String> accountParts, Account.Builder accountBuilder) {
+        getLineParts(accountParts.get(1), 3, Entity.PERIODICAL_BALANCE).stream().forEach(l -> {
+            switch (l.get(0).replaceAll("#", "")) {
+                case Entity.PERIODICAL_BALANCE:
+                    YearMonth period = YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT);
+                    // Ensure the right year index is provided
+                    Integer yearIndex = findFinancialYearByPeriod(period).map(FinancialYear::getIndex).orElse(Integer.valueOf(l.get(1)));
+                    PeriodicalBalance.Builder pbBuilder = PeriodicalBalance.builder()
+                            .yearIndex(yearIndex)
+                            .period(period)
+                            .amount(new BigDecimal(l.get(5)));
+                    Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(4));
+                    while (matcher.find()) {
+                        pbBuilder.specification(Integer.valueOf(matcher.group(2)), matcher.group(3));
+                    }
+                    if (l.size() > 6) {
+                        pbBuilder.quantity(Double.valueOf(l.get(6)));
+                    }
+                    accountBuilder.addPeriodicalBalance(pbBuilder.apply());
+                    break;
+                    
+            }
+        });
+    }
+
+    private void handleAccountPeriodicalBudget(List<String> accountParts, Account.Builder accountBuilder) {
+        getLineParts(accountParts.get(1), 3, Entity.PERIODICAL_BUDGET).stream().forEach(l -> {
+            switch (l.get(0).replaceAll("#", "")) {
+                case Entity.PERIODICAL_BUDGET:
+                    PeriodicalBudget budget = PeriodicalBudget.of(Integer.valueOf(l.get(1)),
+                            YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT), new BigDecimal(l.get(l.size() - 1)));
+                    accountBuilder.addPeriodicalBudget(budget);
+                    break;
+            }
+        });
+    }
+
+    private void handleAccountObjectBalance(List<String> accountParts, Account.Builder accountBuilder) {
+        getLineParts(accountParts.get(1), 2, Entity.OBJECT_OPENING_BALANCE, Entity.OBJECT_CLOSING_BALANCE).stream().forEach(l -> {
+            ObjectBalance.Builder obBuilder = ObjectBalance.builder()
+                    .amount(new BigDecimal(l.get(4)))
+                    .yearIndex(Integer.valueOf(l.get(1)));
+            Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(3));
+            if (matcher.find()) {
+                obBuilder.objectId(Integer.valueOf(matcher.group(2)), matcher.group(3));
+            }
+            if (l.size() > 5) {
+                obBuilder.quantity(Double.valueOf(l.get(5)));
+            }
+            switch (l.get(0).replaceAll("#", "")) {
+                case Entity.OBJECT_OPENING_BALANCE:
+                    accountBuilder.addObjectOpeningBalance(obBuilder.apply());
+                    break;
+                case Entity.OBJECT_CLOSING_BALANCE:
+                    accountBuilder.addObjectOpeningBalance(obBuilder.apply());
+                    break;
+            }
+        });
+    }
+
+    private void handleAccountBalanceAndResult(List<String> accountParts, Account.Builder accountBuilder) {
+        getLineParts(accountParts.get(1), 2, Entity.OPENING_BALANCE, Entity.CLOSING_BALANCE, Entity.RESULT).stream().forEach(l -> {
+            Balance balance = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
+            switch (l.get(0).replaceAll("#", "")) {
+                case Entity.OPENING_BALANCE:
+                    accountBuilder.addOpeningBalance(balance);
+                    break;
+                case Entity.CLOSING_BALANCE:
+                    accountBuilder.addClosingBalance(balance);
+                    break;
+                case Entity.RESULT:
+                    accountBuilder.addResult(balance);
+                    break;
+            }
+        });
     }
 
     private List<AccountingDimension> getDimensions() {
