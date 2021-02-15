@@ -4,7 +4,7 @@ import java.util.Optional;
 
 /**
  *
- * @author hakan
+ * @author Håkan Lidén
  */
 public class AccountingDimension {
 
