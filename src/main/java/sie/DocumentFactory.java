@@ -144,7 +144,7 @@ class DocumentFactory {
             }
             tb.amount(new BigDecimal(parts.get(3)));
             if (parts.size() > 4) {
-                Optional.ofNullable(parts.get(4) == null || parts.get(4).isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
+                Optional.ofNullable(parts.get(4) == null || parts.get(4).replaceAll(REPLACE_STRING, "").isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
                         .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(tb::date);
             }
             if (parts.size() > 5) {
