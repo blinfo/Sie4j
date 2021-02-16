@@ -70,7 +70,7 @@ class DocumentFactory {
         getComments().ifPresent(builder::comments);
         builder.company(getCompany());
         if (hasLine(Entity.TAXATION_YEAR)) {
-            builder.taxationYear(Year.parse(getLineAsString(Entity.TAXATION_YEAR).trim()));
+            builder.taxationYear(Year.parse(getLineAsString(Entity.TAXATION_YEAR)));
         }
         if (hasLine(Entity.FINANCIAL_YEAR)) {
             builder.financialYears(getFinancialYears());
@@ -333,9 +333,9 @@ class DocumentFactory {
         }
         if (hasLine(Entity.CORPORATE_ID)) {
             List<String> lineParts = getLineParts(Entity.CORPORATE_ID);
-            builder.corporateID(lineParts.get(1).trim());
+            builder.corporateID(lineParts.get(1).replaceAll(REPLACE_STRING, ""));
             if (lineParts.size() > 2 && lineParts.get(2).trim().matches("\\d+")) {
-                builder.aquisitionNumber(Integer.valueOf(lineParts.get(2).trim()));
+                builder.aquisitionNumber(Integer.valueOf(lineParts.get(2)));
             }
         }
         getAddress().ifPresent(builder::address);
@@ -460,7 +460,7 @@ class DocumentFactory {
     }
 
     private String getLineAsString(String prefix) {
-        return getLineParts(prefix).stream().filter(p -> ignorePrefix(p)).collect(Collectors.joining(" ")).replaceAll(REPLACE_STRING, "");
+        return getLineParts(prefix).stream().filter(p -> ignorePrefix(p)).collect(Collectors.joining(" ")).replaceAll(REPLACE_STRING, "").trim();
     }
 
     private static boolean ignorePrefix(String p) {
