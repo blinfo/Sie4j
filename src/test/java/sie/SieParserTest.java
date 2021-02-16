@@ -63,7 +63,6 @@ public class SieParserTest {
     @Test
     public void test_BLA_Sie_SE_File() {
         Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/CC2-foretaget.SE"));
-        System.out.println(Sie4j.asJson(doc));
         assertTrue("Document should be of type E4", doc.getMetaData().getSieType().equals(Document.Type.E4));
         assertTrue("AccountingPlan should exist", doc.getAccountingPlan().isPresent());
         AccountingPlan accountingPlan = doc.getAccountingPlan().get();

@@ -63,6 +63,7 @@ class SieStringBuilder {
     private void addAccountingPlan() {
         document.getAccountingPlan().ifPresent(ac -> {
             List<Account> accounts = ac.getAccounts();
+            accounts.sort(Account::compareTo);
             accounts.forEach(account -> {
                 add(Entity.ACCOUNT, account.getNumber(), account.getLabel().map(l -> "\"" + l + "\"").orElse("\"\""));
             });
@@ -94,7 +95,7 @@ class SieStringBuilder {
                 if (!document.getMetaData().getSieType().equals(Document.Type.E1)) {
                     accounts.stream().filter(account -> !account.getPeriodicalBudgets().isEmpty()).forEach(account -> {
                         account.getPeriodicalBudgets().forEach(budg -> {
-                            add(Entity.PERIODICAL_BUDGET, budg.getYearIndex().toString(), account.getNumber(), budg.getPeriod().format(Entity.YEAR_MONTH_FORMAT), budg.getAmount().toString());
+                            add(Entity.PERIODICAL_BUDGET, budg.getYearIndex().toString(), budg.getPeriod().format(Entity.YEAR_MONTH_FORMAT), account.getNumber(), budg.getAmount().toString());
                         });
                     });
                 }

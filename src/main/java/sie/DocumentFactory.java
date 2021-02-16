@@ -50,7 +50,6 @@ class DocumentFactory {
 
     static Document parse(String content) {
         DocumentFactory factory = new DocumentFactory(content);
-//        factory.checkAccountNumbers();
         Document.Builder builder = Document.builder()
                 .metaData(factory.getMetaData())
                 .accountingPlan(factory.getAccountingPlan())
@@ -169,14 +168,26 @@ class DocumentFactory {
                 .filter(line -> line.startsWith("#" + Entity.ACCOUNT))
                 .map(line -> {
                     List<String> accountParts = getParts(line);
-                    Account.Builder accountBuilder = Account.builder(accountParts.get(1));
-                    handleSruAccountTypeAndUnit(accountParts, accountBuilder);
-                    handleAccountBalanceAndResult(accountParts, accountBuilder);
-                    handleAccountObjectBalance(accountParts, accountBuilder);
-                    handleAccountPeriodicalBudget(accountParts, accountBuilder);
-                    handleAccountPeriodicalBalance(accountParts, accountBuilder);
+                    String number = accountParts.get(1);
+                    Account.Builder accountBuilder = Account.builder(number);
+                    Optional.ofNullable(accountParts.size() > 2 ? accountParts.get(2) : null)
+                            .map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
+                    handleSruAccountTypeAndUnit(number, accountBuilder);
+                    handleAccountBalanceAndResult(number, accountBuilder);
+                    handleAccountObjectBalance(number, accountBuilder);
+                    handleAccountPeriodicalBudget(number, accountBuilder);
+                    handleAccountPeriodicalBalance(number, accountBuilder);
                     return accountBuilder.apply();
                 }).collect(Collectors.toList());
+        accounts.addAll(findMissingAccountNumbers().stream().map(number -> {
+            Account.Builder accountBuilder = Account.builder(number).label("Saknas vid import");
+            handleSruAccountTypeAndUnit(number, accountBuilder);
+            handleAccountBalanceAndResult(number, accountBuilder);
+            handleAccountObjectBalance(number, accountBuilder);
+            handleAccountPeriodicalBudget(number, accountBuilder);
+            handleAccountPeriodicalBalance(number, accountBuilder);
+            return accountBuilder.apply();
+        }).collect(Collectors.toList()));
         if (accounts == null || accounts.isEmpty()) {
             return null;
         }
@@ -188,9 +199,8 @@ class DocumentFactory {
         return builder.apply();
     }
 
-    private void handleSruAccountTypeAndUnit(List<String> accountParts, Account.Builder accountBuilder) {
-        Optional.ofNullable(accountParts.get(2)).map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
-        getLineParts(accountParts.get(1), 1, Entity.SRU, Entity.ACCOUNT_TYPE, Entity.UNIT).stream().forEach(l -> {
+    private void handleSruAccountTypeAndUnit(String number, Account.Builder accountBuilder) {
+        getLineParts(number, 1, Entity.SRU, Entity.ACCOUNT_TYPE, Entity.UNIT).stream().forEach(l -> {
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.SRU:
                     accountBuilder.addSruCode(l.get(2).replaceAll(REPLACE_STRING, ""));
@@ -205,8 +215,8 @@ class DocumentFactory {
         });
     }
 
-    private void handleAccountPeriodicalBalance(List<String> accountParts, Account.Builder accountBuilder) {
-        getLineParts(accountParts.get(1), 3, Entity.PERIODICAL_BALANCE).stream().forEach(l -> {
+    private void handleAccountPeriodicalBalance(String number, Account.Builder accountBuilder) {
+        getLineParts(number, 3, Entity.PERIODICAL_BALANCE).stream().forEach(l -> {
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.PERIODICAL_BALANCE:
                     YearMonth period = YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT);
@@ -230,8 +240,8 @@ class DocumentFactory {
         });
     }
 
-    private void handleAccountPeriodicalBudget(List<String> accountParts, Account.Builder accountBuilder) {
-        getLineParts(accountParts.get(1), 3, Entity.PERIODICAL_BUDGET).stream().forEach(l -> {
+    private void handleAccountPeriodicalBudget(String number, Account.Builder accountBuilder) {
+        getLineParts(number, 3, Entity.PERIODICAL_BUDGET).stream().forEach(l -> {
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.PERIODICAL_BUDGET:
                     YearMonth period;
@@ -243,8 +253,8 @@ class DocumentFactory {
         });
     }
 
-    private void handleAccountObjectBalance(List<String> accountParts, Account.Builder accountBuilder) {
-        getLineParts(accountParts.get(1), 2, Entity.OBJECT_OPENING_BALANCE, Entity.OBJECT_CLOSING_BALANCE).stream().forEach(l -> {
+    private void handleAccountObjectBalance(String number, Account.Builder accountBuilder) {
+        getLineParts(number, 2, Entity.OBJECT_OPENING_BALANCE, Entity.OBJECT_CLOSING_BALANCE).stream().forEach(l -> {
             ObjectBalance.Builder obBuilder = ObjectBalance.builder()
                     .amount(new BigDecimal(l.get(4)))
                     .yearIndex(Integer.valueOf(l.get(1)));
@@ -266,8 +276,8 @@ class DocumentFactory {
         });
     }
 
-    private void handleAccountBalanceAndResult(List<String> accountParts, Account.Builder accountBuilder) {
-        getLineParts(accountParts.get(1), 2, Entity.OPENING_BALANCE, Entity.CLOSING_BALANCE, Entity.RESULT).stream().forEach(l -> {
+    private void handleAccountBalanceAndResult(String number, Account.Builder accountBuilder) {
+        getLineParts(number, 2, Entity.OPENING_BALANCE, Entity.CLOSING_BALANCE, Entity.RESULT).stream().forEach(l -> {
             Balance balance = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.OPENING_BALANCE:
@@ -322,7 +332,11 @@ class DocumentFactory {
             builder.type(Company.Type.from(getLineParts(Entity.COMPANY_TYPE).get(1)));
         }
         if (hasLine(Entity.CORPORATE_ID)) {
-            builder.corporateID(getLineAsString(Entity.CORPORATE_ID));
+            List<String> lineParts = getLineParts(Entity.CORPORATE_ID);
+            builder.corporateID(lineParts.get(1).trim());
+            if (lineParts.size() > 2 && lineParts.get(2).trim().matches("\\d+")) {
+                builder.aquisitionNumber(Integer.valueOf(lineParts.get(2).trim()));
+            }
         }
         getAddress().ifPresent(builder::address);
         return builder.apply();
@@ -364,7 +378,7 @@ class DocumentFactory {
         return FinancialYear.of(index, start, end);
     }
 
-    private void checkAccountNumbers() {
+    private List<String> findMissingAccountNumbers() {
         List<String> existingAccounts = getLinesParts(Entity.ACCOUNT).stream().map(s -> s.get(1)).collect(Collectors.toList());
         Set<String> referredAccounts = new HashSet<>();
         getLinesParts(Entity.ACCOUNT_TYPE).forEach(s -> referredAccounts.add(s.get(1)));
@@ -375,13 +389,10 @@ class DocumentFactory {
         getLinesParts(Entity.PERIODICAL_BALANCE).forEach(s -> referredAccounts.add(s.get(3)));
         getLinesParts(Entity.PERIODICAL_BUDGET).forEach(s -> referredAccounts.add(s.get(3)));
         getLinesParts(Entity.RESULT).forEach(s -> referredAccounts.add(s.get(2)));
+        getLinesParts(Entity.SRU).forEach(s -> referredAccounts.add(s.get(1)));
         getLinesParts(Entity.TRANSACTION).forEach(s -> referredAccounts.add(s.get(1)));
         getLinesParts(Entity.UNIT).forEach(s -> referredAccounts.add(s.get(1)));
-        System.out.println("Existing Accounts: " + existingAccounts.size());
-        System.out.println("Referred Accounts: " + referredAccounts.size());
-        List<String> missingAccounts = referredAccounts.stream().filter(s -> !existingAccounts.contains(s)).collect(Collectors.toList());
-        System.out.println("Missing Accounts: " + missingAccounts.size());
-        System.out.println(missingAccounts);
+        return referredAccounts.stream().filter(s -> !existingAccounts.contains(s)).collect(Collectors.toList());
     }
 
     private Boolean isRead() {

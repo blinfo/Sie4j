@@ -14,14 +14,16 @@ public class Company implements Entity {
     private final String id;
     private final Type type;
     private final String corporateId;
+    private final Integer aquisitionNumber;
     private final String sniCode;
     private final Address address;
 
-    private Company(String name, String id, Type type, String corporateID, String sniCode, Address address) {
+    private Company(String name, String id, Type type, String corporateID, Integer aquisitionNumber, String sniCode, Address address) {
         this.name = Objects.requireNonNull(name);
         this.id = id;
         this.type = type;
         this.corporateId = corporateID;
+        this.aquisitionNumber = aquisitionNumber;
         this.sniCode = sniCode;
         this.address = address;
     }
@@ -54,23 +56,13 @@ public class Company implements Entity {
         return Optional.ofNullable(address);
     }
 
-    @Override
-    public String toString() {
-        return "Company{"
-                + "name=" + name + ", "
-                + "id=" + id + ", "
-                + "type=" + type + ", "
-                + "corporateId=" + corporateId + ", "
-                + "sniCode=" + sniCode + ", "
-                + "address=" + address + '}';
-    }
-
     public static class Builder {
 
         private final String name;
         private String id;
         private Type type;
         private String corporateID;
+        private Integer aquisitionNumber;
         private String sniCode;
         private Address address;
 
@@ -93,6 +85,11 @@ public class Company implements Entity {
             return this;
         }
 
+        public Builder aquisitionNumber(Integer aquisitionNumber) {
+            this.aquisitionNumber = aquisitionNumber;
+            return this;
+        }
+
         public Builder sniCode(String sniCode) {
             this.sniCode = sniCode;
             return this;
@@ -104,7 +101,7 @@ public class Company implements Entity {
         }
 
         public Company apply() {
-            return new Company(name, id, type, corporateID, sniCode, address);
+            return new Company(name, id, type, corporateID, aquisitionNumber, sniCode, address);
         }
     }
 

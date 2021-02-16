@@ -11,7 +11,6 @@
 #RAR -1 20160101 20161231
 #TAXAR 2018
 #KPTYP "EUBAS97"
-#KONTO 1110 "Byggnader"
 #KONTO 1119 "Ackumulerade avskrivningar på byggnader"
 #KONTO 1130 "Mark"
 #KONTO 1220 "Inventarier och verktyg"
@@ -54,7 +53,6 @@
 #KONTO 2150 "Ackumulerade överavskrivningar"
 #KONTO 2330 "Checkräkningskredit"
 #KONTO 2340 "Byggnadskreditiv"
-#KONTO 2350 "Andra skulder till kreditinstitut"
 #KONTO 2355 "Lån i utländsk valuta till kreditinst"
 #KONTO 2390 "Övriga långfristiga skulder"
 #KONTO 2420 "Förskott från kunder"
@@ -80,7 +78,6 @@
 #KONTO 2890 "Övriga kortfristiga skulder"
 #KONTO 2910 "Upplupna löner"
 #KONTO 2920 "Upplupna semesterlöner"
-#KONTO 2941 "Beräknade uppl lagstadgade sociala avg"
 #KONTO 2942 "Beräknad upplupen löneskatt för löner"
 #KONTO 2960 "Upplupna räntekostnader"
 #KONTO 2980 "Upplupna avtalskostnader"
@@ -163,7 +160,6 @@
 #KONTO 6991 "Övriga externa kostnader, avdragsgilla"
 #KONTO 6992 "Övriga externa kostnader, ej avdr.gilla"
 #KONTO 6993 "Lämnade bidrag och gåvor"
-#KONTO 7010 "Löner till kollektivanställda"
 #KONTO 7011 "Löner till kollektivanställda"
 #KONTO 7090 "Förändring av semesterlöneskuld"
 #KONTO 7210 "Löner till tjänstemän"
