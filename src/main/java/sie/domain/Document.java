@@ -65,7 +65,7 @@ public class Document implements Entity {
     public Optional<String> getChecksum() {
         return Optional.ofNullable(checksum);
     }
-
+    
     @Override
     public String toString() {
         return "Document{"

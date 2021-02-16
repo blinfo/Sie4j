@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -30,7 +32,6 @@ import sie.domain.Program;
 import sie.domain.Transaction;
 import sie.domain.Voucher;
 
-
 /**
  *
  * @author Håkan Lidén
@@ -49,6 +50,7 @@ class DocumentFactory {
 
     static Document parse(String content) {
         DocumentFactory factory = new DocumentFactory(content);
+//        factory.checkAccountNumbers();
         Document.Builder builder = Document.builder()
                 .metaData(factory.getMetaData())
                 .accountingPlan(factory.getAccountingPlan())
@@ -223,7 +225,7 @@ class DocumentFactory {
                     }
                     accountBuilder.addPeriodicalBalance(pbBuilder.apply());
                     break;
-                    
+
             }
         });
     }
@@ -232,6 +234,7 @@ class DocumentFactory {
         getLineParts(accountParts.get(1), 3, Entity.PERIODICAL_BUDGET).stream().forEach(l -> {
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.PERIODICAL_BUDGET:
+                    YearMonth period;
                     PeriodicalBudget budget = PeriodicalBudget.of(Integer.valueOf(l.get(1)),
                             YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT), new BigDecimal(l.get(l.size() - 1)));
                     accountBuilder.addPeriodicalBudget(budget);
@@ -303,7 +306,7 @@ class DocumentFactory {
 
     private Generated getGenerated() {
         List<String> lineParts = getLineParts(Entity.GENERATED);
-        String sign = Optional.ofNullable(lineParts.get(2)).map(s -> s.replaceAll(REPLACE_STRING, "")).orElse(null);
+        String sign = Optional.ofNullable(lineParts.size() > 2 ? lineParts.get(2) : null).map(s -> s.replaceAll(REPLACE_STRING, "")).orElse(null);
         return Generated.of(LocalDate.parse(lineParts.get(1), Entity.DATE_FORMAT), sign);
     }
 
@@ -361,6 +364,26 @@ class DocumentFactory {
         return FinancialYear.of(index, start, end);
     }
 
+    private void checkAccountNumbers() {
+        List<String> existingAccounts = getLinesParts(Entity.ACCOUNT).stream().map(s -> s.get(1)).collect(Collectors.toList());
+        Set<String> referredAccounts = new HashSet<>();
+        getLinesParts(Entity.ACCOUNT_TYPE).forEach(s -> referredAccounts.add(s.get(1)));
+        getLinesParts(Entity.CLOSING_BALANCE).forEach(s -> referredAccounts.add(s.get(2)));
+        getLinesParts(Entity.OBJECT_CLOSING_BALANCE).forEach(s -> referredAccounts.add(s.get(2)));
+        getLinesParts(Entity.OBJECT_OPENING_BALANCE).forEach(s -> referredAccounts.add(s.get(2)));
+        getLinesParts(Entity.OPENING_BALANCE).forEach(s -> referredAccounts.add(s.get(2)));
+        getLinesParts(Entity.PERIODICAL_BALANCE).forEach(s -> referredAccounts.add(s.get(3)));
+        getLinesParts(Entity.PERIODICAL_BUDGET).forEach(s -> referredAccounts.add(s.get(3)));
+        getLinesParts(Entity.RESULT).forEach(s -> referredAccounts.add(s.get(2)));
+        getLinesParts(Entity.TRANSACTION).forEach(s -> referredAccounts.add(s.get(1)));
+        getLinesParts(Entity.UNIT).forEach(s -> referredAccounts.add(s.get(1)));
+        System.out.println("Existing Accounts: " + existingAccounts.size());
+        System.out.println("Referred Accounts: " + referredAccounts.size());
+        List<String> missingAccounts = referredAccounts.stream().filter(s -> !existingAccounts.contains(s)).collect(Collectors.toList());
+        System.out.println("Missing Accounts: " + missingAccounts.size());
+        System.out.println(missingAccounts);
+    }
+
     private Boolean isRead() {
         List<String> lineParts = getLineParts(Entity.READ);
         return lineParts.get(1).equals("1");
@@ -391,6 +414,7 @@ class DocumentFactory {
 
     private List<List<String>> getLinesParts(String prefix) {
         return Stream.of(content.split("\n"))
+                .filter(line -> !line.isEmpty())
                 .filter(line -> line.startsWith("#" + prefix))
                 .map(line -> getParts(line))
                 .collect(Collectors.toList());
@@ -438,6 +462,7 @@ class DocumentFactory {
 
     private List<List<String>> getLineParts(String key, int keyIndex, String... prefixes) {
         return Stream.of(content.split("\n"))
+                .filter(line -> !line.isEmpty())
                 .filter(line -> {
                     return Stream.of(prefixes).filter(pre -> line.startsWith("#" + pre)).findAny().isPresent();
                 })

@@ -4,6 +4,7 @@ import java.io.InputStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import sie.domain.AccountingPlan;
 import sie.domain.Document;
 
 /**
@@ -44,6 +45,44 @@ public class SieParserTest {
         assertEquals("Checksum should be same", cp437doc.getChecksum().get(), utf8doc.getChecksum().get());
         assertEquals("Checksum should be same", cp437doc.getChecksum().get(), iso8859doc.getChecksum().get());
 
+    }
+
+    @Test
+    public void test_BLA_Sie_SI_File() {
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/CC3.SI"));
+        assertTrue("Document should be of type I4", doc.getMetaData().getSieType().equals(Document.Type.I4));
+        assertTrue("AccountingPlan should exist", doc.getAccountingPlan().isPresent());
+        AccountingPlan accountingPlan = doc.getAccountingPlan().get();
+        Integer expectedNumberOfAccounts = 194;
+        assertEquals("AccountingPlan should have 194 accounts", expectedNumberOfAccounts, Integer.valueOf(accountingPlan.getAccounts().size()));
+        long expectedNumberOfSruCodes = 202;
+        long noOfSruCodes = accountingPlan.getAccounts().stream().flatMap(acc -> acc.getSruCodes().stream()).count();
+        assertEquals("AccountingPlan should have 202 sru codes", expectedNumberOfSruCodes, noOfSruCodes);
+    }
+
+    @Test
+    public void test_BLA_Sie_SE_File() {
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/CC2-foretaget.SE"));
+        System.out.println(Sie4j.asJson(doc));
+        assertTrue("Document should be of type E4", doc.getMetaData().getSieType().equals(Document.Type.E4));
+        assertTrue("AccountingPlan should exist", doc.getAccountingPlan().isPresent());
+        AccountingPlan accountingPlan = doc.getAccountingPlan().get();
+        Integer expectedNumberOfAccounts = 206;
+        assertEquals("AccountingPlan should have 206 accounts", expectedNumberOfAccounts, Integer.valueOf(accountingPlan.getAccounts().size()));
+        long expectedNumberOfSruCodes = 213;
+        long noOfSruCodes = accountingPlan.getAccounts().stream().flatMap(acc -> acc.getSruCodes().stream()).count();
+        assertEquals("AccountingPlan should have 213 sru codes", expectedNumberOfSruCodes, noOfSruCodes);
+        long expectedNumberOfClosingBalances = 7;
+        long noOfClosingBalances = accountingPlan.getAccounts().stream().flatMap(acc -> acc.getClosingBalances().stream()).count();
+        assertEquals("AccountingPlan should have 7 closing balances", expectedNumberOfClosingBalances, noOfClosingBalances);
+        long expectedNumberOfResults = 3;
+        long noOfResults = accountingPlan.getAccounts().stream().flatMap(acc -> acc.getResults().stream()).count();
+        assertEquals("AccountingPlan should have 3 results", expectedNumberOfResults, noOfResults);
+        assertEquals("Document should have 5 vouchers", 5l, doc.getVouchers().size());
+        long expectedNumberOfTransactions = 19;
+        long noOfTransactions = doc.getVouchers().stream().flatMap(ver -> ver.getTransactions().stream()).count();
+        assertEquals("Document should have ", expectedNumberOfTransactions, noOfTransactions);
+        
     }
 
     private InputStream getStream(String string) {
