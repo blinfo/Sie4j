@@ -34,7 +34,7 @@ public class SieParserTest {
 
     @Test
     public void test_checkSumForDocument() {
-        String expectedChecksum = "B46D053906DE60431B15CA0F5DD18353";
+        String expectedChecksum = "A5656969022C20669DCBBBEDA9F6BB56";
         Document cp437doc = Sie4j.toDocument(getStream(""));
         Document utf8doc = Sie4j.toDocument(getStream("_UTF_8"));
         Document iso8859doc = Sie4j.toDocument(getStream("_ISO_8859_15"));

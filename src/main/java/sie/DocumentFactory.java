@@ -437,7 +437,7 @@ class DocumentFactory {
     }
 
     private List<String> getParts(String line) {
-        String[] chars = line.split("");
+        String[] chars = line.replaceAll("\\s+", " ").split("");
         boolean quote = false;
         boolean objArray = false;
         StringBuilder builder = new StringBuilder();

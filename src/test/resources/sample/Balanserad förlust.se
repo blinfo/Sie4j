@@ -1,0 +1,355 @@
+#FLAGGA 0
+#PROGRAM "BL Bokslut" 2016.3.103
+#FORMAT PC8
+#GEN 20170131
+#SIETYP 1
+
+#FNR "Pocketlagret AB"
+#ORGNR "556455-2619" 1
+#FNAMN "Pocketlagret AB"
+#ADRESS "" "" " " ""
+#RAR 0 20160101 20161231
+#RAR -1 20150101 20151231
+#TAXAR 2017
+#OMFATTN 20161231
+
+#KONTO 1110   "Byggnader"
+#SRU 1110 7214
+#KONTO 1119   "Ackumulerade avskrivningar pÜ byggnader"
+#SRU 1119 7214
+#KONTO 1130   "Mark"
+#SRU 1130 7214
+#KONTO 1220   "Inventarier och verktyg"
+#SRU 1220 7215
+#KONTO 1229   "Ack avskr pÜ inventarier o verktyg"
+#SRU 1229 7215
+#KONTO 1319   "Nedskr"
+#SRU 1319 7230
+#KONTO 1351   "Andelar i bîrsnoterade fîretag"
+#SRU 1351 7233
+#KONTO 1460   "Lager av handelsvaror"
+#SRU 1460 7243
+#KONTO 1510   "Kundfordringar"
+#SRU 1510 7251
+#KONTO 1630   "AvrÑkning fîr skatter och avgifter"
+#SRU 1630 7261
+#KONTO 1710   "Fîrutbetalda hyreskostnader"
+#SRU 1710 7263
+#KONTO 1910   "Kassa"
+#SRU 1910 7281
+#KONTO 1920   "Plusgiro"
+#SRU 1920 7281
+#KONTO 1940   "Bank"
+#SRU 1940 7281
+#KONTO 2081   "Aktiekapital"
+#SRU 2081 7301
+#KONTO 2085   "Uppskrivningsfond"
+#SRU 2085 7301
+#KONTO 2086   "Reservfond"
+#SRU 2086 7301
+#KONTO 2091   "Balanserad vinst eller fîrlust"
+#SRU 2091 7302
+#KONTO 2099   "èrets resultat"
+#SRU 2099 7302
+#KONTO 2128   "Periodiseringsfond vid 2008 Ürs taxering"
+#SRU 2128 7321
+#KONTO 2129   "Periodiseringsfond vid 2009 Ürs taxering"
+#SRU 2129 7321
+#KONTO 2350   "Andra skulder till kreditinstitut"
+#SRU 2350 7352
+#KONTO 2440   "Leverantîrsskulder"
+#SRU 2440 7365
+#KONTO 2510   "Skatteskulder"
+#SRU 2510 7368
+#KONTO 2650   "Redovisningskonto fîr moms"
+#SRU 2650 7369
+#KONTO 2710   "Personalskatt"
+#SRU 2710 7369
+#KONTO 2730   "Lagst soc avg och sÑrskild lîneskatt"
+#SRU 2730 7369
+#KONTO 2920   "Upplupna semesterlîner"
+#SRU 2920 7370
+#KONTO 2941   "BerÑknade uppl lagstadgade sociala avg"
+#SRU 2941 7370
+#KONTO 3010   "FîrsÑljning"
+#SRU 3010 7410
+#KONTO 3740   "ôresutjÑmning"
+#SRU 3740 7410
+#KONTO 4010   "Inkîp material och varor"
+#SRU 4010 7511
+#KONTO 4900   "FîrÑndring av lager (gruppkonto)"
+#SRU 4900 7510
+#KONTO 5010   "Lokalhyra"
+#SRU 5010 7513
+#KONTO 5020   "El fîr belysning"
+#SRU 5020 7513
+#KONTO 5100   "Fastighetskostnader (gruppkonto)"
+#SRU 5100 7513
+#KONTO 5131   "UppvÑrmning"
+#SRU 5131 7513
+#KONTO 5410   "Fîrbrukningsinventarier"
+#SRU 5410 7513
+#KONTO 5520   "Reparation och underhÜll av inventarier"
+#SRU 5520 7513
+#KONTO 5615   "Leasing av personbilar"
+#SRU 5615 7513
+#KONTO 5710   "Frakter och transporter"
+#SRU 5710 7513
+#KONTO 5910   "Annonsering"
+#SRU 5910 7513
+#KONTO 6071   "Representation, avdragsgill"
+#SRU 6071 7513
+#KONTO 6072   "Representation, ej avdragsgill"
+#SRU 6072 7513
+#KONTO 6110   "Kontorsmateriel"
+#SRU 6110 7513
+#KONTO 6370   "Kostnader fîr bevakning och larm"
+#SRU 6370 7513
+#KONTO 6420   "ErsÑttningar till revisor"
+#SRU 6420 7513
+#KONTO 7010   "Lîner till kollektivanstÑllda"
+#SRU 7010 7514
+#KONTO 7090   "FîrÑndring av semesterlîneskuld"
+#SRU 7090 7514
+#KONTO 7210   "Lîner till tjÑnstemÑn"
+#SRU 7210 7514
+#KONTO 7291   "FîrÑndring av semesterlîneskuld till tjÑ"
+#SRU 7291 7514
+#KONTO 7321   "Skattefria traktamenten, Sverige"
+#SRU 7321 7514
+#KONTO 7410   "PensionsfîrsÑkringspremier"
+#SRU 7410 7514
+#KONTO 7510   "Lagstadgade sociala avgifter"
+#SRU 7510 7514
+#KONTO 7519   "Soc avg fîr semester- och lîneskuld"
+#SRU 7519 7514
+#KONTO 7530   "SÑrskild lîneskatt"
+#SRU 7530 7514
+#KONTO 7610   "Utbildning"
+#SRU 7610 7514
+#KONTO 7690   "ôvriga personalkostnader"
+#SRU 7690 7514
+#KONTO 7821   "Avskrivningar pÜ byggnader"
+#SRU 7821 7515
+#KONTO 7830   "Avskrivningar pÜ maskiner och inv"
+#SRU 7830 7515
+#KONTO 7832   "Avskrivningar pÜ inventarier och verktyg"
+#SRU 7832 7515
+#KONTO 8019   "ôvriga utdelningar pÜ andelar i koncernfîretag"
+#SRU 8019 7414
+#KONTO 8314   "Skattefria rÑnteintÑkter"
+#SRU 8314 7417
+#KONTO 8410   "RÑntekostnader fîr lÜngfristiga skulder"
+#SRU 8410 7522
+#KONTO 8811   "AvsÑttning till periodiseringsfond"
+#SRU 8811 7525
+#KONTO 8850   "FîrÑndring av îveravskrivningar"
+#SRU 8850 7421
+#KONTO 8910   "Skatt pÜ Ürets beskattningsbara resultat"
+#SRU 8910 7528
+#KONTO 8999   "èrets resultat"
+#SRU 8999 7450
+#KTYP 1110 T
+#KTYP 1119 T
+#KTYP 1130 T
+#KTYP 1220 T
+#KTYP 1229 T
+#KTYP 1319 T
+#KTYP 1351 T
+#KTYP 1460 T
+#KTYP 1510 T
+#KTYP 1630 T
+#KTYP 1710 T
+#KTYP 1910 T
+#KTYP 1920 T
+#KTYP 1940 T
+#KTYP 2081 S
+#KTYP 2085 S
+#KTYP 2086 S
+#KTYP 2091 S
+#KTYP 2099 S
+#KTYP 2128 S
+#KTYP 2129 S
+#KTYP 2350 S
+#KTYP 2440 S
+#KTYP 2510 S
+#KTYP 2650 S
+#KTYP 2710 S
+#KTYP 2730 S
+#KTYP 2920 S
+#KTYP 2941 S
+#KTYP 3010 I
+#KTYP 3740 I
+#KTYP 4010 K
+#KTYP 4900 K
+#KTYP 5010 K
+#KTYP 5020 K
+#KTYP 5100 K
+#KTYP 5131 K
+#KTYP 5410 K
+#KTYP 5520 K
+#KTYP 5615 K
+#KTYP 5710 K
+#KTYP 5910 K
+#KTYP 6071 K
+#KTYP 6072 K
+#KTYP 6110 K
+#KTYP 6370 K
+#KTYP 6420 K
+#KTYP 7010 K
+#KTYP 7090 K
+#KTYP 7210 K
+#KTYP 7291 K
+#KTYP 7321 K
+#KTYP 7410 K
+#KTYP 7510 K
+#KTYP 7519 K
+#KTYP 7530 K
+#KTYP 7610 K
+#KTYP 7690 K
+#KTYP 7821 K
+#KTYP 7830 K
+#KTYP 7832 K
+#KTYP 8019 I
+#KTYP 8314 K
+#KTYP 8410 K
+#KTYP 8811 K
+#KTYP 8850 K
+#KTYP 8910 K
+#KTYP 8999 K
+#IB 0  1110 0
+#UB 0  1110 500000
+#IB 0  1119 0
+#UB 0  1119 0
+#IB 0  1130 0
+#UB 0  1130 100000
+#IB 0  1220 88800
+#UB 0  1220 136300
+#IB 0  1229 -32800
+#UB 0  1229 -32800
+#IB 0  1319 0
+#UB 0  1319 -153000
+#IB 0  1351 53000
+#UB 0  1351 153000
+#IB 0  1460 592700
+#UB 0  1460 149369.15
+#IB 0  1510 128862
+#UB 0  1510 213312
+#IB 0  1630 -2512
+#UB 0  1630 4578
+#IB 0  1710 0
+#UB 0  1710 29535.25
+#IB 0  1910 3500
+#UB 0  1910 2593
+#IB 0  1920 216428.47
+#UB 0  1920 312167.47
+#IB 0  1940 165099
+#UB 0  1940 450055.6
+#IB 0  2081 -100000
+#UB 0  2081 -50000
+#IB 0  2085 0
+#UB 0  2085 0
+#IB 0  2086 -20000
+#UB 0  2086 0
+#IB 0  2091 -396710.63
+#UB 0  2091 -722541.47
+#IB 0  2099 -255830.84
+#UB 0  2099 879869.79
+#IB 0  2128 -75000
+#UB 0  2128 -75000
+#IB 0  2129 -42000
+#UB 0  2129 -42000
+#IB 0  2350 0
+#UB 0  2350 -570000
+#IB 0  2440 -93712
+#UB 0  2440 -1065243
+#IB 0  2510 -13975
+#UB 0  2510 33625
+#IB 0  2650 0
+#UB 0  2650 -21435
+#IB 0  2710 -33319
+#UB 0  2710 -32147
+#IB 0  2730 -30435
+#UB 0  2730 -29572.5
+#IB 0  2920 -115375
+#UB 0  2920 -128770.9
+#IB 0  2941 -36720
+#UB 0  2941 -41895.39
+#RES -1  3010 -5767405.75
+#RES 0  3010 -6111926.27
+#RES -1  3740 0
+#RES 0  3740 0.07
+#RES -1  4010 3204531
+#RES 0  4010 4491714
+#RES -1  4900 38753
+#RES 0  4900 57382
+#RES -1  5010 115600
+#RES 0  5010 118140
+#RES -1  5020 25739.11
+#RES 0  5020 25654.35
+#RES -1  5100 0
+#RES 0  5100 30000
+#RES -1  5131 0
+#RES 0  5131 26167
+#RES -1  5410 0
+#RES 0  5410 23229.37
+#RES -1  5520 23753
+#RES 0  5520 5009.56
+#RES -1  5615 26513
+#RES 0  5615 27276
+#RES -1  5710 11498
+#RES 0  5710 23266
+#RES -1  5910 37000
+#RES 0  5910 66375
+#RES -1  6071 1800
+#RES 0  6071 900
+#RES -1  6072 2500
+#RES 0  6072 602
+#RES -1  6110 11013.3
+#RES 0  6110 13763.06
+#RES -1  6370 6070.5
+#RES 0  6370 11670
+#RES -1  6420 10000
+#RES 0  6420 0
+#RES -1  7010 848685
+#RES 0  7010 896989.5
+#RES -1  7090 101375
+#RES 0  7090 107640.4
+#RES -1  7210 340000
+#RES 0  7210 348000
+#RES -1  7291 74197
+#RES 0  7291 50112
+#RES -1  7321 0
+#RES 0  7321 210
+#RES -1  7410 23492
+#RES 0  7410 36414
+#RES -1  7510 373484
+#RES 0  7510 388084.95
+#RES -1  7519 46739
+#RES 0  7519 52569.38
+#RES -1  7530 5699
+#RES 0  7530 0
+#RES -1  7610 38000
+#RES 0  7610 23317
+#RES -1  7690 0
+#RES 0  7690 463.42
+#RES -1  7821 0
+#RES 0  7821 0
+#RES -1  7830 17760
+#RES 0  7830 0
+#RES -1  7832 0
+#RES 0  7832 0
+#RES -1  8019 0
+#RES 0  8019 153000
+#RES -1  8314 0
+#RES 0  8314 -1153
+#RES -1  8410 0
+#RES 0  8410 15000
+#RES -1  8811 50000
+#RES 0  8811 0
+#RES -1  8850 12000
+#RES 0  8850 0
+#RES -1  8910 65373
+#RES 0  8910 0
+#RES -1  8999 255830.84
+#RES 0  8999 -879869.79
