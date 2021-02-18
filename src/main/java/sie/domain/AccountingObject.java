@@ -4,7 +4,7 @@ package sie.domain;
  *
  * @author Håkan Lidén
  */
-public class AccountingObject {
+public class AccountingObject implements Entity {
 
     private final Integer dimensionId;
     private final String number;

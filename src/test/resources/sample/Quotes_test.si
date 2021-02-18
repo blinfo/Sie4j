@@ -1,0 +1,14 @@
+#FLAGGA 0
+#FORMAT PC8
+#SIETYP 4
+#PROGRAM "Kassasystem" "1.0 - \"Oblique Ozelot\" - alpha"
+#GEN 20180503 "Lars Larsson"
+#FNAMN Övningsbolaget AB
+#ORGNR 550226-1513
+#VER "K" "" 20180502 "Försäljning 25% \"DF:157\""  20180503
+{
+	#TRANS 1930 {} 100.00
+	#TRANS 2610 {} -20.00
+	#TRANS 3010 {} -80.00
+}
+

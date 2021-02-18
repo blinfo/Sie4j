@@ -99,4 +99,11 @@ public class VoucherTest extends Helper {
         assertTrue("Last transaction should have a date", last.getDate().isPresent());
         assertEquals("Last transaction date should be " + date, date, last.getDate().get());
     }
+
+    @Test
+    public void test_VoucherText_with_inline_quotes() {
+        String expectedResult = "Försäljning 25% \"DF:157\"";
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/Quotes_test.si"));
+        assertEquals("Voucher text should be " + expectedResult, expectedResult, doc.getVouchers().get(0).getText().orElse(""));
+    }
 }

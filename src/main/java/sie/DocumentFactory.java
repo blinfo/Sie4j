@@ -116,7 +116,7 @@ class DocumentFactory {
                     .map(Integer::valueOf).ifPresent(builder::number);
             builder.date(LocalDate.parse(parts.get(3).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT));
             if (parts.size() > 4) {
-                Optional.ofNullable(parts.get(4) == null || parts.get(4).isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
+                Optional.ofNullable(parts.get(4) == null || handleQuotes(parts.get(4)).isEmpty() ? null : handleQuotes(parts.get(4)))
                         .ifPresent(builder::text);
             }
             if (parts.size() > 5) {
@@ -124,7 +124,7 @@ class DocumentFactory {
                         .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(builder::registrationDate);
             }
             if (parts.size() > 6) {
-                Optional.ofNullable(parts.get(6) == null || parts.get(6).isEmpty() ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
+                Optional.ofNullable(parts.get(6) == null || handleQuotes(parts.get(6)).isEmpty() ? null : handleQuotes(parts.get(6)))
                         .ifPresent(builder::signature);
             }
         }
@@ -148,15 +148,15 @@ class DocumentFactory {
                         .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(tb::date);
             }
             if (parts.size() > 5) {
-                Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
+                Optional.ofNullable(parts.get(5) == null || handleQuotes(parts.get(5)).isEmpty() ? null : handleQuotes(parts.get(5)))
                         .ifPresent(tb::text);
             }
             if (parts.size() > 6) {
-                Optional.ofNullable(parts.get(6) == null || parts.get(6).isEmpty() || parts.get(6).equals("\"\"") ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
+                Optional.ofNullable(parts.get(6) == null || parts.get(6).replaceAll(REPLACE_STRING, "").isEmpty() ? null : parts.get(6).replaceAll(REPLACE_STRING, ""))
                         .map(Double::valueOf).ifPresent(tb::quantity);
             }
             if (parts.size() > 7) {
-                Optional.ofNullable(parts.get(7) == null || parts.get(7).isEmpty() ? null : parts.get(7).replaceAll(REPLACE_STRING, ""))
+                Optional.ofNullable(parts.get(7) == null || handleQuotes(parts.get(7)).isEmpty() ? null : handleQuotes(parts.get(7)))
                         .ifPresent(tb::signature);
             }
             builder.addTransaction(tb.apply());
@@ -209,7 +209,7 @@ class DocumentFactory {
                     accountBuilder.unit(l.get(2).replaceAll(REPLACE_STRING, ""));
                     break;
                 case Entity.ACCOUNT_TYPE:
-                    Account.Type.find(l.get(2)).ifPresent(accountBuilder::type);
+                    Account.Type.find(l.get(2).replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::type);
                     break;
             }
         });
@@ -219,19 +219,19 @@ class DocumentFactory {
         getLineParts(number, 3, Entity.PERIODICAL_BALANCE).stream().forEach(l -> {
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.PERIODICAL_BALANCE:
-                    YearMonth period = YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT);
+                    YearMonth period = YearMonth.parse(l.get(2).replaceAll(REPLACE_STRING, ""), Entity.YEAR_MONTH_FORMAT);
                     // Ensure the right year index is provided
                     Integer yearIndex = findFinancialYearByPeriod(period).map(FinancialYear::getIndex).orElse(Integer.valueOf(l.get(1)));
                     PeriodicalBalance.Builder pbBuilder = PeriodicalBalance.builder()
                             .yearIndex(yearIndex)
                             .period(period)
-                            .amount(new BigDecimal(l.get(5)));
+                            .amount(new BigDecimal(l.get(5).replaceAll(REPLACE_STRING, "")));
                     Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(4));
                     while (matcher.find()) {
                         pbBuilder.specification(Integer.valueOf(matcher.group(2)), matcher.group(3));
                     }
                     if (l.size() > 6) {
-                        pbBuilder.quantity(Double.valueOf(l.get(6)));
+                        pbBuilder.quantity(Double.valueOf(l.get(6).replaceAll(REPLACE_STRING, "")));
                     }
                     accountBuilder.addPeriodicalBalance(pbBuilder.apply());
                     break;
@@ -244,9 +244,10 @@ class DocumentFactory {
         getLineParts(number, 3, Entity.PERIODICAL_BUDGET).stream().forEach(l -> {
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.PERIODICAL_BUDGET:
-                    YearMonth period;
-                    PeriodicalBudget budget = PeriodicalBudget.of(Integer.valueOf(l.get(1)),
-                            YearMonth.parse(l.get(2), Entity.YEAR_MONTH_FORMAT), new BigDecimal(l.get(l.size() - 1)));
+                    YearMonth period = YearMonth.parse(l.get(2).replaceAll(REPLACE_STRING, ""), Entity.YEAR_MONTH_FORMAT);
+                    BigDecimal amount = new BigDecimal(l.get(l.size() - 1).replaceAll(REPLACE_STRING, ""));
+                    Integer index = findFinancialYearByPeriod(period).map(FinancialYear::getIndex).orElse(Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
+                    PeriodicalBudget budget = PeriodicalBudget.of(index, period, amount);
                     accountBuilder.addPeriodicalBudget(budget);
                     break;
             }
@@ -256,8 +257,8 @@ class DocumentFactory {
     private void handleAccountObjectBalance(String number, Account.Builder accountBuilder) {
         getLineParts(number, 2, Entity.OBJECT_OPENING_BALANCE, Entity.OBJECT_CLOSING_BALANCE).stream().forEach(l -> {
             ObjectBalance.Builder obBuilder = ObjectBalance.builder()
-                    .amount(new BigDecimal(l.get(4)))
-                    .yearIndex(Integer.valueOf(l.get(1)));
+                    .amount(new BigDecimal(l.get(4).replaceAll(REPLACE_STRING, "")))
+                    .yearIndex(Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
             Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(3));
             if (matcher.find()) {
                 obBuilder.objectId(Integer.valueOf(matcher.group(2)), matcher.group(3));
@@ -278,7 +279,7 @@ class DocumentFactory {
 
     private void handleAccountBalanceAndResult(String number, Account.Builder accountBuilder) {
         getLineParts(number, 2, Entity.OPENING_BALANCE, Entity.CLOSING_BALANCE, Entity.RESULT).stream().forEach(l -> {
-            Balance balance = Balance.of(new BigDecimal(l.get(3)), Integer.valueOf(l.get(1)));
+            Balance balance = Balance.of(new BigDecimal(l.get(3).replaceAll(REPLACE_STRING, "")), Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.OPENING_BALANCE:
                     accountBuilder.addOpeningBalance(balance);
@@ -296,28 +297,35 @@ class DocumentFactory {
     private List<AccountingDimension> getDimensions() {
         return getLinesParts(Entity.DIMENSION).stream().map(line -> {
             if (line.size() > 3) {
-                return AccountingDimension.of(Integer.valueOf(line.get(1)), line.get(2), Integer.valueOf(line.get(3)));
+                return AccountingDimension.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
+                        line.get(2).replaceAll(REPLACE_STRING, ""),
+                        Integer.valueOf(line.get(3).replaceAll(REPLACE_STRING, "")));
             }
-            return AccountingDimension.of(Integer.valueOf(line.get(1)), line.get(2));
+            return AccountingDimension.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
+                    line.get(2).replaceAll(REPLACE_STRING, ""));
         }).collect(Collectors.toList());
     }
 
     private List<AccountingObject> getObjects() {
         return getLinesParts(Entity.OBJECT).stream().map(line -> {
-            return AccountingObject.of(Integer.valueOf(line.get(1)), line.get(2), line.get(3));
+            return AccountingObject.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
+                    line.get(2).replaceAll(REPLACE_STRING, ""),
+                    handleQuotes(line.get(3)));
         }).collect(Collectors.toList());
     }
 
     private Program getProgram() {
         List<String> lineParts = getLineParts(Entity.PROGRAM);
-        String version = Optional.ofNullable(lineParts.get(2)).map(s -> s.replaceAll(REPLACE_STRING, "")).orElse(null);
+        String version = Optional.ofNullable(lineParts.get(2) == null || handleQuotes(lineParts.get(2)).isEmpty()
+                ? null : handleQuotes(lineParts.get(2))).orElse(null);
         return Program.of(lineParts.get(1).replaceAll(REPLACE_STRING, ""), version);
     }
 
     private Generated getGenerated() {
         List<String> lineParts = getLineParts(Entity.GENERATED);
-        String sign = Optional.ofNullable(lineParts.size() > 2 ? lineParts.get(2) : null).map(s -> s.replaceAll(REPLACE_STRING, "")).orElse(null);
-        return Generated.of(LocalDate.parse(lineParts.get(1), Entity.DATE_FORMAT), sign);
+        String sign = Optional.ofNullable(lineParts.size() > 2 ? lineParts.get(2) : null)
+                .map(s -> handleQuotes(s).isEmpty() ? null : handleQuotes(s)).orElse(null);
+        return Generated.of(LocalDate.parse(lineParts.get(1).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT), sign);
     }
 
     private Company getCompany() {
@@ -329,13 +337,13 @@ class DocumentFactory {
             builder.sniCode(getLineAsString(Entity.COMPANY_SNI_CODE));
         }
         if (hasLine(Entity.COMPANY_TYPE)) {
-            builder.type(Company.Type.from(getLineParts(Entity.COMPANY_TYPE).get(1)));
+            builder.type(Company.Type.from(getLineParts(Entity.COMPANY_TYPE).get(1).replaceAll(REPLACE_STRING, "")));
         }
         if (hasLine(Entity.CORPORATE_ID)) {
             List<String> lineParts = getLineParts(Entity.CORPORATE_ID);
             builder.corporateID(lineParts.get(1).replaceAll(REPLACE_STRING, ""));
-            if (lineParts.size() > 2 && lineParts.get(2).trim().matches("\\d+")) {
-                builder.aquisitionNumber(Integer.valueOf(lineParts.get(2)));
+            if (lineParts.size() > 2 && lineParts.get(2).replaceAll(REPLACE_STRING, "").trim().matches("\\d+")) {
+                builder.aquisitionNumber(Integer.valueOf(lineParts.get(2).replaceAll(REPLACE_STRING, "")));
             }
         }
         getAddress().ifPresent(builder::address);
@@ -348,17 +356,17 @@ class DocumentFactory {
         }
         Address.Builder builder = Address.builder();
         List<String> parts = getLineParts(Entity.ADDRESS);
-        builder.contact(parts.get(1).replaceAll(REPLACE_STRING, ""));
-        builder.streetAddress(parts.get(2).replaceAll(REPLACE_STRING, ""));
-        builder.postalAddress(parts.get(3).replaceAll(REPLACE_STRING, ""));
-        builder.phone(parts.get(4).replaceAll(REPLACE_STRING, ""));
+        builder.contact(handleQuotes(parts.get(1)));
+        builder.streetAddress(handleQuotes(parts.get(2)));
+        builder.postalAddress(handleQuotes(parts.get(3)));
+        builder.phone(handleQuotes(parts.get(4)));
         return Optional.of(builder.apply());
     }
 
     private List<FinancialYear> getFinancialYears() {
         if (years.isEmpty()) {
             years.addAll(getLinesParts(Entity.FINANCIAL_YEAR).stream()
-                    .map(this::create)
+                    .map(this::createFinancialYear)
                     .collect(Collectors.toList()));
         }
         return years;
@@ -371,38 +379,38 @@ class DocumentFactory {
         }).findFirst();
     }
 
-    private FinancialYear create(List<String> parts) {
-        Integer index = Integer.valueOf(parts.get(1));
-        LocalDate start = LocalDate.parse(parts.get(2), Entity.DATE_FORMAT);
-        LocalDate end = LocalDate.parse(parts.get(3), Entity.DATE_FORMAT);
+    private FinancialYear createFinancialYear(List<String> parts) {
+        Integer index = Integer.valueOf(parts.get(1).replaceAll(REPLACE_STRING, ""));
+        LocalDate start = LocalDate.parse(parts.get(2).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT);
+        LocalDate end = LocalDate.parse(parts.get(3).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT);
         return FinancialYear.of(index, start, end);
     }
 
     private List<String> findMissingAccountNumbers() {
         List<String> existingAccounts = getLinesParts(Entity.ACCOUNT).stream().map(s -> s.get(1)).collect(Collectors.toList());
         Set<String> referredAccounts = new HashSet<>();
-        getLinesParts(Entity.ACCOUNT_TYPE).forEach(s -> referredAccounts.add(s.get(1)));
-        getLinesParts(Entity.CLOSING_BALANCE).forEach(s -> referredAccounts.add(s.get(2)));
-        getLinesParts(Entity.OBJECT_CLOSING_BALANCE).forEach(s -> referredAccounts.add(s.get(2)));
-        getLinesParts(Entity.OBJECT_OPENING_BALANCE).forEach(s -> referredAccounts.add(s.get(2)));
-        getLinesParts(Entity.OPENING_BALANCE).forEach(s -> referredAccounts.add(s.get(2)));
-        getLinesParts(Entity.PERIODICAL_BALANCE).forEach(s -> referredAccounts.add(s.get(3)));
-        getLinesParts(Entity.PERIODICAL_BUDGET).forEach(s -> referredAccounts.add(s.get(3)));
-        getLinesParts(Entity.RESULT).forEach(s -> referredAccounts.add(s.get(2)));
-        getLinesParts(Entity.SRU).forEach(s -> referredAccounts.add(s.get(1)));
-        getLinesParts(Entity.TRANSACTION).forEach(s -> referredAccounts.add(s.get(1)));
-        getLinesParts(Entity.UNIT).forEach(s -> referredAccounts.add(s.get(1)));
+        getLinesParts(Entity.ACCOUNT_TYPE).forEach(s -> referredAccounts.add(s.get(1).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.CLOSING_BALANCE).forEach(s -> referredAccounts.add(s.get(2).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.OBJECT_CLOSING_BALANCE).forEach(s -> referredAccounts.add(s.get(2).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.OBJECT_OPENING_BALANCE).forEach(s -> referredAccounts.add(s.get(2).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.OPENING_BALANCE).forEach(s -> referredAccounts.add(s.get(2).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.PERIODICAL_BALANCE).forEach(s -> referredAccounts.add(s.get(3).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.PERIODICAL_BUDGET).forEach(s -> referredAccounts.add(s.get(3).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.RESULT).forEach(s -> referredAccounts.add(s.get(2).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.SRU).forEach(s -> referredAccounts.add(s.get(1).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.TRANSACTION).forEach(s -> referredAccounts.add(s.get(1).replaceAll(REPLACE_STRING, "")));
+        getLinesParts(Entity.UNIT).forEach(s -> referredAccounts.add(s.get(1).replaceAll(REPLACE_STRING, "")));
         return referredAccounts.stream().filter(s -> !existingAccounts.contains(s)).collect(Collectors.toList());
     }
 
     private Boolean isRead() {
         List<String> lineParts = getLineParts(Entity.READ);
-        return lineParts.get(1).equals("1");
+        return lineParts.get(1).replaceAll(REPLACE_STRING, "").equals("1");
     }
 
     private Document.Type getType() {
         List<String> lineParts = getLineParts(Entity.TYPE);
-        Integer value = Integer.valueOf(lineParts.get(1).trim());
+        Integer value = Integer.valueOf(lineParts.get(1).replaceAll(REPLACE_STRING, "").trim());
         if (value < 4) {
             return Document.Type.valueOf("E" + value);
         }
@@ -418,7 +426,7 @@ class DocumentFactory {
 
     private Optional<String> getComments() {
         if (hasLine(Entity.COMMENTS)) {
-            return Optional.of(getLineParts(Entity.COMMENTS).get(1));
+            return Optional.of(handleQuotes(getLineParts(Entity.COMMENTS).get(1)));
         }
         return Optional.empty();
     }
@@ -439,11 +447,15 @@ class DocumentFactory {
     private List<String> getParts(String line) {
         String[] chars = line.replaceAll("\\s+", " ").split("");
         boolean quote = false;
+        boolean inlineQuote = false;
         boolean objArray = false;
         StringBuilder builder = new StringBuilder();
         for (String c : chars) {
             if (c.equals("\"")) {
                 quote = !quote;
+            }
+            if (c.equals("\\")) {
+                inlineQuote = !inlineQuote;
             }
             if (c.equals("{")) {
                 objArray = true;
@@ -451,7 +463,7 @@ class DocumentFactory {
             if (c.equals("}")) {
                 objArray = false;
             }
-            if (!quote && !objArray && (c.equals(" ") || c.equals("\t"))) {
+            if (!quote && !inlineQuote && !objArray && (c.equals(" ") || c.equals("\t"))) {
                 builder.append("\n");
             }
             builder.append(c);
@@ -460,7 +472,7 @@ class DocumentFactory {
     }
 
     private String getLineAsString(String prefix) {
-        return getLineParts(prefix).stream().filter(p -> ignorePrefix(p)).collect(Collectors.joining(" ")).replaceAll(REPLACE_STRING, "").trim();
+        return handleQuotes(getLineParts(prefix).stream().filter(p -> ignorePrefix(p)).collect(Collectors.joining(" ")).trim());
     }
 
     private static boolean ignorePrefix(String p) {
@@ -480,5 +492,19 @@ class DocumentFactory {
                 .map(this::getParts)
                 .filter(line -> line.get(keyIndex).equals(key))
                 .collect(Collectors.toList());
+    }
+
+    private String handleQuotes(String input) {
+        if (input == null) {
+            return "";
+        }
+        String result = input;
+        if (input.startsWith("\"")) {
+            result = result.substring(1);
+        }
+        if (input.endsWith("\"") && !input.endsWith("\\\"")) {
+            result = result.substring(0, result.length() - 1);
+        }
+        return result.replaceAll("\\\\\"", "\"").replaceAll("[{}]", "");
     }
 }

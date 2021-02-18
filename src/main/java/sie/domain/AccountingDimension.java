@@ -8,6 +8,34 @@ import java.util.Optional;
  */
 public class AccountingDimension {
 
+    /**
+     * Reserved dimension id for Cost centre
+     */
+    public static final Integer COST_CENTRE = 1;
+    /**
+     * Reserved dimension id for Cost bearer
+     */
+    public static final Integer COST_BEARER = 2;
+    /**
+     * Reserved dimension id for Project;
+     */
+    public static final Integer PROJECT = 6;
+    /**
+     * Reserved dimension id for Employee
+     */
+    public static final Integer EMPLOYEE = 7;
+    /**
+     * Reserved dimension id for Customer
+     */
+    public static final Integer CUSTOMER = 8;
+    /**
+     * Reserved dimension id for Supplier
+     */
+    public static final Integer SUPPLIER = 9;
+    /**
+     * Reserved dimension id for Invoice
+     */
+    public static final Integer INVOICE = 10;
     private final Integer id;
     private final String label;
     private final Integer parentId;

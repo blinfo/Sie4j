@@ -62,10 +62,22 @@ public class Document implements Entity {
         return objects;
     }
 
+    public List<AccountingObject> getCostCentres() {
+        return getObjects().stream().filter(obj -> obj.getDimensionId().equals(AccountingDimension.COST_CENTRE)).collect(Collectors.toList());
+    }
+
+    public List<AccountingObject> getCostBearers() {
+        return getObjects().stream().filter(obj -> obj.getDimensionId().equals(AccountingDimension.COST_BEARER)).collect(Collectors.toList());
+    }
+
+    public List<AccountingObject> getProjects() {
+        return getObjects().stream().filter(obj -> obj.getDimensionId().equals(AccountingDimension.PROJECT)).collect(Collectors.toList());
+    }
+
     public Optional<String> getChecksum() {
         return Optional.ofNullable(checksum);
     }
-    
+
     @Override
     public String toString() {
         return "Document{"

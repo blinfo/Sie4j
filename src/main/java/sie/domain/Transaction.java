@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import sie.domain.Account.ObjectId;
 import sie.io.JsonDateSerializer;
 
@@ -65,6 +66,27 @@ public class Transaction implements Entity {
 
     public List<ObjectId> getObjectIds() {
         return objectIds;
+    }
+
+    public List<String> getCostCentreIds() {
+        return objectIds.stream()
+                .filter(objId -> objId.getDimensionId().equals(AccountingDimension.COST_CENTRE))
+                .map(ObjectId::getObjectNumber)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getCostBearerIds() {
+        return objectIds.stream()
+                .filter(objId -> objId.getDimensionId().equals(AccountingDimension.COST_BEARER))
+                .map(ObjectId::getObjectNumber)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getProjectIds() {
+        return objectIds.stream()
+                .filter(objId -> objId.getDimensionId().equals(AccountingDimension.PROJECT))
+                .map(ObjectId::getObjectNumber)
+                .collect(Collectors.toList());
     }
 
     @Override
