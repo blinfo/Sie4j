@@ -356,10 +356,18 @@ class DocumentFactory {
         }
         Address.Builder builder = Address.builder();
         List<String> parts = getLineParts(Entity.ADDRESS);
-        builder.contact(handleQuotes(parts.get(1)));
-        builder.streetAddress(handleQuotes(parts.get(2)));
-        builder.postalAddress(handleQuotes(parts.get(3)));
-        builder.phone(handleQuotes(parts.get(4)));
+        if (parts.size() > 1) {
+            builder.contact(handleQuotes(parts.get(1)));
+        }
+        if (parts.size() > 2) {
+            builder.streetAddress(handleQuotes(parts.get(2)));
+        }
+        if (parts.size() > 3) {
+            builder.postalAddress(handleQuotes(parts.get(3)));
+        }
+        if (parts.size() > 4) {
+            builder.phone(handleQuotes(parts.get(4)));
+        }
         return Optional.of(builder.apply());
     }
 
