@@ -82,6 +82,13 @@ public class Address implements Entity {
         return phone;
     }
 
+    public Boolean isEmpty() {
+        return (contact == null || contact.isEmpty())
+                && (streetAddress == null || streetAddress.isEmpty())
+                && (postalAddress == null || postalAddress.isEmpty())
+                && (phone == null || phone.isEmpty());
+    }
+
     @Override
     public String toString() {
         return "Address{"

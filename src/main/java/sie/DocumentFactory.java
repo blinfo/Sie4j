@@ -354,8 +354,13 @@ class DocumentFactory {
         if (!hasLine(Entity.ADDRESS)) {
             return Optional.empty();
         }
-        Address.Builder builder = Address.builder();
         List<String> parts = getLineParts(Entity.ADDRESS);
+        Address address = handleAddress(parts);
+        return Optional.ofNullable(address.isEmpty() ? null : address);
+    }
+
+    private Address handleAddress(List<String> parts) {
+        Address.Builder builder = Address.builder();
         if (parts.size() > 1) {
             builder.contact(handleQuotes(parts.get(1)));
         }
@@ -368,7 +373,7 @@ class DocumentFactory {
         if (parts.size() > 4) {
             builder.phone(handleQuotes(parts.get(4)));
         }
-        return Optional.of(builder.apply());
+        return builder.apply();
     }
 
     private List<FinancialYear> getFinancialYears() {

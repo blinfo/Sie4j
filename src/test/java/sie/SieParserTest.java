@@ -1,10 +1,15 @@
 package sie;
 
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Optional;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.domain.AccountingPlan;
+import sie.domain.Address;
 import sie.domain.Document;
 
 /**
@@ -81,7 +86,23 @@ public class SieParserTest {
         long expectedNumberOfTransactions = 19;
         long noOfTransactions = doc.getVouchers().stream().flatMap(ver -> ver.getTransactions().stream()).count();
         assertEquals("Document should have ", expectedNumberOfTransactions, noOfTransactions);
-        
+
+    }
+
+    @Test
+    public void test_readFaultyAddress() {
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_WITH_FAULTY_ADDRESS.SI"));
+        Optional<Address> optAddr = doc.getMetaData().getCompany().getAddress();
+        assertTrue("Document should have an address", optAddr.isPresent());
+        Address address = optAddr.get();
+        assertFalse("Address should not be empty", address.isEmpty());
+        String expectedContact = "Ada Adamsson";
+        String expectedStreet = "Fjärde långatan 127";
+        String expectedPostalAddress = "413 05 Göteborg";
+        assertEquals("Contact should be ", expectedContact, address.getContact());
+        assertEquals("Street should be ", expectedStreet, address.getStreetAddress());
+        assertEquals("Postal address should be ", expectedPostalAddress, address.getPostalAddress());
+        assertNull("Phone should be null", address.getPhone());
     }
 
     private InputStream getStream(String string) {
