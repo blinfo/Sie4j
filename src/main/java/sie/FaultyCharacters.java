@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -65,10 +64,6 @@ class FaultyCharacters {
 
     public static Map<String, String> get() {
         return DEVIATIONS;
-    }
-
-    public static String getAsConcatenatedString() {
-        return list().stream().collect(Collectors.joining());
     }
 
     public static boolean stringContains(String string) {

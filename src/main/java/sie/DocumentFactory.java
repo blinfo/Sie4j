@@ -40,6 +40,7 @@ import sie.domain.Voucher;
 class DocumentFactory {
 
     private static final Pattern OBJECT_ID_PATTERN = Pattern.compile("(\"?(\\d+)\"?\\s\"?(\\d+)\"?)+");
+    private static final Pattern DATE_PATTERN = Pattern.compile("\\d{8}");
     private static final String REPLACE_STRING = "[\"\\{\\}]";
     private final String content;
     private final List<FinancialYear> years = new ArrayList<>();
@@ -120,7 +121,7 @@ class DocumentFactory {
                         .ifPresent(builder::text);
             }
             if (parts.size() > 5) {
-                Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
+                Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() || !DATE_PATTERN.matcher(parts.get(5)).matches() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
                         .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(builder::registrationDate);
             }
             if (parts.size() > 6) {
@@ -188,7 +189,7 @@ class DocumentFactory {
             handleAccountPeriodicalBalance(number, accountBuilder);
             return accountBuilder.apply();
         }).collect(Collectors.toList()));
-        if (accounts == null || accounts.isEmpty()) {
+        if (accounts.isEmpty()) {
             return null;
         }
         AccountingPlan.Builder builder = AccountingPlan.builder();
@@ -354,8 +355,7 @@ class DocumentFactory {
         if (!hasLine(Entity.ADDRESS)) {
             return Optional.empty();
         }
-        List<String> parts = getLineParts(Entity.ADDRESS);
-        Address address = handleAddress(parts);
+        Address address = handleAddress(getLineParts(Entity.ADDRESS));
         return Optional.ofNullable(address.isEmpty() ? null : address);
     }
 
