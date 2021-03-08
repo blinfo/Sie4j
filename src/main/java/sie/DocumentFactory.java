@@ -39,13 +39,13 @@ import sie.domain.Voucher;
  */
 class DocumentFactory {
 
-    private static final Pattern OBJECT_ID_PATTERN = Pattern.compile("(\"?(\\d+)\"?\\s\"?(\\d+)\"?)+");
+    static final Pattern OBJECT_ID_PATTERN = Pattern.compile("(\"?(\\d+)\"?\\s\"?([0-9a-zA-Z]+)\"?)+");
     private static final Pattern DATE_PATTERN = Pattern.compile("\\d{8}");
     private static final String REPLACE_STRING = "[\"\\{\\}]";
     private final String content;
     private final List<FinancialYear> years = new ArrayList<>();
 
-    private DocumentFactory(String content) {
+    DocumentFactory(String content) {
         this.content = content;
     }
 
@@ -94,7 +94,7 @@ class DocumentFactory {
                 }).collect(Collectors.toList());
         Voucher.Builder builder = null;
         for (String line : lines) {
-            List<String> parts = getParts(line.trim());
+            List<String> parts = StringUtil.getParts(line.trim());
             builder = handleVoucher(line, builder, vouchers, parts);
             handleTransaction(line, builder, parts);
         }
@@ -168,7 +168,7 @@ class DocumentFactory {
         List<Account> accounts = Stream.of(content.split("\n"))
                 .filter(line -> line.startsWith("#" + Entity.ACCOUNT))
                 .map(line -> {
-                    List<String> accountParts = getParts(line);
+                    List<String> accountParts = StringUtil.getParts(line);
                     String number = accountParts.get(1);
                     Account.Builder accountBuilder = Account.builder(number);
                     Optional.ofNullable(accountParts.size() > 2 ? accountParts.get(2) : null)
@@ -448,40 +448,13 @@ class DocumentFactory {
         return Stream.of(content.split("\n"))
                 .filter(line -> !line.isEmpty())
                 .filter(line -> line.startsWith("#" + prefix))
-                .map(line -> getParts(line))
+                .map(line -> StringUtil.getParts(line))
                 .collect(Collectors.toList());
     }
 
     private List<String> getLineParts(String prefix) {
         String line = content.substring(content.indexOf("#" + prefix));
-        return getParts(line.substring(0, line.indexOf("\n")));
-    }
-
-    private List<String> getParts(String line) {
-        String[] chars = line.replaceAll("\\s+", " ").split("");
-        boolean quote = false;
-        boolean inlineQuote = false;
-        boolean objArray = false;
-        StringBuilder builder = new StringBuilder();
-        for (String c : chars) {
-            if (c.equals("\"")) {
-                quote = !quote;
-            }
-            if (c.equals("\\")) {
-                inlineQuote = !inlineQuote;
-            }
-            if (c.equals("{")) {
-                objArray = true;
-            }
-            if (c.equals("}")) {
-                objArray = false;
-            }
-            if (!quote && !inlineQuote && !objArray && (c.equals(" ") || c.equals("\t"))) {
-                builder.append("\n");
-            }
-            builder.append(c);
-        }
-        return Stream.of(builder.toString().split("\n")).map(String::trim).collect(Collectors.toList());
+        return StringUtil.getParts(line.substring(0, line.indexOf("\n")));
     }
 
     private String getLineAsString(String prefix) {
@@ -502,7 +475,7 @@ class DocumentFactory {
                 .filter(line -> {
                     return Stream.of(prefixes).filter(pre -> line.startsWith("#" + pre)).findAny().isPresent();
                 })
-                .map(this::getParts)
+                .map(StringUtil::getParts)
                 .filter(line -> line.get(keyIndex).equals(key))
                 .collect(Collectors.toList());
     }
