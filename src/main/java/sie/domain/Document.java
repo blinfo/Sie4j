@@ -180,6 +180,7 @@ public class Document implements Entity {
          */
         I4;
 
+        public static Type DEFAULT = E1;
         /**
          * Returns the number part of the type.
          * <p>

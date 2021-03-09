@@ -423,6 +423,9 @@ class DocumentFactory {
     }
 
     private Document.Type getType() {
+        if (!hasLine(Entity.TYPE)) {
+            return Document.Type.DEFAULT;
+        }
         List<String> lineParts = getLineParts(Entity.TYPE);
         Integer value = Integer.valueOf(lineParts.get(1).replaceAll(REPLACE_STRING, "").trim());
         if (value < 4) {
@@ -435,7 +438,7 @@ class DocumentFactory {
                     ? Document.Type.E4
                     : Document.Type.I4;
         }
-        return Document.Type.E1;
+        return Document.Type.DEFAULT;
     }
 
     private Optional<String> getComments() {
