@@ -55,11 +55,11 @@ public class Document implements Entity {
     }
 
     public List<AccountingDimension> getDimensions() {
-        return dimensions;
+        return new ArrayList<>(dimensions);
     }
 
     public List<AccountingObject> getObjects() {
-        return objects;
+        return new ArrayList<>(objects);
     }
 
     public List<AccountingObject> getCostCentres() {

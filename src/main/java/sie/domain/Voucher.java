@@ -65,7 +65,7 @@ public class Voucher implements Entity, Comparable<Voucher> {
     }
 
     public List<Transaction> getTransactions() {
-        return transactions;
+        return new ArrayList<>(transactions);
     }
 
     public Boolean isBalanced() {

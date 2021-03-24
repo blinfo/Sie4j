@@ -65,7 +65,7 @@ public class Transaction implements Entity {
     }
 
     public List<ObjectId> getObjectIds() {
-        return objectIds;
+        return new ArrayList<>(objectIds);
     }
 
     public List<String> getCostCentreIds() {

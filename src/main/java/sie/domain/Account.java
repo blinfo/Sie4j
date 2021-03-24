@@ -150,7 +150,7 @@ public class Account implements Entity, Comparable<Account> {
      * @return List of SRU codes
      */
     public List<String> getSruCodes() {
-        return sruCodes;
+        return new ArrayList<>(sruCodes);
     }
 
     /**
@@ -166,7 +166,7 @@ public class Account implements Entity, Comparable<Account> {
      * @return List of opening balances
      */
     public List<Balance> getOpeningBalances() {
-        return openingBalances;
+        return new ArrayList<>(openingBalances);
     }
 
     /**
@@ -199,7 +199,7 @@ public class Account implements Entity, Comparable<Account> {
      * @return List of opening balances
      */
     public List<Balance> getClosingBalances() {
-        return closingBalances;
+        return new ArrayList<>(closingBalances);
     }
 
     /**
@@ -232,7 +232,7 @@ public class Account implements Entity, Comparable<Account> {
      * @return List of results
      */
     public List<Balance> getResults() {
-        return results;
+        return new ArrayList<>(results);
     }
 
     /**
@@ -252,11 +252,11 @@ public class Account implements Entity, Comparable<Account> {
     }
 
     public List<ObjectBalance> getObjectOpeningBalances() {
-        return objectOpeningBalances;
+        return new ArrayList<>(objectOpeningBalances);
     }
 
     public List<ObjectBalance> getObjectClosingBalances() {
-        return objectClosingBalances;
+        return new ArrayList<>(objectClosingBalances);
     }
 
     /**
@@ -272,7 +272,7 @@ public class Account implements Entity, Comparable<Account> {
     }
 
     public List<PeriodicalBalance> getPeriodicalBalances() {
-        return periodicalBalances;
+        return new ArrayList<>(periodicalBalances);
     }
 
     @Override
