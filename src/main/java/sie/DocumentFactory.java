@@ -318,8 +318,8 @@ class DocumentFactory {
 
     private Program getProgram() {
         List<String> lineParts = getLineParts(Entity.PROGRAM);
-        String version = Optional.ofNullable(lineParts.get(2) == null || handleQuotes(lineParts.get(2)).isEmpty()
-                ? null : handleQuotes(lineParts.get(2))).orElse(null);
+        Boolean hasVersion = lineParts.size() > 2 && lineParts.get(2) != null && !handleQuotes(lineParts.get(2)).isEmpty();
+        String version = Optional.ofNullable(hasVersion ? handleQuotes(lineParts.get(2)) : null).orElse(null);
         return Program.of(lineParts.get(1).replaceAll(REPLACE_STRING, ""), version);
     }
 
