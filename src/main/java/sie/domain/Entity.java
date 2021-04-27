@@ -6,10 +6,11 @@ import java.time.format.DateTimeFormatter;
 
 /**
  *
- * @author Håkan Lidén 
+ * @author Håkan Lidén
  *
  */
 public interface Entity {
+
     public static final String ACCOUNT = "KONTO";
     public static final String ACCOUNT_TYPE = "KTYP";
     public static final String ACCOUNTING_PLAN_TYPE = "KPTYP";
@@ -43,8 +44,8 @@ public interface Entity {
     public static final String UNIT = "ENHET";
     public static final String VOUCHER = "VER";
 
-    public static final Integer SCALE = 2; 
-    public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN; 
+    public static final Integer SCALE = 2;
+    public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
     public static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd");
     public static final DateTimeFormatter YEAR_MONTH_FORMAT = DateTimeFormatter.ofPattern("yyyyMM");

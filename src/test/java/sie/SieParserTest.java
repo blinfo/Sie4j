@@ -105,6 +105,16 @@ public class SieParserTest {
         assertNull("Phone should be null", address.getPhone());
     }
 
+    @Test
+    public void SIE_file_where_program_version_is_missing_should_be_handled() {
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/SIE_with_missing_program_version.se"));
+        String expectedFirstVoucherText = "Dagsrapport 110000775";
+        assertNull("Version should be null", doc.getMetaData().getProgram().getVersion());
+        assertEquals("Document should contain 3 vouchers", 3l, doc.getVouchers().size());
+        assertTrue("First voucher should have a text", doc.getVouchers().get(0).getText().isPresent());
+        assertEquals("First voucher text should be " + expectedFirstVoucherText, expectedFirstVoucherText, doc.getVouchers().get(0).getText().get());
+    }
+
     private InputStream getStream(String string) {
         String path = "/sample/BLBLOV_SIE4";
         String suffix = ".SI";
