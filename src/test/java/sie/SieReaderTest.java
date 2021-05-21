@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.domain.AccountingPlan;
 import sie.domain.Address;
+import sie.domain.Company;
 import sie.domain.Document;
 
 /**
@@ -111,6 +112,16 @@ public class SieReaderTest {
         assertEquals("Document should contain 3 vouchers", 3l, doc.getVouchers().size());
         assertTrue("First voucher should have a text", doc.getVouchers().get(0).getText().isPresent());
         assertEquals("First voucher text should be " + expectedFirstVoucherText, expectedFirstVoucherText, doc.getVouchers().get(0).getText().get());
+    }
+
+    @Test
+    public void test_strange_sie_file() {
+        Document strangeDoc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/Transaktioner per Z-rapport.se"));
+        Company company = strangeDoc.getMetaData().getCompany();
+        company.getCorporateID().ifPresent(System.out::println);
+        strangeDoc.getVouchers().forEach(v -> {
+            System.out.println(v);
+        });
     }
 
     private InputStream getStream(String string) {

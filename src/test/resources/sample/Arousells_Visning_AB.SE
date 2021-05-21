@@ -1,0 +1,895 @@
+#FLAGGA 0
+#PROGRAM "BL Administration" 2021.2.103
+#FORMAT PC8
+#GEN 20210521 "1 Linda Henriksson"
+#SIETYP 4
+#FNR "halo"
+#ORGNR 7702167508
+#ADRESS "" "Fiskaregatan 12" "82452 HUDIKSVALL" "070-7777777"
+#FNAMN "Arousells Visning AB"
+#FTYP E
+#RAR 0 20210101 20211231
+#RAR -1 20200101 20201231
+#TAXAR 2022
+#KPTYP EUBAS97
+#DIM 1 "KostnadsstÑlle"
+#OBJEKT 1 "100001" "Kst Vattingen"
+#DIM 2 "KostnadsbÑrare"
+#OBJEKT 2 "100001" "kb"
+#DIM 6 "Projekt"
+#OBJEKT 6 "1000" "projekt 1"
+#OBJEKT 6 "1001" "Ett projektnamn som Ñr ganska lÜngt"
+#OBJEKT 6 "100221" "Projekt med sex siffrigt id"
+#OBJEKT 6 "100222" "test"
+#KONTO 1110 "Byggnader"
+#KONTO 1119 "Ackumulerade avskrivningar pÜ byggnader"
+#KONTO 1220 "Inventarier och verktyg"
+#KONTO 1229 "Ack avskr pÜ inventarier o verktyg"
+#KONTO 1240 "Bilar och andra transportmedel"
+#KONTO 1249 "Ack avskr pÜ bilar och andra trpt.medel"
+#KONTO 1350 "Aktier, andelar och vÑrdep i andra ftg"
+#KONTO 1380 "Andra lÜngfristiga fordringar"
+#KONTO 1383 "LÑmnade depositioner"
+#KONTO 1410 "Lager av rÜvaror"
+#KONTO 143010 "rova"
+#KONTO 145010 ""
+#KONTO 1510 "Kundfordringar"
+#KONTO 1511 "Kundfordringar annat"
+#KONTO 1512 ""
+#KONTO 1610 "Fordringar hos anstÑllda"
+#KONTO 1630 "AvrÑkning fîr skatter och avgifter"
+#KONTO 1650 "Momsfordran"
+#KONTO 1680 "Andra kortfristiga fordringar"
+#KONTO 1710 "Fîrutbetalda hyreskostnader"
+#KONTO 1720 "Fîrutbetalda leasingavgifter"
+#KONTO 1730 "Fîrutbetalda fîrsÑkringspremier"
+#KONTO 1740 "Fîrutbetalda rÑntekostnader"
+#KONTO 1760 "Upplupna rÑnteintÑkter"
+#KONTO 1790 "ôvr fîrutbetalda kostn och upplupna int"
+#KONTO 1810 "Andelar i bîrsnoterade fîretag"
+#KONTO 1910 "Kassa"
+#KONTO 1911 "Kassa, Kassa 1"
+#KONTO 1918 ""
+#KONTO 1920 "Plusgiro"
+#KONTO 1925 "Swish"
+#KONTO 1930 "Bank"
+#KONTO 1931 "Kort 2"
+#KONTO 1932 "Kort"
+#KONTO 1940 "Defaultkonto"
+#KONTO 2081 "Aktiekapital"
+#KONTO 2086 "Reservfond"
+#KONTO 2091 "Balanserad vinst eller fîrlust"
+#KONTO 2092 "Mottagna/lÑmnade koncernbidrag"
+#KONTO 2099 "èrets resultat"
+#KONTO 2113 "Periodiseringsfond vid 2013 Ürs taxering"
+#KONTO 2123 "Periodiseringsfond 2013"
+#KONTO 2124 "Periodiseringsfond 2014"
+#KONTO 2128 "Periodiseringsfond vid 2008 Ürs taxering"
+#KONTO 2129 "Periodiseringsfond vid 2009 Ürs taxering"
+#KONTO 2150 "Ackumulerade îveravskrivningar"
+#KONTO 23 ""
+#KONTO 2330 "CheckrÑkningskredit"
+#KONTO 2340 "Byggnadskreditiv"
+#KONTO 2350 "Andra skulder till kreditinstitut"
+#KONTO 2355 "LÜn i utlÑndsk valuta till kreditinst"
+#KONTO 2390 "ôvriga lÜngfristiga skulder"
+#KONTO 2391 "AvrÑkning Kassakonto"
+#KONTO 2392 "AvrÑkning Kontokort"
+#KONTO 2394 "AvrÑkning Kassa 1"
+#KONTO 2420 "Fîrskott frÜn kunder"
+#KONTO 2421 "Ej inlîsta presentkort "
+#KONTO 2440 "Leverantîrsskulder"
+#KONTO 2490 "Kreditkortsfaktura"
+#KONTO 2510 "Skatteskulder"
+#KONTO 2512 "BerÑknad inkomstskatt"
+#KONTO 2610 "Moms 25%"
+#KONTO 2614 "Utg moms omvÑnd skattskyldighet, 25 %"
+#KONTO 2615 "UtgÜende moms import av varor, 25 %"
+#KONTO 2620 "Moms 12%"
+#KONTO 2630 "UtgÜende moms, 6 %"
+#KONTO 2640 "IngÜende moms"
+#KONTO 2644 "IngÜende moms omvÑnd skattskyldighet"
+#KONTO 2650 "Redovisningskonto fîr moms"
+#KONTO 2660 "SÑrskilda punktskatter"
+#KONTO 2710 "Personalskatt"
+#KONTO 2730 "Lagst soc avg och sÑrskild lîneskatt"
+#KONTO 2760 "Semestermedel"
+#KONTO 2794 "Fackfîreningsavgifter"
+#KONTO 2810 "AvrÑkning fîr factoring"
+#KONTO 2820 "Skulder till anstÑllda"
+#KONTO 2830 "AvrÑkning fîr annans rÑkning"
+#KONTO 2840 "Kortfristiga lÜneskulder"
+#KONTO 2890 "ôvriga kortfristiga skulder"
+#KONTO 2893 "AvrÑkning Linda"
+#KONTO 2896 "Skuld till personal - Dricks"
+#KONTO 2910 "Upplupna lîner"
+#KONTO 2920 "Upplupna semesterlîner"
+#KONTO 2941 "BerÑknade uppl lagstadgade sociala avg"
+#KONTO 2942 "BerÑknad upplupen lîneskatt fîr lîner"
+#KONTO 2960 "Upplupna rÑntekostnader"
+#KONTO 2980 "Upplupna avtalskostnader"
+#KONTO 2990 "ôvr upplupna kostn och fîrutbetalda int"
+#KONTO 2999 "OBS-konto"
+#KONTO 3001 "FîrsÑljning inom Sverige, 25 % moms"
+#KONTO 3002 "FîrsÑljning inom Sverige, 12 % moms"
+#KONTO 3003 ""
+#KONTO 3010 "FîrsÑljning"
+#KONTO 3011 "FîrsÑljning gula skor"
+#KONTO 3012 ""
+#KONTO 3013 ""
+#KONTO 3014 ""
+#KONTO 3015 ""
+#KONTO 3016 ""
+#KONTO 3031 "dgdfgf"
+#KONTO 3041 "FîrsÑljning tjÑnster 25%"
+#KONTO 3210 "MAT"
+#KONTO 3320 "LéSK VATTEN"
+#KONTO 3330 "CIDER"
+#KONTO 3340 "ôL"
+#KONTO 3350 "VIN"
+#KONTO 3360 "SPRIT"
+#KONTO 3500 "Fakturerade kostnader"
+#KONTO 3520 "Fakturerade frakter"
+#KONTO 3690 "ôvriga sidointÑkter"
+#KONTO 3730 "LÑmnade rabatter"
+#KONTO 3731 "LÑmnade kassarabatter "
+#KONTO 3740 "ôresutjÑmning"
+#KONTO 3910 "Hyres- och arrendeintÑkter"
+#KONTO 3930 "PÜminnelseavgift"
+#KONTO 3960 "Valutakursvinster"
+#KONTO 3973 "Vinst vid avyttring av maskiner och inv"
+#KONTO 3981 "ErhÜllna EU-bidrag"
+#KONTO 3985 "ErhÜllna statliga bidrag"
+#KONTO 3987 "ErhÜllna kommunala bidrag"
+#KONTO 3989 "ôvriga erhÜllna bidrag"
+#KONTO 3990 "ôvriga ersÑttningar och intÑkter"
+#KONTO 4010 "Inkîp material och varor"
+#KONTO 4011 "sdjasldjslkjlkasj"
+#KONTO 4012 "jhgkhljîmm"
+#KONTO 4013 "hhggfgfdgf"
+#KONTO 4014 "dîfksdîlkfsîdkf"
+#KONTO 4015 "testar"
+#KONTO 4016 "testar igen"
+#KONTO 4017 "igen"
+#KONTO 4018 "igenigen"
+#KONTO 4019 "igenigenigen"
+#KONTO 4020 ""
+#KONTO 4021 ""
+#KONTO 4022 ""
+#KONTO 4023 "sdfsdfs"
+#KONTO 4024 "L31"
+#KONTO 4425 "Ink?pta tj?nster i Sverige, omv.moms 25%"
+#KONTO 4515 "Ink?p av varor fr?n annat EU-land, 25%"
+#KONTO 4600 "Legoarbeten och underentreprenader"
+#KONTO 4999 ""
+#KONTO 5010 "Lokalhyra"
+#KONTO 5020 "El fîr belysning"
+#KONTO 5050 "Lokaltillbehîr"
+#KONTO 5060 "StÑdning och renhÜllning"
+#KONTO 5070 "Reparation och underhÜll av lokaler"
+#KONTO 5090 "ôvriga lokalkostnader"
+#KONTO 5210 "Hyra av maskiner"
+#KONTO 5220 "Hyra av inventarier och verktyg"
+#KONTO 5410 "Fîrbrukningsinventarier"
+#KONTO 5420 "Programvaror"
+#KONTO 5440 "Fîrbrukningsemballage"
+#KONTO 5444 ""
+#KONTO 5460 "Fîrbrukningsmaterial"
+#KONTO 5520 "Reparation och underhÜll av inventarier"
+#KONTO 5580 "UnderhÜll och tvÑtt av arbetsklÑder"
+#KONTO 5610 "Personbilskostnader"
+#KONTO 5611 "Drivmedel fîr personbilar"
+#KONTO 5612 "FîrsÑkring och skatt fîr personbilar"
+#KONTO 5613 "Reparation och underhÜll av personbilar"
+#KONTO 5615 "Leasing av personbilar"
+#KONTO 5616 "TrÑngselskatt, avdragsgill"
+#KONTO 5619 "ôvriga personbilskostnader"
+#KONTO 5620 "Lastbilskostnader"
+#KONTO 5621 "specialkonto"
+#KONTO 5640 "Kostnader fîr arbetsmaskiner"
+#KONTO 5710 "Frakter och transporter"
+#KONTO 5810 "Biljetter"
+#KONTO 5820 "Hyrbilskostnader"
+#KONTO 5830 "Kost och logi"
+#KONTO 5890 "ôvriga resekostnader"
+#KONTO 5910 "Annonsering"
+#KONTO 5920 "Utomhus- och trafikreklam"
+#KONTO 5930 "Reklamtrycksaker och direktreklam"
+#KONTO 5940 "UtstÑllningar och mÑssor"
+#KONTO 5960 "Varuprover, reklamgÜvor, presentreklam"
+#KONTO 5990 "ôvriga kostnader fîr reklam och PR"
+#KONTO 6010 "Kataloger, prislistor m m"
+#KONTO 6050 "FîrsÑljningsprovisioner"
+#KONTO 6060 "KreditfîrsÑljningskostnader"
+#KONTO 6071 "Representation, avdragsgill"
+#KONTO 6072 "Representation, ej avdragsgill"
+#KONTO 6090 "ôvriga fîrsÑljningskostnader"
+#KONTO 6110 "Kontorsmateriel"
+#KONTO 6150 "Trycksaker"
+#KONTO 6210 "Telekommunikation"
+#KONTO 6230 "Datakommunikation"
+#KONTO 6250 "Postbefordran"
+#KONTO 6310 "FîretagsfîrsÑkringar"
+#KONTO 6350 "Fîrluster pÜ kundfordringar"
+#KONTO 6352 "Befarade fîrluster pÜ kundfordringar"
+#KONTO 6360 "Garantikostnader"
+#KONTO 6370 "Kostnader fîr bevakning och larm"
+#KONTO 6420 "ErsÑttningar till revisor"
+#KONTO 6530 "RedovisningstjÑnster"
+#KONTO 6540 "IT-tjÑnster"
+#KONTO 6550 "Konsultarvoden"
+#KONTO 6560 "Serviceavgifter till branschorganisation"
+#KONTO 6570 "Bankkostnader"
+#KONTO 6590 "ôvriga externa tjÑnster"
+#KONTO 6970 "Tidningar, tidskrifter och facklitt"
+#KONTO 6981 "Fîreningsavgifter, avdragsgilla"
+#KONTO 6982 "Fîreningsavgifter, ej avdragsgilla"
+#KONTO 6991 "ôvriga externa kostnader, avdragsgilla"
+#KONTO 6992 "ôvriga externa kostnader, ej avdr.gilla"
+#KONTO 6993 "LÑmnade bidrag och gÜvor"
+#KONTO 7010 "Lîner till kollektivanstÑllda"
+#KONTO 7090 "FîrÑndring av semesterlîneskuld"
+#KONTO 7210 "Lîner till tjÑnstemÑn"
+#KONTO 7220 "Lîner till fîretagsledare"
+#KONTO 7310 "Kontanta extraersÑttningar"
+#KONTO 7321 "Skattefria traktamenten, Sverige"
+#KONTO 7322 "Skattepliktiga traktamenten, Sverige"
+#KONTO 7323 "Skattefria traktamenten, utlandet"
+#KONTO 7324 "Skattepliktiga traktamenten, utlandet"
+#KONTO 7331 "BilersÑttningar, skattefria"
+#KONTO 7332 "BilersÑttningar, skattepliktiga"
+#KONTO 7370 "RepresentationsersÑttningar"
+#KONTO 7380 "Kostnader fîr fîrmÜner till anstÑllda"
+#KONTO 7390 "ôvriga kostnadsersÑttningar och fîrmÜner"
+#KONTO 7410 "PensionsfîrsÑkringspremier"
+#KONTO 7460 "Pensionsutbetalningar"
+#KONTO 7510 "Lagstadgade sociala avgifter"
+#KONTO 7519 "Soc avg fîr semester- och lîneskuld"
+#KONTO 7530 "SÑrskild lîneskatt"
+#KONTO 7570 "Premier fîr arbetsmarknadsfîrsÑkringar"
+#KONTO 7580 "GrupplivfîrsÑkringspremier"
+#KONTO 7590 "ôvr soc och andra avg enligt lag o avtal"
+#KONTO 7610 "Utbildning"
+#KONTO 7620 "Sjuk- och hÑlsovÜrd"
+#KONTO 7631 "Personalrepresentation, avdragsgill"
+#KONTO 7632 "Personalrepresentation, ej avdragsgill"
+#KONTO 7690 "ôvriga personalkostnader"
+#KONTO 7810 "Avskrivningar pÜ immateriella anl.tillg"
+#KONTO 7820 "Avskrivningar pÜ byggnader och markanl"
+#KONTO 7821 "Avskrivningar pÜ byggnader"
+#KONTO 7830 "Avskrivningar pÜ maskiner och inv"
+#KONTO 7960 "Valutakursfîrluster"
+#KONTO 7973 "Fîrlust vid avyttring av mask o invent"
+#KONTO 8110 "Utdelningar pÜ andelar i intressefîretag"
+#KONTO 8210 "Utdelningar pÜ andelar i andra fîretag"
+#KONTO 8310 "RÑnteintÑkter frÜn omsÑttningstillgÜngar"
+#KONTO 8311 "RÑnteintÑkter frÜn bank"
+#KONTO 8314 "Skattefria rÑnteintÑkter"
+#KONTO 8390 "ôvriga finansiella intÑkter"
+#KONTO 8410 "RÑntekostnader fîr lÜngfristiga skulder"
+#KONTO 8421 "RÑntekostnader till kreditinstitut"
+#KONTO 8423 "RÑntekostnader fîr skatter och avgifter"
+#KONTO 8490 "ôvriga skuldrelaterade poster"
+#KONTO 8710 "ExtraordinÑra intÑkter"
+#KONTO 8750 "ExtraordinÑra kostnader"
+#KONTO 8811 "AvsÑttning till periodiseringsfond"
+#KONTO 8819 "èterfîring frÜn periodiseringsfond"
+#KONTO 8850 "FîrÑndring av îveravskrivningar"
+#KONTO 8910 "Skatt pÜ Ürets beskattningsbara resultat"
+#KONTO 8999 "èrets resultat"
+#KONTO 9000 "Mismatch"
+#KONTO 9999 ""
+#KONTO DF ""
+#SRU 1110 7214
+#SRU 1119 7214
+#SRU 1220 7215
+#SRU 1229 7215
+#SRU 1240 7215
+#SRU 1249 7215
+#SRU 1350 7233
+#SRU 1380 7235
+#SRU 1383 7235
+#SRU 1410 7241
+#SRU 143010 7240
+#SRU 145010 7240
+#SRU 1510 7251
+#SRU 1511 7250
+#SRU 1512 7250
+#SRU 1610 7261
+#SRU 1630 7261
+#SRU 1650 7261
+#SRU 1680 7261
+#SRU 1710 7263
+#SRU 1720 7263
+#SRU 1730 7263
+#SRU 1740 7263
+#SRU 1760 7263
+#SRU 1790 7263
+#SRU 1810 7271
+#SRU 1910 7281
+#SRU 1911 7281
+#SRU 1918 7281
+#SRU 1920 7281
+#SRU 1930 7281
+#SRU 1931 7281
+#SRU 1940 7281
+#SRU 2081 7301
+#SRU 2086 7301
+#SRU 2091 7302
+#SRU 2092 7302
+#SRU 2099 7302
+#SRU 2113 7321
+#SRU 2123 7321
+#SRU 2124 7321
+#SRU 2128 7321
+#SRU 2129 7321
+#SRU 2150 7322
+#SRU 2330 7351
+#SRU 2340 7352
+#SRU 2350 7352
+#SRU 2355 7352
+#SRU 2390 7354
+#SRU 2391 7354
+#SRU 2392 7354
+#SRU 2394 7354
+#SRU 2420 7362
+#SRU 2421 7362
+#SRU 2440 7365
+#SRU 2490 7369
+#SRU 2510 7368
+#SRU 2512 7368
+#SRU 2610 7369
+#SRU 2614 7369
+#SRU 2615 7369
+#SRU 2620 7369
+#SRU 2630 7369
+#SRU 2640 7369
+#SRU 2644 7369
+#SRU 2650 7369
+#SRU 2660 7369
+#SRU 2710 7369
+#SRU 2730 7369
+#SRU 2760 7369
+#SRU 2794 7369
+#SRU 2810 7369
+#SRU 2820 7369
+#SRU 2830 7369
+#SRU 2840 7369
+#SRU 2890 7369
+#SRU 2893 7369
+#SRU 2896 7369
+#SRU 2910 7370
+#SRU 2920 7370
+#SRU 2941 7370
+#SRU 2942 7370
+#SRU 2960 7370
+#SRU 2980 7370
+#SRU 2990 7370
+#SRU 2999 7370
+#SRU 3001 7410
+#SRU 3002 7410
+#SRU 3003 7400
+#SRU 3010 7410
+#SRU 3011 7410
+#SRU 3013 7410
+#SRU 3014 7410
+#SRU 3015 7410
+#SRU 3016 7410
+#SRU 3031 7400
+#SRU 3500 7410
+#SRU 3520 7410
+#SRU 3690 7410
+#SRU 3730 7410
+#SRU 3731 7410
+#SRU 3740 7410
+#SRU 3910 7413
+#SRU 3930 7413
+#SRU 3960 7413
+#SRU 3973 7413
+#SRU 3981 7413
+#SRU 3985 7413
+#SRU 3987 7413
+#SRU 3989 7413
+#SRU 3990 7413
+#SRU 4010 7511
+#SRU 4011 7500
+#SRU 4012 7500
+#SRU 4013 7500
+#SRU 4014 7500
+#SRU 4015 7500
+#SRU 4016 7500
+#SRU 4017 7500
+#SRU 4018 7500
+#SRU 4019 7500
+#SRU 4020 7500
+#SRU 4021 7500
+#SRU 4022 7500
+#SRU 4023 7500
+#SRU 4024 7500
+#SRU 4425 7511
+#SRU 4515 7511
+#SRU 4600 7511
+#SRU 5010 7513
+#SRU 5020 7513
+#SRU 5050 7513
+#SRU 5060 7513
+#SRU 5070 7513
+#SRU 5090 7513
+#SRU 5210 7513
+#SRU 5220 7513
+#SRU 5410 7513
+#SRU 5420 7513
+#SRU 5440 7513
+#SRU 5444 7513
+#SRU 5460 7513
+#SRU 5520 7513
+#SRU 5580 7513
+#SRU 5610 7513
+#SRU 5611 7513
+#SRU 5612 7513
+#SRU 5613 7513
+#SRU 5615 7513
+#SRU 5616 7513
+#SRU 5619 7513
+#SRU 5620 7513
+#SRU 5621 7501
+#SRU 5640 7513
+#SRU 5710 7513
+#SRU 5810 7513
+#SRU 5820 7513
+#SRU 5830 7513
+#SRU 5890 7513
+#SRU 5910 7513
+#SRU 5920 7513
+#SRU 5930 7513
+#SRU 5940 7513
+#SRU 5960 7513
+#SRU 5990 7513
+#SRU 6010 7513
+#SRU 6050 7513
+#SRU 6060 7513
+#SRU 6071 7513
+#SRU 6072 7513
+#SRU 6072 7653
+#SRU 6090 7513
+#SRU 6110 7513
+#SRU 6150 7513
+#SRU 6210 7513
+#SRU 6230 7513
+#SRU 6250 7513
+#SRU 6310 7513
+#SRU 6350 7513
+#SRU 6352 7513
+#SRU 6360 7513
+#SRU 6370 7513
+#SRU 6420 7513
+#SRU 6530 7513
+#SRU 6540 7513
+#SRU 6550 7513
+#SRU 6560 7513
+#SRU 6570 7513
+#SRU 6590 7513
+#SRU 6970 7513
+#SRU 6981 7513
+#SRU 6982 7513
+#SRU 6982 7653
+#SRU 6991 7513
+#SRU 6992 7513
+#SRU 6992 7653
+#SRU 6993 7513
+#SRU 6993 7653
+#SRU 7010 7514
+#SRU 7090 7514
+#SRU 7210 7514
+#SRU 7220 7514
+#SRU 7310 7514
+#SRU 7321 7514
+#SRU 7322 7514
+#SRU 7323 7514
+#SRU 7324 7514
+#SRU 7331 7514
+#SRU 7332 7514
+#SRU 7370 7514
+#SRU 7380 7514
+#SRU 7390 7514
+#SRU 7410 7514
+#SRU 7460 7514
+#SRU 7510 7514
+#SRU 7519 7514
+#SRU 7530 7514
+#SRU 7570 7514
+#SRU 7580 7514
+#SRU 7590 7514
+#SRU 7610 7514
+#SRU 7620 7514
+#SRU 7631 7514
+#SRU 7632 7514
+#SRU 7632 7653
+#SRU 7690 7514
+#SRU 7810 7515
+#SRU 7820 7515
+#SRU 7821 7515
+#SRU 7830 7515
+#SRU 7960 7517
+#SRU 7973 7517
+#SRU 8110 7415
+#SRU 8210 7403
+#SRU 8310 7417
+#SRU 8311 7417
+#SRU 8314 7417
+#SRU 8314 7754
+#SRU 8390 7417
+#SRU 8410 7522
+#SRU 8421 7522
+#SRU 8423 7522
+#SRU 8423 7653
+#SRU 8490 7522
+#SRU 8710 7422
+#SRU 8750 7422
+#SRU 8811 7525
+#SRU 8819 7420
+#SRU 8850 7421
+#SRU 8910 7528
+#SRU 8910 7651
+#SRU 8999 7450
+#IB 0 1119 100.00
+#IB 0 1220 5400.00
+#IB 0 1240 100.00
+#IB 0 1350 500.00
+#IB 0 1410 -1348.00
+#IB 0 145010 8000.00
+#IB 0 1510 6732179.80
+#IB 0 1610 -2992.00
+#IB 0 1630 2000.00
+#IB 0 1730 1000.00
+#IB 0 1810 3000.00
+#IB 0 1910 52779.00
+#IB 0 1918 700.00
+#IB 0 1920 2250.00
+#IB 0 1930 -3479062.33
+#IB 0 1931 -3098.50
+#IB 0 1940 -433315.00
+#IB 0 2081 -21000.00
+#IB 0 2091 -45000.00
+#IB 0 2099 -1088803.09
+#IB 0 2390 -12000.00
+#IB 0 2440 -1692583.00
+#IB 0 2490 -3257.90
+#IB 0 2512 -11000.00
+#IB 0 2610 -343553.91
+#IB 0 2620 -4468.39
+#IB 0 2630 -2304.00
+#IB 0 2640 889298.08
+#IB 0 2710 -247843.00
+#IB 0 2730 -449264.43
+#IB 0 2820 -500.00
+#IB 0 2893 -1.00
+#IB 0 2999 268815.05
+#IB -1 1220 5400.00
+#IB -1 1240 100.00
+#IB -1 1350 500.00
+#IB -1 1510 -4752.00
+#IB -1 1630 2000.00
+#IB -1 1730 1000.00
+#IB -1 1810 3000.00
+#IB -1 1930 -23298.06
+#IB -1 1931 -598.50
+#IB -1 1940 -22866.00
+#IB -1 2081 -21000.00
+#IB -1 2091 -45000.00
+#IB -1 2099 2064314.39
+#IB -1 2390 -12000.00
+#IB -1 2440 -2386127.53
+#IB -1 2490 -680.00
+#IB -1 2512 -11000.00
+#IB -1 2610 -6599.84
+#IB -1 2630 -294.00
+#IB -1 2640 499694.92
+#IB -1 2710 -17564.00
+#IB -1 2730 -21994.00
+#IB -1 2999 -2135.38
+#UB 0 1110 200.00
+#UB 0 1119 100.00
+#UB 0 1220 5400.00
+#UB 0 1240 100.00
+#UB 0 1350 500.00
+#UB 0 1383 -100.00
+#UB 0 1410 -1348.00
+#UB 0 143010 100.00
+#UB 0 145010 9500.80
+#UB 0 1510 7251523.74
+#UB 0 1511 33333.00
+#UB 0 1512 45222.00
+#UB 0 1610 -3092.00
+#UB 0 1630 2000.00
+#UB 0 1730 1000.00
+#UB 0 1760 -200.00
+#UB 0 1810 3000.00
+#UB 0 1910 60401.00
+#UB 0 1918 700.00
+#UB 0 1920 2650.00
+#UB 0 1925 578.00
+#UB 0 1930 -3017246.33
+#UB 0 1931 -3098.50
+#UB 0 1932 167616.15
+#UB 0 1940 -702041.00
+#UB 0 2081 -21000.00
+#UB 0 2091 -45000.00
+#UB 0 2099 -1088803.09
+#UB 0 2390 -12000.00
+#UB 0 2391 -1000.00
+#UB 0 2440 -1738039.00
+#UB 0 2490 -3257.90
+#UB 0 2512 -11000.00
+#UB 0 2610 -536665.30
+#UB 0 2620 -17752.44
+#UB 0 2630 -7710.22
+#UB 0 2640 955873.78
+#UB 0 2710 -269225.00
+#UB 0 2730 -474485.04
+#UB 0 2820 -500.00
+#UB 0 2893 -1.00
+#UB 0 2999 268815.05
+#UB -1 1119 100.00
+#UB -1 1220 5400.00
+#UB -1 1240 100.00
+#UB -1 1350 500.00
+#UB -1 1410 -1348.00
+#UB -1 145010 8000.00
+#UB -1 1510 6732179.80
+#UB -1 1610 -2992.00
+#UB -1 1630 2000.00
+#UB -1 1730 1000.00
+#UB -1 1810 3000.00
+#UB -1 1910 52779.00
+#UB -1 1918 700.00
+#UB -1 1920 2250.00
+#UB -1 1930 -3479062.33
+#UB -1 1931 -3098.50
+#UB -1 1940 -433315.00
+#UB -1 2081 -21000.00
+#UB -1 2091 -45000.00
+#UB -1 2099 -1088803.09
+#UB -1 2390 -12000.00
+#UB -1 2440 -1692583.00
+#UB -1 2490 -3257.90
+#UB -1 2512 -11000.00
+#UB -1 2610 -343553.91
+#UB -1 2620 -4468.39
+#UB -1 2630 -2304.00
+#UB -1 2640 889298.08
+#UB -1 2710 -247843.00
+#UB -1 2730 -449264.43
+#UB -1 2820 -500.00
+#UB -1 2893 -1.00
+#UB -1 2999 268815.05
+#RES 0 3001 -25035.36
+#RES 0 3003 -89699.40
+#RES 0 3010 -883526.88
+#RES 0 3011 -19976.00
+#RES 0 3013 4000.00
+#RES 0 3015 2400.00
+#RES 0 3031 100.00
+#RES 0 3210 -101399.20
+#RES 0 3320 -9301.34
+#RES 0 3330 -276.00
+#RES 0 3340 -18991.16
+#RES 0 3350 -11521.60
+#RES 0 3360 -7364.49
+#RES 0 3740 -32084.64
+#RES 0 3930 -3595.00
+#RES 0 4010 27726.90
+#RES 0 4012 57332.80
+#RES 0 4014 3555.20
+#RES 0 4015 -2220.00
+#RES 0 4017 480.00
+#RES 0 4018 532.80
+#RES 0 4019 2220.00
+#RES 0 4022 1120.00
+#RES 0 4023 640.00
+#RES 0 4999 4000.00
+#RES 0 5010 5682.80
+#RES 0 5020 -350.00
+#RES 0 5070 6221.60
+#RES 0 5410 4627.60
+#RES 0 5420 100.00
+#RES 0 5610 6555.00
+#RES 0 5620 4800.00
+#RES 0 6050 10000.00
+#RES 0 6350 4800.00
+#RES 0 6352 480.00
+#RES 0 6370 7200.00
+#RES 0 6530 700.00
+#RES 0 6560 4444.00
+#RES 0 7010 80269.28
+#RES 0 7210 710.40
+#RES 0 7310 799.20
+#RES 0 7510 25220.61
+#RES 0 7530 6221.60
+#RES 0 7610 11022.00
+#RES 0 8310 53332.80
+#RES 0 8311 53332.80
+#RES 0 8410 1420.80
+#RES 0 9999 83612.36
+#RES -1 3001 80.00
+#RES -1 3010 -6342707.03
+#RES -1 3011 -4525.72
+#RES -1 3012 -675.00
+#RES -1 3013 -264.00
+#RES -1 3014 -136.00
+#RES -1 3015 -12072.00
+#RES -1 3016 -910.40
+#RES -1 3041 -147040.00
+#RES -1 3730 -56000.45
+#RES -1 3740 5.66
+#RES -1 4010 1306372.29
+#RES -1 4999 71200.00
+#RES -1 5010 123095.44
+#RES -1 5410 122830.64
+#RES -1 5420 50.00
+#RES -1 5444 -100000.00
+#RES -1 5610 2705.87
+#RES -1 5620 -43589.26
+#RES -1 6530 792.00
+#RES -1 7010 1358747.72
+#RES -1 7331 475.00
+#RES -1 7510 427270.43
+#RES -1 7610 65769.39
+#RES -1 7631 2078.56
+#RES -1 8110 -20000.00
+#RES -1 8999 3153117.48
+#RES -1 9999 -20848.00
+#OIB 0 2440 {1 "100001"} -13343.00
+#OIB 0 2440 {1 "3"} 1.00
+#OIB -1 2440 {1 "100001"} -778.00
+#OIB 0 2440 {2 "100000"} 1.00
+#OIB 0 2440 {2 "100001"} -13343.00
+#OIB -1 2440 {2 "100001"} -778.00
+#OUB 0 1110 {1 "1000"} 100.00
+#OUB 0 3011 {1 "1000"} -10196.00
+#OUB 0 143010 {1 "100001"} 100.00
+#OUB 0 2440 {1 "100001"} -13343.00
+#OUB 0 3011 {1 "100001"} -2000.00
+#OUB 0 4010 {1 "100001"} 4800.00
+#OUB 0 2440 {1 "3"} 1.00
+#OUB -1 3010 {1 "1000"} -27169.92
+#OUB -1 4010 {1 "100000"} 480.00
+#OUB -1 5410 {1 "100000"} 1200.00
+#OUB -1 2440 {1 "100001"} -12565.00
+#OUB -1 4010 {1 "100001"} 10759.00
+#OUB -1 5010 {1 "100001"} -500.00
+#OUB -1 2440 {1 "3"} 1.00
+#OUB -1 4999 {1 "3"} 71200.00
+#OUB 0 2440 {2 "100000"} 1.00
+#OUB 0 1110 {2 "100001"} 100.00
+#OUB 0 143010 {2 "100001"} 100.00
+#OUB 0 2440 {2 "100001"} -13343.00
+#OUB 0 3011 {2 "100001"} -12196.00
+#OUB -1 2440 {2 "100000"} 1.00
+#OUB -1 2440 {2 "100001"} -12565.00
+#OUB -1 4010 {2 "100001"} 6565.00
+#OUB 0 143010 {6 "1000"} 100.00
+#OUB 0 145010 {6 "1000"} 1500.80
+#OUB 0 1510 {6 "1000"} 8.00
+#OUB 0 3011 {6 "1000"} -2000.00
+#OUB -1 2440 {6 "1000"} -12565.00
+#OUB -1 4010 {6 "1000"} 38725.00
+#OUB -1 5010 {6 "1000"} 17699.20
+#OUB -1 5620 {6 "1000"} 5738.09
+#OUB -1 2440 {6 "1001"} -268.00
+#OUB -1 2640 {6 "1001"} 53.64
+#OUB -1 3740 {6 "1001"} -0.20
+#OUB -1 5010 {6 "1001"} 4952.16
+#VER A 110000051 20210505 "nr. 64" 20210505
+{
+#TRANS 1932 {} 2040.00 20210505 "Kort"
+#TRANS 2610 {} -51.80 20210505 "Moms 25%"
+#TRANS 2620 {} -190.82 20210505 "Moms 12%"
+#TRANS 3210 {} -1355.36 20210505 "MAT"
+#TRANS 3320 {} -234.82 20210505 "LéSK VATTEN"
+#TRANS 3340 {} -207.20 20210505 "ôL"
+}
+#VER A 110000052 20210506 "nr. 65" 20210506
+{
+#TRANS 1932 {} 3418.00 20210506 "Kort"
+#TRANS 2610 {} -231.00 20210506 "Moms 25%"
+#TRANS 2620 {} -242.46 20210506 "Moms 12%"
+#TRANS 3210 {} -1926.79 20210506 "MAT"
+#TRANS 3320 {} -93.75 20210506 "LéSK VATTEN"
+#TRANS 3340 {} -665.60 20210506 "ôL"
+#TRANS 3350 {} -258.40 20210506 "VIN"
+}
+#VER A 110000053 20210507 "nr. 66" 20210507
+{
+#TRANS 1932 {} 5576.60 20210507 "Kort"
+#TRANS 2610 {} -190.80 20210507 "Moms 25%"
+#TRANS 2620 {} -495.28 20210507 "Moms 12%"
+#TRANS 3210 {} -3782.23 20210507 "MAT"
+#TRANS 3320 {} -345.09 20210507 "LéSK VATTEN"
+#TRANS 3340 {} -298.40 20210507 "ôL"
+#TRANS 3350 {} -264.80 20210507 "VIN"
+#TRANS 3360 {} -200.00 20210507 "SPRIT"
+}
+#VER A 110000054 20210508 "nr. 67" 20210508
+{
+#TRANS 1932 {} 26123.20 20210508 "Kort"
+#TRANS 2610 {} -1783.12 20210508 "Moms 25%"
+#TRANS 2620 {} -1843.67 20210508 "Moms 12%"
+#TRANS 3210 {} -14105.89 20210508 "MAT"
+#TRANS 3320 {} -1258.04 20210508 "LéSK VATTEN"
+#TRANS 3340 {} -3073.60 20210508 "ôL"
+#TRANS 3350 {} -2265.60 20210508 "VIN"
+#TRANS 3360 {} -1793.28 20210508 "SPRIT"
+}
+#VER A 110000055 20210509 "nr. 68" 20210509
+{
+#TRANS 1932 {} 10553.80 20210509 "Kort"
+#TRANS 2610 {} -577.60 20210509 "Moms 25%"
+#TRANS 2620 {} -821.34 20210509 "Moms 12%"
+#TRANS 3210 {} -6663.21 20210509 "MAT"
+#TRANS 3320 {} -181.25 20210509 "LéSK VATTEN"
+#TRANS 3340 {} -700.00 20210509 "ôL"
+#TRANS 3350 {} -1434.40 20210509 "VIN"
+#TRANS 3360 {} -176.00 20210509 "SPRIT"
+}
+#VER A 110000056 20210512 "nr. 69" 20210512
+{
+#TRANS 1910 {} 453.00 20210512 "Kassa"
+#TRANS 1932 {} 18069.75 20210512 "Kort"
+#TRANS 2610 {} -975.55 20210512 "Moms 25%"
+#TRANS 2620 {} -1461.96 20210512 "Moms 12%"
+#TRANS 3210 {} -11137.50 20210512 "MAT"
+#TRANS 3320 {} -1045.54 20210512 "LéSK VATTEN"
+#TRANS 3340 {} -2003.00 20210512 "ôL"
+#TRANS 3350 {} -1160.00 20210512 "VIN"
+#TRANS 3360 {} -739.20 20210512 "SPRIT"
+}
+#VER A 110000057 20210513 "nr. 70" 20210513
+{
+#TRANS 1910 {} 2885.00 20210513 "Kassa"
+#TRANS 1925 {} 513.00 20210513 "Swish"
+#TRANS 1932 {} 37903.80 20210513 "Kort"
+#TRANS 2610 {} -1789.04 20210513 "Moms 25%"
+#TRANS 2620 {} -3466.78 20210513 "Moms 12%"
+#TRANS 3210 {} -25666.61 20210513 "MAT"
+#TRANS 3320 {} -3223.21 20210513 "LéSK VATTEN"
+#TRANS 3330 {} -55.20 20210513 "CIDER"
+#TRANS 3340 {} -4343.36 20210513 "ôL"
+#TRANS 3350 {} -2368.80 20210513 "VIN"
+#TRANS 3360 {} -388.80 20210513 "SPRIT"
+}
+#VER A 110000058 20210514 "nr. 71" 20210514
+{
+#TRANS 1932 {} 23852.00 20210514 "Kort"
+#TRANS 2610 {} -1819.40 20210514 "Moms 25%"
+#TRANS 2620 {} -1580.89 20210514 "Moms 12%"
+#TRANS 3210 {} -12308.04 20210514 "MAT"
+#TRANS 3320 {} -866.07 20210514 "LéSK VATTEN"
+#TRANS 3330 {} -220.80 20210514 "CIDER"
+#TRANS 3340 {} -3693.60 20210514 "ôL"
+#TRANS 3350 {} -1952.00 20210514 "VIN"
+#TRANS 3360 {} -1411.20 20210514 "SPRIT"
+}
+#VER A 110000059 20210515 "nr. 72" 20210515
+{
+#TRANS 1932 {} 30814.00 20210515 "Kort"
+#TRANS 2610 {} -1855.20 20210515 "Moms 25%"
+#TRANS 2620 {} -2307.64 20210515 "Moms 12%"
+#TRANS 3210 {} -18050.89 20210515 "MAT"
+#TRANS 3320 {} -1179.46 20210515 "LéSK VATTEN"
+#TRANS 3340 {} -3264.80 20210515 "ôL"
+#TRANS 3350 {} -1500.00 20210515 "VIN"
+#TRANS 3360 {} -2656.01 20210515 "SPRIT"
+}
+#VER A 110000060 20210516 "nr. 73" 20210516
+{
+#TRANS 1910 {} 144.00 20210516 "Kassa"
+#TRANS 1925 {} 65.00 20210516 "Swish"
+#TRANS 1932 {} 9265.00 20210516 "Kort"
+#TRANS 2610 {} -264.80 20210516 "Moms 25%"
+#TRANS 2620 {} -873.21 20210516 "Moms 12%"
+#TRANS 3210 {} -6402.68 20210516 "MAT"
+#TRANS 3320 {} -874.11 20210516 "LéSK VATTEN"
+#TRANS 3340 {} -741.60 20210516 "ôL"
+#TRANS 3350 {} -317.60 20210516 "VIN"
+}

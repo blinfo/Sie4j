@@ -65,7 +65,6 @@ class DocumentFactory {
         Document doc = builder.apply();
         builder.checksum(Checksum.calculate(doc));
     }
-    
 
     private MetaData getMetaData() {
         MetaData.Builder builder = MetaData.builder();
@@ -175,7 +174,7 @@ class DocumentFactory {
                 .filter(line -> line.startsWith("#" + Entity.ACCOUNT))
                 .map(line -> {
                     List<String> accountParts = StringUtil.getParts(line);
-                    String number = accountParts.get(1);
+                    String number = accountParts.get(1).replaceAll(REPLACE_STRING, "");
                     Account.Builder accountBuilder = Account.builder(number);
                     Optional.ofNullable(accountParts.size() > 2 ? accountParts.get(2) : null)
                             .map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
@@ -286,17 +285,21 @@ class DocumentFactory {
 
     private void handleAccountBalanceAndResult(String number, Account.Builder accountBuilder) {
         getLineParts(number, 2, Entity.OPENING_BALANCE, Entity.CLOSING_BALANCE, Entity.RESULT).stream().forEach(l -> {
-            Balance balance = Balance.of(new BigDecimal(l.get(3).replaceAll(REPLACE_STRING, "")), Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
-            switch (l.get(0).replaceAll("#", "")) {
-                case Entity.OPENING_BALANCE:
-                    accountBuilder.addOpeningBalance(balance);
-                    break;
-                case Entity.CLOSING_BALANCE:
-                    accountBuilder.addClosingBalance(balance);
-                    break;
-                case Entity.RESULT:
-                    accountBuilder.addResult(balance);
-                    break;
+            try {
+                Balance balance = Balance.of(new BigDecimal(l.get(3).replaceAll(REPLACE_STRING, "")), Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
+                switch (l.get(0).replaceAll("#", "")) {
+                    case Entity.OPENING_BALANCE:
+                        accountBuilder.addOpeningBalance(balance);
+                        break;
+                    case Entity.CLOSING_BALANCE:
+                        accountBuilder.addClosingBalance(balance);
+                        break;
+                    case Entity.RESULT:
+                        accountBuilder.addResult(balance);
+                        break;
+                }
+            } catch (NumberFormatException ex) {
+                throw new SieException("Balance is not a number", ex);
             }
         });
     }

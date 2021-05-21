@@ -1,11 +1,8 @@
 package sie.sample;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import sie.SieException;
 
 /**
@@ -33,12 +30,12 @@ public class Version {
     /**
      * Creates a Version object from a String.
      * <p>
- The string should be of the format d.d or d.d.d where d is an integer,
- e.g. 1.4 or 1.10.3
- <p>
+     * The string should be of the format d.d or d.d.d where d is an integer,
+     * e.g. 1.4 or 1.10.3
+     * <p>
      *
      * @param string should be of the format d.d or d.d.d (where d is an
- integer)
+     * integer)
      * @return Version
      */
     public static Version from(String string) {
@@ -51,15 +48,6 @@ public class Version {
         } else {
             throw new SieException("Could not construct a Version object from string: " + string);
         }
-//        List<Integer> ints = Stream.of(string.replaceAll("[^\\d\\.]", "").split("\\."))
-//                .map(in -> Integer.valueOf(in))
-//                .collect(Collectors.toList());
-//        if (ints.isEmpty()) {
-//        }
-//        Integer major = ints.get(0);
-//        Integer minor = ints.size() > 1 ? ints.get(1) : 0;
-//        Integer patch = ints.size() > 2 ? ints.get(2) : null;
-//        return of(major, minor, patch);
     }
 
     /**
@@ -129,8 +117,8 @@ public class Version {
     /**
      * Returns a string representation of the version.
      * <p>
- The string is of the same format as the expected input string for
- "Version.of(String string)", i.e. 1.4.0 or 2.1.11
+     * The string is of the same format as the expected input string for
+     * "Version.of(String string)", i.e. 1.4.0 or 2.1.11
      *
      * @return String (i.e. 1.4.0)
      */

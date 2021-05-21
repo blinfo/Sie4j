@@ -5,17 +5,21 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.List;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
+import sie.validate.DocumentValidator;
+import sie.validate.model.SieError;
 
 /**
  * A java parser for SIE data.
  * <p>
- This parser will take SIE data and read it to a java domain for ease of use
- in developing situations. The domain fairly accurately represents the data,
- though it is restructured somewhat for clarity, e.g. all meta-data is
- collected into the MetaData class.
- <h3>Packages</h3>
+ * This parser will take SIE data and read it to a java domain for ease of use
+ * in developing situations. The domain fairly accurately represents the data,
+ * though it is restructured somewhat for clarity, e.g. all meta-data is
+ * collected into the MetaData class.
+ * <h3>Packages</h3>
  * <table border="true">
  * <tr>
  * <th align="left">sie<td>This package contains this class (Sie4j) which is
@@ -108,5 +112,13 @@ public class Sie4j {
 
     public static String calculateChecksum(InputStream input) {
         return Checksum.calculate(input);
+    }
+
+    public static List<SieError> validate(InputStream input) {
+        try {
+            return DocumentValidator.of(toDocument(input)).getErrors();
+        } catch (SieException ex) {
+            return Arrays.asList(SieError.builder().level(SieError.Level.FATAL).origin(Document.class).message(ex.getLocalizedMessage()).build());
+        }
     }
 }
