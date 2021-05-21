@@ -13,7 +13,7 @@
 #KPTYP "EUBAS97"
 #KONTO 1110 "Byggnader"
 #KONTO 1119 "Ackumulerade avskrivningar på byggnader"
-#KONTO 1130 "Mark"
+#KONTO 11AF "Mark"
 #KONTO 1220 "Inventarier och verktyg"
 #KONTO 1229 "Ack avskr på inventarier o verktyg"
 #KONTO 1240 "Bilar och andra transportmedel"
@@ -215,7 +215,7 @@
 #KONTO 8999 "Årets resultat"
 #SRU 1110 " "
 #SRU 1119 7214
-#SRU 1130 7214
+#SRU 11AF 7214
 #SRU 1220 7215
 #SRU 1229 7215
 #SRU 1240 7215

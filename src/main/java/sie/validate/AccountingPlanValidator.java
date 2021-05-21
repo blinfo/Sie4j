@@ -45,6 +45,9 @@ class AccountingPlanValidator extends AbstractValidator<AccountingPlan> {
                     }
                 });
             }
+            if (!acc.getNumberAsInteger().isPresent()) {
+                addWarning(ACCOUNT, "Kontot har inte ett numeriskt värde: " + acc.getNumber());
+            }
         });
     }
 
