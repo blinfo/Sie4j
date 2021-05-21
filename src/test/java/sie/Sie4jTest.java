@@ -22,11 +22,13 @@ public class Sie4jTest {
         assertEquals("Should contain" + numberOfErrors + " error", numberOfErrors, errors.size());
         SieError error = errors.get(0);
         String origin = "Document";
+        String tag = "#KONTO";
         assertEquals("Level should be " + level, level, error.getLevel());
         assertEquals("Message should be " + message, message, error.getMessage());
         assertTrue("Error should contain an origin", error.getOrigin().isPresent());
         assertEquals("Origin should be " + origin, origin, error.getOrigin().get());
-        assertFalse("Error should not contain a tag", error.getTag().isPresent());
+        assertTrue("Error should contain a tag", error.getTag().isPresent());
+        assertEquals("Tag should be " + tag, tag, error.getTag().get());
         System.out.println(error);
     }
 
@@ -39,11 +41,13 @@ public class Sie4jTest {
         assertEquals("Should contain" + numberOfErrors + " error", numberOfErrors, errors.size());
         SieError error = errors.get(0);
         String origin = "Document";
+        String tag = "#KONTO";
         assertEquals("Level should be " + level, level, error.getLevel());
         assertEquals("Message should be " + message, message, error.getMessage());
         assertTrue("Error should contain an origin", error.getOrigin().isPresent());
         assertEquals("Origin should be " + origin, origin, error.getOrigin().get());
-        assertFalse("Error should not contain a tag", error.getTag().isPresent());
+        assertTrue("Error should contain a tag", error.getTag().isPresent());
+        assertEquals("Tag should be " + tag, tag, error.getTag().get());
         System.out.println(error);
     }
 }

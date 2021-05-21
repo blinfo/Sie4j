@@ -312,7 +312,7 @@ public class Account implements Entity, Comparable<Account> {
 
         private Builder(String number) {
             if (number == null || number.isEmpty()) {
-                throw new SieException("Account number must not be null or empty");
+                throw new SieException("Account number must not be null or empty", "#KONTO");
             }
             this.number = number;
         }

@@ -118,7 +118,9 @@ public class Sie4j {
         try {
             return DocumentValidator.of(toDocument(input)).getErrors();
         } catch (SieException ex) {
-            return Arrays.asList(SieError.builder().level(SieError.Level.FATAL).origin(Document.class).message(ex.getLocalizedMessage()).build());
+            SieError.Builder builder = SieError.builder().level(SieError.Level.FATAL).origin(Document.class).message(ex.getLocalizedMessage());
+            ex.getTag().ifPresent(builder::tag);
+            return Arrays.asList(builder.build());
         }
     }
 }
