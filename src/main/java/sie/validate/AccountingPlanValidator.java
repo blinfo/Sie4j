@@ -41,7 +41,7 @@ class AccountingPlanValidator extends AbstractValidator<AccountingPlan> {
             if (!acc.getSruCodes().isEmpty()) {
                 acc.getSruCodes().forEach(sru -> {
                     if (isNullOrBlank(sru)) {
-                        addInfo(SRU, "SRU-kod för konto " + acc.getNumber() + "  saknas");
+                        addInfo(SRU, "SRU-kod för konto " + acc.getNumber() + " saknas");
                     }
                 });
             }
