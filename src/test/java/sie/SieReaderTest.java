@@ -1,7 +1,6 @@
 package sie;
 
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,22 +16,22 @@ import sie.domain.Document;
  * @author Håkan Lidén
  *
  */
-public class SieParserTest {
+public class SieReaderTest {
 
     @Test
     public void test_StreamReader_read() {
         String expectedProgramLine = "#PROGRAM \"BL Administration\" 2018.2.101";
         String expectedCompanyNameLine = "#FNAMN \"Övningsföretaget AB\"";
-        String content = SieParser.read(Helper.getSIE(4, 'E'));
+        String content = SieReader.streamToString(Helper.getSIE(4, 'E'));
         assertTrue("Should contain " + expectedProgramLine, content.contains(expectedProgramLine));
         assertTrue("Should contain " + expectedCompanyNameLine, content.contains(expectedCompanyNameLine));
     }
 
     @Test
     public void test_StreamReader_encoding_handling() {
-        String cp437content = SieParser.read(getStream(""));
-        String utf8content = SieParser.read(getStream("_UTF_8"));
-        String iso8859content = SieParser.read(getStream("_ISO_8859_15"));
+        String cp437content = SieReader.streamToString(getStream(""));
+        String utf8content = SieReader.streamToString(getStream("_UTF_8"));
+        String iso8859content = SieReader.streamToString(getStream("_ISO_8859_15"));
         assertEquals("Content should be same", cp437content, utf8content);
         assertEquals("Content should be same", cp437content, iso8859content);
     }
@@ -86,7 +85,6 @@ public class SieParserTest {
         long expectedNumberOfTransactions = 19;
         long noOfTransactions = doc.getVouchers().stream().flatMap(ver -> ver.getTransactions().stream()).count();
         assertEquals("Document should have ", expectedNumberOfTransactions, noOfTransactions);
-
     }
 
     @Test

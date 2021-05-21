@@ -1,10 +1,12 @@
 package sie;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 import sie.domain.Document;
+import sie.domain.Entity;
 
 /**
  *
@@ -13,22 +15,53 @@ import sie.domain.Document;
  */
 class SieReader {
 
+    private static final List<String> BOX_DRAWING_CHARS = Arrays.asList("─", "━", "│",
+            "┃", "┄", "┅", "┆", "┇", "┈", "┉", "┊", "┋", "┌", "┍", "┎", "┏", "┐",
+            "┑", "┒", "┓", "└", "┕", "┖", "┗", "┘", "┙", "┚", "┛", "├", "┝", "┞",
+            "┟", "┠", "┡", "┢", "┣", "┤", "┥", "┦", "┧", "┨", "┩", "┪", "┫", "┬",
+            "┭", "┮", "┯", "┰", "┱", "┲", "┳", "┴", "┵", "┶", "┷", "┸", "┹", "┺",
+            "┻", "┼", "┽", "┾", "┿", "╀", "╁", "╂", "╃", "╄", "╅", "╆", "╇", "╈",
+            "╉", "╊", "╋", "╌", "╍", "╎", "╏", "═", "║", "╒", "╓", "╔", "╕", "╖",
+            "╗", "╘", "╙", "╚", "╛", "╜", "╝", "╞", "╟", "╠", "╡", "╢", "╣", "╤",
+            "╥", "╦", "╧", "╨", "╩", "╪", "╫", "╬", "╭", "╮", "╯", "╰", "╱", "╲",
+            "╳", "╴", "╵", "╶", "╷", "╸", "╹", "╺", "╻", "╼", "╽", "╾", "╿");
+
     private SieReader() {
     }
 
-    public static Document read(String input) {
-        return SieParser.parse(input);
-    }
-
     public static Document read(InputStream input) {
-        return SieParser.parse(input);
+        return SieReader.read(streamToString(input));
     }
 
-    public static Document read(File file) {
+    public static Document read(String input) {
+        return DocumentFactory.parse(input);
+    }
+
+    static String streamToString(InputStream input) {
         try {
-            return read(new FileInputStream(file));
-        } catch (FileNotFoundException ex) {
-            throw new SieException(ex);
+            byte[] buffer = new byte[input.available()];
+            input.read(buffer);
+            String result = new String(buffer, Entity.CHARSET);
+            if (isUtf8(result)) {
+                result = new String(buffer, StandardCharsets.UTF_8);
+            }
+            if (isIso8859(result)) {
+                result = new String(buffer, StandardCharsets.ISO_8859_1);
+            }
+            if (FaultyCharacters.stringContains(result)) {
+                result = FaultyCharacters.replaceAll(result);
+            }
+            return result.replaceAll("\r\n", "\n").replaceAll("\r", "\n").trim();
+        } catch (IOException ex) {
+            throw new SieException("Could not read source", ex);
         }
+    }
+
+    private static boolean isIso8859(String result) {
+        return result.contains("�");
+    }
+
+    private static Boolean isUtf8(String string) {
+        return BOX_DRAWING_CHARS.stream().filter(c -> string.contains(c)).findAny().isPresent();
     }
 }

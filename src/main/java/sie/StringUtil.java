@@ -8,7 +8,7 @@ import java.util.stream.Stream;
  *
  * @author Håkan Lidén
  */
-public class StringUtil {
+class StringUtil {
 
     public static List<String> getParts(String line) {
         String[] chars = line.replaceAll("\\s+", " ").split("");

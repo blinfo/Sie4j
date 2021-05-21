@@ -1,4 +1,4 @@
-package sie.domain;
+package sie;
 
 import java.util.List;
 import static org.junit.Assert.assertEquals;

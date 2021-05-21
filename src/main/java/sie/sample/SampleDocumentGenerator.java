@@ -41,17 +41,20 @@ import java.util.stream.Collectors;
  * This class generates SIE documents populated with fake/fabricated data.
  * <p>
  * Sample:  <code><pre>
- Document doc = SampleDocumentGenerator.generate();
- File file = new File(System.getProperty("user.home") + "/"
-     + doc.getMetaData().getCompany().getName() + " - "
-     + LocalDateTime.now().format(Entity.DATE_TIME_FORMAT) + ".SE");
- Sie4j.fromDocument(doc, file);
- </pre></code>
+ * Document doc = SampleDocumentGenerator.generate();
+ * File file = new File(System.getProperty("user.home") + "/"
+ * + doc.getMetaData().getCompany().getName() + " - "
+ * + LocalDateTime.now().format(Entity.DATE_TIME_FORMAT) + ".SE");
+ * Sie4j.fromDocument(doc, file);
+ * </pre></code>
  * <p>
- * The sample code will write to a file in your home directory, for example
- * "Sverige & Foodservice - 20210211131407.SE" The data is intended for test
- * purposes, any similarities with existing people or companies are
- * unintentional.
+ * If you run the main method in this class, the sample SIE data will be written
+ * to a file in a created directory ("SIE-test-data") in your home directory,
+ * e.g. "[HOME-DIRECTORY]/SIE-test-data/Sverige & Foodservice -
+ * 20210211131407.SE"
+ * <br>
+ * The data is intended for test purposes, any similarities with existing people
+ * or companies are unintentional.
  * <p>
  * The source data was generated at
  * <a href="https://fejk.company/">https://fejk.company/</a>
@@ -69,10 +72,10 @@ public class SampleDocumentGenerator {
     }
 
     /**
-     * Generates a fake Document.
+     * Generates a fake SIE Document.
      * <p>
-     * Will generate a document populated with fabricated data. Currently only
-     * documents of type E4 are supported.
+     * Will generate a document populated with fabricated SIE data. Currently
+     * only documents of type E4 are supported.
      *
      *
      * @return Document - a fabricated document.
@@ -96,7 +99,7 @@ public class SampleDocumentGenerator {
                 .currency("SEK")
                 .financialYears(createYears())
                 .taxationYear(Year.now().minusYears(1))
-                .program(Program.of("Sie4j", "1.0 - Build: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MMdd-HHmmss.SSSSSS"))))
+                .program(Program.of("Sie4j", Version.current().toString()))
                 .sieType(Document.Type.E4)
                 .generated(Generated.of(LocalDate.now(), generator.getName() + " " + generator.getEmail()));
         return builder.apply();
@@ -259,6 +262,16 @@ public class SampleDocumentGenerator {
         return new Random().nextInt(max);
     }
 
+    /**
+     * Creates a SIE-file with fake data.
+     * <p>
+     * If you run this method, sample SIE data will be written to a file in a
+     * created directory ("SIE-test-data") in your home directory, e.g.
+     * "[HOME-DIRECTORY]/SIE-test-data/Sverige & Foodservice -
+     * 20210211131407.SE"
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Document doc = SampleDocumentGenerator.generate();
         File file = new File(System.getProperty("user.home") + "/SIE-test-data/"

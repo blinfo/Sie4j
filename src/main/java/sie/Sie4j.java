@@ -1,6 +1,8 @@
 package sie;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import sie.sample.SampleDocumentGenerator;
@@ -9,11 +11,11 @@ import sie.domain.Document;
 /**
  * A java parser for SIE data.
  * <p>
- * This parser will take SIE data and parse it to a java domain for ease of use
- * in developing situations. The domain fairly accurately represents the data,
- * though it is restructured somewhat for clarity, e.g. all meta-data is
- * collected into the MetaData class.
- * <h3>Packages</h3>
+ This parser will take SIE data and read it to a java domain for ease of use
+ in developing situations. The domain fairly accurately represents the data,
+ though it is restructured somewhat for clarity, e.g. all meta-data is
+ collected into the MetaData class.
+ <h3>Packages</h3>
  * <table border="true">
  * <tr>
  * <th align="left">sie<td>This package contains this class (Sie4j) which is
@@ -65,7 +67,11 @@ public class Sie4j {
     }
 
     public static Document toDocument(File input) {
-        return SieReader.read(input);
+        try {
+            return SieReader.read(new FileInputStream(input));
+        } catch (FileNotFoundException ex) {
+            throw new SieException(ex);
+        }
     }
 
     public static Document toDocument(String input) {
@@ -75,6 +81,7 @@ public class Sie4j {
     public static String fromDocument(Document input) {
         return SieWriter.write(input);
     }
+
     public static String fromDocument(Document input, Charset charset) {
         return SieWriter.write(input, charset);
     }
@@ -82,6 +89,7 @@ public class Sie4j {
     public static File fromDocument(Document input, File target) {
         return SieWriter.write(input, target);
     }
+
     public static File fromDocument(Document input, File target, Charset charset) {
         return SieWriter.write(input, target, charset);
     }

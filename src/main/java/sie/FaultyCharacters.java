@@ -54,28 +54,27 @@ class FaultyCharacters {
     private FaultyCharacters() {
     }
 
-    public static List<String> list() {
+    private static List<String> list() {
         return new ArrayList<>(DEVIATIONS.keySet());
     }
 
-    public static String getReplacement(String key) {
+    private static String getReplacement(String key) {
         return DEVIATIONS.getOrDefault(key, "?");
     }
 
-    public static Map<String, String> get() {
+    private static Map<String, String> get() {
         return DEVIATIONS;
     }
 
-    public static boolean stringContains(String string) {
+    static boolean stringContains(String string) {
         return FaultyCharacters.get().keySet().stream().filter(c -> string.contains(c)).findFirst().isPresent();
     }
 
-    public static String replaceAll(String string) {
+    static String replaceAll(String string) {
         String result = string;
         for (String character : FaultyCharacters.list()) {
             result = result.replaceAll(character, FaultyCharacters.getReplacement(character));
         }
         return result;
     }
-
 }

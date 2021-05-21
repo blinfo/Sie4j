@@ -24,7 +24,7 @@ class Serializer {
      * @return String - JSON object as string.
      */
     public static String asJson(InputStream source) {
-        return asJson(SieParser.parse(source));
+        return asJson(SieReader.read(source));
     }
 
     /**
@@ -34,7 +34,7 @@ class Serializer {
      * @return String - JSON object as string.
      */
     public static String asJson(String source) {
-        return asJson(SieParser.parse(source));
+        return asJson(SieReader.read(source));
     }
 
     /**

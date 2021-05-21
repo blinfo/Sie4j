@@ -57,10 +57,15 @@ class DocumentFactory {
                 .dimensions(factory.getDimensions())
                 .objects(factory.getObjects())
                 .vouchers(factory.getVouchers());
-        Document doc = builder.apply();
-        builder.checksum(Checksum.calculate(doc));
+        factory.addChecksum(builder);
         return builder.apply();
     }
+
+    private void addChecksum(Document.Builder builder) {
+        Document doc = builder.apply();
+        builder.checksum(Checksum.calculate(doc));
+    }
+    
 
     private MetaData getMetaData() {
         MetaData.Builder builder = MetaData.builder();

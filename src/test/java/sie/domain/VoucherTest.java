@@ -106,4 +106,13 @@ public class VoucherTest extends Helper {
         Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/Quotes_test.si"));
         assertEquals("Voucher text should be " + expectedResult, expectedResult, doc.getVouchers().get(0).getText().orElse(""));
     }
+    
+    @Test
+    public void test_Voucher_from_strange_sie_file() {
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/SIE_with_missing_program_version.se"));
+        List<Voucher> vouchers = doc.getVouchers();
+        assertEquals("First voucher should have eight transaction rows", 8l, vouchers.get(0).getTransactions().size());
+        assertEquals("Second voucher should have seven transaction rows", 7l, vouchers.get(1).getTransactions().size());
+        assertEquals("Third voucher should have eight transaction rows", 8l, vouchers.get(2).getTransactions().size());
+    }
 }
