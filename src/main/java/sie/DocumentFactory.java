@@ -299,7 +299,7 @@ class DocumentFactory {
                         break;
                 }
             } catch (NumberFormatException ex) {
-                throw new SieException("Balance is not a number", ex, "#KONTO");
+                throw new SieException("Balansen är inte ett tal", ex, "#KONTO");
             }
         });
     }

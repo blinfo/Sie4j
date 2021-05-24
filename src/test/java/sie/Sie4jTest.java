@@ -19,7 +19,7 @@ public class Sie4jTest {
         List<SieError> errors = validator.getErrors();
         long numberOfErrors = 1;
         SieError.Level level = SieError.Level.FATAL;
-        String message = "Account number must not be null or empty";
+        String message = "Kontonummer får inte vara null eller tom sträng";
         assertEquals("Should contain" + numberOfErrors + " error", numberOfErrors, errors.size());
         SieError error = errors.get(0);
         String origin = "Document";
@@ -38,7 +38,7 @@ public class Sie4jTest {
         List<SieError> errors = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_balance.SE")).getErrors();
         long numberOfErrors = 1;
         SieError.Level level = SieError.Level.FATAL;
-        String message = "Balance is not a number";
+        String message = "Balansen är inte ett tal";
         assertEquals("Should contain" + numberOfErrors + " error", numberOfErrors, errors.size());
         SieError error = errors.get(0);
         String origin = "Document";

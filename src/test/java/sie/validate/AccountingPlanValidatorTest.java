@@ -17,7 +17,7 @@ public class AccountingPlanValidatorTest extends AbstractValidatorTest {
 
     @Test
     public void test_accountingPlan_with_missing_account_numbers() {
-        String expectedMessage = "Account number must not be null or empty";
+        String expectedMessage = "Kontonummer får inte vara null eller tom sträng";
         SieException exeption = assertThrows("", SieException.class, () -> getDocument("BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
         assertEquals("Exception message should be " + expectedMessage, expectedMessage, exeption.getMessage());
     }
