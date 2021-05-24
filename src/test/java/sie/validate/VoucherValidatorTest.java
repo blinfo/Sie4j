@@ -49,10 +49,10 @@ public class VoucherValidatorTest extends AbstractValidatorTest {
     @Test
     public void test_files() {
         Validator firstValidator = Sie4j.validate(getClass().getResourceAsStream("/sample/Arousells_Visning_AB.SE"));
-        assertEquals("First validator should contain 42 errors", 42l, firstValidator.getErrors().size());
+        assertEquals("First validator should contain 84 errors", 84l, firstValidator.getErrors().size());
         assertEquals("First validator should contain 1 warning", 1l, firstValidator.getWarnings().size());
         assertEquals("First validator should contain 1 info", 1l, firstValidator.getInfo().size());
-        assertEquals("First validator should contain 40 fatal", 40l, firstValidator.getFatalErrors().size());
+        assertEquals("First validator should contain 82 fatal", 82l, firstValidator.getFatalErrors().size());
         Validator secondValidator = Sie4j.validate(getClass().getResourceAsStream("/sample/Transaktioner per Z-rapport.se"));
         assertTrue("Second validator should contain no errors", secondValidator.getErrors().isEmpty());
     }
