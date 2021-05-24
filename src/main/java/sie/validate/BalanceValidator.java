@@ -1,7 +1,9 @@
 package sie.validate;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import sie.domain.AccountingPlan;
+import sie.domain.Balance;
 import sie.domain.Document;
 import sie.domain.Entity;
 
@@ -50,6 +52,9 @@ class BalanceValidator extends AbstractValidator<Document> {
                         .flatMap(voucher -> voucher.getTransactions().stream())
                         .filter(transaction -> transaction.getAccountNumber().equals(acc.getNumber()))
                         .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
+                // TODO: Kolla upp om inte ingående balans ska läggas till summeringen av verifikationernas rader. // HL 2021-05-24
+                sum.add(acc.getOpeningBalanceByYearIndex(index).map(Balance::getAmount).orElse(BigDecimal.ZERO).setScale(Entity.SCALE, Entity.ROUNDING_MODE));
+                
                 if (!sum.equals(balance.getAmount())) {
                     addFatal(CLOSING_BALANCE, "Utgående balans för konto " + acc.getNumber()
                             + " år " + index + " stämmer inte med summering av verifikationerna."
