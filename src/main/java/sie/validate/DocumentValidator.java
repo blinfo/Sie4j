@@ -2,6 +2,7 @@ package sie.validate;
 
 import java.util.ArrayList;
 import java.util.List;
+import sie.SieException;
 import sie.domain.Document;
 
 /**
@@ -17,6 +18,7 @@ public class DocumentValidator implements Validator {
     private DocumentValidator() {
         this(null, null);
     }
+
     private DocumentValidator(Document document, Document.Type type) {
         this.entity = document;
         this.type = type;
@@ -29,9 +31,11 @@ public class DocumentValidator implements Validator {
         return documentValidator;
     }
 
-    public static Validator from(SieError error) {
+    public static Validator of(SieException ex, Class origin) {
         DocumentValidator documentValidator = new DocumentValidator();
-        documentValidator.addError(error);
+        SieError.Builder builder = SieError.builder().level(SieError.Level.FATAL).message(ex.getMessage()).origin(origin);
+        ex.getTag().ifPresent(builder::tag);
+        documentValidator.addError(builder.build());
         return documentValidator;
     }
 

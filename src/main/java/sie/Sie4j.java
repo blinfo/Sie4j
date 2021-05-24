@@ -117,9 +117,7 @@ public class Sie4j {
         try {
             return DocumentValidator.from(toDocument(input));
         } catch (SieException ex) {
-            SieError.Builder builder = SieError.builder().level(SieError.Level.FATAL).origin(Document.class).message(ex.getLocalizedMessage());
-            ex.getTag().ifPresent(builder::tag);
-            return DocumentValidator.from(builder.build());
+            return DocumentValidator.of(ex, Document.class);
         }
     }
 }

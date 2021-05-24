@@ -20,7 +20,7 @@ public class SieError implements Comparable<SieError> {
         this.message = message;
     }
 
-    public static SieError.Builder builder() {
+    static SieError.Builder builder() {
         return new Builder();
     }
 
@@ -62,7 +62,7 @@ public class SieError implements Comparable<SieError> {
         public static final Level DEFAULT = INFO;
     }
 
-    public static class Builder {
+    static class Builder {
 
         private String origin;
         private Level level;
