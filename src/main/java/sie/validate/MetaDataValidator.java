@@ -99,25 +99,22 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
     }
 
     private void validateFinancialYears() {
-        if (!type.equals(Document.Type.I4)) {
-            List<FinancialYear> years = entity.getFinancialYears();
-            if (years.isEmpty()) {
-                addWarning(FINANCIAL_YEAR, "Räkenskapsår saknas");
-                return;
-            }
-            years.forEach(year -> {
-                if (year.getIndex() == null) {
-                    addWarning(FINANCIAL_YEAR, "Räkenskapsårets index (årsnummer) saknas");
-                }
-                if (year.getStartDate() == null) {
-                    addWarning(FINANCIAL_YEAR, "Räkenskapsårets startdatum saknas");
-                }
-                if (year.getEndDate() == null) {
-                    addWarning(FINANCIAL_YEAR, "Räkenskapsårets slutdatum saknas");
-                }
-            });
+        List<FinancialYear> years = entity.getFinancialYears();
+        if (!type.equals(Document.Type.I4) && years.isEmpty()) {
+            addWarning(FINANCIAL_YEAR, "Räkenskapsår saknas");
+            return;
         }
-
+        years.forEach(year -> {
+            if (year.getIndex() == null) {
+                addWarning(FINANCIAL_YEAR, "Räkenskapsårets index (årsnummer) saknas");
+            }
+            if (year.getStartDate() == null) {
+                addWarning(FINANCIAL_YEAR, "Räkenskapsårets startdatum saknas");
+            }
+            if (year.getEndDate() == null) {
+                addWarning(FINANCIAL_YEAR, "Räkenskapsårets slutdatum saknas");
+            }
+        });
     }
 
     private void validatePeriodRange() {

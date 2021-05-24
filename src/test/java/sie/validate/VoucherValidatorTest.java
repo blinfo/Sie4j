@@ -29,7 +29,7 @@ public class VoucherValidatorTest extends AbstractValidatorTest {
         Document.Type type = document.getMetaData().getSieType();
         Voucher voucher = document.getVouchers().get(0);
         VoucherValidator validator = VoucherValidator.of(voucher, type);
-        String expectedMessage = "Voucher is not balanced. Series: A Number: 1 Difference: 0.10";
+        String expectedMessage = "Verifikationen är i obalans. Serie: A. Nummer: 1. Differens: 0.10";
         assertEquals("Error list should contain one error", 1l, validator.getErrors().size());
         assertEquals("Error list should contain one fatal error", 1l, validator.getFatalErrors().size());
         assertEquals("Error message should be " + expectedMessage, expectedMessage, validator.getErrors().get(0).getMessage());
@@ -41,7 +41,7 @@ public class VoucherValidatorTest extends AbstractValidatorTest {
         Document.Type type = document.getMetaData().getSieType();
         Voucher voucher = document.getVouchers().get(1);
         VoucherValidator validator = VoucherValidator.of(voucher, type);
-        String expectedMessage = "Voucher does not contain any transactions. Series: A Number: 2";
+        String expectedMessage = "Verifikationen innehåller inga transaktionsrader. Serie: A. Nummer: 2.";
         assertEquals("Error list should contain one error", 1l, validator.getErrors().size());
         assertEquals("Error message should be " + expectedMessage, expectedMessage, validator.getErrors().get(0).getMessage());
     }
@@ -49,11 +49,12 @@ public class VoucherValidatorTest extends AbstractValidatorTest {
     @Test
     public void test_files() {
         Validator firstValidator = Sie4j.validate(getClass().getResourceAsStream("/sample/Arousells_Visning_AB.SE"));
-        assertEquals("First validator should contain 2 errors", 2l, firstValidator.getErrors().size());
+        assertEquals("First validator should contain 42 errors", 42l, firstValidator.getErrors().size());
         assertEquals("First validator should contain 1 warning", 1l, firstValidator.getWarnings().size());
         assertEquals("First validator should contain 1 info", 1l, firstValidator.getInfo().size());
+        assertEquals("First validator should contain 40 fatal", 40l, firstValidator.getFatalErrors().size());
         Validator secondValidator = Sie4j.validate(getClass().getResourceAsStream("/sample/Transaktioner per Z-rapport.se"));
-        assertTrue("First validator should contain n errors", secondValidator.getErrors().isEmpty());
+        assertTrue("Second validator should contain no errors", secondValidator.getErrors().isEmpty());
     }
 
 }

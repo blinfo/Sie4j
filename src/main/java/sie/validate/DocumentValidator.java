@@ -48,6 +48,7 @@ public class DocumentValidator implements Validator {
         errors.addAll(MetaDataValidator.from(entity.getMetaData()).getErrors());
         validateAccountingPlan();
         validateVouchers();
+        validateBalances();
     }
 
     private void validateAccountingPlan() {
@@ -76,5 +77,9 @@ public class DocumentValidator implements Validator {
 
     private void addErrors(List<SieError> errors) {
         this.errors.addAll(errors);
+    }
+
+    private void validateBalances() {
+        addErrors(BalanceValidator.from(entity).getErrors());
     }
 }

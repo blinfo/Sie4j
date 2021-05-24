@@ -10,6 +10,8 @@ import sie.domain.Voucher;
  */
 class VoucherValidator extends AbstractValidator<Voucher> {
 
+    private static final String VOUCHER = "#VER";
+
     private VoucherValidator(Voucher entity, Document.Type type) {
         super(entity, type);
     }
@@ -21,24 +23,24 @@ class VoucherValidator extends AbstractValidator<Voucher> {
     @Override
     protected void validate() {
         if (Integer.valueOf(type.getNumber()) < 4) {
-            addFatal("#VER", "Files of type " + type.getNumber() + " must not contain vouchers");
+            addFatal(VOUCHER, "Filer av typen " + type.getNumber() + " får inte innehålla verifikationer!");
             return;
         }
         if (entity.getDate() == null) {
-            addFatal("#VER", "Voucher date is missing");
+            addFatal(VOUCHER, "Verifikationsdatum saknas!");
         }
         if (!entity.getDiff().equals(BigDecimal.ZERO)) {
-            String message = "Voucher is not balanced. "
-                    + entity.getSeries().map(s -> "Series: " + s + " ").orElse("")
-                    + entity.getNumber().map(n -> "Number: " + n + " ").orElse("")
-                    + "Difference: " + entity.getDiff();
-            addFatal("#VER", message);
+            String message = "Verifikationen är i obalans. "
+                    + entity.getSeries().map(s -> "Serie: " + s + ". ").orElse("")
+                    + entity.getNumber().map(n -> "Nummer: " + n + ". ").orElse("")
+                    + "Differens: " + entity.getDiff();
+            addFatal(VOUCHER, message);
         }
         if (entity.getTransactions().isEmpty()) {
-            String message = "Voucher does not contain any transactions. "
-                    + entity.getSeries().map(s -> "Series: " + s + " ").orElse("")
-                    + entity.getNumber().map(n -> "Number: " + n + " ").orElse("");
-            addInfo("#VER", message.trim());
+            String message = "Verifikationen innehåller inga transaktionsrader. "
+                    + entity.getSeries().map(s -> "Serie: " + s + ". ").orElse("")
+                    + entity.getNumber().map(n -> "Nummer: " + n + ". ").orElse("");
+            addInfo(VOUCHER, message.trim());
         } else {
             entity.getTransactions().forEach(trans -> {
                 addErrors(TransactionValidator.of(trans, type).getErrors());

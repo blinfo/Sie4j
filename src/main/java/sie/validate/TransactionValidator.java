@@ -9,6 +9,8 @@ import sie.domain.Transaction;
  */
 class TransactionValidator extends AbstractValidator<Transaction> {
 
+    private static final String TRANSACTION = "#TRANS";
+
     private TransactionValidator(Transaction entity, Document.Type type) {
         super(entity, type);
     }
@@ -20,10 +22,10 @@ class TransactionValidator extends AbstractValidator<Transaction> {
     @Override
     protected void validate() {
         if (entity.getAccountNumber() == null || entity.getAccountNumber().isEmpty()) {
-            addFatal("#TRANS", "Account number is missing");
+            addFatal(TRANSACTION, "Kontonummer saknas!");
         }
         if (entity.getAmount() == null) {
-            addFatal("#TRANS", "Amount is missing");
+            addFatal(TRANSACTION, "Belopp saknas!");
         }
     }
 

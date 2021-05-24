@@ -16,11 +16,10 @@ public class SieWriterTest {
     public void test_SieWriter_fromDocument() {
         Document sampleDoc = SampleDocumentGenerator.generate();
         String expectedVersion = Version.current().toString();
-        String expectedName = sampleDoc.getMetaData().getCompany().getName();
         String sieString = SieWriter.write(sampleDoc);
         assertTrue("String should contain #FORMAT PC8", sieString.contains("PC8"));
         assertTrue("String should contain #PROGRAM \"Sie4j\" \"" + expectedVersion + "\"", sieString.contains("#PROGRAM \"Sie4j\" \"" + expectedVersion + "\""));
-        assertTrue("String should contain #FNAMN \"" + expectedName + "\"", sieString.contains("#FNAMN \"" + expectedName + "\""));
+        assertTrue("String should contain #FNAMN \"", sieString.contains("#FNAMN \""));
         assertTrue("String should contain #RAR 0", sieString.contains("#RAR 0"));
         assertTrue("String should contain #TAXAR ", sieString.contains("#TAXAR "));
         assertTrue("String should contain #KPTYP ", sieString.contains("#KPTYP "));
