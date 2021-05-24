@@ -45,6 +45,9 @@ public class Transaction implements Entity {
     }
 
     public BigDecimal getAmount() {
+        if (amount == null) {
+            return null;
+        }
         return amount.setScale(SCALE, ROUNDING_MODE);
     }
 

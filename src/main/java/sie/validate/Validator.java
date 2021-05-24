@@ -2,7 +2,6 @@ package sie.validate;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import sie.validate.model.SieError;
 
 /**
  *
@@ -18,5 +17,9 @@ public interface Validator {
 
     default List<SieError> getWarnings() {
         return getErrors().stream().filter(error -> error.getLevel().equals(SieError.Level.WARNING)).collect(Collectors.toList());
+    }
+    
+    default List<SieError> getInfo() {
+        return getErrors().stream().filter(error -> error.getLevel().equals(SieError.Level.INFO)).collect(Collectors.toList());
     }
 }

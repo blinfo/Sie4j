@@ -10,7 +10,7 @@ import sie.io.JsonDateSerializer;
 
 /**
  *
- * @author Håkan Lidén 
+ * @author Håkan Lidén
  *
  */
 public class Voucher implements Entity, Comparable<Voucher> {
@@ -71,7 +71,7 @@ public class Voucher implements Entity, Comparable<Voucher> {
     public Boolean isBalanced() {
         return getDiff().equals(BigDecimal.ZERO);
     }
-    
+
     public BigDecimal getDiff() {
         BigDecimal sum = new BigDecimal(getTransactions().stream()
                 .mapToDouble(t -> t.getAmount().doubleValue()).sum());

@@ -20,6 +20,7 @@ public class DocumentValidator extends AbstractValidator<Document> {
     protected void validate() {
         addErrors(MetaDataValidator.from(entity.getMetaData()).getErrors());
         validateAccountingPlan();
+        validateVouchers();
     }
 
     private void validateAccountingPlan() {
@@ -30,6 +31,12 @@ public class DocumentValidator extends AbstractValidator<Document> {
                 addErrors(AccountingPlanValidator.of(plan, type).getErrors());
             });
         }
+    }
+
+    private void validateVouchers() {
+        entity.getVouchers().forEach(voucher -> {
+            addErrors(VoucherValidator.of(voucher, type).getErrors());
+        });
     }
 
 }

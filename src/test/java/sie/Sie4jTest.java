@@ -2,10 +2,10 @@ package sie;
 
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import sie.validate.model.SieError;
+import sie.validate.SieError;
+import sie.validate.Validator;
 
 /**
  *
@@ -15,7 +15,8 @@ public class Sie4jTest {
 
     @Test
     public void test_file_with_missing_accounts() {
-        List<SieError> errors = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
+        Validator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
+        List<SieError> errors = validator.getErrors();
         long numberOfErrors = 1;
         SieError.Level level = SieError.Level.FATAL;
         String message = "Account number must not be null or empty";
@@ -34,7 +35,7 @@ public class Sie4jTest {
 
     @Test
     public void test_file_with_missing_account_balance() {
-        List<SieError> errors = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_balance.SE"));
+        List<SieError> errors = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_balance.SE")).getErrors();
         long numberOfErrors = 1;
         SieError.Level level = SieError.Level.FATAL;
         String message = "Balance is not a number";

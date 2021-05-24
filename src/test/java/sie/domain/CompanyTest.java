@@ -30,7 +30,7 @@ public class CompanyTest extends Helper {
     @Test
     public void test_Company_CID() {
         Company company = getDocument(4, 'E').getMetaData().getCompany();
-        String expectedResult = "1655710918";
+        String expectedResult = "165571-0918";
         assertTrue("Company should have cid", company.getCorporateID().isPresent());
         assertEquals("Company cid should be " + expectedResult, expectedResult, company.getCorporateID().get());
     }

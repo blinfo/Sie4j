@@ -6,10 +6,8 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.SieException;
-import sie.domain.Account;
 import sie.domain.AccountingPlan;
 import sie.domain.Document;
-import sie.validate.model.SieError;
 
 /**
  *

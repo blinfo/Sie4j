@@ -3,7 +3,6 @@ package sie.validate;
 import java.util.List;
 import org.junit.Test;
 import sie.domain.Document;
-import sie.validate.model.SieError;
 
 /**
  *

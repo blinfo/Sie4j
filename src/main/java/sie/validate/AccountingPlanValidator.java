@@ -1,6 +1,5 @@
 package sie.validate;
 
-import sie.SieException;
 import sie.domain.AccountingPlan;
 import sie.domain.Document;
 

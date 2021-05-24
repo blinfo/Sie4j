@@ -5,12 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.List;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
 import sie.validate.DocumentValidator;
-import sie.validate.model.SieError;
+import sie.validate.FileValidator;
+import sie.validate.SieError;
+import sie.validate.Validator;
 
 /**
  * A java parser for SIE data.
@@ -114,13 +114,13 @@ public class Sie4j {
         return Checksum.calculate(input);
     }
 
-    public static List<SieError> validate(InputStream input) {
+    public static Validator validate(InputStream input) {
         try {
-            return DocumentValidator.of(toDocument(input)).getErrors();
+            return DocumentValidator.of(toDocument(input));
         } catch (SieException ex) {
             SieError.Builder builder = SieError.builder().level(SieError.Level.FATAL).origin(Document.class).message(ex.getLocalizedMessage());
             ex.getTag().ifPresent(builder::tag);
-            return Arrays.asList(builder.build());
+            return FileValidator.from(builder.build());
         }
     }
 }

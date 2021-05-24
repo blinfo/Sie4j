@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import sie.domain.Document;
 import sie.domain.Entity;
-import sie.validate.model.SieError;
 
 /**
  *
@@ -22,6 +21,7 @@ public abstract class AbstractValidator<T extends Entity> implements Validator {
         this.entity = entity;
         this.type = type;
         errors = new ArrayList<>();
+        init();
     }
     
     protected void addErrors(List<SieError> errors) {
@@ -45,10 +45,13 @@ public abstract class AbstractValidator<T extends Entity> implements Validator {
     protected Boolean isNullOrBlank(String input) {
         return input == null || input.trim().isEmpty();
     }
+    
+    private void init() {
+        validate();
+    }
 
     @Override
     public List<SieError> getErrors() {
-        validate();
         return errors.stream().sorted().collect(Collectors.toList());
     }
 

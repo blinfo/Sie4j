@@ -45,7 +45,13 @@ public class Company implements Entity {
     }
 
     public Optional<String> getCorporateID() {
-        return Optional.ofNullable(corporateId);
+        if (corporateId == null || corporateId.trim().isEmpty()) {
+            return Optional.empty();
+        }
+        if (corporateId.matches("\\d{6}-\\d{4}")) {
+            return Optional.of(corporateId);
+        }
+        return Optional.of(corporateId).filter(cid -> cid.matches("\\d{10}")).map(cid -> cid.substring(0, 6) + "-" + cid.substring(6));
     }
 
     public Optional<String> getSniCode() {
@@ -54,6 +60,18 @@ public class Company implements Entity {
 
     public Optional<Address> getAddress() {
         return Optional.ofNullable(address);
+    }
+
+    @Override
+    public String toString() {
+        return "Company{"
+                + "name=" + name + ", "
+                + "id=" + id + ", "
+                + "type=" + type + ", "
+                + "corporateId=" + getCorporateID().orElse("") + ", "
+                + "aquisitionNumber=" + aquisitionNumber + ", "
+                + "sniCode=" + sniCode + ", "
+                + "address=" + address + '}';
     }
 
     public static class Builder {

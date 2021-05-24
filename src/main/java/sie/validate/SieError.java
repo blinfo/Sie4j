@@ -1,4 +1,4 @@
-package sie.validate.model;
+package sie.validate;
 
 import java.util.Optional;
 
