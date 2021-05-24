@@ -1,6 +1,7 @@
 package sie.validate;
 
 import java.math.BigDecimal;
+import sie.domain.AccountingPlan;
 import sie.domain.Document;
 import sie.domain.Entity;
 
@@ -35,22 +36,43 @@ class BalanceValidator extends AbstractValidator<Document> {
             entity.getAccountingPlan().ifPresent(plan -> {
                 entity.getMetaData().getFinancialYearByIndex(0).ifPresent(fy -> {
                     Integer index = fy.getIndex();
-                    plan.getAccounts().forEach(acc -> {
-                        acc.getClosingBalanceByYearIndex(index).ifPresent((balance) -> {
-                            BigDecimal sum = new BigDecimal(entity.getVouchers().stream()
-                                    .flatMap(voucher -> voucher.getTransactions().stream())
-                                    .filter(transaction -> transaction.getAccountNumber().equals(acc.getNumber()))
-                                    .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
-                            if (!sum.equals(balance.getAmount())) {
-                                addFatal(CLOSING_BALANCE, "Utgående balans för konto " + acc.getNumber()
-                                        + " år " + index + " stämmer inte med summering av verifikationerna."
-                                        + " Balans: " + balance.getAmount() + " Summa: " + sum);
-                            }
-                        });
-                    });
+                    checkClosingBalance(plan, index);
+                    checkResult(plan, index);
                 });
             });
         }
+    }
+
+    private void checkClosingBalance(AccountingPlan plan, Integer index) {
+        plan.getAccounts().forEach(acc -> {
+            acc.getClosingBalanceByYearIndex(index).ifPresent((balance) -> {
+                BigDecimal sum = new BigDecimal(entity.getVouchers().stream()
+                        .flatMap(voucher -> voucher.getTransactions().stream())
+                        .filter(transaction -> transaction.getAccountNumber().equals(acc.getNumber()))
+                        .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
+                if (!sum.equals(balance.getAmount())) {
+                    addFatal(CLOSING_BALANCE, "Utgående balans för konto " + acc.getNumber()
+                            + " år " + index + " stämmer inte med summering av verifikationerna."
+                                    + " Balans: " + balance.getAmount() + " Summa: " + sum);
+                }
+            });
+        });
+    }
+
+    private void checkResult(AccountingPlan plan, Integer index) {
+        plan.getAccounts().forEach(acc -> {
+            acc.getResultByYearIndex(index).ifPresent((balance) -> {
+                BigDecimal sum = new BigDecimal(entity.getVouchers().stream()
+                        .flatMap(voucher -> voucher.getTransactions().stream())
+                        .filter(transaction -> transaction.getAccountNumber().equals(acc.getNumber()))
+                        .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
+                if (!sum.equals(balance.getAmount())) {
+                    addFatal(RESULT, "Resultat för konto " + acc.getNumber()
+                            + " år " + index + " stämmer inte med summering av verifikationerna."
+                                    + " Resultat: " + balance.getAmount() + " Summa: " + sum);
+                }
+            });
+        });
     }
 
     private void checkForIrregularBalancesAndResults() {
