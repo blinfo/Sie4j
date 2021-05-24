@@ -1,24 +1,47 @@
 package sie.validate;
 
+import java.util.ArrayList;
+import java.util.List;
 import sie.domain.Document;
 
 /**
  *
  * @author Håkan Lidén
  */
-public class DocumentValidator extends AbstractValidator<Document> {
+public class DocumentValidator implements Validator {
 
-    public DocumentValidator(Document entity) {
-        super(entity, entity.getMetaData().getSieType());
+    private final Document entity;
+    private final Document.Type type;
+    private final List<SieError> errors;
+
+    private DocumentValidator() {
+        this(null, null);
+    }
+    private DocumentValidator(Document document, Document.Type type) {
+        this.entity = document;
+        this.type = type;
+        this.errors = new ArrayList<>();
     }
 
-    public static DocumentValidator of(Document document) {
-        return new DocumentValidator(document);
+    public static DocumentValidator from(Document document) {
+        DocumentValidator documentValidator = new DocumentValidator(document, document.getMetaData().getSieType());
+        documentValidator.validate();
+        return documentValidator;
+    }
+
+    public static Validator from(SieError error) {
+        DocumentValidator documentValidator = new DocumentValidator();
+        documentValidator.addError(error);
+        return documentValidator;
     }
 
     @Override
-    protected void validate() {
-        addErrors(MetaDataValidator.from(entity.getMetaData()).getErrors());
+    public List<SieError> getErrors() {
+        return new ArrayList<>(errors);
+    }
+
+    private void validate() {
+        errors.addAll(MetaDataValidator.from(entity.getMetaData()).getErrors());
         validateAccountingPlan();
         validateVouchers();
     }
@@ -39,4 +62,15 @@ public class DocumentValidator extends AbstractValidator<Document> {
         });
     }
 
+    private void addWarning(String tag, String message) {
+        errors.add(SieError.builder().origin(entity.getClass()).level(SieError.Level.WARNING).tag(tag).message(message).build());
+    }
+
+    private void addError(SieError error) {
+        errors.add(error);
+    }
+
+    private void addErrors(List<SieError> errors) {
+        this.errors.addAll(errors);
+    }
 }

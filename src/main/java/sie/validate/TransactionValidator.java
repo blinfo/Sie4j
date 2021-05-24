@@ -7,7 +7,7 @@ import sie.domain.Transaction;
  *
  * @author Håkan Lidén
  */
-public class TransactionValidator extends AbstractValidator<Transaction> {
+class TransactionValidator extends AbstractValidator<Transaction> {
 
     private TransactionValidator(Transaction entity, Document.Type type) {
         super(entity, type);

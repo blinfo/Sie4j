@@ -11,7 +11,7 @@ import sie.domain.Entity;
  * @author Håkan Lidén
  * @param <T>
  */
-public abstract class AbstractValidator<T extends Entity> implements Validator {
+abstract class AbstractValidator<T extends Entity> implements Validator {
 
     protected final T entity;
     protected final Document.Type type;

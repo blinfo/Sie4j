@@ -8,14 +8,13 @@ import java.nio.charset.Charset;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
 import sie.validate.DocumentValidator;
-import sie.validate.FileValidator;
 import sie.validate.SieError;
 import sie.validate.Validator;
 
 /**
  * A java parser for SIE data.
  * <p>
- * This parser will take SIE data and read it to a java domain for ease of use
+ * This parser will take SIE data and read it to a java domain for ease from use
  * in developing situations. The domain fairly accurately represents the data,
  * though it is restructured somewhat for clarity, e.g. all meta-data is
  * collected into the MetaData class.
@@ -116,11 +115,11 @@ public class Sie4j {
 
     public static Validator validate(InputStream input) {
         try {
-            return DocumentValidator.of(toDocument(input));
+            return DocumentValidator.from(toDocument(input));
         } catch (SieException ex) {
             SieError.Builder builder = SieError.builder().level(SieError.Level.FATAL).origin(Document.class).message(ex.getLocalizedMessage());
             ex.getTag().ifPresent(builder::tag);
-            return FileValidator.from(builder.build());
+            return DocumentValidator.from(builder.build());
         }
     }
 }

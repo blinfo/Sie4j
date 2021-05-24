@@ -8,7 +8,7 @@ import sie.domain.Voucher;
  *
  * @author Håkan Lidén
  */
-public class VoucherValidator extends AbstractValidator<Voucher> {
+class VoucherValidator extends AbstractValidator<Voucher> {
 
     private VoucherValidator(Voucher entity, Document.Type type) {
         super(entity, type);
