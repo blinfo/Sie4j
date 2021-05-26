@@ -15,29 +15,29 @@ abstract class AbstractValidator<T extends Entity> implements Validator {
 
     protected final T entity;
     protected final Document.Type type;
-    private final List<SieError> errors;
+    private final List<SieLog> logs;
 
     public AbstractValidator(T entity, Document.Type type) {
         this.entity = entity;
         this.type = type;
-        errors = new ArrayList<>();
+        logs = new ArrayList<>();
         init();
     }
-    
-    protected void addErrors(List<SieError> errors) {
-        this.errors.addAll(errors);
+
+    protected void addLogs(List<SieLog> logs) {
+        this.logs.addAll(logs);
     }
 
     protected void addInfo(String tag, String message) {
-        errors.add(SieError.builder().origin(entity.getClass()).level(SieError.Level.INFO).tag(tag).message(message).build());
+        logs.add(SieLog.builder().origin(entity.getClass()).level(SieLog.Level.INFO).tag(tag).message(message).build());
     }
 
     protected void addWarning(String tag, String message) {
-        errors.add(SieError.builder().origin(entity.getClass()).level(SieError.Level.WARNING).tag(tag).message(message).build());
+        logs.add(SieLog.builder().origin(entity.getClass()).level(SieLog.Level.WARNING).tag(tag).message(message).build());
     }
 
-    protected void addFatal(String tag, String message) {
-        errors.add(SieError.builder().origin(entity.getClass()).level(SieError.Level.FATAL).tag(tag).message(message).build());
+    protected void addCritical(String tag, String message) {
+        logs.add(SieLog.builder().origin(entity.getClass()).level(SieLog.Level.CRITICAL).tag(tag).message(message).build());
     }
 
     protected abstract void validate();
@@ -45,14 +45,13 @@ abstract class AbstractValidator<T extends Entity> implements Validator {
     protected Boolean isNullOrBlank(String input) {
         return input == null || input.trim().isEmpty();
     }
-    
+
     private void init() {
         validate();
     }
 
     @Override
-    public List<SieError> getErrors() {
-        return errors.stream().sorted().collect(Collectors.toList());
+    public List<SieLog> getLogs() {
+        return logs.stream().sorted().collect(Collectors.toList());
     }
-
 }

@@ -9,7 +9,7 @@ import sie.domain.Document;
 
 /**
  *
- * @author Håkan Lidén 
+ * @author Håkan Lidén
  *
  */
 class Serializer {

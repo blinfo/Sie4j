@@ -45,19 +45,22 @@ class DocumentFactory {
     private final String content;
     private final List<FinancialYear> years = new ArrayList<>();
 
-    DocumentFactory(String content) {
+    private DocumentFactory(String content) {
         this.content = content;
     }
 
-    static Document parse(String content) {
-        DocumentFactory factory = new DocumentFactory(content);
+    static DocumentFactory from(String content) {
+        return new DocumentFactory(content);
+    }
+
+    Document parse() {
         Document.Builder builder = Document.builder()
-                .metaData(factory.getMetaData())
-                .accountingPlan(factory.getAccountingPlan())
-                .dimensions(factory.getDimensions())
-                .objects(factory.getObjects())
-                .vouchers(factory.getVouchers());
-        factory.addChecksum(builder);
+                .metaData(getMetaData())
+                .accountingPlan(getAccountingPlan())
+                .dimensions(getDimensions())
+                .objects(getObjects())
+                .vouchers(getVouchers());
+        addChecksum(builder);
         return builder.apply();
     }
 
@@ -299,7 +302,7 @@ class DocumentFactory {
                         break;
                 }
             } catch (NumberFormatException ex) {
-                throw new SieException("Balansen är inte ett tal", ex, "#KONTO");
+                throw new SieException("Balansen för konto " + number + " är inte ett tal", ex, "#KONTO");
             }
         });
     }

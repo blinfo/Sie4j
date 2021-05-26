@@ -27,7 +27,6 @@ class SieWriter {
         return write(document, Entity.CHARSET);
     }
 
-
     public static String write(Document document, Charset charset) {
         if (charset.equals(StandardCharsets.UTF_8)) {
             return SieStringBuilder.parse(document);
@@ -47,7 +46,7 @@ class SieWriter {
     public static File write(Document document, File target) {
         return write(document, target, Entity.CHARSET);
     }
-    
+
     public static File write(Document document, File target, Charset charset) {
         try {
             String content = SieStringBuilder.parse(document);

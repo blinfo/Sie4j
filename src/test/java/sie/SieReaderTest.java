@@ -118,10 +118,9 @@ public class SieReaderTest {
     public void test_strange_sie_file() {
         Document strangeDoc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/Transaktioner per Z-rapport.se"));
         Company company = strangeDoc.getMetaData().getCompany();
-        company.getCorporateID().ifPresent(System.out::println);
-        strangeDoc.getVouchers().forEach(v -> {
-            System.out.println(v);
-        });
+        String expectedCid = "555555-5555";
+        assertTrue("CID should be present", company.getCorporateID().isPresent());
+        assertEquals("CID should be " + expectedCid, expectedCid, company.getCorporateID().get());
     }
 
     private InputStream getStream(String string) {

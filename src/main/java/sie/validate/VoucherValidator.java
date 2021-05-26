@@ -23,18 +23,18 @@ class VoucherValidator extends AbstractValidator<Voucher> {
     @Override
     protected void validate() {
         if (Integer.valueOf(type.getNumber()) < 4) {
-            addFatal(VOUCHER, "Filer av typen " + type.getNumber() + " får inte innehålla verifikationer!");
+            addCritical(VOUCHER, "Filer av typen " + type.getNumber() + " får inte innehålla verifikationer!");
             return;
         }
         if (entity.getDate() == null) {
-            addFatal(VOUCHER, "Verifikationsdatum saknas!");
+            addCritical(VOUCHER, "Verifikationsdatum saknas!");
         }
         if (!entity.getDiff().equals(BigDecimal.ZERO)) {
             String message = "Verifikationen är i obalans. "
                     + entity.getSeries().map(s -> "Serie: " + s + ". ").orElse("")
                     + entity.getNumber().map(n -> "Nummer: " + n + ". ").orElse("")
                     + "Differens: " + entity.getDiff();
-            addFatal(VOUCHER, message);
+            addCritical(VOUCHER, message);
         }
         if (entity.getTransactions().isEmpty()) {
             String message = "Verifikationen innehåller inga transaktionsrader. "
@@ -43,7 +43,7 @@ class VoucherValidator extends AbstractValidator<Voucher> {
             addInfo(VOUCHER, message.trim());
         } else {
             entity.getTransactions().forEach(trans -> {
-                addErrors(TransactionValidator.of(trans, type).getErrors());
+                addLogs(TransactionValidator.of(trans, type).getLogs());
             });
         }
     }

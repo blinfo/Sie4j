@@ -13,7 +13,7 @@ public class DocumentValidator implements Validator {
 
     private final Document entity;
     private final Document.Type type;
-    private final List<SieError> errors;
+    private final List<SieLog> logs;
 
     private DocumentValidator() {
         this(null, null);
@@ -22,7 +22,7 @@ public class DocumentValidator implements Validator {
     private DocumentValidator(Document document, Document.Type type) {
         this.entity = document;
         this.type = type;
-        this.errors = new ArrayList<>();
+        this.logs = new ArrayList<>();
     }
 
     public static DocumentValidator from(Document document) {
@@ -33,19 +33,19 @@ public class DocumentValidator implements Validator {
 
     public static Validator of(SieException ex, Class origin) {
         DocumentValidator documentValidator = new DocumentValidator();
-        SieError.Builder builder = SieError.builder().level(SieError.Level.FATAL).message(ex.getMessage()).origin(origin);
+        SieLog.Builder builder = SieLog.builder().level(SieLog.Level.CRITICAL).message(ex.getMessage()).origin(origin);
         ex.getTag().ifPresent(builder::tag);
-        documentValidator.addError(builder.build());
+        documentValidator.addLog(builder.build());
         return documentValidator;
     }
 
     @Override
-    public List<SieError> getErrors() {
-        return new ArrayList<>(errors);
+    public List<SieLog> getLogs() {
+        return new ArrayList<>(logs);
     }
 
     private void validate() {
-        errors.addAll(MetaDataValidator.from(entity.getMetaData()).getErrors());
+        logs.addAll(MetaDataValidator.from(entity.getMetaData()).getLogs());
         validateAccountingPlan();
         validateVouchers();
         validateBalances();
@@ -56,30 +56,30 @@ public class DocumentValidator implements Validator {
             addWarning("#KONTO", "Inga konton funna");
         } else {
             entity.getAccountingPlan().ifPresent(plan -> {
-                addErrors(AccountingPlanValidator.of(plan, type).getErrors());
+                addLogs(AccountingPlanValidator.of(plan, type).getLogs());
             });
         }
     }
 
     private void validateVouchers() {
         entity.getVouchers().forEach(voucher -> {
-            addErrors(VoucherValidator.of(voucher, type).getErrors());
+            addLogs(VoucherValidator.of(voucher, type).getLogs());
         });
     }
 
     private void addWarning(String tag, String message) {
-        errors.add(SieError.builder().origin(entity.getClass()).level(SieError.Level.WARNING).tag(tag).message(message).build());
+        logs.add(SieLog.builder().origin(entity.getClass()).level(SieLog.Level.WARNING).tag(tag).message(message).build());
     }
 
-    private void addError(SieError error) {
-        errors.add(error);
+    private void addLog(SieLog addLog) {
+        logs.add(addLog);
     }
 
-    private void addErrors(List<SieError> errors) {
-        this.errors.addAll(errors);
+    private void addLogs(List<SieLog> logs) {
+        this.logs.addAll(logs);
     }
 
     private void validateBalances() {
-        addErrors(BalanceValidator.from(entity).getErrors());
+        addLogs(BalanceValidator.from(entity).getLogs());
     }
 }

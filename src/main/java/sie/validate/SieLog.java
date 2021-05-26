@@ -6,21 +6,21 @@ import java.util.Optional;
  *
  * @author Håkan Lidén
  */
-public class SieError implements Comparable<SieError> {
+public class SieLog implements Comparable<SieLog> {
 
     private final String origin;
     private final Level level;
     private final String tag;
     private final String message;
 
-    private SieError(String origin, Level level, String tag, String message) {
+    private SieLog(String origin, Level level, String tag, String message) {
         this.origin = origin;
         this.level = level;
         this.tag = tag;
         this.message = message;
     }
 
-    static SieError.Builder builder() {
+    static SieLog.Builder builder() {
         return new Builder();
     }
 
@@ -42,11 +42,11 @@ public class SieError implements Comparable<SieError> {
 
     @Override
     public String toString() {
-        return "SieError{" + "origin=" + origin + ", level=" + level + ", tag=" + tag + ", message=" + message + '}';
+        return "SieLog{" + "origin=" + origin + ", level=" + level + ", tag=" + tag + ", message=" + message + '}';
     }
 
     @Override
-    public int compareTo(SieError other) {
+    public int compareTo(SieLog other) {
         int result = other.level.compareTo(level);
         if (result == 0) {
             result = tag.compareTo(other.tag);
@@ -58,7 +58,7 @@ public class SieError implements Comparable<SieError> {
     }
 
     public enum Level {
-        INFO, WARNING, FATAL;
+        INFO, WARNING, CRITICAL;
         public static final Level DEFAULT = INFO;
     }
 
@@ -97,8 +97,8 @@ public class SieError implements Comparable<SieError> {
             return this;
         }
 
-        public SieError build() {
-            return new SieError(origin, level, tag, message);
+        public SieLog build() {
+            return new SieLog(origin, level, tag, message);
         }
     }
 }

@@ -9,17 +9,17 @@ import java.util.stream.Collectors;
  */
 public interface Validator {
 
-    List<SieError> getErrors();
+    List<SieLog> getLogs();
 
-    default List<SieError> getFatalErrors() {
-        return getErrors().stream().filter(error -> error.getLevel().equals(SieError.Level.FATAL)).collect(Collectors.toList());
+    default List<SieLog> getCriticalErrors() {
+        return getLogs().stream().filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL)).collect(Collectors.toList());
     }
 
-    default List<SieError> getWarnings() {
-        return getErrors().stream().filter(error -> error.getLevel().equals(SieError.Level.WARNING)).collect(Collectors.toList());
+    default List<SieLog> getWarnings() {
+        return getLogs().stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING)).collect(Collectors.toList());
     }
     
-    default List<SieError> getInfo() {
-        return getErrors().stream().filter(error -> error.getLevel().equals(SieError.Level.INFO)).collect(Collectors.toList());
+    default List<SieLog> getInfo() {
+        return getLogs().stream().filter(log -> log.getLevel().equals(SieLog.Level.INFO)).collect(Collectors.toList());
     }
 }

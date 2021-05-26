@@ -22,10 +22,10 @@ class TransactionValidator extends AbstractValidator<Transaction> {
     @Override
     protected void validate() {
         if (entity.getAccountNumber() == null || entity.getAccountNumber().isEmpty()) {
-            addFatal(TRANSACTION, "Kontonummer saknas!");
+            addCritical(TRANSACTION, "Kontonummer saknas!");
         }
         if (entity.getAmount() == null) {
-            addFatal(TRANSACTION, "Belopp saknas!");
+            addCritical(TRANSACTION, "Belopp saknas!");
         }
     }
 

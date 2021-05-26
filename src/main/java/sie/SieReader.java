@@ -34,7 +34,8 @@ class SieReader {
     }
 
     public static Document read(String input) {
-        return DocumentFactory.parse(input);
+        DocumentFactory factory = DocumentFactory.from(input);
+        return factory.parse();
     }
 
     static String streamToString(InputStream input) {

@@ -8,7 +8,6 @@ import java.nio.charset.Charset;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
 import sie.validate.DocumentValidator;
-import sie.validate.SieError;
 import sie.validate.Validator;
 
 /**

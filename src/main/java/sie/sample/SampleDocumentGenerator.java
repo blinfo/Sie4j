@@ -274,11 +274,11 @@ public class SampleDocumentGenerator {
      */
     public static void main(String[] args) {
         Document doc = SampleDocumentGenerator.generate();
-        File file = new File(System.getProperty("user.home") + "/SIE-test-data/"
+        File target = new File(System.getProperty("user.home") + "/SIE-test-data/"
                 + doc.getMetaData().getCompany().getName() + " - "
                 + LocalDateTime.now().format(Entity.DATE_TIME_FORMAT)
                 + ".SE");
-        file.getParentFile().mkdirs();
-        Sie4j.fromDocument(doc, file);
+        target.getParentFile().mkdirs();
+        Sie4j.fromDocument(doc, target);
     }
 }
