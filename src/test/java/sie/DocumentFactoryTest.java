@@ -70,4 +70,18 @@ public class DocumentFactoryTest {
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_iso_voucher_date.SI"));
         assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
     }
+
+    @Test
+    public void test_file_with_12_digit_cid() {
+        String expectedMessage = "Organisationsnummer ska vara av formatet nnnnnn-nnnn";
+        DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_12_digit_cid.SI"));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
+    }
+
+    @Test
+    public void test_file_with_8_plus_4_digit_cid() {
+        String expectedMessage = "Organisationsnummer ska vara av formatet nnnnnn-nnnn";
+        DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_8-4_digit_cid.SI"));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
+    }
 }

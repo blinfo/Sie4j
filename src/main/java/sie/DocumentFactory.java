@@ -225,7 +225,7 @@ class DocumentFactory {
             try {
                 tb.amount(new BigDecimal(amount));
             } catch (NumberFormatException e) {
-                SieException ex = new SieException("Strängen \"" + amount + "\" kan inte hanteras som belopp", Entity.TRANSACTION);
+                SieException ex = new SieException("Strängen \"" + amount + "\" för balans, konto " + accountNumber + ", kan inte hanteras som belopp", Entity.TRANSACTION);
                 addCritical(ex);
                 throw ex;
             }
@@ -328,7 +328,7 @@ class DocumentFactory {
                         BigDecimal amount = new BigDecimal(amountString);
                         pbBuilder.amount(amount);
                     } catch (NumberFormatException e) {
-                        SieException ex = new SieException("Strängen \"" + amountString + "\" kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
+                        SieException ex = new SieException("Strängen \"" + amountString + "\" för periodbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
                         addCritical(ex);
                         throw ex;
                     }
@@ -345,7 +345,7 @@ class DocumentFactory {
                         try {
                             pbBuilder.quantity(Double.valueOf(quantity));
                         } catch (NumberFormatException e) {
-                            SieException ex = new SieException("Strängen \"" + quantity + "\" kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
+                            SieException ex = new SieException("Strängen \"" + quantity + "\" för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
                             addCritical(ex);
                             throw ex;
                         }
@@ -362,10 +362,21 @@ class DocumentFactory {
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.PERIODICAL_BUDGET:
                     YearMonth period = YearMonth.parse(l.get(2).replaceAll(REPLACE_STRING, ""), Entity.YEAR_MONTH_FORMAT);
-                    BigDecimal amount = new BigDecimal(l.get(l.size() - 1).replaceAll(REPLACE_STRING, ""));
-                    Integer index = findFinancialYearByPeriod(period).map(FinancialYear::getIndex).orElse(Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
-                    PeriodicalBudget budget = PeriodicalBudget.of(index, period, amount);
-                    accountBuilder.addPeriodicalBudget(budget);
+                    String amountString = l.get(l.size() - 1).replaceAll(REPLACE_STRING, "");
+                    if (amountString.contains(",")) {
+                        addInfo("Decimaltal måste anges med punkt.", Entity.PERIODICAL_BUDGET);
+                        amountString = amountString.replaceAll(",", ".");
+                    }
+                    try {
+                        BigDecimal amount = new BigDecimal(amountString);
+                        Integer index = findFinancialYearByPeriod(period).map(FinancialYear::getIndex).orElse(Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
+                        PeriodicalBudget budget = PeriodicalBudget.of(index, period, amount);
+                        accountBuilder.addPeriodicalBudget(budget);
+                    } catch (NumberFormatException e) {
+                        SieException ex = new SieException("Strängen \"" + amountString + "\" för periodbudget, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BUDGET);
+                        addCritical(ex);
+                        throw ex;
+                    }
                     break;
             }
         });
@@ -374,14 +385,37 @@ class DocumentFactory {
     private void handleAccountObjectBalance(String number, Account.Builder accountBuilder) {
         getLineParts(number, 2, Entity.OBJECT_OPENING_BALANCE, Entity.OBJECT_CLOSING_BALANCE).stream().forEach(l -> {
             ObjectBalance.Builder obBuilder = ObjectBalance.builder()
-                    .amount(new BigDecimal(l.get(4).replaceAll(REPLACE_STRING, "")))
                     .yearIndex(Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
             Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(3));
             if (matcher.find()) {
+                String amountString = l.get(4).replaceAll(REPLACE_STRING, "");
+                if (amountString.contains(",")) {
+                    addInfo("Decimaltal måste anges med punkt.", Entity.PERIODICAL_BALANCE);
+                    amountString = amountString.replaceAll(",", ".");
+                }
+                try {
+                    BigDecimal amount = new BigDecimal(amountString);
+                    obBuilder.amount(amount);
+                } catch (NumberFormatException e) {
+                    SieException ex = new SieException("Strängen \"" + amountString + "\" för objektbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
+                    addCritical(ex);
+                    throw ex;
+                }
                 obBuilder.objectId(Integer.valueOf(matcher.group(2)), matcher.group(3));
             }
             if (l.size() > 5) {
-                obBuilder.quantity(Double.valueOf(l.get(5)));
+                String quantity = l.get(5).replaceAll(REPLACE_STRING, "");
+                if (quantity.contains(",")) {
+                    addInfo("Decimaltal måste anges med punkt.", Entity.PERIODICAL_BALANCE);
+                    quantity = quantity.replaceAll(",", ".");
+                }
+                try {
+                    obBuilder.quantity(Double.valueOf(quantity));
+                } catch (NumberFormatException e) {
+                    SieException ex = new SieException("Strängen \"" + quantity + "\" för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
+                    addCritical(ex);
+                    throw ex;
+                }
             }
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.OBJECT_OPENING_BALANCE:
@@ -396,9 +430,16 @@ class DocumentFactory {
 
     private void handleAccountBalanceAndResult(String number, Account.Builder accountBuilder) {
         getLineParts(number, 2, Entity.OPENING_BALANCE, Entity.CLOSING_BALANCE, Entity.RESULT).stream().forEach(l -> {
+            String tag = l.get(0).trim();
+            String amountString = l.get(3).replaceAll(REPLACE_STRING, "");
+            if (amountString.contains(",")) {
+                addInfo("Decimaltal måste anges med punkt.", tag);
+                amountString = amountString.replaceAll(",", ".");
+            }
             try {
-                Balance balance = Balance.of(new BigDecimal(l.get(3).replaceAll(REPLACE_STRING, "")), Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
-                switch (l.get(0).replaceAll("#", "")) {
+                BigDecimal amount = new BigDecimal(amountString);
+                Balance balance = Balance.of(amount, Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
+                switch (tag.replaceAll("#", "")) {
                     case Entity.OPENING_BALANCE:
                         accountBuilder.addOpeningBalance(balance);
                         break;
@@ -410,7 +451,7 @@ class DocumentFactory {
                         break;
                 }
             } catch (NumberFormatException ex) {
-                SieException sieException = new SieException("Balansen för konto " + number + " är inte ett tal", ex, "#KONTO");
+                SieException sieException = new SieException("Strängen \"" + amountString + "\" för balans, konto " + number + ", kan inte hanteras som belopp", ex, tag);
                 addCritical(sieException);
                 throw sieException;
             }
@@ -505,14 +546,23 @@ class DocumentFactory {
         if (corporateId == null || corporateId.trim().isEmpty()) {
             return Optional.empty();
         }
+        if (corporateId.matches("\\d{8}-\\d{4}")) {
+            corporateId = corporateId.substring(2);
+            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn", Entity.CORPORATE_ID);
+        }
         if (corporateId.matches("\\d{6}-\\d{4}")) {
             return Optional.of(corporateId);
+        }
+        if (corporateId.matches("\\d*")) {
+            if (corporateId.length() > 10) {
+                corporateId = corporateId.substring(corporateId.length() - 10);
+            }
         }
         Optional<String> result = Optional.of(corporateId).filter(cid -> cid.matches("\\d{10}")).map(cid -> cid.substring(0, 6) + "-" + cid.substring(6));
         if (result.isPresent()) {
             addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn", Entity.CORPORATE_ID);
         } else {
-            addWarning("Organisationsnummer är av felaktigt format: " + corporateId, Entity.CORPORATE_ID);
+            addWarning("Organisationsnummer är inte av formatet nnnnnn-nnnn: " + corporateId, Entity.CORPORATE_ID);
         }
         return result;
     }

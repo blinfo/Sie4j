@@ -40,11 +40,12 @@ public class Sie4jTest {
         List<SieLog> logs = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_balance.SE")).getLogs();
         long numberOfLogs = 1;
         SieLog.Level level = SieLog.Level.CRITICAL;
-        String message = "Balansen för konto 1119 är inte ett tal";
+        String message = "Strängen \"\" för balans, konto 1119, kan inte hanteras som belopp";
         assertEquals("Should contain" + numberOfLogs + " log", numberOfLogs, logs.size());
         SieLog log = logs.get(0);
         String origin = "Document";
-        String tag = "#KONTO";
+        String tag = "#IB";
+        System.out.println(log);
         assertEquals("Level should be " + level, level, log.getLevel());
         assertEquals("Message should be " + message, message, log.getMessage());
         assertTrue("Log should contain an origin", log.getOrigin().isPresent());
