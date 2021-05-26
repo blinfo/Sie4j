@@ -56,29 +56,29 @@ public class Sie4j {
         return Serializer.asJson(input);
     }
 
-    public static String asJson(String input) {
-        return Serializer.asJson(input);
-    }
+//    public static String asJson(String input) {
+//        return Serializer.asJson(input);
+//    }
 
     public static String asJson(Document input) {
         return Serializer.asJson(input);
     }
 
     public static Document toDocument(InputStream input) {
-        return SieReader.read(input);
+        return SieReader.from(input).read();
     }
 
     public static Document toDocument(File input) {
         try {
-            return SieReader.read(new FileInputStream(input));
+            return SieReader.from(new FileInputStream(input)).read();
         } catch (FileNotFoundException ex) {
             throw new SieException(ex);
         }
     }
 
-    public static Document toDocument(String input) {
-        return SieReader.read(input);
-    }
+//    public static Document toDocument(String input) {
+//        return SieReader.read(input);
+//    }
 
     public static String fromDocument(Document input) {
         return SieWriter.write(input);

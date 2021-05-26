@@ -24,18 +24,18 @@ class Serializer {
      * @return String - JSON object as string.
      */
     public static String asJson(InputStream source) {
-        return asJson(SieReader.read(source));
+        return asJson(SieReader.from(source).read());
     }
 
-    /**
-     * Converts SIE data to JSON.
-     *
-     * @param source
-     * @return String - JSON object as string.
-     */
-    public static String asJson(String source) {
-        return asJson(SieReader.read(source));
-    }
+//    /**
+//     * Converts SIE data to JSON.
+//     *
+//     * @param source
+//     * @return String - JSON object as string.
+//     */
+//    public static String asJson(String source) {
+//        return asJson(SieReader.read(source));
+//    }
 
     /**
      * Converts Document to JSON.

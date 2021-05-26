@@ -31,6 +31,7 @@ import sie.domain.PeriodicalBudget;
 import sie.domain.Program;
 import sie.domain.Transaction;
 import sie.domain.Voucher;
+import sie.validate.SieLog;
 
 /**
  *
@@ -44,16 +45,28 @@ class DocumentFactory {
     private static final String REPLACE_STRING = "[\"\\{\\}]";
     private final String content;
     private final List<FinancialYear> years = new ArrayList<>();
+    private final List<SieLog> logs = new ArrayList<>();
+    private Document document;
 
     private DocumentFactory(String content) {
         this.content = content;
     }
 
     static DocumentFactory from(String content) {
-        return new DocumentFactory(content);
+        DocumentFactory factory = new DocumentFactory(content);
+        factory.parse();
+        return factory;
     }
 
-    Document parse() {
+    public Document getDocument() {
+        return document;
+    }
+
+    public List<SieLog> getLogs() {
+        return logs;
+    }
+
+    private void parse() {
         Document.Builder builder = Document.builder()
                 .metaData(getMetaData())
                 .accountingPlan(getAccountingPlan())
@@ -61,7 +74,7 @@ class DocumentFactory {
                 .objects(getObjects())
                 .vouchers(getVouchers());
         addChecksum(builder);
-        return builder.apply();
+        document = builder.apply();
     }
 
     private void addChecksum(Document.Builder builder) {

@@ -25,18 +25,25 @@ class SieReader {
             "╗", "╘", "╙", "╚", "╛", "╜", "╝", "╞", "╟", "╠", "╡", "╢", "╣", "╤",
             "╥", "╦", "╧", "╨", "╩", "╪", "╫", "╬", "╭", "╮", "╯", "╰", "╱", "╲",
             "╳", "╴", "╵", "╶", "╷", "╸", "╹", "╺", "╻", "╼", "╽", "╾", "╿");
+    private final String input;
 
-    private SieReader() {
+    private SieReader(String input) {
+        this.input = input;
     }
 
-    public static Document read(InputStream input) {
-        return SieReader.read(streamToString(input));
+    public static SieReader from(InputStream input) {
+        return new SieReader(streamToString(input));
     }
-
-    public static Document read(String input) {
+    
+    public Document read() {
         DocumentFactory factory = DocumentFactory.from(input);
-        return factory.parse();
+        return factory.getDocument();
     }
+//
+//    public static Document read(String input) {
+//        DocumentFactory factory = DocumentFactory.from(input);
+//        return factory.getDocument();
+//    }
 
     static String streamToString(InputStream input) {
         try {

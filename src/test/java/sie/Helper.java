@@ -15,6 +15,6 @@ public class Helper {
     }
 
     protected static Document getDocument(Integer typeNr, char type) {
-        return SieReader.read(getSIE(typeNr, type));
+        return SieReader.from(getSIE(typeNr, type)).read();
     }
 }

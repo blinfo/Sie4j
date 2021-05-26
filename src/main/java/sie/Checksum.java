@@ -31,6 +31,6 @@ class Checksum {
     }
 
     public static String calculate(InputStream input) {
-        return calculate(SieReader.read(input));
+        return calculate(SieReader.from(input).read());
     }
 }
