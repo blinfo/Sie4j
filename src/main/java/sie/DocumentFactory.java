@@ -25,6 +25,7 @@ class DocumentFactory {
 
     static final Pattern OBJECT_ID_PATTERN = Pattern.compile("(\"?(\\d+)\"?\\s\"?([0-9a-zA-Z]+)\"?)+");
     private static final Pattern DATE_PATTERN = Pattern.compile("\\d{8}");
+    private static final Pattern CURRENCY_PATTERN = Pattern.compile("[A-Z]{3}");
     private static final String REPLACE_STRING = "[\"\\{\\}]";
     private final String content;
     private final List<FinancialYear> years = new ArrayList<>();
@@ -80,10 +81,19 @@ class DocumentFactory {
             builder.financialYears(getFinancialYears());
         }
         if (hasLine(Entity.PERIOD_RANGE)) {
-            builder.periodRange(LocalDate.parse(getLineAsString(Entity.PERIOD_RANGE), Entity.DATE_FORMAT));
+            if (getType().equals(Document.Type.E1) || getType().equals(Document.Type.I4)) {
+                addInfo("Filer av typen " + getType() + " får inte innehålla den här taggen", Entity.PERIOD_RANGE);
+            } else {
+                builder.periodRange(LocalDate.parse(getLineAsString(Entity.PERIOD_RANGE), Entity.DATE_FORMAT));
+            }
         }
         if (hasLine(Entity.CURRENCY)) {
-            builder.currency(getLineAsString(Entity.CURRENCY));
+            String curr = getLineAsString(Entity.CURRENCY);
+            if (!CURRENCY_PATTERN.matcher(curr).matches()) {
+                addWarning("Valuta ska anges enligt ISO-4217. Felaktigt format: " + curr, Entity.CURRENCY);
+            } else {
+                builder.currency(getLineAsString(Entity.CURRENCY));
+            }
         }
         return builder.apply();
     }
@@ -345,20 +355,40 @@ class DocumentFactory {
             builder.id(getLineAsString(Entity.COMPANY_ID));
         }
         if (hasLine(Entity.COMPANY_SNI_CODE)) {
-            builder.sniCode(getLineAsString(Entity.COMPANY_SNI_CODE));
+            if (getType().equals(Document.Type.I4)) {
+                addInfo("Filer av typen " + getType() + " får inte innehålla den här taggen", Entity.COMPANY_SNI_CODE);
+            } else {
+                builder.sniCode(getLineAsString(Entity.COMPANY_SNI_CODE));
+            }
         }
         if (hasLine(Entity.COMPANY_TYPE)) {
             builder.type(Company.Type.from(getLineParts(Entity.COMPANY_TYPE).get(1).replaceAll(REPLACE_STRING, "")));
         }
         if (hasLine(Entity.CORPORATE_ID)) {
             List<String> lineParts = getLineParts(Entity.CORPORATE_ID);
-            builder.corporateID(lineParts.get(1).replaceAll(REPLACE_STRING, ""));
+            getCorporateID(lineParts.get(1).replaceAll(REPLACE_STRING, "")).ifPresent(builder::corporateID);
             if (lineParts.size() > 2 && lineParts.get(2).replaceAll(REPLACE_STRING, "").trim().matches("\\d+")) {
                 builder.aquisitionNumber(Integer.valueOf(lineParts.get(2).replaceAll(REPLACE_STRING, "")));
             }
         }
         getAddress().ifPresent(builder::address);
         return builder.apply();
+    }
+
+    private Optional<String> getCorporateID(String corporateId) {
+        if (corporateId == null || corporateId.trim().isEmpty()) {
+            return Optional.empty();
+        }
+        if (corporateId.matches("\\d{6}-\\d{4}")) {
+            return Optional.of(corporateId);
+        }
+        Optional<String> result = Optional.of(corporateId).filter(cid -> cid.matches("\\d{10}")).map(cid -> cid.substring(0, 6) + "-" + cid.substring(6));
+        if (result.isPresent()) {
+            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn", Entity.CORPORATE_ID);
+        } else {
+            addWarning("Organisationsnummer är av felaktigt format: " + corporateId, Entity.CORPORATE_ID);
+        }
+        return result;
     }
 
     private Optional<Address> getAddress() {
@@ -508,6 +538,28 @@ class DocumentFactory {
     }
 
     private void addCritical(SieException sieException) {
-        SieLog.of(getClass(), sieException);
+        logs.add(SieLog.of(getClass(), sieException));
+    }
+
+    private void addWarning(String message, String tag) {
+        addWarning(Document.class, message, tag);
+    }
+
+    private void addWarning(Class origin, String message, String tag) {
+        if (!tag.startsWith("#")) {
+            tag = "#" + tag;
+        }
+        logs.add(SieLog.warning(origin, message, tag));
+    }
+
+    private void addInfo(String message, String tag) {
+        addInfo(Document.class, message, tag);
+    }
+
+    private void addInfo(Class origin, String message, String tag) {
+        if (!tag.startsWith("#")) {
+            tag = "#" + tag;
+        }
+        logs.add(SieLog.info(origin, message, tag));
     }
 }

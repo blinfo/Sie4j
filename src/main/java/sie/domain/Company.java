@@ -45,13 +45,7 @@ public class Company implements Entity {
     }
 
     public Optional<String> getCorporateID() {
-        if (corporateId == null || corporateId.trim().isEmpty()) {
-            return Optional.empty();
-        }
-        if (corporateId.matches("\\d{6}-\\d{4}")) {
-            return Optional.of(corporateId);
-        }
-        return Optional.of(corporateId).filter(cid -> cid.matches("\\d{10}")).map(cid -> cid.substring(0, 6) + "-" + cid.substring(6));
+        return Optional.ofNullable(corporateId);
     }
 
     public Optional<String> getSniCode() {

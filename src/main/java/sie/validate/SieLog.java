@@ -30,6 +30,30 @@ public class SieLog implements Comparable<SieLog> {
         return builder.build();
     }
 
+    public static SieLog info(Class origin, String message) {
+        return info(origin, message, null);
+    }
+
+    public static SieLog info(Class origin, String message, String tag) {
+        return builder().origin(origin).message(message).tag(tag).level(Level.INFO).build();
+    }
+
+    public static SieLog warning(Class origin, String message) {
+        return warning(origin, message, null);
+    }
+
+    public static SieLog warning(Class origin, String message, String tag) {
+        return builder().origin(origin).message(message).tag(tag).level(Level.WARNING).build();
+    }
+
+    public static SieLog critical(Class origin, String message) {
+        return critical(origin, message, null);
+    }
+
+    public static SieLog critical(Class origin, String message, String tag) {
+        return builder().origin(origin).message(message).tag(tag).level(Level.INFO).build();
+    }
+
     static SieLog.Builder builder() {
         return new Builder();
     }
