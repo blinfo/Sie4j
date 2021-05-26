@@ -1,10 +1,12 @@
 package sie;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +38,10 @@ class DocumentFactory {
         this.content = content;
     }
 
+    static DocumentFactory from(InputStream stream) {
+        return from(SieReader.streamToString(stream));
+    }
+
     static DocumentFactory from(String content) {
         DocumentFactory factory = new DocumentFactory(content);
         factory.parse();
@@ -48,6 +54,13 @@ class DocumentFactory {
 
     public List<SieLog> getLogs() {
         return logs;
+    }
+    
+    public List<SieLog> getWarnings() {
+        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING)).collect(Collectors.toList());
+    }
+    public List<SieLog> getCriticalErrors() {
+        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL)).collect(Collectors.toList());
     }
 
     private void parse() {
@@ -125,9 +138,13 @@ class DocumentFactory {
             builder = Voucher.builder();
             Optional.ofNullable(parts.get(1) == null || parts.get(1).isEmpty() ? null : parts.get(1).replaceAll(REPLACE_STRING, ""))
                     .ifPresent(builder::series);
-            Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
-                    ? null : parts.get(2).replaceAll(REPLACE_STRING, ""))
-                    .map(Integer::valueOf).ifPresent(builder::number);
+            if (getType().equals(Document.Type.I4)) {
+                addInfo("Filer av typen " + getType() + " bör inte innehålla verifikationsnummer", Entity.VOUCHER);
+            } else {
+                Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
+                        ? null : parts.get(2).replaceAll(REPLACE_STRING, ""))
+                        .map(Integer::valueOf).ifPresent(builder::number);
+            }
             builder.date(LocalDate.parse(parts.get(3).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT));
             if (parts.size() > 4) {
                 Optional.ofNullable(parts.get(4) == null || handleQuotes(parts.get(4)).isEmpty() ? null : handleQuotes(parts.get(4)))
@@ -316,7 +333,7 @@ class DocumentFactory {
     }
 
     private List<AccountingDimension> getDimensions() {
-        return getLinesParts(Entity.DIMENSION).stream().map(line -> {
+        List<AccountingDimension> dimList = getLinesParts(Entity.DIMENSION).stream().map(line -> {
             if (line.size() > 3) {
                 return AccountingDimension.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
                         line.get(2).replaceAll(REPLACE_STRING, ""),
@@ -325,21 +342,45 @@ class DocumentFactory {
             return AccountingDimension.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
                     line.get(2).replaceAll(REPLACE_STRING, ""));
         }).collect(Collectors.toList());
+        if (!dimList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
+            addWarning("Filer av typen " + getType() + " får inte innehålla taggen", Entity.DIMENSION);
+            return Collections.emptyList();
+        }
+        return dimList;
     }
 
     private List<AccountingObject> getObjects() {
-        return getLinesParts(Entity.OBJECT).stream().map(line -> {
+        List<AccountingObject> objList = getLinesParts(Entity.OBJECT).stream().map(line -> {
             return AccountingObject.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
                     line.get(2).replaceAll(REPLACE_STRING, ""),
                     handleQuotes(line.get(3)));
         }).collect(Collectors.toList());
+        if (!objList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
+            addWarning("Filer av typen " + getType() + " får inte innehålla taggen", Entity.OBJECT);
+            return Collections.emptyList();
+        }
+        return objList;
     }
 
     private Program getProgram() {
+        if (!hasLine(Entity.PROGRAM)) {
+            addWarning("Programinformation saknas", Entity.PROGRAM);
+        }
         List<String> lineParts = getLineParts(Entity.PROGRAM);
+        if (lineParts.size() < 2) {
+            addWarning("Programnamn saknas", Entity.PROGRAM);
+        }
         Boolean hasVersion = lineParts.size() > 2 && lineParts.get(2) != null && !handleQuotes(lineParts.get(2)).isEmpty();
         String version = Optional.ofNullable(hasVersion ? handleQuotes(lineParts.get(2)) : null).orElse(null);
-        return Program.of(lineParts.get(1).replaceAll(REPLACE_STRING, ""), version);
+        if (version == null) {
+            addWarning("Programversion saknas", Entity.PROGRAM);
+        }
+        try {
+            return Program.of(lineParts.get(1).replaceAll(REPLACE_STRING, ""), version);
+        } catch (NullPointerException ex) {
+            addWarning("Kunde inte skapa programinformation från raden", Entity.PROGRAM);
+            return null;
+        }
     }
 
     private Generated getGenerated() {
