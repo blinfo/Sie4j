@@ -1,9 +1,12 @@
 package sie.validate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import sie.SieException;
 import sie.domain.Document;
+import sie.domain.Program;
 
 /**
  *
@@ -12,26 +15,26 @@ import sie.domain.Document;
 public class DocumentValidator implements Validator {
 
     private final Document entity;
-    private final Document.Type type;
+    private final LocalDateTime timestamp;
     private final List<SieLog> logs;
 
     private DocumentValidator() {
-        this(null, null);
+        this(null);
     }
 
-    private DocumentValidator(Document document, Document.Type type) {
+    private DocumentValidator(Document document) {
         this.entity = document;
-        this.type = type;
+        this.timestamp = LocalDateTime.now();
         this.logs = new ArrayList<>();
     }
 
     public static DocumentValidator from(Document document) {
-        DocumentValidator documentValidator = new DocumentValidator(document, document.getMetaData().getSieType());
+        DocumentValidator documentValidator = new DocumentValidator(document);
         documentValidator.validate();
         return documentValidator;
     }
 
-    public static Validator of(SieException ex, Class origin) {
+    public static DocumentValidator of(SieException ex, Class origin) {
         DocumentValidator documentValidator = new DocumentValidator();
         SieLog.Builder builder = SieLog.builder().level(SieLog.Level.CRITICAL).message(ex.getMessage()).origin(origin);
         ex.getTag().ifPresent(builder::tag);
@@ -44,26 +47,44 @@ public class DocumentValidator implements Validator {
         return new ArrayList<>(logs);
     }
 
-    private void validate() {
-        logs.addAll(MetaDataValidator.from(entity.getMetaData()).getLogs());
-        validateAccountingPlan();
-        validateVouchers();
-        validateBalances();
+    public Optional<Document.Type> getType() {
+        return Optional.of(entity).map(e -> e.getMetaData().getSieType());
     }
 
-    private void validateAccountingPlan() {
-        if (!type.equals(Document.Type.I4) && !entity.getAccountingPlan().isPresent()) {
-            addWarning("#KONTO", "Inga konton funna");
-        } else {
-            entity.getAccountingPlan().ifPresent(plan -> {
-                addLogs(AccountingPlanValidator.of(plan, type).getLogs());
-            });
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public Optional<Program> getProgram() {
+        return Optional.of(entity).map(e -> e.getMetaData().getProgram());
+    }
+
+    private void validate() {
+        if (entity != null) {
+            logs.addAll(MetaDataValidator.from(entity.getMetaData()).getLogs());
+            validateAccountingPlan();
+            validateVouchers();
+            validateBalances();
         }
     }
 
+    private void validateAccountingPlan() {
+        getType().ifPresent(type -> {
+            if (!type.equals(Document.Type.I4) && !entity.getAccountingPlan().isPresent()) {
+                addWarning("#KONTO", "Inga konton funna");
+            } else {
+                entity.getAccountingPlan().ifPresent(plan -> {
+                    addLogs(AccountingPlanValidator.of(plan, type).getLogs());
+                });
+            }
+        });
+    }
+
     private void validateVouchers() {
-        entity.getVouchers().forEach(voucher -> {
-            addLogs(VoucherValidator.of(voucher, type).getLogs());
+        getType().ifPresent(type -> {
+            entity.getVouchers().forEach(voucher -> {
+                addLogs(VoucherValidator.of(voucher, type).getLogs());
+            });
         });
     }
 
@@ -80,6 +101,8 @@ public class DocumentValidator implements Validator {
     }
 
     private void validateBalances() {
-        addLogs(BalanceValidator.from(entity).getLogs());
+        if (entity != null) {
+            addLogs(BalanceValidator.from(entity).getLogs());
+        }
     }
 }

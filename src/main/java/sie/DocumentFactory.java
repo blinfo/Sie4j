@@ -13,24 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import sie.domain.Account;
-import sie.domain.AccountingDimension;
-import sie.domain.AccountingObject;
-import sie.domain.AccountingPlan;
-import sie.domain.Address;
-import sie.domain.Balance;
-import sie.domain.Company;
-import sie.domain.Document;
-import sie.domain.Entity;
-import sie.domain.FinancialYear;
-import sie.domain.Generated;
-import sie.domain.MetaData;
-import sie.domain.ObjectBalance;
-import sie.domain.PeriodicalBalance;
-import sie.domain.PeriodicalBudget;
-import sie.domain.Program;
-import sie.domain.Transaction;
-import sie.domain.Voucher;
+import sie.domain.*;
 import sie.validate.SieLog;
 
 /**
@@ -315,7 +298,9 @@ class DocumentFactory {
                         break;
                 }
             } catch (NumberFormatException ex) {
-                throw new SieException("Balansen för konto " + number + " är inte ett tal", ex, "#KONTO");
+                SieException sieException = new SieException("Balansen för konto " + number + " är inte ett tal", ex, "#KONTO");
+                addCritical(sieException);
+                throw sieException;
             }
         });
     }
@@ -520,5 +505,9 @@ class DocumentFactory {
             result = result.substring(0, result.length() - 1);
         }
         return result.replaceAll("\\\\\"", "\"").replaceAll("[{}]", "");
+    }
+
+    private void addCritical(SieException sieException) {
+        SieLog.of(getClass(), sieException);
     }
 }

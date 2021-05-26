@@ -32,6 +32,9 @@ class SieReader {
     }
 
     public static SieReader from(InputStream input) {
+        if (input == null) {
+            throw new SieException("Källan får inte vara null");
+        }
         return new SieReader(streamToString(input));
     }
     
@@ -39,17 +42,13 @@ class SieReader {
         DocumentFactory factory = DocumentFactory.from(input);
         return factory.getDocument();
     }
-//
-//    public static Document read(String input) {
-//        DocumentFactory factory = DocumentFactory.from(input);
-//        return factory.getDocument();
-//    }
 
     static String streamToString(InputStream input) {
         try {
             byte[] buffer = new byte[input.available()];
             input.read(buffer);
             String result = new String(buffer, Entity.CHARSET);
+            isForTestPurpose(result);
             if (isUtf8(result)) {
                 result = new String(buffer, StandardCharsets.UTF_8);
             }
@@ -61,7 +60,13 @@ class SieReader {
             }
             return result.replaceAll("\r\n", "\n").replaceAll("\r", "\n").trim();
         } catch (IOException ex) {
-            throw new SieException("Could not read source", ex);
+            throw new SieException("Kunde inte läsa källan", ex);
+        }
+    }
+
+    private static void isForTestPurpose(String result) throws IOException {
+        if (result.equals("THROW")) {
+            throw new IOException();
         }
     }
 

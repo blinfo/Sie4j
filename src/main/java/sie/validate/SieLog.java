@@ -1,6 +1,7 @@
 package sie.validate;
 
 import java.util.Optional;
+import sie.SieException;
 
 /**
  *
@@ -18,6 +19,15 @@ public class SieLog implements Comparable<SieLog> {
         this.level = level;
         this.tag = tag;
         this.message = message;
+    }
+
+    public static SieLog of(Class origin, SieException exception) {
+        SieLog.Builder builder = builder()
+                .level(Level.CRITICAL)
+                .origin(origin)
+                .message(exception.getLocalizedMessage());
+        exception.getTag().ifPresent(builder::tag);
+        return builder.build();
     }
 
     static SieLog.Builder builder() {

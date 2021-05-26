@@ -18,7 +18,7 @@ public interface Validator {
     default List<SieLog> getWarnings() {
         return getLogs().stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING)).collect(Collectors.toList());
     }
-    
+
     default List<SieLog> getInfo() {
         return getLogs().stream().filter(log -> log.getLevel().equals(SieLog.Level.INFO)).collect(Collectors.toList());
     }

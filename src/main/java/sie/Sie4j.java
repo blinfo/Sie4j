@@ -8,7 +8,6 @@ import java.nio.charset.Charset;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
 import sie.validate.DocumentValidator;
-import sie.validate.Validator;
 
 /**
  * A java parser for SIE data.
@@ -56,10 +55,6 @@ public class Sie4j {
         return Serializer.asJson(input);
     }
 
-//    public static String asJson(String input) {
-//        return Serializer.asJson(input);
-//    }
-
     public static String asJson(Document input) {
         return Serializer.asJson(input);
     }
@@ -75,10 +70,6 @@ public class Sie4j {
             throw new SieException(ex);
         }
     }
-
-//    public static Document toDocument(String input) {
-//        return SieReader.read(input);
-//    }
 
     public static String fromDocument(Document input) {
         return SieWriter.write(input);
@@ -100,10 +91,6 @@ public class Sie4j {
         return SampleDocumentGenerator.generate();
     }
 
-    public static String calculateChecksum(String input) {
-        return Checksum.calculate(input);
-    }
-
     public static String calculateChecksum(Document input) {
         return Checksum.calculate(input);
     }
@@ -112,7 +99,7 @@ public class Sie4j {
         return Checksum.calculate(input);
     }
 
-    public static Validator validate(InputStream input) {
+    public static DocumentValidator validate(InputStream input) {
         try {
             return DocumentValidator.from(toDocument(input));
         } catch (SieException ex) {
