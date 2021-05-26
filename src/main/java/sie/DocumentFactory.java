@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -55,10 +56,11 @@ class DocumentFactory {
     public List<SieLog> getLogs() {
         return logs;
     }
-    
+
     public List<SieLog> getWarnings() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING)).collect(Collectors.toList());
     }
+
     public List<SieLog> getCriticalErrors() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL)).collect(Collectors.toList());
     }
@@ -138,14 +140,40 @@ class DocumentFactory {
             builder = Voucher.builder();
             Optional.ofNullable(parts.get(1) == null || parts.get(1).isEmpty() ? null : parts.get(1).replaceAll(REPLACE_STRING, ""))
                     .ifPresent(builder::series);
-            if (getType().equals(Document.Type.I4)) {
+            Optional<String> optVoucherNumber = Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
+                    ? null : parts.get(2).replaceAll(REPLACE_STRING, ""));
+            if (getType().equals(Document.Type.I4) && optVoucherNumber.isPresent()) {
                 addInfo("Filer av typen " + getType() + " bör inte innehålla verifikationsnummer", Entity.VOUCHER);
             } else {
-                Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
-                        ? null : parts.get(2).replaceAll(REPLACE_STRING, ""))
-                        .map(Integer::valueOf).ifPresent(builder::number);
+                optVoucherNumber.map(Integer::valueOf).ifPresent(builder::number);
             }
-            builder.date(LocalDate.parse(parts.get(3).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT));
+            if (parts.size() > 3) {
+                String dateString = parts.get(3).replaceAll(REPLACE_STRING, "");
+                if (dateString.contains("-")) {
+                    addInfo("Datum ska anges med åtta siffror - ååååmmdd utan bindestreck", Entity.VOUCHER);
+                    dateString = dateString.replaceAll("-", "");
+                }
+                if (dateString.length() == 6) {
+                    addInfo("Datum ska anges med åtta siffror - ååååmmdd - inte sex: \"" + dateString + "\"", Entity.VOUCHER);
+                    dateString = "20" + dateString;
+                }
+                if (dateString.isEmpty()) {
+                    SieException sieException = new SieException("Verifikationsdatum är tomt", Entity.VOUCHER);
+                    addCritical(sieException);
+                    throw sieException;
+                }
+                try {
+                    builder.date(LocalDate.parse(dateString, Entity.DATE_FORMAT));
+                } catch (DateTimeParseException e) {
+                    SieException sieException = new SieException("Kan inte läsa verifikationsdatum: \"" + dateString + "\"", e, Entity.VOUCHER);
+                    addCritical(sieException);
+                    throw sieException;
+                }
+            } else {
+                SieException sieException = new SieException("Verifikationsdatum saknas", Entity.VOUCHER);
+                addCritical(sieException);
+                throw sieException;
+            }
             if (parts.size() > 4) {
                 Optional.ofNullable(parts.get(4) == null || handleQuotes(parts.get(4)).isEmpty() ? null : handleQuotes(parts.get(4)))
                         .ifPresent(builder::text);

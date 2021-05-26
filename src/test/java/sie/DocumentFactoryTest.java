@@ -1,9 +1,9 @@
 package sie;
 
-import java.util.List;
 import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import org.junit.Test;
 import sie.domain.Voucher;
 
@@ -34,5 +34,40 @@ public class DocumentFactoryTest {
                 .stream()
                 .filter(voucher -> voucher.getNumber().isPresent()).findAny();
         assertFalse("Vouchers should not contain number", optVoucher.isPresent());
+    }
+
+    @Test
+    public void test_file_with_empty_voucher_date() {
+        String expectedMessage = "Verifikationsdatum är tomt";
+        SieException ex = assertThrows("", SieException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_empty_voucher_date.SI")));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+    }
+
+    @Test
+    public void test_file_with_missing_voucher_date() {
+        String expectedMessage = "Verifikationsdatum saknas";
+        SieException ex = assertThrows("", SieException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_voucher_date.SI")));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+    }
+
+    @Test
+    public void test_file_with_critical_voucher_date_error() {
+        String expectedMessage = "Kan inte läsa verifikationsdatum: \"rappakalja\"";
+        SieException ex = assertThrows("", SieException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_critical_voucher_date_error.SI")));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+    }
+
+    @Test
+    public void test_file_with_erroneous_voucher_date() {
+        String expectedMessage = "Datum ska anges med åtta siffror - ååååmmdd - inte sex: \"180501\"";
+        DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_erroneous_voucher_date.SI"));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
+    }
+
+    @Test
+    public void test_file_with_iso_voucher_date() {
+        String expectedMessage = "Datum ska anges med åtta siffror - ååååmmdd utan bindestreck";
+        DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_iso_voucher_date.SI"));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
     }
 }
