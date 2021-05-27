@@ -10,7 +10,6 @@ import sie.domain.Document;
 class AccountingPlanValidator extends AbstractValidator<AccountingPlan> {
 
     private static final String ACCOUNT = "#KONTO",
-            ACCOUNTING_PLAN_TYPE = "#KPTYP",
             SRU = "#SRU";
 
     private AccountingPlanValidator(AccountingPlan entity, Document.Type type) {
@@ -23,11 +22,6 @@ class AccountingPlanValidator extends AbstractValidator<AccountingPlan> {
 
     @Override
     protected void validate() {
-        entity.getType().ifPresent(type -> {
-            if (isNullOrBlank(type)) {
-                addInfo(ACCOUNTING_PLAN_TYPE, "Kontoplanstypen saknas");
-            }
-        });
         validate_accounts();
     }
 
@@ -37,15 +31,12 @@ class AccountingPlanValidator extends AbstractValidator<AccountingPlan> {
             return;
         }
         entity.getAccounts().forEach(acc -> {
-            if (!acc.getSruCodes().isEmpty()) {
+            if ((type.equals(Document.Type.E1) || type.equals(Document.Type.E2)) && !acc.getSruCodes().isEmpty()) {
                 acc.getSruCodes().forEach(sru -> {
                     if (isNullOrBlank(sru)) {
                         addInfo(SRU, "SRU-kod för konto " + acc.getNumber() + " saknas");
                     }
                 });
-            }
-            if (!acc.getNumberAsInteger().isPresent()) {
-                addWarning(ACCOUNT, "Kontot har inte ett numeriskt värde: " + acc.getNumber());
             }
         });
     }

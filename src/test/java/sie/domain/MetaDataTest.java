@@ -26,7 +26,7 @@ public class MetaDataTest extends Helper {
 
     @Test
     public void test_Document_isRead() {
-        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI"));
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE1_file_is_read.SE"));
         assertTrue("Document should be signaled as read", doc.getMetaData().isRead());
     }
 

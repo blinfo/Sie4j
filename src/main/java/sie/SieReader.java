@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import sie.domain.Document;
 import sie.domain.Entity;
+import sie.validate.DocumentValidator;
 
 /**
  *
@@ -25,10 +26,23 @@ class SieReader {
             "╗", "╘", "╙", "╚", "╛", "╜", "╝", "╞", "╟", "╠", "╡", "╢", "╣", "╤",
             "╥", "╦", "╧", "╨", "╩", "╪", "╫", "╬", "╭", "╮", "╯", "╰", "╱", "╲",
             "╳", "╴", "╵", "╶", "╷", "╸", "╹", "╺", "╻", "╼", "╽", "╾", "╿");
-    private final String input;
+    private DocumentValidator validator;
+    private DocumentFactory factory;
+    private Document document;
 
     private SieReader(String input) {
-        this.input = input;
+        init(input);
+    }
+
+    private void init(String input) {
+        try {
+            factory = DocumentFactory.from(input);
+            document = factory.getDocument();
+            validator = DocumentValidator.from(document);
+            validator.addLogs(factory.getLogs());
+        } catch (SieException ex) {
+            validator = DocumentValidator.of(ex, DocumentFactory.class);
+        }
     }
 
     public static SieReader from(InputStream input) {
@@ -37,10 +51,17 @@ class SieReader {
         }
         return new SieReader(streamToString(input));
     }
-    
+
     public Document read() {
-        DocumentFactory factory = DocumentFactory.from(input);
-        return factory.getDocument();
+        if (!validator.isValid()) {
+            String message = validator.getCriticalErrors().get(0).getMessage();
+            throw new SieException(message);
+        }
+        return document;
+    }
+    
+    public DocumentValidator validate() {
+        return validator;
     }
 
     static String streamToString(InputStream input) {

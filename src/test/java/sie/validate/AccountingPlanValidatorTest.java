@@ -23,30 +23,17 @@ public class AccountingPlanValidatorTest extends AbstractValidatorTest {
     }
 
     @Test
-    public void test_accountingPlan() {
-        Document doc = getDocument("BLBLOV_SIE4_UTF_8_with_errors.SE");
+    public void test_accountingPlan_sie2() {
+        Document doc = getDocument("BLBLOV_SIE2_UTF_8_with_errors.SE");
         Document.Type type = doc.getMetaData().getSieType();
         doc.getAccountingPlan().ifPresent(plan -> {
             List<SieLog> logs = AccountingPlanValidator.of(plan, doc.getMetaData().getSieType()).getLogs();
-            long numberOfLogs = 2;
-            String logMessage1 = "Kontot har inte ett numeriskt värde: 11AF";
-            SieLog.Level level1 = SieLog.Level.WARNING;
-            String tag1 = "#KONTO";
-            String origin1 = AccountingPlan.class.getSimpleName();
-            SieLog log1 = logs.get(0);
-            assertEquals("Should contain " + numberOfLogs + " logs", numberOfLogs, logs.size());
-            assertEquals("Log message should be " + logMessage1, logMessage1, log1.getMessage());
-            assertEquals("Log level should be " + level1, level1, log1.getLevel());
-            assertTrue("Log should have a tag", log1.getTag().isPresent());
-            assertEquals("Log tag should be " + tag1, tag1, log1.getTag().get());
-            assertTrue("Log should have an origin", log1.getOrigin().isPresent());
-            assertEquals("Log origin should be " + origin1, origin1, log1.getOrigin().get());
-            
+            long numberOfLogs = 1;
             String logMessage2 = "SRU-kod för konto 1110 saknas";
             SieLog.Level level2 = SieLog.Level.INFO;
             String tag2 = "#SRU";
             String origin2 = AccountingPlan.class.getSimpleName();
-            SieLog log2 = logs.get(1);
+            SieLog log2 = logs.get(0);
             assertEquals("Should contain " + numberOfLogs + " logs", numberOfLogs, logs.size());
             assertEquals("Log message should be " + logMessage2, logMessage2, log2.getMessage());
             assertEquals("Log level should be " + level2, level2, log2.getLevel());
@@ -54,7 +41,6 @@ public class AccountingPlanValidatorTest extends AbstractValidatorTest {
             assertEquals("Log tag should be " + tag2, tag2, log2.getTag().get());
             assertTrue("Log should have an origin", log2.getOrigin().isPresent());
             assertEquals("Log origin should be " + origin2, origin2, log2.getOrigin().get());
-            
         });
     }
 }

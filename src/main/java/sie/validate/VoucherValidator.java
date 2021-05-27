@@ -22,10 +22,10 @@ class VoucherValidator extends AbstractValidator<Voucher> {
 
     @Override
     protected void validate() {
-        if (Integer.valueOf(type.getNumber()) < 4) {
-            addCritical(VOUCHER, "Filer av typen " + type.getNumber() + " får inte innehålla verifikationer!");
-            return;
-        }
+//        if (Integer.valueOf(type.getNumber()) < 4) {
+//            addCritical(VOUCHER, "Filer av typen " + type.getNumber() + " får inte innehålla verifikationer!");
+//            return;
+//        }
         if (entity.getDate() == null) {
             addCritical(VOUCHER, "Verifikationsdatum saknas!");
         }

@@ -8,7 +8,7 @@ import sie.Helper;
 
 /**
  *
- * @author Håkan Lidén 
+ * @author Håkan Lidén
  *
  */
 public class GeneratedTest extends Helper {

@@ -44,7 +44,7 @@ import sie.validate.DocumentValidator;
  * @author Håkan Lidén
  */
 public class Sie4j {
-
+    
     /**
      * Convert SIE data to JSON
      *
@@ -101,7 +101,8 @@ public class Sie4j {
 
     public static DocumentValidator validate(InputStream input) {
         try {
-            return DocumentValidator.from(toDocument(input));
+            SieReader reader = SieReader.from(input);
+            return reader.validate();
         } catch (SieException ex) {
             return DocumentValidator.of(ex, Document.class);
         }

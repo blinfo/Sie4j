@@ -14,12 +14,19 @@ import sie.domain.Document;
 public class DocumentValidatorTest extends AbstractValidatorTest {
 
     @Test
-    public void test_file_with_errors() {
+    public void test_SIE4_file_with_errors() {
         Document document = getDocument("BLBLOV_SIE4_UTF_8_with_errors.SE");
         DocumentValidator validator = DocumentValidator.from(document);
         assertFalse("Logs should not be empty", validator.getLogs().isEmpty());
-        assertEquals("Should contain 1 info", 1l, validator.getInfo().size());
-        assertEquals("Should contain 26 warnings", 26l, validator.getWarnings().size());
+        assertEquals("Should contain 25 warnings", 25l, validator.getWarnings().size());
+    }
+
+    @Test
+    public void test_SIE2_file_with_errors() {
+        Document document = getDocument("BLBLOV_SIE2_UTF_8_with_errors.SE");
+        DocumentValidator validator = DocumentValidator.from(document);
+        assertFalse("Logs should not be empty", validator.getLogs().isEmpty());
+        assertEquals("Should contain 1 warnings", 1l, validator.getWarnings().size());
     }
 
     @Test
@@ -38,5 +45,17 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         assertEquals("Origin should be " + origin.getSimpleName(), origin.getSimpleName(), critical.getOrigin().get());
         assertTrue("Log should contain tag", critical.getTag().isPresent());
         assertEquals("Tag should be " + tag, tag, critical.getTag().get());
+    }
+
+    @Test
+    public void test_balances_and_results_against_vouchers() {
+        Document document = getDocument("Arousells_Visning_AB.SE");
+        DocumentValidator validator = DocumentValidator.from(document);
+        long expectedNumberOfWarnings = 82;
+        String expectedFirstMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna. Resultat: -25035.36 Summa: 0.00";
+        assertTrue("Log list should not be empty", validator.getLogs().size() > 0);
+        assertTrue("Validator should show imbalance", validator.hasResultBalanceVsVoucherImbalance());
+        assertEquals("Validator should contain " + expectedNumberOfWarnings + " warnings", expectedNumberOfWarnings, validator.getWarnings().size());
+        assertEquals("First message should be " + expectedFirstMessage, expectedFirstMessage, validator.getWarnings().get(0).getMessage());
     }
 }

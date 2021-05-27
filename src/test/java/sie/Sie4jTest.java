@@ -25,7 +25,7 @@ public class Sie4jTest {
         String message = "Kontonummer får inte vara null eller tom sträng";
         assertEquals("Should contain" + numberOfLogs + " log", numberOfLogs, logs.size());
         SieLog log = logs.get(0);
-        String origin = "Document";
+        String origin = DocumentFactory.class.getSimpleName();
         String tag = "#KONTO";
         assertEquals("Level should be " + level, level, log.getLevel());
         assertEquals("Message should be " + message, message, log.getMessage());
@@ -43,9 +43,8 @@ public class Sie4jTest {
         String message = "Strängen \"\" för balans, konto 1119, kan inte hanteras som belopp";
         assertEquals("Should contain" + numberOfLogs + " log", numberOfLogs, logs.size());
         SieLog log = logs.get(0);
-        String origin = "Document";
+        String origin = DocumentFactory.class.getSimpleName();
         String tag = "#IB";
-        System.out.println(log);
         assertEquals("Level should be " + level, level, log.getLevel());
         assertEquals("Message should be " + message, message, log.getMessage());
         assertTrue("Log should contain an origin", log.getOrigin().isPresent());

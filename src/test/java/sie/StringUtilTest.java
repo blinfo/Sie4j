@@ -24,6 +24,6 @@ public class StringUtilTest {
         List<String> parts2 = StringUtil.getParts(secondLine);
         assertEquals("Second line should contain " + numberOfParts + "parts", numberOfParts, parts.size());
         assertEquals("Second line part 4 should be " + expectedAmount2, expectedAmount2, parts2.get(4));
-        
+
     }
 }

@@ -25,7 +25,7 @@ public class ProgramTest extends Helper {
         String expectedResult = "2018.2.101";
         assertEquals("Program version should be " + expectedResult, expectedResult, program.getVersion());
     }
-    
+
     @Test
     public void test_Program_getVersion_with_quotes() {
         String expectedResult = "1.0 - \"Oblique Ozelot\" - alpha";

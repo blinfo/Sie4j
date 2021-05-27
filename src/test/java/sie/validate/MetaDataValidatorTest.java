@@ -19,5 +19,5 @@ public class MetaDataValidatorTest extends AbstractValidatorTest {
             System.out.println("");
         });
     }
-    
+
 }

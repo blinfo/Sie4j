@@ -130,6 +130,10 @@ class DocumentFactory {
 
     private List<Voucher> getVouchers() {
         List<Voucher> vouchers = new ArrayList<>();
+        if (hasLine(Entity.VOUCHER) && Integer.valueOf(getType().getNumber()) < 4) {
+            addWarning("Filer av typen " + getType() + " får inte innehålla verifikationer", Entity.VOUCHER);
+            return vouchers;
+        }
         List<String> lines = Stream.of(content.split("\n"))
                 .filter(line -> {
                     String l = line.trim();
@@ -278,6 +282,18 @@ class DocumentFactory {
                 .map(line -> {
                     List<String> accountParts = StringUtil.getParts(line);
                     String number = accountParts.get(1).replaceAll(REPLACE_STRING, "");
+                    if (number == null || number.trim().isEmpty()) {
+                        SieException ex = new SieException("Kontonummer får inte vara null eller tom sträng", Entity.ACCOUNT);
+                        addCritical(ex);
+                        throw ex;
+                    }
+                    if (!number.matches("\\d{4,}")) {
+                        if (number.length() <= 3) {
+                            addWarning(AccountingPlan.class, "Kontonummer ska innehålla minst fyra siffror: " + number, Entity.ACCOUNT);
+                        } else {
+                            addWarning(AccountingPlan.class, "Kontot har inte ett numeriskt värde: " + number, Entity.ACCOUNT);
+                        }
+                    }
                     Account.Builder accountBuilder = Account.builder(number);
                     Optional.ofNullable(accountParts.size() > 2 ? accountParts.get(2) : null)
                             .map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
@@ -303,6 +319,8 @@ class DocumentFactory {
         AccountingPlan.Builder builder = AccountingPlan.builder();
         if (hasLine(Entity.ACCOUNTING_PLAN_TYPE)) {
             builder.type(getLineParts(Entity.ACCOUNTING_PLAN_TYPE).get(1).trim());
+        } else {
+            addInfo("Kontoplanstyp saknas");
         }
         builder.accounts(accounts);
         return builder.apply();
@@ -752,12 +770,16 @@ class DocumentFactory {
         logs.add(SieLog.warning(origin, message, tag));
     }
 
+    private void addInfo(String message) {
+        addInfo(Document.class, message, null);
+    }
+
     private void addInfo(String message, String tag) {
         addInfo(Document.class, message, tag);
     }
 
     private void addInfo(Class origin, String message, String tag) {
-        if (!tag.startsWith("#")) {
+        if (tag != null && !tag.startsWith("#")) {
             tag = "#" + tag;
         }
         logs.add(SieLog.info(origin, message, tag));

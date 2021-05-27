@@ -14,6 +14,7 @@ import sie.domain.Program;
  */
 public class DocumentValidator implements Validator {
 
+    private static final String MESSAGE = "stämmer inte med summering av verifikationerna";
     private final Document entity;
     private final LocalDateTime timestamp;
     private final List<SieLog> logs;
@@ -42,6 +43,10 @@ public class DocumentValidator implements Validator {
         return documentValidator;
     }
 
+    public boolean isValid() {
+        return getCriticalErrors().isEmpty();
+    }
+
     @Override
     public List<SieLog> getLogs() {
         return new ArrayList<>(logs);
@@ -57,6 +62,13 @@ public class DocumentValidator implements Validator {
 
     public Optional<Program> getProgram() {
         return Optional.of(entity).map(e -> e.getMetaData().getProgram());
+    }
+
+    public Boolean hasResultBalanceVsVoucherImbalance() {
+        return getLogs().stream()
+                .filter(log -> log.getMessage().contains(MESSAGE))
+                .findAny()
+                .isPresent();
     }
 
     private void validate() {
@@ -96,7 +108,7 @@ public class DocumentValidator implements Validator {
         logs.add(addLog);
     }
 
-    private void addLogs(List<SieLog> logs) {
+    public void addLogs(List<SieLog> logs) {
         this.logs.addAll(logs);
     }
 

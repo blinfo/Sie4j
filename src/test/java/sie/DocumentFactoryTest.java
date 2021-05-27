@@ -18,7 +18,6 @@ public class DocumentFactoryTest {
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/SIE_with_missing_program_version.se"));
         String message = "Programversion saknas";
         long size = 4l;
-        factory.getLogs().forEach(System.out::println);
         assertEquals("List should contain " + size + " log", size, factory.getLogs().size());
         assertEquals("Message should be " + message, message, factory.getWarnings().get(0).getMessage());
     }
@@ -84,21 +83,21 @@ public class DocumentFactoryTest {
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_8-4_digit_cid.SI"));
         assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
     }
-    
+
     @Test
     public void test_file_with_non_consecutive_years() {
         String expectedMessage = "Slutdatum för år -2 är inte direkt före nästa års startdatum";
         SieException ex = assertThrows("", SieException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1_erroneous_leap_year.SE")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
-    
+
     @Test
     public void test_file_with_erroneous_taxation_year() {
         String expectedMessage = "Taxeringsår \"2018 ÅRL\" ska bara innehålla årtal";
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_erroneous_taxar.SE"));
         assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
     }
-    
+
     @Test
     public void test_file_with_unparseable_taxation_year() {
         String expectedMessage = "Taxeringsår tas bort då \"CCMXVIII\" inte motsvarar ett årtal";

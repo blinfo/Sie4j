@@ -4,11 +4,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.Helper;
 import sie.Sie4j;
+import sie.SieException;
 import static sie.domain.Entity.ROUNDING_MODE;
 import static sie.domain.Entity.SCALE;
 
@@ -26,17 +27,9 @@ public class VoucherTest extends Helper {
                     assertTrue("Voucher is balanced", v.isBalanced());
                     assertTrue("Voucher has transactions", v.getTransactions().size() > 0);
                 });
-
-        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI"));
-        assertFalse("Document contains unbalanced voucchers", doc.isBalanced());
-        Integer expectedNumberOfVouchers = 2;
-        BigDecimal expectedFirstDiff = new BigDecimal(0.55).setScale(SCALE, ROUNDING_MODE);
-        BigDecimal expectedSecondDiff = new BigDecimal(-0.14).setScale(SCALE, ROUNDING_MODE);
-        List<Voucher> imbalancedVouchers = doc.getImbalancedVouchers();
-        assertEquals("Document should contain " + expectedNumberOfVouchers + " imbalanced vouchers",
-                expectedNumberOfVouchers, Integer.valueOf(imbalancedVouchers.size()));
-        assertEquals("First diff should be " + expectedFirstDiff, expectedFirstDiff, imbalancedVouchers.get(0).getDiff());
-        assertEquals("Second diff should be " + expectedSecondDiff, expectedSecondDiff, imbalancedVouchers.get(1).getDiff());
+        String expectedMessage = "Verifikationen är i obalans. Serie: K. Differens: 0.55";
+        SieException ex = assertThrows("", SieException.class, () -> Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI")));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
 
     @Test
@@ -106,7 +99,7 @@ public class VoucherTest extends Helper {
         Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/Quotes_test.si"));
         assertEquals("Voucher text should be " + expectedResult, expectedResult, doc.getVouchers().get(0).getText().orElse(""));
     }
-    
+
     @Test
     public void test_Voucher_from_strange_sie_file() {
         Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/SIE_with_missing_program_version.se"));
