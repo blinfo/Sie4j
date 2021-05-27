@@ -53,7 +53,7 @@ public class DocumentValidator implements Validator {
     }
 
     public Optional<Document.Type> getType() {
-        return Optional.of(entity).map(e -> e.getMetaData().getSieType());
+        return Optional.ofNullable(entity).map(e -> e.getMetaData().getSieType());
     }
 
     public LocalDateTime getTimestamp() {
@@ -61,7 +61,7 @@ public class DocumentValidator implements Validator {
     }
 
     public Optional<Program> getProgram() {
-        return Optional.of(entity).map(e -> e.getMetaData().getProgram());
+        return Optional.ofNullable(entity).map(e -> e.getMetaData().getProgram());
     }
 
     public Boolean hasResultBalanceVsVoucherImbalance() {

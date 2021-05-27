@@ -58,4 +58,15 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         assertEquals("Validator should contain " + expectedNumberOfWarnings + " warnings", expectedNumberOfWarnings, validator.getWarnings().size());
         assertEquals("First message should be " + expectedFirstMessage, expectedFirstMessage, validator.getWarnings().get(0).getMessage());
     }
+
+    @Test
+    public void test_getProgram() {
+        Document document = getDocument("Arousells_Visning_AB.SE");
+        DocumentValidator validator = DocumentValidator.from(document);
+        String expectedName = "BL Administration";
+        String expectedVersion = "2021.2.103";
+        assertTrue("Should have a program", validator.getProgram().isPresent());
+        assertEquals("Name should be " + expectedName, expectedName, validator.getProgram().get().getName());
+        assertEquals("Version should be " + expectedVersion, expectedVersion, validator.getProgram().get().getVersion());
+    }
 }
