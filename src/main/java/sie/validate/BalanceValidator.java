@@ -1,7 +1,6 @@
 package sie.validate;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import sie.domain.AccountingPlan;
 import sie.domain.Balance;
 import sie.domain.Document;
@@ -56,7 +55,7 @@ class BalanceValidator extends AbstractValidator<Document> {
                 sum.add(acc.getOpeningBalanceByYearIndex(index).map(Balance::getAmount).orElse(BigDecimal.ZERO).setScale(Entity.SCALE, Entity.ROUNDING_MODE));
                 
                 if (!sum.equals(balance.getAmount())) {
-                    addCritical(CLOSING_BALANCE, "Utgående balans för konto " + acc.getNumber()
+                    addWarning(CLOSING_BALANCE, "Utgående balans för konto " + acc.getNumber()
                             + " år " + index + " stämmer inte med summering av verifikationerna."
                                     + " Balans: " + balance.getAmount() + " Summa: " + sum);
                 }
@@ -72,7 +71,7 @@ class BalanceValidator extends AbstractValidator<Document> {
                         .filter(transaction -> transaction.getAccountNumber().equals(acc.getNumber()))
                         .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
                 if (!sum.equals(balance.getAmount())) {
-                    addCritical(RESULT, "Resultat för konto " + acc.getNumber()
+                    addWarning(RESULT, "Resultat för konto " + acc.getNumber()
                             + " år " + index + " stämmer inte med summering av verifikationerna."
                                     + " Resultat: " + balance.getAmount() + " Summa: " + sum);
                 }
