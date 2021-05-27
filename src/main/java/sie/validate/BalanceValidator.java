@@ -34,7 +34,7 @@ class BalanceValidator extends AbstractValidator<Document> {
     }
 
     private void checkBalancesAndResultsAgainstVouchers() {
-        if (!type.equals(Document.Type.I4)) {
+        if (type.equals(Document.Type.E4)) {
             entity.getAccountingPlan().ifPresent(plan -> {
                 entity.getMetaData().getFinancialYearByIndex(0).ifPresent(fy -> {
                     Integer index = fy.getIndex();
@@ -105,5 +105,4 @@ class BalanceValidator extends AbstractValidator<Document> {
             });
         }
     }
-
 }

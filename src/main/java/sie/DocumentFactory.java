@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import sie.domain.*;
 import sie.validate.SieLog;
@@ -90,7 +91,21 @@ class DocumentFactory {
         getComments().ifPresent(builder::comments);
         builder.company(getCompany());
         if (hasLine(Entity.TAXATION_YEAR)) {
-            builder.taxationYear(Year.parse(getLineAsString(Entity.TAXATION_YEAR)));
+            String yearString = getLineAsString(Entity.TAXATION_YEAR);
+            String originalString = yearString;
+            String message = "";
+            if (!yearString.matches("\\d{4}")) {
+                message = "Taxeringsår \"" + yearString + "\" ska bara innehålla årtal";
+                yearString = yearString.replaceAll("\\D", "");
+            }
+            try {
+                builder.taxationYear(Year.parse(yearString));
+                if (!message.isEmpty()) {
+                    addInfo(message, Entity.TAXATION_YEAR);
+                }
+            } catch (DateTimeParseException ex) {
+                addWarning("Taxeringsår tas bort då \"" + originalString + "\" inte motsvarar ett årtal", Entity.TAXATION_YEAR);
+            }
         }
         if (hasLine(Entity.FINANCIAL_YEAR)) {
             builder.financialYears(getFinancialYears());
@@ -598,6 +613,15 @@ class DocumentFactory {
                     .map(this::createFinancialYear)
                     .collect(Collectors.toList()));
         }
+        IntStream.range(0, years.size() - 1).forEach(i -> {
+            LocalDate start = years.get(i).getStartDate();
+            LocalDate end = years.get(i + 1).getEndDate();
+            if (!start.equals(end.plusDays(1))) {
+                SieException ex = new SieException("Slutdatum för år " + years.get(i + 1).getIndex() + " är inte direkt före nästa års startdatum", Entity.FINANCIAL_YEAR);
+                addCritical(ex);
+                throw ex;
+            }
+        });
         return years;
     }
 
