@@ -19,9 +19,9 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         DocumentValidator validator = DocumentValidator.from(document);
         assertFalse("Logs should not be empty", validator.getLogs().isEmpty());
         assertEquals("Should contain 1 info", 1l, validator.getInfo().size());
-        assertEquals("Should contain 1 warnings", 1l, validator.getWarnings().size());
-        assertEquals("Should contain 25 critical errors", 25l, validator.getCriticalErrors().size());
+        assertEquals("Should contain 26 warnings", 26l, validator.getWarnings().size());
     }
+
     @Test
     public void test_validator_from_SieException() {
         String message = "Taggen får inte förekomma i SIE-formatet.";
