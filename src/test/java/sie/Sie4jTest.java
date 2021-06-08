@@ -2,8 +2,6 @@ package sie;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
