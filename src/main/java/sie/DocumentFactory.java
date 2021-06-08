@@ -135,10 +135,9 @@ class DocumentFactory {
             return vouchers;
         }
         List<String> lines = Stream.of(content.split("\n"))
-                .filter(line -> {
-                    String l = line.trim();
-                    return l.startsWith("#" + Entity.VOUCHER) || l.startsWith("#" + Entity.TRANSACTION);
-                }).collect(Collectors.toList());
+                .filter(this::isVoucherOrTransactionLine)
+                .map(this::handleMissingVoucherNumberSeries)
+                .collect(Collectors.toList());
         Voucher.Builder builder = null;
         for (String line : lines) {
             List<String> parts = StringUtil.getParts(line.trim());
@@ -149,6 +148,17 @@ class DocumentFactory {
             vouchers.add(builder.apply());
         }
         return vouchers;
+    }
+
+    private boolean isVoucherOrTransactionLine(String line) {
+        return line.startsWith("#" + Entity.VOUCHER) || line.trim().startsWith("#" + Entity.TRANSACTION);
+    }
+
+    private String handleMissingVoucherNumberSeries(String line) {
+        if (line.matches("#VER\\s{2}\\d+ 20\\d{6} .*")) {
+            line = line.substring(0, 5) + "\"\"" + line.substring(5);
+        }
+        return line;
     }
 
     private Voucher.Builder handleVoucher(String line, Voucher.Builder builder, List<Voucher> vouchers, List<String> parts) {

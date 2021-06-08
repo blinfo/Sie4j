@@ -224,4 +224,16 @@ public class SieReaderTest {
         assertEquals("Log list should contain one critical error", 1l, validator.getCriticalErrors().size());
         assertEquals("Log message should be " + expectedMessage, expectedMessage, validator.getCriticalErrors().get(0).getMessage());
     }
+    
+    @Test
+    public void compare_original_and_copy() {
+        SieReader original = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
+        SieReader copy = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1_copy.SE"));
+        System.out.println("Original:");
+        original.validate().getProgram().ifPresent(System.out::println);
+        original.validate().getLogs().forEach(System.out::println);
+        System.out.println("Copy:");
+        copy.validate().getProgram().ifPresent(System.out::println);
+        copy.validate().getLogs().forEach(System.out::println);
+    }
 }
