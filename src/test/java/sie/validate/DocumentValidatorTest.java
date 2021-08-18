@@ -61,6 +61,18 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         assertEquals("Validator should contain " + expectedNumberOfWarnings + " warnings", expectedNumberOfWarnings, validator.getWarnings().size());
         assertEquals("First message should be " + expectedFirstMessage, expectedFirstMessage, validator.getWarnings().get(0).getMessage());
     }
+    
+    @Test
+    public void test_document_validator_balances_and_results_against_vouchers() {
+        DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/Arousells_Visning_AB.SE"));
+        long expectedNumberOfLogs = 86;
+        long expectedNumberOfWarnings = 84;
+        String expectedFirstMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna. Resultat: -25035.36 Summa: 0.00";
+        assertTrue("Log list should not be empty", validator.getLogs().size() > 0);
+        assertEquals("Validator should contain " + expectedNumberOfLogs + " logs", expectedNumberOfLogs, validator.getLogs().size());
+        assertEquals("Validator should contain " + expectedNumberOfWarnings + " warnings", expectedNumberOfWarnings, validator.getWarnings().size());
+        assertEquals("First message should be " + expectedFirstMessage, expectedFirstMessage, validator.getWarnings().get(0).getMessage());
+    }
 
     @Test
     public void test_getProgram() {
