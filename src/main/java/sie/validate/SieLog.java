@@ -1,5 +1,6 @@
 package sie.validate;
 
+import java.util.Objects;
 import java.util.Optional;
 import sie.SieException;
 
@@ -89,6 +90,40 @@ public class SieLog implements Comparable<SieLog> {
             result = message.compareTo(other.message);
         }
         return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.origin);
+        hash = 17 * hash + Objects.hashCode(this.level);
+        hash = 17 * hash + Objects.hashCode(this.tag);
+        hash = 17 * hash + Objects.hashCode(this.message);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SieLog other = (SieLog) obj;
+        if (!Objects.equals(this.origin, other.origin)) {
+            return false;
+        }
+        if (!Objects.equals(this.tag, other.tag)) {
+            return false;
+        }
+        if (!Objects.equals(this.message, other.message)) {
+            return false;
+        }
+        return this.level == other.level;
     }
 
     public enum Level {

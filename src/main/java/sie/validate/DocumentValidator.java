@@ -47,6 +47,14 @@ public class DocumentValidator implements Validator {
         return getCriticalErrors().isEmpty();
     }
 
+    /**
+     * Getter for SieLogs.
+     * <p>
+     * Only unique SieLogs are returned. If an error occurs several times in the
+     * input, only one will be logged.
+     *
+     * @return List of unique SieLogs
+     */
     @Override
     public List<SieLog> getLogs() {
         return new ArrayList<>(logs);

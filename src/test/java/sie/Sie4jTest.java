@@ -78,7 +78,7 @@ public class Sie4jTest {
         assertEquals("Message should be " + message, message, critical.getMessage());
         assertFalse("Log contains no tag", critical.getTag().isPresent());
     }
-    
+
     @Test
     public void test_write_sie_file() {
         Document document = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
@@ -90,14 +90,13 @@ public class Sie4jTest {
         target.delete();
         assertFalse("File should not exist", target.exists());
     }
-    
+
     @Test
     public void test_file_with_missing_voucher_series_marker() {
         // If no series is given, an empty string should be used in the SIE file:
         // #VER "" 1 20170101 " " 20170119 " " 
         Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_voucher_series.SE"));
         Voucher firstVoucher = doc.getVouchers().get(0);
-        System.out.println(firstVoucher.getNumber().orElse(0));
         assertEquals("First vouchers number should be 1", 1l, firstVoucher.getNumber().get().longValue());
         assertFalse("First vouchers serie should be empty", firstVoucher.getSeries().isPresent());
         assertFalse("First vouchers text should be empty", firstVoucher.getText().isPresent());

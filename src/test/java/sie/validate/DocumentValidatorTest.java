@@ -1,9 +1,12 @@
 package sie.validate;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import sie.Sie4j;
 import sie.SieException;
 import sie.domain.Document;
 
@@ -68,5 +71,27 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         assertTrue("Should have a program", validator.getProgram().isPresent());
         assertEquals("Name should be " + expectedName, expectedName, validator.getProgram().get().getName());
         assertEquals("Version should be " + expectedVersion, expectedVersion, validator.getProgram().get().getVersion());
+    }
+
+    @Test
+    public void test_faulty_program() {
+        Document document = getDocument("SIE_with_missing_program_version.se");
+        DocumentValidator validator = DocumentValidator.from(document);
+        SieLog log = validator.getLogs().get(0);
+        String expectedLog = "SieLog{origin=MetaData, level=WARNING, tag=#PROGRAM, message=Programversion saknas}";
+        assertEquals("SieLog should be " + expectedLog, expectedLog, log.toString());
+    }
+
+    @Test
+    public void test_corrected_corporate_id() {
+        String log1 = "SieLog{origin=Document, level=INFO, tag=#ORGNR, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn}";
+        String log2 = "SieLog{origin=Document, level=INFO, tag=null, message=Kontoplanstyp saknas}";
+        String log3 = "SieLog{origin=Document, level=INFO, tag=#VER, message=Filer av typen I4 bör inte innehålla verifikationsnummer}";
+        DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/Transaktioner per Z-rapport.se"));
+        List<String> logs = validator.getLogs().stream().map(SieLog::toString).collect(Collectors.toList());
+        assertEquals("Should contain 3 logs", 3, logs.size());
+        assertTrue("Should contain " + log1, logs.contains(log1));
+        assertTrue("Should contain " + log2, logs.contains(log2));
+        assertTrue("Should contain " + log3, logs.contains(log3));
     }
 }

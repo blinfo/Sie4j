@@ -224,16 +224,16 @@ public class SieReaderTest {
         assertEquals("Log list should contain one critical error", 1l, validator.getCriticalErrors().size());
         assertEquals("Log message should be " + expectedMessage, expectedMessage, validator.getCriticalErrors().get(0).getMessage());
     }
-    
+
     @Test
     public void compare_original_and_copy() {
+        // The copy will have a correct format for the corporate id.
         SieReader original = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
         SieReader copy = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1_copy.SE"));
-        System.out.println("Original:");
-        original.validate().getProgram().ifPresent(System.out::println);
-        original.validate().getLogs().forEach(System.out::println);
-        System.out.println("Copy:");
-        copy.validate().getProgram().ifPresent(System.out::println);
-        copy.validate().getLogs().forEach(System.out::println);
+        String originalLog = "SieLog{origin=Document, level=INFO, tag=#ORGNR, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn}";
+        assertEquals("Original should contain 1 log", 1, original.validate().getLogs().size());
+        assertEquals("Original log should be " + originalLog, originalLog, original.validate().getLogs().get(0).toString());
+        assertTrue("Original Program and Copy Program should be equal", original.read().getMetaData().getProgram().toString()
+                .equals(copy.read().getMetaData().getProgram().toString()));
     }
 }

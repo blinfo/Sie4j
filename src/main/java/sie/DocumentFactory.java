@@ -766,7 +766,10 @@ class DocumentFactory {
     }
 
     private void addCritical(SieException sieException) {
-        logs.add(SieLog.of(getClass(), sieException));
+        SieLog critical = SieLog.of(getClass(), sieException);
+        if (!logs.contains(critical)) {
+            logs.add(critical);
+        }
     }
 
     private void addWarning(String message, String tag) {
@@ -774,10 +777,11 @@ class DocumentFactory {
     }
 
     private void addWarning(Class origin, String message, String tag) {
-        if (!tag.startsWith("#")) {
-            tag = "#" + tag;
+        tag = handleLogTag(tag);
+        SieLog warning = SieLog.warning(origin, message, tag);
+        if (!logs.contains(warning)) {
+            logs.add(warning);
         }
-        logs.add(SieLog.warning(origin, message, tag));
     }
 
     private void addInfo(String message) {
@@ -789,9 +793,17 @@ class DocumentFactory {
     }
 
     private void addInfo(Class origin, String message, String tag) {
+        tag = handleLogTag(tag);
+        SieLog info = SieLog.info(origin, message, tag);
+        if (!logs.contains(info)) {
+            logs.add(info);
+        }
+    }
+
+    private String handleLogTag(String tag) {
         if (tag != null && !tag.startsWith("#")) {
             tag = "#" + tag;
         }
-        logs.add(SieLog.info(origin, message, tag));
+        return tag;
     }
 }
