@@ -72,11 +72,11 @@ public class Sie4j {
     }
 
     public static String fromDocument(Document input) {
-        return SieWriter.write(input);
+        return SieWriter.write(input).trim();
     }
 
     public static String fromDocument(Document input, Charset charset) {
-        return SieWriter.write(input, charset);
+        return SieWriter.write(input, charset).trim();
     }
 
     public static File fromDocument(Document input, File target) {

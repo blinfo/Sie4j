@@ -1,0 +1,26 @@
+#FLAGGA 0
+#PROGRAM "SieWriterTest" "0.0.1"
+#FORMAT PC8
+#GEN 20210818
+#SIETYP 4
+#ORGNR 123432-9878
+#FNAMN "Test av Writer"
+#RAR 0 20210101 20211231
+#KONTO 1000 "Apelsin"
+#KONTO 1001 "Banan"
+#KONTO 1002 "Citron"
+#VER "" 1 20210201 "" "" "" 
+{
+#TRANS 1000 {} 1.00 "" ""
+#TRANS 1001 {} -1.00 "" ""
+}
+#VER "A" 1 20210201 "" "" "" 
+{
+#TRANS 1000 {} 1.00 "" ""
+#TRANS 1001 {} -1.00 "" ""
+}
+#VER "" 2 20210202 "" "" "" 
+{
+#TRANS 1000 {} 1.00 "" ""
+#TRANS 1001 {} -1.00 "" ""
+}
