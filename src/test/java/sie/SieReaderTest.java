@@ -219,7 +219,7 @@ public class SieReaderTest {
     public void test_type4E_with_imbalanced_voucher() {
         SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"));
         DocumentValidator validator = reader.validate();
-        String expectedMessage = "Verifikationen är i obalans. Serie: A. Nummer: 1. Differens: 0.10";
+        String expectedMessage = "Verifikationen är i obalans. Serie: A. Nummer: 1. Datum: 20170101. Differens: 0.10";
         assertEquals("Log list should contain one log", 27l, validator.getLogs().size());
         assertEquals("Log list should contain one critical error", 1l, validator.getCriticalErrors().size());
         assertEquals("Log message should be " + expectedMessage, expectedMessage, validator.getCriticalErrors().get(0).getMessage());

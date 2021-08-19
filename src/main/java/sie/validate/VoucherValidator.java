@@ -1,6 +1,7 @@
 package sie.validate;
 
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 import sie.domain.Document;
 import sie.domain.Voucher;
 
@@ -33,6 +34,7 @@ class VoucherValidator extends AbstractValidator<Voucher> {
             String message = "Verifikationen är i obalans. "
                     + entity.getSeries().map(s -> "Serie: " + s + ". ").orElse("")
                     + entity.getNumber().map(n -> "Nummer: " + n + ". ").orElse("")
+                    + "Datum: " + entity.getDate().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ". "
                     + "Differens: " + entity.getDiff();
             addCritical(VOUCHER, message);
         }

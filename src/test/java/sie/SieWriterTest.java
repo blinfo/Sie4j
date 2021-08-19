@@ -62,7 +62,7 @@ public class SieWriterTest {
         return MetaData.builder()
                 .company(Company.builder("Test av Writer").corporateID("123432-9878").apply())
                 .program(Program.of("SieWriterTest", "0.0.1"))
-                .generated(Generated.from(LocalDate.now()))
+                .generated(Generated.from(LocalDate.parse("2021-08-18")))
                 .read(Boolean.FALSE)
                 .sieType(Document.Type.E4)
                 .financialYears(Arrays.asList(FinancialYear.of(0, LocalDate.parse("2021-01-01"), LocalDate.parse("2021-12-31"))))

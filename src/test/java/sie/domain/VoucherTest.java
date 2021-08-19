@@ -27,7 +27,8 @@ public class VoucherTest extends Helper {
                     assertTrue("Voucher is balanced", v.isBalanced());
                     assertTrue("Voucher has transactions", v.getTransactions().size() > 0);
                 });
-        String expectedMessage = "Verifikationen är i obalans. Serie: K. Differens: 0.55";
+        String expectedMessage = "Verifikationen är i obalans. Serie: K. Datum: 20180502. Differens: 0.55\n"
+                + "Verifikationen är i obalans. Serie: K. Datum: 20180502. Differens: -0.14";
         SieException ex = assertThrows("", SieException.class, () -> Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }

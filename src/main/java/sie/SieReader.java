@@ -5,9 +5,11 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import sie.domain.Document;
 import sie.domain.Entity;
 import sie.validate.DocumentValidator;
+import sie.validate.SieLog;
 
 /**
  *
@@ -54,12 +56,12 @@ class SieReader {
 
     public Document read() {
         if (!validator.isValid()) {
-            String message = validator.getCriticalErrors().get(0).getMessage();
+            String message = validator.getCriticalErrors().stream().map(SieLog::getMessage).collect(Collectors.joining("\n"));
             throw new SieException(message);
         }
         return document;
     }
-    
+
     public DocumentValidator validate() {
         return validator;
     }
