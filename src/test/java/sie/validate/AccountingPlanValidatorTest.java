@@ -24,7 +24,7 @@ public class AccountingPlanValidatorTest extends AbstractValidatorTest {
 
     @Test
     public void test_accountingPlan_sie2() {
-        Document doc = getDocument("BLBLOV_SIE2_UTF_8_with_errors.SE");
+        Document doc = getDocument("BLBLOV_SIE2_UTF_8_with_multiple_errors.SE");
         Document.Type type = doc.getMetaData().getSieType();
         doc.getAccountingPlan().ifPresent(plan -> {
             List<SieLog> logs = AccountingPlanValidator.of(plan, doc.getMetaData().getSieType()).getLogs();

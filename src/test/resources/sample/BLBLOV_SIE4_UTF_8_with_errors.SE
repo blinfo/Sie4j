@@ -13,7 +13,7 @@
 #KPTYP "EUBAS97"
 #KONTO 1110 "Byggnader"
 #KONTO 1119 "Ackumulerade avskrivningar på byggnader"
-#KONTO 11AF "Mark"
+#KONTO 1130 "Mark"
 #KONTO 1220 "Inventarier och verktyg"
 #KONTO 1229 "Ack avskr på inventarier o verktyg"
 #KONTO 1240 "Bilar och andra transportmedel"

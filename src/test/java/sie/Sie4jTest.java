@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.domain.Document;
@@ -101,5 +102,19 @@ public class Sie4jTest {
         assertFalse("First vouchers serie should be empty", firstVoucher.getSeries().isPresent());
         assertFalse("First vouchers text should be empty", firstVoucher.getText().isPresent());
         assertFalse("First vouchers signature should be empty", firstVoucher.getSignature().isPresent());
+    }
+
+    @Test
+    public void test_SIE2_with_non_numeric_account_number_should_throw_exception() {
+        SieException ex = assertThrows("", SieException.class, () -> Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE2_UTF_8_with_non_numeric_account_number.SE")));
+        String expectedMessage = "Kontot har inte ett numeriskt värde: 11AF";
+        assertEquals("Should have message: " + expectedMessage, expectedMessage, ex.getMessage());
+    }
+
+    @Test
+    public void test_too_long_account_number() {
+        SieException ex = assertThrows("", SieException.class, () -> Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_8_digit_account_number.SE")));
+        String expectedMessage = "Kontot är längre än sex siffror: 11100111";
+        assertEquals("Should have message: " + expectedMessage, expectedMessage, ex.getMessage());
     }
 }

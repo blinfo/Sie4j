@@ -135,10 +135,10 @@ public class SieReaderTest {
 
     @Test
     public void test_SIE2_file_with_errors() {
-        SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE2_UTF_8_with_errors.SE"));
+        SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE2_UTF_8_with_multiple_errors.SE"));
         DocumentValidator validator = reader.validate();
         assertFalse("Logs should not be empty", validator.getLogs().isEmpty());
-        assertEquals("Should contain 5 warnings", 5l, validator.getWarnings().size());
+        assertEquals("Should contain 4 warnings", 4l, validator.getWarnings().size());
     }
 
     @Test
@@ -147,17 +147,17 @@ public class SieReaderTest {
         Document doc = reader.read();
         Document.Type type = doc.getMetaData().getSieType();
         List<SieLog> logs = reader.validate().getLogs();
-        long numberOfLogs = 7;
-        String logMessage4 = "Kontot har inte ett numeriskt värde: 11AF";
+        long numberOfLogs = 6;
+        String logMessage4 = "Kontonummer ska innehålla minst fyra siffror: 119";
         SieLog.Level level4 = SieLog.Level.WARNING;
-        String tag4 = "#KONTO";
+        String tag3 = "#KONTO";
         String origin4 = AccountingPlan.class.getSimpleName();
-        SieLog log1 = logs.get(4);
+        SieLog log1 = logs.get(3);
         assertEquals("Should contain " + numberOfLogs + " logs", numberOfLogs, logs.size());
         assertEquals("Log message should be " + logMessage4, logMessage4, log1.getMessage());
         assertEquals("Log level should be " + level4, level4, log1.getLevel());
         assertTrue("Log should have a tag", log1.getTag().isPresent());
-        assertEquals("Log tag should be " + tag4, tag4, log1.getTag().get());
+        assertEquals("Log tag should be " + tag3, tag3, log1.getTag().get());
         assertTrue("Log should have an origin", log1.getOrigin().isPresent());
         assertEquals("Log origin should be " + origin4, origin4, log1.getOrigin().get());
 
@@ -190,12 +190,12 @@ public class SieReaderTest {
         Document doc = reader.read();
         DocumentValidator validator = reader.validate();
         List<SieLog> logs = validator.getLogs();
-        long numberOfLogs = 27;
-        String logMessage1 = "Kontot har inte ett numeriskt värde: 11AF";
-        SieLog.Level level1 = SieLog.Level.WARNING;
-        String tag1 = "#KONTO";
-        String origin1 = AccountingPlan.class.getSimpleName();
-        SieLog log1 = logs.get(26);
+        long numberOfLogs = 26;
+        String logMessage1 = "Organisationsnummer ska vara av formatet nnnnnn-nnnn";
+        SieLog.Level level1 = SieLog.Level.INFO;
+        String tag1 = "#ORGNR";
+        String origin1 = Document.class.getSimpleName();
+        SieLog log1 = logs.get(25);
         assertEquals("Should contain " + numberOfLogs + " logs", numberOfLogs, logs.size());
         assertEquals("Log message should be " + logMessage1, logMessage1, log1.getMessage());
         assertEquals("Log level should be " + level1, level1, log1.getLevel());

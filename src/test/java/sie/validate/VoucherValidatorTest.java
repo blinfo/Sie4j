@@ -26,8 +26,8 @@ public class VoucherValidatorTest extends AbstractValidatorTest {
     @Test
     public void test_files() {
         Validator firstValidator = Sie4j.validate(getClass().getResourceAsStream("/sample/Arousells_Visning_AB.SE"));
-        assertEquals("First validator should contain 86 logs", 86l, firstValidator.getLogs().size());
-        assertEquals("First validator should contain 84 warning", 84l, firstValidator.getWarnings().size());
+        assertEquals("First validator should contain 87 logs", 87l, firstValidator.getLogs().size());
+        assertEquals("First validator should contain 85 warning", 85l, firstValidator.getWarnings().size());
         assertEquals("First validator should contain 2 info", 2l, firstValidator.getInfo().size());
         Validator secondValidator = Sie4j.validate(getClass().getResourceAsStream("/sample/Transaktioner per Z-rapport.se"));
         assertEquals("Second validator should contain 3 info logs", 3l, secondValidator.getLogs().size());

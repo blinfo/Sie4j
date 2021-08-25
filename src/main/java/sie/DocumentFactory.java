@@ -30,6 +30,10 @@ class DocumentFactory {
     static final Pattern OBJECT_ID_PATTERN = Pattern.compile("(\"?(\\d+)\"?\\s\"?([0-9a-zA-Z]+)\"?)+");
     private static final Pattern DATE_PATTERN = Pattern.compile("\\d{8}");
     private static final Pattern CURRENCY_PATTERN = Pattern.compile("[A-Z]{3}");
+    private static final Pattern NUMERIC_PATTERN = Pattern.compile("\\d+");
+    private static final Pattern ACCOUNT_NUMBER_PATTERN = Pattern.compile("\\d{4}");
+    private static final Pattern VOUCHER_LINE_MISSING_SERIES_PATTERN = Pattern.compile("#VER\\s{2}\\d+ 20\\d{6} .*");
+    private static final Pattern YEAR_PATTERN = Pattern.compile("\\d{4}");
     private static final String REPLACE_STRING = "[\"\\{\\}]";
     private final String content;
     private final List<FinancialYear> years = new ArrayList<>();
@@ -94,7 +98,7 @@ class DocumentFactory {
             String yearString = getLineAsString(Entity.TAXATION_YEAR);
             String originalString = yearString;
             String message = "";
-            if (!yearString.matches("\\d{4}")) {
+            if (!YEAR_PATTERN.matcher(yearString).matches()) {
                 message = "Taxeringsår \"" + yearString + "\" ska bara innehålla årtal";
                 yearString = yearString.replaceAll("\\D", "");
             }
@@ -155,7 +159,7 @@ class DocumentFactory {
     }
 
     private String handleMissingVoucherNumberSeries(String line) {
-        if (line.matches("#VER\\s{2}\\d+ 20\\d{6} .*")) {
+        if (VOUCHER_LINE_MISSING_SERIES_PATTERN.matcher(line).matches()) {
             line = line.substring(0, 5) + "\"\"" + line.substring(5);
         }
         return line;
@@ -297,11 +301,20 @@ class DocumentFactory {
                         addCritical(ex);
                         throw ex;
                     }
-                    if (!number.matches("\\d{4,}")) {
+                    if (!NUMERIC_PATTERN.matcher(number).matches()) {
+                        SieException ex = new SieException("Kontot har inte ett numeriskt värde: " + number, Entity.ACCOUNT);
+                        addCritical(ex);
+                        throw ex;
+                    }
+                    if (!ACCOUNT_NUMBER_PATTERN.matcher(number).matches()) {
                         if (number.length() <= 3) {
                             addWarning(AccountingPlan.class, "Kontonummer ska innehålla minst fyra siffror: " + number, Entity.ACCOUNT);
-                        } else {
-                            addWarning(AccountingPlan.class, "Kontot har inte ett numeriskt värde: " + number, Entity.ACCOUNT);
+                        } else if (number.length() > 4 && number.length() <= 6) {
+                            addWarning(AccountingPlan.class, "Kontot har fler än fyra siffror: " + number, Entity.ACCOUNT);
+                        } else if (number.length() > 6) {
+                            SieException ex = new SieException("Kontot är längre än sex siffror: " + number, Entity.ACCOUNT);
+                            addCritical(ex);
+                            throw ex;
                         }
                     }
                     Account.Builder accountBuilder = Account.builder(number);

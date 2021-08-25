@@ -18,18 +18,16 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
 
     @Test
     public void test_SIE4_file_with_errors() {
-        Document document = getDocument("BLBLOV_SIE4_UTF_8_with_errors.SE");
-        DocumentValidator validator = DocumentValidator.from(document);
+        DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_non_numeric_account_number.SE"));
         assertFalse("Logs should not be empty", validator.getLogs().isEmpty());
-        assertEquals("Should contain 25 warnings", 25l, validator.getWarnings().size());
+        assertEquals("Should contain 1 critical error", 1l, validator.getCriticalErrors().size());
     }
 
     @Test
     public void test_SIE2_file_with_errors() {
-        Document document = getDocument("BLBLOV_SIE2_UTF_8_with_errors.SE");
-        DocumentValidator validator = DocumentValidator.from(document);
+        DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE2_UTF_8_with_errors.SE"));
         assertFalse("Logs should not be empty", validator.getLogs().isEmpty());
-        assertEquals("Should contain 1 warnings", 1l, validator.getWarnings().size());
+        assertEquals("Should contain 4 warnings", 4l, validator.getWarnings().size());
     }
 
     @Test
@@ -61,12 +59,12 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         assertEquals("Validator should contain " + expectedNumberOfWarnings + " warnings", expectedNumberOfWarnings, validator.getWarnings().size());
         assertEquals("First message should be " + expectedFirstMessage, expectedFirstMessage, validator.getWarnings().get(0).getMessage());
     }
-    
+
     @Test
     public void test_document_validator_balances_and_results_against_vouchers() {
         DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/Arousells_Visning_AB.SE"));
-        long expectedNumberOfLogs = 86;
-        long expectedNumberOfWarnings = 84;
+        long expectedNumberOfLogs = 87;
+        long expectedNumberOfWarnings = 85;
         String expectedFirstMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna. Resultat: -25035.36 Summa: 0.00";
         assertTrue("Log list should not be empty", validator.getLogs().size() > 0);
         assertEquals("Validator should contain " + expectedNumberOfLogs + " logs", expectedNumberOfLogs, validator.getLogs().size());
@@ -105,5 +103,14 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         assertTrue("Should contain " + log1, logs.contains(log1));
         assertTrue("Should contain " + log2, logs.contains(log2));
         assertTrue("Should contain " + log3, logs.contains(log3));
+    }
+
+    @Test
+    public void test_too_long_account_number() {
+        DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_8_digit_account_number.SE"));
+        long expectedNumberOfCriticalErrors = 1l;
+        String error = "SieLog{origin=DocumentFactory, level=CRITICAL, tag=#KONTO, message=Kontot är längre än sex siffror: 11100111}";
+        assertEquals("Should contain " + expectedNumberOfCriticalErrors + " critical errors", expectedNumberOfCriticalErrors, validator.getCriticalErrors().size());
+        assertTrue("Should contain " + error, validator.getCriticalErrors().stream().map(SieLog::toString).collect(Collectors.toList()).contains(error));
     }
 }
