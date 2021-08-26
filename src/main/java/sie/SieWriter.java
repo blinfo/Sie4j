@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import sie.domain.Document;
 import sie.domain.Entity;
+import sie.exception.SieException;
 
 /**
  *

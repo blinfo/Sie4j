@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import sie.domain.Document;
 import sie.domain.Entity;
+import sie.exception.SieException;
 import sie.validate.DocumentValidator;
 import sie.validate.SieLog;
 

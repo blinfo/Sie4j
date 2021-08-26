@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import sie.SieException;
 import sie.domain.AccountingPlan;
 import sie.domain.Document;
+import sie.exception.SieException;
 
 /**
  *
@@ -25,7 +25,6 @@ public class AccountingPlanValidatorTest extends AbstractValidatorTest {
     @Test
     public void test_accountingPlan_sie2() {
         Document doc = getDocument("BLBLOV_SIE2_UTF_8_with_multiple_errors.SE");
-        Document.Type type = doc.getMetaData().getSieType();
         doc.getAccountingPlan().ifPresent(plan -> {
             List<SieLog> logs = AccountingPlanValidator.of(plan, doc.getMetaData().getSieType()).getLogs();
             long numberOfLogs = 1;

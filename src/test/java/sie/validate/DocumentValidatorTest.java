@@ -7,7 +7,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.Sie4j;
-import sie.SieException;
+import sie.exception.SieException;
 import sie.domain.Document;
 
 /**

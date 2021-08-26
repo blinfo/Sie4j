@@ -13,6 +13,7 @@ import sie.domain.AccountingPlan;
 import sie.domain.Address;
 import sie.domain.Company;
 import sie.domain.Document;
+import sie.exception.SieException;
 import sie.validate.DocumentValidator;
 import sie.validate.SieLog;
 

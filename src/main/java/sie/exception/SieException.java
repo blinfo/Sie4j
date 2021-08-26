@@ -1,4 +1,4 @@
-package sie;
+package sie.exception;
 
 import java.util.Optional;
 

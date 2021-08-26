@@ -2,7 +2,7 @@ package sie.validate;
 
 import java.util.Objects;
 import java.util.Optional;
-import sie.SieException;
+import sie.exception.SieException;
 
 /**
  *

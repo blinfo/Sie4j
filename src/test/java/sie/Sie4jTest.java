@@ -11,6 +11,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.domain.Document;
 import sie.domain.Voucher;
+import sie.exception.SieException;
 import sie.validate.DocumentValidator;
 import sie.validate.SieLog;
 

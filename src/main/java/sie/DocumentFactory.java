@@ -18,6 +18,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import sie.domain.*;
+import sie.exception.AccountNumberException;
+import sie.exception.InvalidAmountException;
+import sie.exception.InvalidQuantityException;
+import sie.exception.InvalidVoucherDateException;
+import sie.exception.MissingAccountNumberAndAmountException;
+import sie.exception.MissingAccountNumberException;
+import sie.exception.MissingAmountException;
+import sie.exception.MissingVoucherDateException;
+import sie.exception.NonConsecutiveFinancialYearsException;
+import sie.exception.SieException;
 import sie.validate.SieLog;
 
 /**
@@ -191,19 +201,19 @@ class DocumentFactory {
                     dateString = "20" + dateString;
                 }
                 if (dateString.isEmpty()) {
-                    SieException sieException = new SieException("Verifikationsdatum är tomt", Entity.VOUCHER);
+                    SieException sieException = new MissingVoucherDateException();
                     addCritical(sieException);
                     throw sieException;
                 }
                 try {
                     builder.date(LocalDate.parse(dateString, Entity.DATE_FORMAT));
                 } catch (DateTimeParseException e) {
-                    SieException sieException = new SieException("Kan inte läsa verifikationsdatum: \"" + dateString + "\"", e, Entity.VOUCHER);
+                    SieException sieException = new InvalidVoucherDateException(dateString, e);
                     addCritical(sieException);
                     throw sieException;
                 }
             } else {
-                SieException sieException = new SieException("Verifikationsdatum saknas", Entity.VOUCHER);
+                SieException sieException = new MissingVoucherDateException();
                 addCritical(sieException);
                 throw sieException;
             }
@@ -229,14 +239,14 @@ class DocumentFactory {
                 throw new SieException("No current voucher builder");
             }
             if (parts.size() < 2) {
-                SieException ex = new SieException("Kontonummer och belopp saknas", Entity.TRANSACTION);
+                SieException ex = new MissingAccountNumberAndAmountException(Entity.TRANSACTION);
                 addCritical(ex);
                 throw ex;
             }
             Transaction.Builder tb = Transaction.builder();
             String accountNumber = parts.get(1).replaceAll(REPLACE_STRING, "");
             if (accountNumber.isEmpty()) {
-                SieException ex = new SieException("Kontonummer saknas", Entity.TRANSACTION);
+                SieException ex = new MissingAccountNumberException(Entity.TRANSACTION);
                 addCritical(ex);
                 throw ex;
             }
@@ -246,7 +256,7 @@ class DocumentFactory {
                 tb.addObjectId(Account.ObjectId.of(Integer.valueOf(matcher.group(2)), matcher.group(3)));
             }
             if (parts.size() < 4) {
-                SieException ex = new SieException("Belopp saknas", Entity.TRANSACTION);
+                SieException ex = new MissingAmountException(Entity.TRANSACTION);
                 addCritical(ex);
                 throw ex;
             }
@@ -258,7 +268,7 @@ class DocumentFactory {
             try {
                 tb.amount(new BigDecimal(amount));
             } catch (NumberFormatException e) {
-                SieException ex = new SieException("Strängen \"" + amount + "\" för balans, konto " + accountNumber + ", kan inte hanteras som belopp", Entity.TRANSACTION);
+                SieException ex = new InvalidAmountException("Strängen \"" + amount + "\" för balans, konto " + accountNumber + ", kan inte hanteras som belopp", e, Entity.TRANSACTION);
                 addCritical(ex);
                 throw ex;
             }
@@ -297,12 +307,12 @@ class DocumentFactory {
                     List<String> accountParts = StringUtil.getParts(line);
                     String number = accountParts.get(1).replaceAll(REPLACE_STRING, "");
                     if (number == null || number.trim().isEmpty()) {
-                        SieException ex = new SieException("Kontonummer får inte vara null eller tom sträng", Entity.ACCOUNT);
+                        SieException ex = new AccountNumberException("Kontonummer får inte vara null eller tom sträng");
                         addCritical(ex);
                         throw ex;
                     }
                     if (!NUMERIC_PATTERN.matcher(number).matches()) {
-                        SieException ex = new SieException("Kontot har inte ett numeriskt värde: " + number, Entity.ACCOUNT);
+                        SieException ex = new AccountNumberException("Kontot har inte ett numeriskt värde: " + number);
                         addCritical(ex);
                         throw ex;
                     }
@@ -312,7 +322,7 @@ class DocumentFactory {
                         } else if (number.length() > 4 && number.length() <= 6) {
                             addWarning(AccountingPlan.class, "Kontot har fler än fyra siffror: " + number, Entity.ACCOUNT);
                         } else if (number.length() > 6) {
-                            SieException ex = new SieException("Kontot är längre än sex siffror: " + number, Entity.ACCOUNT);
+                            SieException ex = new AccountNumberException("Kontot är längre än sex siffror: " + number);
                             addCritical(ex);
                             throw ex;
                         }
@@ -384,7 +394,7 @@ class DocumentFactory {
                         BigDecimal amount = new BigDecimal(amountString);
                         pbBuilder.amount(amount);
                     } catch (NumberFormatException e) {
-                        SieException ex = new SieException("Strängen \"" + amountString + "\" för periodbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
+                        SieException ex = new InvalidAmountException("Strängen \"" + amountString + "\" för periodbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
                         addCritical(ex);
                         throw ex;
                     }
@@ -401,7 +411,7 @@ class DocumentFactory {
                         try {
                             pbBuilder.quantity(Double.valueOf(quantity));
                         } catch (NumberFormatException e) {
-                            SieException ex = new SieException("Strängen \"" + quantity + "\" för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
+                            SieException ex = new InvalidQuantityException("Strängen \"" + quantity + "\" för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
                             addCritical(ex);
                             throw ex;
                         }
@@ -429,7 +439,7 @@ class DocumentFactory {
                         PeriodicalBudget budget = PeriodicalBudget.of(index, period, amount);
                         accountBuilder.addPeriodicalBudget(budget);
                     } catch (NumberFormatException e) {
-                        SieException ex = new SieException("Strängen \"" + amountString + "\" för periodbudget, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BUDGET);
+                        SieException ex = new InvalidAmountException("Strängen \"" + amountString + "\" för periodbudget, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BUDGET);
                         addCritical(ex);
                         throw ex;
                     }
@@ -453,7 +463,7 @@ class DocumentFactory {
                     BigDecimal amount = new BigDecimal(amountString);
                     obBuilder.amount(amount);
                 } catch (NumberFormatException e) {
-                    SieException ex = new SieException("Strängen \"" + amountString + "\" för objektbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
+                    SieException ex = new InvalidAmountException("Strängen \"" + amountString + "\" för objektbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
                     addCritical(ex);
                     throw ex;
                 }
@@ -468,7 +478,7 @@ class DocumentFactory {
                 try {
                     obBuilder.quantity(Double.valueOf(quantity));
                 } catch (NumberFormatException e) {
-                    SieException ex = new SieException("Strängen \"" + quantity + "\" för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
+                    SieException ex = new InvalidQuantityException("Strängen \"" + quantity + "\" för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
                     addCritical(ex);
                     throw ex;
                 }
@@ -507,7 +517,7 @@ class DocumentFactory {
                         break;
                 }
             } catch (NumberFormatException ex) {
-                SieException sieException = new SieException("Strängen \"" + amountString + "\" för balans, konto " + number + ", kan inte hanteras som belopp", ex, tag);
+                SieException sieException = new InvalidAmountException("Strängen \"" + amountString + "\" för balans, konto " + number + ", kan inte hanteras som belopp", ex, tag);
                 addCritical(sieException);
                 throw sieException;
             }
@@ -658,7 +668,7 @@ class DocumentFactory {
             LocalDate start = years.get(i).getStartDate();
             LocalDate end = years.get(i + 1).getEndDate();
             if (!start.equals(end.plusDays(1))) {
-                SieException ex = new SieException("Slutdatum för år " + years.get(i + 1).getIndex() + " är inte direkt före nästa års startdatum", Entity.FINANCIAL_YEAR);
+            SieException ex = new NonConsecutiveFinancialYearsException(years.get(i + 1));
                 addCritical(ex);
                 throw ex;
             }

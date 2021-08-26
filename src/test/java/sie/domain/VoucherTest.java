@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.Helper;
 import sie.Sie4j;
-import sie.SieException;
+import sie.exception.SieException;
 import static sie.domain.Entity.ROUNDING_MODE;
 import static sie.domain.Entity.SCALE;
 

@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import sie.SieException;
+import sie.exception.MissingAccountNumberException;
+import sie.exception.SieException;
 
 /**
  *
@@ -61,9 +62,9 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @param number the account number: number("1910")
      * @return Account.Builder
-     * @throws SieException if the number is empty/null
+     * @throws MissingAccountNumberException if the number is empty/null
      */
-    public static Builder builder(String number) {
+    public static Builder builder(String number) throws MissingAccountNumberException {
         return new Builder(number);
     }
 
@@ -79,7 +80,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @param number the account number: number(1910)
      * @return Account.Builder
-     * @throws SieException if the number is null
+     * @throws MissingAccountNumberException if the number is null
      */
     public static Builder builder(Integer number) {
         return new Builder(number.toString());
@@ -312,7 +313,7 @@ public class Account implements Entity, Comparable<Account> {
 
         private Builder(String number) {
             if (number == null || number.isEmpty()) {
-                throw new SieException("Kontonummer får inte vara null eller tom sträng", "#KONTO");
+                throw new MissingAccountNumberException(Entity.ACCOUNT);
             }
             this.number = number;
         }

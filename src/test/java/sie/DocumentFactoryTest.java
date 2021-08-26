@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import org.junit.Test;
 import sie.domain.Voucher;
+import sie.exception.*;
 
 /**
  *
@@ -37,22 +38,22 @@ public class DocumentFactoryTest {
 
     @Test
     public void test_file_with_empty_voucher_date() {
-        String expectedMessage = "Verifikationsdatum är tomt";
-        SieException ex = assertThrows("", SieException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_empty_voucher_date.SI")));
+        String expectedMessage = "Verifikationsdatum saknas";
+        SieException ex = assertThrows("", MissingVoucherDateException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_empty_voucher_date.SI")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
 
     @Test
     public void test_file_with_missing_voucher_date() {
         String expectedMessage = "Verifikationsdatum saknas";
-        SieException ex = assertThrows("", SieException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_voucher_date.SI")));
+        SieException ex = assertThrows("", MissingVoucherDateException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_voucher_date.SI")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
 
     @Test
     public void test_file_with_critical_voucher_date_error() {
         String expectedMessage = "Kan inte läsa verifikationsdatum: \"rappakalja\"";
-        SieException ex = assertThrows("", SieException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_critical_voucher_date_error.SI")));
+        SieException ex = assertThrows("", InvalidVoucherDateException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_critical_voucher_date_error.SI")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
 
@@ -87,7 +88,7 @@ public class DocumentFactoryTest {
     @Test
     public void test_file_with_non_consecutive_years() {
         String expectedMessage = "Slutdatum för år -2 är inte direkt före nästa års startdatum";
-        SieException ex = assertThrows("", SieException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1_erroneous_leap_year.SE")));
+        SieException ex = assertThrows("", NonConsecutiveFinancialYearsException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1_erroneous_leap_year.SE")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
 

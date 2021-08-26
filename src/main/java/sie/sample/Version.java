@@ -3,7 +3,7 @@ package sie.sample;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import sie.SieException;
+import sie.exception.SieException;
 
 /**
  * The Version is an object representing a semantic version.

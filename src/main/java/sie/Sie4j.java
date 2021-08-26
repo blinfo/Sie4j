@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
+import sie.exception.SieException;
 import sie.validate.DocumentValidator;
 
 /**
