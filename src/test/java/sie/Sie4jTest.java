@@ -118,4 +118,12 @@ public class Sie4jTest {
         String expectedMessage = "Kontot är längre än sex siffror: 11100111";
         assertEquals("Should have message: " + expectedMessage, expectedMessage, ex.getMessage());
     }
+
+    @Test
+    public void test_file_with_missing_company_name() {
+        DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_company_name.SI"));
+        String expectedMessage = "Företagsnamn saknas";
+        assertEquals("Should contain 1 warning", 1l, validator.getWarnings().size());
+        assertEquals("Should contain message " + expectedMessage, expectedMessage, validator.getWarnings().get(0).getMessage());
+    }
 }
