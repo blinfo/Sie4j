@@ -23,7 +23,7 @@ pipeline {
     stage('Deploy Artifacts') {
         agent {
           docker {
-            image 'blinfo/maven:3.6.1-jdk-8-alpine'
+            image 'blinfo/maven:3.6.1-jdk-11'
             args '-e MAVEN_CONFIG=/home/jenkins/.m2'
           }
         }
