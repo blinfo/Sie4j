@@ -7,7 +7,7 @@ pipeline {
     stage('Build and Test') {
        agent {
           docker {
-            image 'maven:3.6.1-openjdk-11'
+            image 'maven:3.6.1-jdk-11'
           }
        }
        steps {
