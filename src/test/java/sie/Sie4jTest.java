@@ -120,10 +120,16 @@ public class Sie4jTest {
     }
 
     @Test
-    public void test_file_with_missing_company_name() {
+    public void test_validate_file_with_missing_company_name() {
         DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_company_name.SI"));
         String expectedMessage = "Företagsnamn saknas";
         assertEquals("Should contain 1 warning", 1l, validator.getWarnings().size());
         assertEquals("Should contain message " + expectedMessage, expectedMessage, validator.getWarnings().get(0).getMessage());
+    }
+    
+    @Test
+    public void test_file_with_missing_company_name() {
+        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_company_name.SI"));
+        assertTrue("Company name should be empty", doc.getMetaData().getCompany().getName().isEmpty());
     }
 }
