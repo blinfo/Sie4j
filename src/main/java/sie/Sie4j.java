@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
 import sie.exception.SieException;
@@ -66,14 +67,14 @@ public class Sie4j {
 
     public static Document toDocument(File input) {
         try {
-            return SieReader.from(new FileInputStream(input)).read();
+            return toDocument(new FileInputStream(input));
         } catch (FileNotFoundException ex) {
             throw new SieException(ex);
         }
     }
 
     public static String fromDocument(Document input) {
-        return SieWriter.write(input).trim();
+        return fromDocument(input, StandardCharsets.UTF_8);
     }
 
     public static String fromDocument(Document input, Charset charset) {
@@ -81,7 +82,7 @@ public class Sie4j {
     }
 
     public static File fromDocument(Document input, File target) {
-        return SieWriter.write(input, target);
+        return fromDocument(input, target, StandardCharsets.UTF_8);
     }
 
     public static File fromDocument(Document input, File target, Charset charset) {

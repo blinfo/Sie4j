@@ -44,7 +44,7 @@ public class SieReaderTest {
 
     @Test
     public void test_checkSumForDocument() {
-        String expectedChecksum = "A5656969022C20669DCBBBEDA9F6BB56";
+        String expectedChecksum = "705756706151497349476164793776747166613756673D3D";
         Document cp437doc = Sie4j.toDocument(getStream(""));
         Document utf8doc = Sie4j.toDocument(getStream("_UTF_8"));
         Document iso8859doc = Sie4j.toDocument(getStream("_ISO_8859_15"));
