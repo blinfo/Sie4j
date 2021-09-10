@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import sie.exception.SieException;
 
 /**
  *
@@ -181,6 +183,7 @@ public class Document implements Entity {
         I4;
 
         public static Type DEFAULT = E1;
+
         /**
          * Returns the number part of the type.
          * <p>
@@ -194,6 +197,10 @@ public class Document implements Entity {
          */
         public String getNumber() {
             return name().replaceAll("\\D", "");
+        }
+
+        public static Optional<Type> find(String input) {
+            return Stream.of(values()).filter(t -> t.name().equalsIgnoreCase(input)).findFirst();
         }
     }
 }

@@ -4,7 +4,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import javax.xml.bind.DatatypeConverter;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 import sie.domain.Document;
 import sie.exception.SieException;
 
@@ -21,7 +22,7 @@ class Checksum {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             md5.update(input.getBytes(StandardCharsets.UTF_8));
-            return DatatypeConverter.printHexBinary(md5.digest());
+            return Hex.encodeHexString(Base64.encodeBase64(md5.digest()), false);
         } catch (NoSuchAlgorithmException ex) {
             throw new SieException(ex);
         }

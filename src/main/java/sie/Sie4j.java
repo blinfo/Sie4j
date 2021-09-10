@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
 import sie.exception.SieException;
@@ -45,7 +46,7 @@ import sie.validate.DocumentValidator;
  * @author Håkan Lidén
  */
 public class Sie4j {
-    
+
     /**
      * Convert SIE data to JSON
      *
@@ -66,24 +67,59 @@ public class Sie4j {
 
     public static Document toDocument(File input) {
         try {
-            return SieReader.from(new FileInputStream(input)).read();
+            return toDocument(new FileInputStream(input));
         } catch (FileNotFoundException ex) {
             throw new SieException(ex);
         }
     }
 
+    /**
+     * This method produces a UTF-8 String with SIE content.
+     *
+     * @param input Document
+     * @return
+     */
     public static String fromDocument(Document input) {
-        return SieWriter.write(input).trim();
+        return fromDocument(input, StandardCharsets.UTF_8);
     }
 
+    /**
+     * This method produces a String with SIE content with the charset
+     * specified.
+     *
+     * @param input Document
+     * @param charset Charset for the output.
+     * @return String
+     */
     public static String fromDocument(Document input, Charset charset) {
         return SieWriter.write(input, charset).trim();
     }
 
+    /**
+     * This method produces a File with SIE content.
+     * <p>
+     * The file is the one specified as target. The content will be UTF-8
+     * encoded.
+     *
+     * @param input Document
+     * @param target Target file
+     * @return
+     */
     public static File fromDocument(Document input, File target) {
-        return SieWriter.write(input, target);
+        return fromDocument(input, target, StandardCharsets.UTF_8);
     }
 
+    /**
+     * This method produces a File with SIE content.
+     * <p>
+     * The file is the one specified as target. The content will be encoded
+     * according to the charset parameter.
+     *
+     * @param input Document
+     * @param target Target file
+     * @param charset Charset for the file
+     * @return
+     */
     public static File fromDocument(Document input, File target, Charset charset) {
         return SieWriter.write(input, target, charset);
     }
