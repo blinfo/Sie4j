@@ -72,6 +72,20 @@ public class DocumentFactoryTest {
     }
 
     @Test
+    public void test_file_with_erroneous_transaction_should_throw_exception() {
+        String expectedMessage = "Malformed line. \"#TRANS 1930\"";
+        InvalidTransactionDataException ex = assertThrows("", InvalidTransactionDataException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_faulty_transaction.SI")));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+    }
+
+    @Test
+    public void test_file_with_erroneous_sru_line_should_throw_exception() {
+        String expectedMessage = "Malformed line. \"#SRU 1110\"";
+        MalformedLineException ex = assertThrows("", MalformedLineException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_sru_code.SE")));
+        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+    }
+
+    @Test
     public void test_file_with_12_digit_cid() {
         String expectedMessage = "Organisationsnummer ska vara av formatet nnnnnn-nnnn";
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_12_digit_cid.SI"));

@@ -1,0 +1,19 @@
+#FLAGGA 0
+#FORMAT PC8
+#SIETYP 4
+#PROGRAM "Kassasystem" 1.0
+#GEN 20180503 "Lars Larsson"
+#FNAMN Övningsbolaget AB
+#ORGNR 550226-1513
+#VER "K" "" 20180502 "Försäljning 25% (DF:157)"  20180503
+{
+	#TRANS 1930
+	#TRANS 2610 {} -20.00
+	#TRANS 3010 {} -80.00
+}
+#VER "K" "" 20180502 "Försäljning 12% (DF:158)"  20180503
+{
+	#TRANS 1910 {} 500.00
+	#TRANS 2621 {} -53.57
+	#TRANS 3020 {} -446.43
+}

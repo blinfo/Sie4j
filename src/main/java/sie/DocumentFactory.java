@@ -21,7 +21,9 @@ import sie.domain.*;
 import sie.exception.AccountNumberException;
 import sie.exception.InvalidAmountException;
 import sie.exception.InvalidQuantityException;
+import sie.exception.InvalidTransactionDataException;
 import sie.exception.InvalidVoucherDateException;
+import sie.exception.MalformedLineException;
 import sie.exception.MissingAccountNumberAndAmountException;
 import sie.exception.MissingAccountNumberException;
 import sie.exception.MissingAmountException;
@@ -183,12 +185,14 @@ class DocumentFactory {
             builder = Voucher.builder();
             Optional.ofNullable(parts.get(1) == null || parts.get(1).isEmpty() ? null : parts.get(1).replaceAll(REPLACE_STRING, ""))
                     .ifPresent(builder::series);
-            Optional<String> optVoucherNumber = Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
-                    ? null : parts.get(2).replaceAll(REPLACE_STRING, ""));
-            if (getType().equals(Document.Type.I4) && optVoucherNumber.isPresent()) {
-                addInfo("Filer av typen " + getType() + " bör inte innehålla verifikationsnummer", Entity.VOUCHER);
-            } else {
-                optVoucherNumber.map(Integer::valueOf).ifPresent(builder::number);
+            if (parts.size() > 2) {
+                Optional<String> optVoucherNumber = Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
+                        ? null : parts.get(2).replaceAll(REPLACE_STRING, ""));
+                if (getType().equals(Document.Type.I4) && optVoucherNumber.isPresent()) {
+                    addInfo("Filer av typen " + getType() + " bör inte innehålla verifikationsnummer", Entity.VOUCHER);
+                } else {
+                    optVoucherNumber.map(Integer::valueOf).ifPresent(builder::number);
+                }
             }
             if (parts.size() > 3) {
                 String dateString = parts.get(3).replaceAll(REPLACE_STRING, "");
@@ -251,6 +255,11 @@ class DocumentFactory {
                 throw ex;
             }
             tb.accountNumber(parts.get(1).replaceAll(REPLACE_STRING, ""));
+            if (parts.size() < 3) {
+                SieException ex = new InvalidTransactionDataException(parts.stream().collect(Collectors.joining(" ")));
+                addCritical(ex);
+                throw ex;
+            }
             Matcher matcher = OBJECT_ID_PATTERN.matcher(parts.get(2));
             while (matcher.find()) {
                 tb.addObjectId(Account.ObjectId.of(Integer.valueOf(matcher.group(2)), matcher.group(3)));
@@ -361,7 +370,11 @@ class DocumentFactory {
 
     private void handleSruAccountTypeAndUnit(String number, Account.Builder accountBuilder) {
         getLineParts(number, 1, Entity.SRU, Entity.ACCOUNT_TYPE, Entity.UNIT).stream().forEach(l -> {
-            switch (l.get(0).replaceAll("#", "")) {
+            String tag = l.get(0).replaceAll("#", "");
+            if (l.size() < 3 || l.get(2).isBlank()) {
+                throw new MalformedLineException(l.stream().collect(Collectors.joining(" ")).trim(), tag);
+            }
+            switch (tag) {
                 case Entity.SRU:
                     accountBuilder.addSruCode(l.get(2).replaceAll(REPLACE_STRING, ""));
                     break;
@@ -668,7 +681,7 @@ class DocumentFactory {
             LocalDate start = years.get(i).getStartDate();
             LocalDate end = years.get(i + 1).getEndDate();
             if (!start.equals(end.plusDays(1))) {
-            SieException ex = new NonConsecutiveFinancialYearsException(years.get(i + 1));
+                SieException ex = new NonConsecutiveFinancialYearsException(years.get(i + 1));
                 addCritical(ex);
                 throw ex;
             }
