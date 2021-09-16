@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import sie.domain.Account;
+import sie.domain.Balance;
 import sie.domain.Company;
 import sie.domain.Document;
 import sie.domain.Entity;
@@ -77,21 +78,56 @@ class SieStringBuilder {
                 account.getSruCodes().forEach(sru -> add(Entity.SRU, account.getNumber(), sru));
             });
             if (!document.getMetaData().getSieType().equals(Document.Type.I4)) {
-                accounts.stream().filter(account -> !account.getOpeningBalances().isEmpty()).forEach(account -> {
-                    account.getOpeningBalances().forEach(balance -> {
-                        add(Entity.OPENING_BALANCE, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
-                    });
-                });
-                accounts.stream().filter(account -> !account.getClosingBalances().isEmpty()).forEach(account -> {
-                    account.getClosingBalances().forEach(balance -> {
-                        add(Entity.CLOSING_BALANCE, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
-                    });
-                });
-                accounts.stream().filter(account -> !account.getResults().isEmpty()).forEach(account -> {
-                    account.getResults().forEach(balance -> {
-                        add(Entity.RESULT, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
-                    });
-                });
+//                accounts.stream().filter(account -> !account.getOpeningBalances().isEmpty()).forEach(account -> {
+//                    account.getOpeningBalances().forEach(balance -> {
+//                        add(Entity.OPENING_BALANCE, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
+//                    });
+//                });
+//                accounts.stream().filter(account -> !account.getClosingBalances().isEmpty()).forEach(account -> {
+//                    account.getClosingBalances().forEach(balance -> {
+//                        add(Entity.CLOSING_BALANCE, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
+//                    });
+//                });
+//                accounts.stream().filter(account -> !account.getResults().isEmpty()).forEach(account -> {
+//                    account.getResults().forEach(balance -> {
+//                        add(Entity.RESULT, balance.getYearIndex().toString(), account.getNumber(), balance.getAmount().toString());
+//                    });
+//                });
+                accounts.stream().filter(account->!account.getOpeningBalances().isEmpty())
+                        .flatMap(account -> {
+                            return account.getOpeningBalances().stream().map(balance -> new ResultBalance(Entity.OPENING_BALANCE, account.getNumber(), balance));
+                        }).sorted().forEach(rb -> add(rb.getTag(), rb.getParts()));
+                accounts.stream().filter(account->!account.getClosingBalances().isEmpty())
+                        .flatMap(account -> {
+                            return account.getClosingBalances().stream().map(balance -> new ResultBalance(Entity.CLOSING_BALANCE, account.getNumber(), balance));
+                        }).sorted().forEach(rb -> add(rb.getTag(), rb.getParts()));
+                accounts.stream().filter(account->!account.getResults().isEmpty())
+                        .flatMap(account -> {
+                            return account.getResults().stream().map(balance -> new ResultBalance(Entity.RESULT, account.getNumber(), balance));
+                        }).sorted().forEach(rb -> add(rb.getTag(), rb.getParts()));
+//                accounts.stream().filter(account -> !account.getOpeningBalances().isEmpty()).forEach(account -> {
+//                    account.getOpeningBalances().stream()
+//                            .map(balance -> {
+//                                return new ResultBalance(Entity.OPENING_BALANCE, account.getNumber(), balance);
+//                            })
+//                            .sorted()
+//                            .forEach(rb -> add(rb.getTag(), rb.getParts()));
+//                });
+//                accounts.stream().filter(account -> !account.getClosingBalances().isEmpty()).forEach(account -> {
+//                    account.getClosingBalances().stream()
+//                            .map(balance -> {
+//                                return new ResultBalance(Entity.CLOSING_BALANCE, account.getNumber(), balance);
+//                            })
+//                            .forEach(rb -> add(rb.getTag(), rb.getParts()));
+//                });
+//                accounts.stream().filter(account -> !account.getResults().isEmpty()).forEach(account -> {
+//                    account.getResults().stream()
+//                            .map(balance -> {
+//                                return new ResultBalance(Entity.RESULT, account.getNumber(), balance);
+//                            })
+//                            .sorted()
+//                            .forEach(rb -> add(rb.getTag(), rb.getParts()));
+//                });
                 if (!document.getMetaData().getSieType().equals(Document.Type.E1)) {
                     accounts.stream().filter(account -> !account.getPeriodicalBudgets().isEmpty()).forEach(account -> {
                         account.getPeriodicalBudgets().forEach(budg -> {
@@ -101,6 +137,36 @@ class SieStringBuilder {
                 }
             }
         });
+    }
+
+    private static class ResultBalance implements Comparable<ResultBalance> {
+
+        private final String tag;
+        private final String number;
+        private final Balance balance;
+
+        public ResultBalance(String tag, String number, Balance balance) {
+            this.tag = tag;
+            this.number = number;
+            this.balance = balance;
+        }
+
+        public String getTag() {
+            return tag;
+        }
+
+        public String[] getParts() {
+            return new String[]{balance.getYearIndex().toString(), number, balance.getAmount().toString()};
+        }
+
+        @Override
+        public int compareTo(ResultBalance other) {
+            int result = other.balance.getYearIndex().compareTo(this.balance.getYearIndex());
+            if (result == 0) {
+                return this.number.compareTo(other.number);
+            }
+            return result;
+        }
     }
 
     private void addMetaData() {

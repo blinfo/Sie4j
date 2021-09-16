@@ -30,7 +30,7 @@ public class ChecksumTest {
 
     @Test
     public void testCalculate_Document() {
-        String expResult = "6776705244795A33307931304C634A644D4E557864673D3D";
+        String expResult = "5A356B71664D33426F4D6D436A53634E675946662F673D3D";
         assertTrue("Document should have checksum", DOCUMENT.getChecksum().isPresent());
         assertEquals("Document checksum should be " + expResult, expResult, DOCUMENT.getChecksum().get());
         assertEquals("Document checksum should be " + expResult, expResult, Checksum.calculate(DOCUMENT));
