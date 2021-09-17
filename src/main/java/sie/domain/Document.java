@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import sie.exception.InvalidSieTypeException;
 import sie.exception.SieException;
 
 /**
@@ -195,12 +195,18 @@ public class Document implements Entity {
          *
          * @return The number part of the Type
          */
-        public String getNumber() {
-            return name().replaceAll("\\D", "");
+        public Integer getNumber() {
+            return Integer.valueOf(name().replaceAll("\\D", ""));
         }
 
-        public static Optional<Type> find(String input) {
-            return Stream.of(values()).filter(t -> t.name().equalsIgnoreCase(input)).findFirst();
+        public static Type get(String input) {
+            try {
+                return valueOf(input.toUpperCase());
+            } catch (IllegalArgumentException ex) {
+                throw new InvalidSieTypeException(input, ex);
+            } catch (NullPointerException ex) {
+                throw new SieException("SIE type must not be null", ex);
+            }
         }
     }
 }
