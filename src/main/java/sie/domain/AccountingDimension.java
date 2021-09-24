@@ -6,7 +6,7 @@ import java.util.Optional;
  *
  * @author Håkan Lidén
  */
-public class AccountingDimension {
+public class AccountingDimension implements Entity {
 
     /**
      * Reserved dimension id for Cost centre

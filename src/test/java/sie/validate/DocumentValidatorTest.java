@@ -95,7 +95,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
     @Test
     public void test_corrected_corporate_id() {
         String log1 = "SieLog{origin=Document, level=INFO, tag=#ORGNR, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn}";
-        String log2 = "SieLog{origin=Document, level=INFO, tag=null, message=Kontoplanstyp saknas}";
+        String log2 = "SieLog{origin=Document, level=INFO, tag=, message=Kontoplanstyp saknas}";
         String log3 = "SieLog{origin=Document, level=INFO, tag=#VER, message=Filer av typen I4 bör inte innehålla verifikationsnummer}";
         DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/Transaktioner per Z-rapport.se"));
         List<String> logs = validator.getLogs().stream().map(SieLog::toString).collect(Collectors.toList());

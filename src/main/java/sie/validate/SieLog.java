@@ -77,7 +77,7 @@ public class SieLog implements Comparable<SieLog> {
 
     @Override
     public String toString() {
-        return "SieLog{" + "origin=" + origin + ", level=" + level + ", tag=" + tag + ", message=" + message + '}';
+        return "SieLog{" + "origin=" + origin + ", level=" + level + ", tag=" + getTag().orElse("") + ", message=" + message + '}';
     }
 
     @Override

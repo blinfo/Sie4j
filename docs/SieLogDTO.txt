@@ -1,0 +1,84 @@
+SieLogDTO
+
+
+Response:
+[
+  {
+    "message":"string",
+    "tag":"string",
+    "level":"string",
+    "origin":"string"
+  }
+]
+
+exempel:
+[
+  {"message":"Organisationsnummer ska vara av formatet nnnnnn-nnnn","tag":"#ORGNR","level":"INFO","origin":"Document"}
+  {"message":"Kontoplanstyp saknas","level":"INFO","origin":"Document"}
+  {"message":"Filer av typen I4 bör inte innehålla verifikationsnummer","tag":"#VER","level":"INFO","origin":"Document"}
+  {"message":"Kontaktperson saknas i adress","tag":"#ADRESS","level":"INFO","origin":"MetaData"}
+  {"message":"Verifikationen innehåller inga transaktionsrader. Serie: F. Nummer: 7.","tag":"#VER","level":"INFO","origin":"Voucher"}
+]
+
+Tag
+tag points to the prefix for the line in the original file. Starts with a hash-sign (#).
+tag (enum):
+KONTO - Account - Konto
+KTYP - Account Type - Kontotyp (T, tillgång; S, skuld; K, kostnad; I, Intäkt) 
+KPTYP - Accountingplan Type - Kontoplanstyp
+ADRESS - Address - Adress (Kontaktperson, gatuadress, postadress, telefon)
+UB - Outgoing Balance - Utgående balans
+PROSA - Comment - Fritext/kommentarer
+FNR - Company Id (internal) - Programmets interna id för företaget
+FNAMN - Corporate Name - Företagsnamn
+BKOD - Line of Business-Code - SNI-kod (branschkod)
+FTYP - Type of Business - Företagstyp
+ORGNR - Corprate Identity Number - Organisationsnummer
+VALUTA - Currency - Valuta
+DIM - Dimension - Dimension
+RAR - Financial Year - Räkenskapsår
+FORMAT - Encoding Format - Kodformat (Cp437, "PC8")
+GEN - Generated - Genererad (datum, signatur)
+OBJEKT - Object - Objekt inom en dimension
+OUB - Closing Balance for Object - Utgående objektbalans
+OIB - Opening Balance for Object - Ingående objektbalans
+IB - Opening Balance - Ingående balans
+OMFATTN - Period Range - Datum för periodsaldons omfattning (t.o.m.-datum)
+PSALDO - Periodical Balance - Periodsaldo
+PBUDGET - Periodical Budget - Periodbudget
+PROGRAM - Program - Program (som skapat filen)
+FLAGGA - Read/Not Read - Boolsk flagga som talar om ifall filen lästs eller ej
+RES - Result - Resultat
+SRU - Standardized Accounting Statement - Standardiserat räkenskapsutdrag (SRU), koppling till Skatteverket
+TAXAR - Year of Assessment - Taxeringsår
+TRANS - Transaction - Transaktion (verifikationsrad)
+SIETYP - Type of Sie-file - Sie-typ (1, 2, 3, 4) (Filändelsen förutsätts säga om det rör sig om typ 4 för import eller typ 4 för export)
+ENHET - Unit - Enhet
+VER - Voucher - Verifikation
+
+Level
+level (enum):
+INFO - trivial errors that will be handled either by Sie4j or can safely be ignored
+WARNING - might cause errors in the imported data
+CRITICAL - will halt the import
+
+Origin
+Origin points to the source in Sie4j where the error is found. Primarily for debugging.
+origin (enum):
+Account
+AccountingDimension
+AccountingObject
+AccountingPlan
+Address
+Balance
+Company
+Document
+FinancialYear
+Generated
+MetaData
+ObjectBalance
+PeriodicalBalance
+PeriodicalBudget
+Program
+Transaction
+Voucher

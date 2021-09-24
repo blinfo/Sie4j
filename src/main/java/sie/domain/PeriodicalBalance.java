@@ -9,7 +9,7 @@ import sie.domain.Account.ObjectId;
  *
  * @author Håkan Lidén
  */
-public class PeriodicalBalance {
+public class PeriodicalBalance implements Entity {
 
     private final Integer yearIndex;
     private final YearMonth period;
