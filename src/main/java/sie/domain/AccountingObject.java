@@ -4,7 +4,7 @@ package sie.domain;
  *
  * @author Håkan Lidén
  */
-public class AccountingObject implements Entity {
+public class AccountingObject implements Entity, Comparable<AccountingObject> {
 
     private final Integer dimensionId;
     private final String number;
@@ -35,5 +35,17 @@ public class AccountingObject implements Entity {
     @Override
     public String toString() {
         return "AccountingObject{" + "dimensionId=" + dimensionId + ", number=" + number + ", label=" + label + '}';
+    }
+
+    @Override
+    public int compareTo(AccountingObject other) {
+        int result = dimensionId.compareTo(other.dimensionId);
+        if (result == 0) {
+            if (number.matches("\\d+") && other.number.matches("\\d+")) {
+                return Integer.valueOf(number).compareTo(Integer.valueOf(other.number));
+            }
+            return number.compareTo(other.number);
+        }
+        return result;
     }
 }

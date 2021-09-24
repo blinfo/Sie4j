@@ -148,7 +148,7 @@ public class SieReaderTest {
         Document doc = reader.read();
         Document.Type type = doc.getMetaData().getSieType();
         List<SieLog> logs = reader.validate().getLogs();
-        long numberOfLogs = 6;
+        long numberOfLogs = 7;
         String logMessage2 = "Kontonummer ska innehålla minst fyra siffror: 119";
         SieLog.Level level2 = SieLog.Level.WARNING;
         String tag3 = "#KONTO";
@@ -162,13 +162,13 @@ public class SieReaderTest {
         assertTrue("Log should have an origin", log1.getOrigin().isPresent());
         assertEquals("Log origin should be " + origin4, origin4, log1.getOrigin().get());
 
-        String logMessage5 = "SRU-kod för konto 1110 saknas";
+        String logMessage6 = "SRU-kod för konto 1110 saknas";
         SieLog.Level level5 = SieLog.Level.INFO;
         String tag2 = "#SRU";
         String origin2 = AccountingPlan.class.getSimpleName();
-        SieLog log2 = logs.get(5);
+        SieLog log2 = logs.get(6);
         assertEquals("Should contain " + numberOfLogs + " logs", numberOfLogs, logs.size());
-        assertEquals("", logMessage5, log2.getMessage());
+        assertEquals("", logMessage6, log2.getMessage());
         assertEquals("Log level should be " + level5, level5, log2.getLevel());
         assertTrue("Log should have a tag", log2.getTag().isPresent());
         assertEquals("Log tag should be " + tag2, tag2, log2.getTag().get());
@@ -191,19 +191,20 @@ public class SieReaderTest {
         Document doc = reader.read();
         DocumentValidator validator = reader.validate();
         List<SieLog> logs = validator.getLogs();
-        long numberOfLogs = 26;
-        String logMessage1 = "Organisationsnummer ska vara av formatet nnnnnn-nnnn";
+        long numberOfLogs = 27;
+        String logMessage2 = "Organisationsnummer ska vara av formatet nnnnnn-nnnn. 1655710918";
         SieLog.Level level1 = SieLog.Level.INFO;
         String tag1 = "#ORGNR";
         String origin1 = Document.class.getSimpleName();
-        SieLog log1 = logs.get(25);
+        SieLog log1 = logs.get(25); // TODO: Lägg till koll av konto saknas
+        SieLog log2 = logs.get(26);
         assertEquals("Should contain " + numberOfLogs + " logs", numberOfLogs, logs.size());
-        assertEquals("Log message should be " + logMessage1, logMessage1, log1.getMessage());
-        assertEquals("Log level should be " + level1, level1, log1.getLevel());
-        assertTrue("Log should have a tag", log1.getTag().isPresent());
-        assertEquals("Log tag should be " + tag1, tag1, log1.getTag().get());
-        assertTrue("Log should have an origin", log1.getOrigin().isPresent());
-        assertEquals("Log origin should be " + origin1, origin1, log1.getOrigin().get());
+        assertEquals("Log message should be " + logMessage2, logMessage2, log2.getMessage());
+        assertEquals("Log level should be " + level1, level1, log2.getLevel());
+        assertTrue("Log should have a tag", log2.getTag().isPresent());
+        assertEquals("Log tag should be " + tag1, tag1, log2.getTag().get());
+        assertTrue("Log should have an origin", log2.getOrigin().isPresent());
+        assertEquals("Log origin should be " + origin1, origin1, log2.getOrigin().get());
     }
 
     @Test
@@ -211,7 +212,7 @@ public class SieReaderTest {
         SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE3_UTF_8_with_vouchers.SE"));
         DocumentValidator validator = reader.validate();
         String expectedWarningMessage = "Filer av typen E3 får inte innehålla verifikationer";
-        assertEquals("Log list should contain one log", 3l, validator.getLogs().size());
+        assertEquals("Log list should contain one log", 6l, validator.getLogs().size());
         assertEquals("Log list should contain two warnings", 2l, validator.getWarnings().size());
         assertEquals("Second warning message should be " + expectedWarningMessage, expectedWarningMessage, validator.getWarnings().get(1).getMessage());
     }
@@ -231,7 +232,7 @@ public class SieReaderTest {
         // The copy will have a correct format for the corporate id.
         SieReader original = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
         SieReader copy = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1_copy.SE"));
-        String originalLog = "SieLog{origin=Document, level=INFO, tag=#ORGNR, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn}";
+        String originalLog = "SieLog{origin=Document, level=INFO, tag=#ORGNR, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn. 1655710918}";
         assertEquals("Original should contain 1 log", 1, original.validate().getLogs().size());
         assertEquals("Original log should be " + originalLog, originalLog, original.validate().getLogs().get(0).toString());
         assertTrue("Original Program and Copy Program should be equal", original.read().getMetaData().getProgram().toString()

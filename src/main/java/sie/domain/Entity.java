@@ -3,13 +3,14 @@ package sie.domain;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.time.format.DateTimeFormatter;
+import sie.dto.DTO;
 
 /**
  *
  * @author Håkan Lidén
  *
  */
-public interface Entity {
+public interface Entity extends DTO {
 
     public static final String ACCOUNT = "KONTO";
     public static final String ACCOUNT_TYPE = "KTYP";

@@ -6,7 +6,7 @@ import java.util.Optional;
  *
  * @author Håkan Lidén
  */
-public class AccountingDimension implements Entity {
+public class AccountingDimension implements Entity, Comparable<AccountingDimension> {
 
     /**
      * Reserved dimension id for Cost centre
@@ -75,4 +75,8 @@ public class AccountingDimension implements Entity {
         return "AccountingDimension{" + "id=" + id + ", label=" + label + ", parentId=" + parentId + '}';
     }
 
+    @Override
+    public int compareTo(AccountingDimension other) {
+        return id.compareTo(other.id);
+    }
 }

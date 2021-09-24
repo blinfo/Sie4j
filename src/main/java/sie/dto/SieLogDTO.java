@@ -1,6 +1,6 @@
-package sie.io;
+package sie.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import sie.dto.DTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import sie.exception.SieException;
@@ -10,8 +10,7 @@ import sie.validate.SieLog;
  *
  * @author Håkan Lidén
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class SieLogDTO {
+public class SieLogDTO implements DTO{
 
     private final SieLog log;
 

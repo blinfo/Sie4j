@@ -18,7 +18,7 @@ public class DocumentFactoryTest {
     public void test_file_with_missing_program_version() {
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/SIE_with_missing_program_version.se"));
         String message = "Programversion saknas";
-        long size = 2l;
+        long size = 10l;
         assertEquals("List should contain " + size + " log", size, factory.getLogs().size());
         assertEquals("Message should be " + message, message, factory.getWarnings().get(0).getMessage());
     }
@@ -87,14 +87,14 @@ public class DocumentFactoryTest {
 
     @Test
     public void test_file_with_12_digit_cid() {
-        String expectedMessage = "Organisationsnummer ska vara av formatet nnnnnn-nnnn";
+        String expectedMessage = "Organisationsnummer ska vara av formatet nnnnnn-nnnn. 165502261513";
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_12_digit_cid.SI"));
         assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
     }
 
     @Test
     public void test_file_with_8_plus_4_digit_cid() {
-        String expectedMessage = "Organisationsnummer ska vara av formatet nnnnnn-nnnn";
+        String expectedMessage = "Organisationsnummer ska vara av formatet nnnnnn-nnnn. 16550226-1513";
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_8-4_digit_cid.SI"));
         assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
     }

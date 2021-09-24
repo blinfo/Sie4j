@@ -146,7 +146,7 @@ class DocumentFactory {
 
     private List<Voucher> getVouchers() {
         List<Voucher> vouchers = new ArrayList<>();
-        if (hasLine(Entity.VOUCHER) && Integer.valueOf(getType().getNumber()) < 4) {
+        if (hasLine(Entity.VOUCHER) && getType().getNumber() < 4) {
             addWarning("Filer av typen " + getType() + " får inte innehålla verifikationer", Entity.VOUCHER);
             return vouchers;
         }
@@ -347,6 +347,7 @@ class DocumentFactory {
                     return accountBuilder.apply();
                 }).collect(Collectors.toList());
         accounts.addAll(findMissingAccountNumbers().stream().map(number -> {
+            addInfo("Konto " + number + "saknas i kontolistan.", Entity.ACCOUNT);
             Account.Builder accountBuilder = Account.builder(number).label("Saknas vid import");
             handleSruAccountTypeAndUnit(number, accountBuilder);
             handleAccountBalanceAndResult(number, accountBuilder);
@@ -548,7 +549,7 @@ class DocumentFactory {
                     line.get(2).replaceAll(REPLACE_STRING, ""));
         }).collect(Collectors.toList());
         if (!dimList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
-            addWarning("Filer av typen " + getType() + " får inte innehålla taggen", Entity.DIMENSION);
+            addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.DIMENSION, Entity.DIMENSION);
             return Collections.emptyList();
         }
         return dimList;
@@ -561,7 +562,7 @@ class DocumentFactory {
                     handleQuotes(line.get(3)));
         }).collect(Collectors.toList());
         if (!objList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
-            addWarning("Filer av typen " + getType() + " får inte innehålla taggen", Entity.OBJECT);
+            addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.OBJECT, Entity.OBJECT);
             return Collections.emptyList();
         }
         return objList;
@@ -626,22 +627,24 @@ class DocumentFactory {
             return Optional.empty();
         }
         if (corporateId.matches("\\d{8}-\\d{4}")) {
+            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + corporateId, Entity.CORPORATE_ID);
             corporateId = corporateId.substring(2);
-            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn", Entity.CORPORATE_ID);
         }
         if (corporateId.matches("\\d{6}-\\d{4}")) {
             return Optional.of(corporateId);
         }
         if (corporateId.matches("\\d*")) {
             if (corporateId.length() > 10) {
+                addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + corporateId, Entity.CORPORATE_ID);
                 corporateId = corporateId.substring(corporateId.length() - 10);
+            } else if (corporateId.length() < 10) {
+                addInfo("Organisationsnummer är ogiltigt. " + corporateId, Entity.CORPORATE_ID);
+               return Optional.empty();
             }
         }
         Optional<String> result = Optional.of(corporateId).filter(cid -> cid.matches("\\d{10}")).map(cid -> cid.substring(0, 6) + "-" + cid.substring(6));
         if (result.isPresent()) {
-            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn", Entity.CORPORATE_ID);
-        } else {
-            addWarning("Organisationsnummer är inte av formatet nnnnnn-nnnn: " + corporateId, Entity.CORPORATE_ID);
+            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + corporateId, Entity.CORPORATE_ID);
         }
         return result;
     }

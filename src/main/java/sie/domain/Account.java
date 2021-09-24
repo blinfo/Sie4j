@@ -548,7 +548,7 @@ public class Account implements Entity, Comparable<Account> {
         }
     }
 
-    public static class ObjectId {
+    public static class ObjectId implements Entity {
 
         private final Integer dimensionId;
         private final String objectNumber;

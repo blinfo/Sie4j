@@ -37,6 +37,9 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
         if (entity.isRead() == null) {
             addInfo(FLAGG, "Flagga saknas");
         }
+        if (entity.isRead()) {
+            addWarning(FLAGG, "Filen markerad som tidigare inläst");
+        }
         validateProgram();
         validateCompany();
         validateGenerated();
@@ -87,7 +90,7 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
             if (isNullOrBlank(cin)) {
                 addWarning(CIN, "Organisationsnummer saknas");
             } else if (!CIN_PATTERN.matcher(cin).matches()) {
-                addInfo(CIN, "Organisationsnummer har felaktigt format");
+                addInfo(CIN, "Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + cin);
             }
         });
     }

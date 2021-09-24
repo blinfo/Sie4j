@@ -2,6 +2,7 @@ package sie.domain;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Optional;
 import sie.domain.Account.ObjectId;
 
 /**
@@ -59,6 +60,14 @@ public class ObjectBalance implements Entity {
      */
     public ObjectId getObjectId() {
         return objectId;
+    }
+
+    /**
+     *
+     * @return Optional of Double - quantity for the object balance.
+     */
+    public Optional<Double> getQuantity() {
+        return Optional.ofNullable(quantity);
     }
 
     @Override
