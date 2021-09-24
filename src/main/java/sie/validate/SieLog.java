@@ -82,9 +82,9 @@ public class SieLog implements Comparable<SieLog> {
 
     @Override
     public int compareTo(SieLog other) {
-        int result = other.level.compareTo(level);
+        int result = other.getLevel().compareTo(getLevel());
         if (result == 0) {
-            result = tag.compareTo(other.tag);
+            result = getTag().orElse("").compareTo(other.getTag().orElse(""));
         }
         if (result == 0) {
             result = message.compareTo(other.message);

@@ -71,15 +71,15 @@ class DocumentFactory {
     }
 
     public List<SieLog> getLogs() {
-        return logs;
+        return logs.stream().sorted().collect(Collectors.toList());
     }
 
     public List<SieLog> getWarnings() {
-        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING)).collect(Collectors.toList());
+        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING)).sorted().collect(Collectors.toList());
     }
 
     public List<SieLog> getCriticalErrors() {
-        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL)).collect(Collectors.toList());
+        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL)).sorted().collect(Collectors.toList());
     }
 
     private void parse() {

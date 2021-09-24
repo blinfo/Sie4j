@@ -13,11 +13,36 @@ Response:
 
 exempel:
 [
-  {"message":"Organisationsnummer ska vara av formatet nnnnnn-nnnn","tag":"#ORGNR","level":"INFO","origin":"Document"}
-  {"message":"Kontoplanstyp saknas","level":"INFO","origin":"Document"}
-  {"message":"Filer av typen I4 bör inte innehålla verifikationsnummer","tag":"#VER","level":"INFO","origin":"Document"}
-  {"message":"Kontaktperson saknas i adress","tag":"#ADRESS","level":"INFO","origin":"MetaData"}
-  {"message":"Verifikationen innehåller inga transaktionsrader. Serie: F. Nummer: 7.","tag":"#VER","level":"INFO","origin":"Voucher"}
+    {
+        "message": "Slutdatum för år -2 är inte direkt före nästa års startdatum",
+        "tag": "#RAR",
+        "level": "CRITICAL",
+        "origin": "DocumentFactory"
+    },
+    {
+        "message": "Verifikationen är i obalans. Serie: K. Datum: 20180502. Differens: 0.55",
+        "tag": "#VER",
+        "level": "CRITICAL",
+        "origin": "Voucher"
+    }, 
+    {
+        "message": "Utgående balans för konto 1119 år 0 stämmer inte med summering av verifikationerna. Balans: -100000.00 Summa: -20000.00",
+        "tag": "#UB",
+        "level": "WARNING",
+        "origin": "Document"
+    },
+    {
+        "message": "Organisationsnummer ska vara av formatet nnnnnn-nnnn",
+        "tag": "#ORGNR",
+        "level": "INFO",
+        "origin": "Document"
+    },
+    {
+        "message": "Verifikationen innehåller inga transaktionsrader. Serie: F. Nummer: 7.",
+        "tag": "#VER",
+        "level": "INFO",
+        "origin": "Voucher"
+    }
 ]
 
 Tag
@@ -73,6 +98,7 @@ Address
 Balance
 Company
 Document
+DocumentFactory
 FinancialYear
 Generated
 MetaData

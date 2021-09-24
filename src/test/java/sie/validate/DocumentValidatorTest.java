@@ -65,11 +65,13 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/Arousells_Visning_AB.SE"));
         long expectedNumberOfLogs = 87;
         long expectedNumberOfWarnings = 85;
-        String expectedFirstMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna. Resultat: -25035.36 Summa: 0.00";
+        String expectedFirstMessage = "Kontonummer ska innehålla minst fyra siffror: 23";
+        String expectedFourthMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna. Resultat: -25035.36 Summa: 0.00";
         assertTrue("Log list should not be empty", validator.getLogs().size() > 0);
         assertEquals("Validator should contain " + expectedNumberOfLogs + " logs", expectedNumberOfLogs, validator.getLogs().size());
         assertEquals("Validator should contain " + expectedNumberOfWarnings + " warnings", expectedNumberOfWarnings, validator.getWarnings().size());
         assertEquals("First message should be " + expectedFirstMessage, expectedFirstMessage, validator.getWarnings().get(0).getMessage());
+        assertEquals("Fourth message should be " + expectedFourthMessage, expectedFourthMessage, validator.getWarnings().get(3).getMessage());
     }
 
     @Test

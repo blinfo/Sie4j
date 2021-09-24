@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import sie.domain.Document;
 import sie.domain.Program;
 import sie.exception.SieException;
@@ -57,7 +58,7 @@ public class DocumentValidator implements Validator {
      */
     @Override
     public List<SieLog> getLogs() {
-        return new ArrayList<>(logs);
+        return logs.stream().sorted().collect(Collectors.toList());
     }
 
     public Optional<Document.Type> getType() {
