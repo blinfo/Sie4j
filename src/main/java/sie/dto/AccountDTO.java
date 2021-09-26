@@ -1,5 +1,6 @@
 package sie.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 import java.util.stream.Collectors;
 import sie.domain.Account;
@@ -9,6 +10,9 @@ import sie.domain.Account.ObjectId;
  *
  * @author Håkan Lidén
  */
+@JsonPropertyOrder({"number", "label", "unit", "sruCodes", "openingBalances",
+    "closingBalances", "results", "objectOpeningBalances", "objectClosingBalances",
+    "periodicalBalances", "periodicalBudgets"})
 public class AccountDTO implements DTO {
 
     private final Account source;
@@ -56,11 +60,11 @@ public class AccountDTO implements DTO {
     public List<ObjectBalanceDTO> getObjectClosingBalances() {
         return source.getObjectClosingBalances().stream().map(ObjectBalanceDTO::from).collect(Collectors.toList());
     }
-    
+
     public List<PeriodicalBalanceDTO> getPeriodicalBalances() {
         return source.getPeriodicalBalances().stream().map(PeriodicalBalanceDTO::from).collect(Collectors.toList());
     }
-    
+
     public List<PeriodicalBudgetDTO> getPeriodicalBudgets() {
         return source.getPeriodicalBudgets().stream().map(PeriodicalBudgetDTO::from).collect(Collectors.toList());
     }

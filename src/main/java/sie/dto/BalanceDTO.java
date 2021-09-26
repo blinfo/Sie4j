@@ -1,5 +1,6 @@
 package sie.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.math.BigDecimal;
 import sie.domain.Balance;
 
@@ -7,6 +8,7 @@ import sie.domain.Balance;
  *
  * @author Håkan Lidén
  */
+@JsonPropertyOrder({"yearIndex", "amount"})
 public class BalanceDTO implements DTO {
 
     private final Balance source;

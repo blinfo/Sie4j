@@ -1,5 +1,6 @@
 package sie.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -9,6 +10,7 @@ import sie.domain.Transaction;
  *
  * @author Håkan Lidén
  */
+@JsonPropertyOrder({"accountNumber", "amount", "text", "date", "signature", "quantity", "costCenterIds", "costBearerIds", "projeIds"})
 public class TransactionDTO implements DTO {
 
     private final Transaction source;

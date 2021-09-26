@@ -1,6 +1,6 @@
 package sie.dto;
 
-import sie.dto.DTO;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import sie.exception.SieException;
@@ -10,7 +10,8 @@ import sie.validate.SieLog;
  *
  * @author Håkan Lidén
  */
-public class SieLogDTO implements DTO{
+@JsonPropertyOrder({"level", "message", "tag", "origin"})
+public class SieLogDTO implements DTO {
 
     private final SieLog log;
 

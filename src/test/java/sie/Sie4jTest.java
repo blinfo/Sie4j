@@ -132,36 +132,4 @@ public class Sie4jTest {
         Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_company_name.SI"));
         assertTrue("Company name should be empty", doc.getMetaData().getCompany().getName().isEmpty());
     }
-
-    @Test
-    public void test_file_to_json() {
-        String jsonDoc = Sie4j.asJson(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8.SI"));
-        assertEquals("", expectedJson(), jsonDoc);
-    }
-
-    private String expectedJson() {
-        return "{\"metaData\":{\"read\":false,"
-                + "\"program\":{\"name\":\"Kassasystem\",\"version\":\"1.0\"},"
-                + "\"generated\":{\"date\":\"2018-05-03\",\"signature\":\"Lars Larsson\"},"
-                + "\"sieType\":\"I4\",\"comments\":null,"
-                + "\"company\":{\"name\":\"Övningsbolaget AB\",\"id\":null,\"type\":null,"
-                + "\"corporateId\":\"550226-1513\",\"aquisitionNumber\":null,"
-                + "\"sniCode\":null,\"address\":null},"
-                + "\"taxationYear\":null,\"financialYears\":[],\"periodRange\":null,"
-                + "\"currency\":null},\"accountingPlan\":null,\"vouchers\":["
-                + "{\"series\":\"K\",\"number\":null,\"date\":\"2018-05-02\","
-                + "\"text\":\"Försäljning 25% (DF:157)\",\"registrationDate\":\"2018-05-03\","
-                + "\"signature\":null,\"transactions\":["
-                + "{\"accountNumber\":\"1930\",\"amount\":100.00,\"date\":null,\"text\":null,\"quantity\":null,\"signature\":null,\"objectIds\":[]},"
-                + "{\"accountNumber\":\"2610\",\"amount\":-20.00,\"date\":null,\"text\":null,\"quantity\":null,\"signature\":null,\"objectIds\":[]},"
-                + "{\"accountNumber\":\"3010\",\"amount\":-80.00,\"date\":null,\"text\":null,\"quantity\":null,\"signature\":null,\"objectIds\":[]}]},"
-                + "{\"series\":\"K\",\"number\":null,\"date\":\"2018-05-02\","
-                + "\"text\":\"Försäljning 12% (DF:158)\",\"registrationDate\":\"2018-05-03\","
-                + "\"signature\":null,\"transactions\":["
-                + "{\"accountNumber\":\"1910\",\"amount\":500.00,\"date\":null,\"text\":null,\"quantity\":null,\"signature\":null,\"objectIds\":[]},"
-                + "{\"accountNumber\":\"2621\",\"amount\":-53.57,\"date\":null,\"text\":null,\"quantity\":null,\"signature\":null,\"objectIds\":[]},"
-                + "{\"accountNumber\":\"3020\",\"amount\":-446.43,\"date\":null,\"text\":null,\"quantity\":null,\"signature\":null,\"objectIds\":[]}]}"
-                + "],\"dimensions\":[],\"objects\":[],"
-                + "\"checksum\":\"705756706151497349476164793776747166613756673D3D\"}";
-    }
 }
