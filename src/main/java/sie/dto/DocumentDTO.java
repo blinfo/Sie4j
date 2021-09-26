@@ -15,7 +15,7 @@ import sie.domain.Voucher;
  *
  * @author Håkan Lidén
  */
-@JsonPropertyOrder({"type", "company", "years", "dimensions", "objects", "accounts", "vouchers"})
+@JsonPropertyOrder({"type", "company", "years", "dimensions", "objects", "accounts", "voucherNumberSeries", "vouchers"})
 public class DocumentDTO implements DTO {
 
     private final Document.Type type;
@@ -80,6 +80,15 @@ public class DocumentDTO implements DTO {
 
     public List<AccountingObjectDTO> getObjects() {
         return objects.stream().sorted().map(AccountingObjectDTO::from).collect(Collectors.toList());
+    }
+
+    public List<String> getVoucherNumberSeries() {
+        return vouchers.stream()
+                .map(v -> v.getSeries().orElse(null))
+                .filter(s -> s != null)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public List<VoucherDTO> getVouchers() {
