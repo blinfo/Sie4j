@@ -10,8 +10,11 @@ import java.util.List;
 @JsonPropertyOrder({"document", "logs"})
 public class ValidationResultDTO implements DTO {
 
-    private final DocumentDTO document;
-    private final List<SieLogDTO> logs;
+    private DocumentDTO document;
+    private List<SieLogDTO> logs;
+
+    public ValidationResultDTO() {
+    }
 
     private ValidationResultDTO(DocumentDTO document, List<SieLogDTO> logs) {
         this.document = document;
@@ -26,7 +29,16 @@ public class ValidationResultDTO implements DTO {
         return logs;
     }
 
+    public void setLogs(List<SieLogDTO> logs) {
+        this.logs = logs;
+    }
+
     public DocumentDTO getDocument() {
         return document;
     }
+
+    public void setDocument(DocumentDTO document) {
+        this.document = document;
+    }
+
 }

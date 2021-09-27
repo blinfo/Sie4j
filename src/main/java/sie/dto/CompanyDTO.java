@@ -10,66 +10,115 @@ import sie.domain.Company;
 @JsonPropertyOrder({"name", "corporateID", "aquisitionNumber", "sniCode", "type", "address", "id"})
 public class CompanyDTO implements DTO {
 
-    private final Company source;
-
-    private CompanyDTO(Company company) {
-        this.source = company;
-    }
+    private String name;
+    private String corporateId;
+    private Integer aquisitionNumber;
+    private String sniCode;
+    private TypeDTO type;
+    private AddressDTO address;
+    private String id;
 
     public static CompanyDTO from(Company company) {
-        return new CompanyDTO(company);
+        CompanyDTO dto = new CompanyDTO();
+        dto.setName(company.getName());
+        company.getCorporateID().ifPresent(dto::setCorporateId);
+        company.getAquisitionNumber().ifPresent(dto::setAquisitionNumber);
+        company.getSniCode().ifPresent(dto::setSniCode);
+        company.getType().map(TypeDTO::from).ifPresent(dto::setType);
+        company.getAddress().map(AddressDTO::from).ifPresent(dto::setAddress);
+        company.getId().ifPresent(dto::setId);
+        return dto;
     }
 
     public String getName() {
-        if (source.getName().isBlank()) {
-            return null;
-        }
-        return source.getName();
+        return name;
     }
 
-    public String getCorporateID() {
-        return source.getCorporateID().map(s -> s.isBlank() ? null : s).orElse(null);
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCorporateId() {
+        return corporateId;
+    }
+
+    public void setCorporateId(String corporateId) {
+        this.corporateId = corporateId;
     }
 
     public Integer getAquisitionNumber() {
-        return source.getAquisitionNumber().orElse(null);
+        return aquisitionNumber;
+    }
+
+    public void setAquisitionNumber(Integer aquisitionNumber) {
+        this.aquisitionNumber = aquisitionNumber;
     }
 
     public String getSniCode() {
-        return source.getSniCode().map(s -> s.isBlank() ? null : s).orElse(null);
+        return sniCode;
+    }
+
+    public void setSniCode(String sniCode) {
+        this.sniCode = sniCode;
     }
 
     public TypeDTO getType() {
-        return source.getType().map(TypeDTO::from).orElse(null);
+        return type;
+    }
+
+    public void setType(TypeDTO type) {
+        this.type = type;
     }
 
     public AddressDTO getAddress() {
-        return source.getAddress().map(AddressDTO::from).orElse(null);
+        return address;
     }
-    
+
+    public void setAddress(AddressDTO address) {
+        this.address = address;
+    }
+
     public String getId() {
-        return source.getId().orElse(null);
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @JsonPropertyOrder({"type", "description"})
     public static class TypeDTO implements DTO {
 
-        private final Company.Type type;
+        private String type;
+        private String description;
 
-        private TypeDTO(Company.Type type) {
+        public TypeDTO() {
+        }
+
+        private TypeDTO(String type, String description) {
             this.type = type;
+            this.description = description;
         }
 
         public static TypeDTO from(Company.Type type) {
-            return new TypeDTO(type);
+            return new TypeDTO(type.name(), type.getDescription());
         }
 
         public String getType() {
-            return type.name();
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String getDescription() {
-            return type.getDescription();
+            return description;
         }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
     }
 }

@@ -11,21 +11,34 @@ import sie.domain.Balance;
 @JsonPropertyOrder({"yearIndex", "amount"})
 public class BalanceDTO implements DTO {
 
-    private final Balance source;
+    private Integer yearIndex;
+    private BigDecimal amount;
 
-    private BalanceDTO(Balance source) {
-        this.source = source;
+    public BalanceDTO() {
+    }
+
+    private BalanceDTO(Integer yearIndex, BigDecimal amount) {
+        this.yearIndex = yearIndex;
+        this.amount = amount;
     }
 
     public static BalanceDTO from(Balance source) {
-        return new BalanceDTO(source);
+        return new BalanceDTO(source.getYearIndex(), source.getAmount());
     }
 
     public Integer getYearIndex() {
-        return source.getYearIndex();
+        return yearIndex;
+    }
+
+    public void setYearIndex(Integer yearIndex) {
+        this.yearIndex = yearIndex;
     }
 
     public BigDecimal getAmount() {
-        return source.getAmount();
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 }

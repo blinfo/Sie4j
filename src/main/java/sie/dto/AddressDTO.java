@@ -10,41 +10,52 @@ import sie.domain.Address;
 @JsonPropertyOrder({"contact", "streetAddress", "postalAddress", "phone"})
 public class AddressDTO {
 
-    private final Address source;
+    private String contact;
+    private String streetAddress;
+    private String postalAddress;
+    private String phone;
 
-    private AddressDTO(Address source) {
-        this.source = source;
+    public AddressDTO() {
     }
 
     public static AddressDTO from(Address source) {
-        return new AddressDTO(source);
+        AddressDTO dto = new AddressDTO();
+        dto.setContact(source.getContact().isBlank() ? null : source.getContact());
+        dto.setStreetAddress(source.getStreetAddress().isBlank() ? null : source.getStreetAddress());
+        dto.setPostalAddress(source.getPostalAddress().isBlank() ? null : source.getPostalAddress());
+        dto.setPhone(source.getPhone().isBlank() ? null : source.getPhone());
+        return dto;
     }
 
     public String getContact() {
-        if (source.getContact().isBlank()) {
-            return null;
-        }
-        return source.getContact();
+        return contact;
     }
 
-    public String getPhone() {
-        if (source.getPhone().isBlank()) {
-            return null;
-        }
-        return source.getPhone();
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public String getStreetAddress() {
-        if (source.getStreetAddress().isBlank()) {
-            return null;
-        }
-        return source.getStreetAddress();
+        return streetAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
     }
 
     public String getPostalAddress() {
-        if (source.getPostalAddress().isBlank()) {
-            return null;
-        }
-        return source.getPostalAddress();
+        return postalAddress;
+    }
+
+    public void setPostalAddress(String postalAddress) {
+        this.postalAddress = postalAddress;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

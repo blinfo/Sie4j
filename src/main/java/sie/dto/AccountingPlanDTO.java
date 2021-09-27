@@ -12,21 +12,35 @@ import sie.domain.AccountingPlan;
 @JsonPropertyOrder({"accounts", "type"})
 public class AccountingPlanDTO implements DTO {
 
-    private final AccountingPlan source;
+    private List<AccountDTO> accounts;
+    private String type;
 
-    private AccountingPlanDTO(AccountingPlan source) {
-        this.source = source;
+    public AccountingPlanDTO() {
+    }
+
+    private AccountingPlanDTO(List<AccountDTO> accounts, String type) {
+        this.accounts = accounts;
+        this.type = type;
     }
 
     public static AccountingPlanDTO from(AccountingPlan source) {
-        return new AccountingPlanDTO(source);
+        List<AccountDTO> accounts = source.getAccounts().stream().map(AccountDTO::from).collect(Collectors.toList());
+        return new AccountingPlanDTO(accounts, source.getType().orElse(null));
     }
 
     public List<AccountDTO> getAccounts() {
-        return source.getAccounts().stream().sorted().map(AccountDTO::from).collect(Collectors.toList());
+        return accounts;
+    }
+
+    public void setAccounts(List<AccountDTO> accounts) {
+        this.accounts = accounts;
     }
 
     public String getType() {
-        return source.getType().orElse(null);
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

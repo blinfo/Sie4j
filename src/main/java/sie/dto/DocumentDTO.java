@@ -17,106 +17,73 @@ import sie.domain.Voucher;
 @JsonPropertyOrder({"metaData", "dimensions", "objects", "accounts", "voucherNumberSeries", "vouchers"})
 public class DocumentDTO implements DTO {
 
-    private final MetaData metaData;
-    private final AccountingPlan accountingPlan;
-    private final List<Voucher> vouchers;
-    private final List<AccountingDimension> dimensions;
-    private final List<AccountingObject> objects;
-
-    private DocumentDTO(MetaData metaData,
-            AccountingPlan accountingPlan,
-            List<Voucher> vouchers,
-            List<AccountingDimension> dimensions,
-            List<AccountingObject> objects) {
-        this.metaData = metaData;
-        this.accountingPlan = accountingPlan;
-        this.vouchers = vouchers;
-        this.dimensions = dimensions;
-        this.objects = objects;
-    }
+    private MetaDataDTO metaData;
+    private AccountingPlanDTO accountingPlan;
+    private List<String> voucherNumberSeries;
+    private List<VoucherDTO> vouchers;
+    private List<AccountingDimensionDTO> dimensions;
+    private List<AccountingObjectDTO> objects;
 
     public static DocumentDTO from(Document document) {
-        Builder builder = DocumentDTO.builder()
-                .setMetaData(document.getMetaData())
-                .setDimensions(document.getDimensions())
-                .setObjects(document.getObjects())
-                .setVouchers(document.getVouchers());
-        document.getAccountingPlan().ifPresent(builder::setAccountingPlan);
-        return builder.apply();
-    }
-
-    public static Builder builder() {
-        return new Builder();
+        DocumentDTO dto = new DocumentDTO();
+        dto.setMetaData(MetaDataDTO.from(document.getMetaData()));
+        document.getAccountingPlan().map(AccountingPlanDTO::from).ifPresent(dto::setAccountingPlan);
+        dto.setVouchers(document.getVouchers().stream().map(VoucherDTO::from).collect(Collectors.toList()));
+        dto.setDimensions(document.getDimensions().stream().map(AccountingDimensionDTO::from).collect(Collectors.toList()));
+        dto.setObjects(document.getObjects().stream().map(AccountingObjectDTO::from).collect(Collectors.toList()));
+        return dto;
     }
 
     public MetaDataDTO getMetaData() {
-        return MetaDataDTO.from(metaData);
+        return metaData;
+    }
+
+    public void setMetaData(MetaDataDTO metaData) {
+        this.metaData = metaData;
     }
 
     public AccountingPlanDTO getAccountingPlan() {
-        return AccountingPlanDTO.from(accountingPlan);
+        return accountingPlan;
+    }
+
+    public void setAccountingPlan(AccountingPlanDTO accountingPlan) {
+        this.accountingPlan = accountingPlan;
+    }
+
+    public List<VoucherDTO> getVouchers() {
+        return vouchers;
+    }
+
+    public void setVouchers(List<VoucherDTO> vouchers) {
+        this.vouchers = vouchers;
     }
 
     public List<AccountingDimensionDTO> getDimensions() {
-        return dimensions.stream().sorted().map(AccountingDimensionDTO::from).collect(Collectors.toList());
+        return dimensions;
+    }
+
+    public void setDimensions(List<AccountingDimensionDTO> dimensions) {
+        this.dimensions = dimensions;
     }
 
     public List<AccountingObjectDTO> getObjects() {
-        return objects.stream().sorted().map(AccountingObjectDTO::from).collect(Collectors.toList());
+        return objects;
+    }
+
+    public void setObjects(List<AccountingObjectDTO> objects) {
+        this.objects = objects;
     }
 
     public List<String> getVoucherNumberSeries() {
         return vouchers.stream()
-                .map(v -> v.getSeries().orElse(null))
+                .map(v -> v.getSeries())
                 .filter(s -> s != null)
                 .distinct()
                 .sorted()
                 .collect(Collectors.toList());
     }
 
-    public List<VoucherDTO> getVouchers() {
-        return vouchers.stream().sorted().map(VoucherDTO::from).collect(Collectors.toList());
+    public void setVoucherNumberSeries(List<String> series) {
+        // Do nothing
     }
-
-    public static class Builder {
-
-        private MetaData metaData;
-        private AccountingPlan accountingPlan;
-        private List<AccountingObject> objects;
-        private List<AccountingDimension> dimensions;
-        private List<Voucher> vouchers;
-
-        private Builder() {
-        }
-
-        public Builder setMetaData(MetaData metaData) {
-            this.metaData = metaData;
-            return this;
-        }
-
-        public Builder setVouchers(List<Voucher> vouchers) {
-            this.vouchers = vouchers;
-            return this;
-        }
-
-        public Builder setAccountingPlan(AccountingPlan accountingPlan) {
-            this.accountingPlan = accountingPlan;
-            return this;
-        }
-
-        public Builder setDimensions(List<AccountingDimension> dimensions) {
-            this.dimensions = dimensions;
-            return this;
-        }
-
-        public Builder setObjects(List<AccountingObject> objects) {
-            this.objects = objects;
-            return this;
-        }
-
-        public DocumentDTO apply() {
-            return new DocumentDTO(metaData, accountingPlan, vouchers, dimensions, objects);
-        }
-    }
-
 }

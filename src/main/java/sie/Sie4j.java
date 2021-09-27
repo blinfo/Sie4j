@@ -61,6 +61,10 @@ public class Sie4j {
     public static String asJson(Document input) {
         return Serializer.asJson(input);
     }
+    
+    public static Document fromJson(InputStream input) {
+        return Deserializer.fromJson(input);
+    }
 
     public static Document toDocument(InputStream input) {
         return SieReader.from(input).read();

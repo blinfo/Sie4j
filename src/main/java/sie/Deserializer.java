@@ -2,8 +2,12 @@ package sie;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.Year;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,10 +19,13 @@ import sie.domain.Address;
 import sie.domain.Balance;
 import sie.domain.Company;
 import sie.domain.Document;
+import sie.domain.Entity;
 import sie.domain.FinancialYear;
 import sie.domain.Generated;
 import sie.domain.MetaData;
 import sie.domain.ObjectBalance;
+import sie.domain.PeriodicalBalance;
+import sie.domain.PeriodicalBudget;
 import sie.domain.Program;
 import sie.domain.Transaction;
 import sie.domain.Voucher;
@@ -33,6 +40,8 @@ import sie.dto.FinancialYearDTO;
 import sie.dto.GeneratedDTO;
 import sie.dto.MetaDataDTO;
 import sie.dto.ObjectBalanceDTO;
+import sie.dto.PeriodicalBalanceDTO;
+import sie.dto.PeriodicalBudgetDTO;
 import sie.dto.ProgramDTO;
 import sie.dto.TransactionDTO;
 import sie.dto.VoucherDTO;
@@ -45,6 +54,10 @@ import sie.exception.SieException;
 class Deserializer {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    public static Document fromJson(InputStream stream) {
+        return fromJson(streamToString(stream));
+    }
 
     public static Document fromJson(DocumentDTO dto) {
         return new Deserializer().parse(dto);
@@ -114,11 +127,11 @@ class Deserializer {
     }
 
     private Company createCompany(CompanyDTO company) {
-        if (company == null || isEmpty(company.getName()) && isEmpty(company.getCorporateID())) {
+        if (company == null || isEmpty(company.getName()) && isEmpty(company.getCorporateId())) {
             return null;
         }
         return Company.builder(company.getName())
-                .corporateID(company.getCorporateID())
+                .corporateID(company.getCorporateId())
                 .address(createAddress(company.getAddress()))
                 .aquisitionNumber(company.getAquisitionNumber())
                 .sniCode(company.getSniCode())
@@ -168,11 +181,14 @@ class Deserializer {
         Account.Builder builder = Account.builder(input.getNumber())
                 .label(input.getLabel())
                 .unit(input.getUnit());
+        input.getSruCodes().forEach(builder::addSruCode);
         input.getOpeningBalances().stream().map(this::createBalance).forEach(builder::addOpeningBalance);
         input.getClosingBalances().stream().map(this::createBalance).forEach(builder::addClosingBalance);
         input.getResults().stream().map(this::createBalance).forEach(builder::addResult);
         input.getObjectOpeningBalances().stream().map(this::createObjectBalance).forEach(builder::addObjectOpeningBalance);
         input.getObjectClosingBalances().stream().map(this::createObjectBalance).forEach(builder::addObjectClosingBalance);
+        input.getPeriodicalBalances().stream().map(this::createPeriodicalBalance).forEach(builder::addPeriodicalBalance);
+        input.getPeriodicalBudgets().stream().map(this::createPeriodicalBudget).forEach(builder::addPeriodicalBudget);
         return builder.apply();
     }
 
@@ -187,6 +203,20 @@ class Deserializer {
                 .objectId(input.getObjectId().getDimensionId(), input.getObjectId().getObjectNumber())
                 .quantity(input.getQuantity())
                 .apply();
+    }
+
+    private PeriodicalBalance createPeriodicalBalance(PeriodicalBalanceDTO input) {
+        return PeriodicalBalance.builder()
+                .amount(input.getAmount())
+                .period(YearMonth.parse(input.getPeriod()))
+                .yearIndex(input.getYearIndex())
+                .quantity(input.getQuantity())
+                .specification(input.getObjectId().getDimensionId(), input.getObjectId().getObjectNumber())
+                .apply();
+    }
+
+    private PeriodicalBudget createPeriodicalBudget(PeriodicalBudgetDTO input) {
+        return PeriodicalBudget.of(input.getYearIndex(), YearMonth.parse(input.getPeriod()), input.getAmount());
     }
 
     private Voucher createVoucher(VoucherDTO input) {
@@ -209,7 +239,7 @@ class Deserializer {
                 .signature(input.getSignature())
                 .text(input.getText())
                 .date(Optional.ofNullable(input.getDate()).map(LocalDate::parse).orElse(null));
-        input.getCostCentreIds().stream().map(num -> Account.ObjectId.of(AccountingDimension.COST_CENTRE, num)).forEach(builder::addObjectId);
+        input.getCostCenterIds().stream().map(num -> Account.ObjectId.of(AccountingDimension.COST_CENTRE, num)).forEach(builder::addObjectId);
         input.getCostBearerIds().stream().map(num -> Account.ObjectId.of(AccountingDimension.COST_BEARER, num)).forEach(builder::addObjectId);
         input.getProjectIds().stream().map(num -> Account.ObjectId.of(AccountingDimension.PROJECT, num)).forEach(builder::addObjectId);
         return builder.apply();
@@ -217,5 +247,15 @@ class Deserializer {
 
     private Boolean isEmpty(String string) {
         return string == null || string.isBlank();
+    }
+
+    private static String streamToString(InputStream input) {
+        try {
+            byte[] buffer = new byte[input.available()];
+            input.read(buffer);
+            return new String(buffer, StandardCharsets.UTF_8);
+        } catch (IOException ex) {
+            throw new SieException("Kunde inte läsa källan", ex);
+        }
     }
 }
