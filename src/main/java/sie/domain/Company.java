@@ -118,28 +118,38 @@ public class Company implements Entity {
     }
 
     public enum Type {
-        AB,
-        BAB,
-        BF,
-        BFL,
-        BRF,
-        E,
-        EK,
-        FAB,
-        FL,
-        HB,
-        I,
-        KB,
-        KHF,
-        MB,
-        OFB,
-        S,
-        SB,
-        SCE,
-        SE,
-        SF,
-        TSF,
-        X;
+        AB("Aktiebolag"),
+        BAB("Bankaktiebolag"),
+        BF("Bostadsförening"),
+        BFL("Utländsk banks filial"),
+        BRF("Bostadsrättsförening"),
+        E("Enskild näringsidkare"),
+        EK("Ekonomisk förening"),
+        FAB("Försäkringsaktiebolag"),
+        FL("Filial till utländskt bolag"),
+        HB("Handelsbolag"),
+        I("Ideell förening som bedriver näring"),
+        KB("Kommanditbolag"),
+        KHF("Kooperativ hyresrättsförening"),
+        MB("Medlemsbank"),
+        OFB("Ömsesidigt försäkringsbolag"),
+        SB("Sparbank"),
+        SCE("Europakooperativ"),
+        SE("Europabolag"),
+        SF("Sambruksförening"),
+        S("Stiftelse som bedriver näring"),
+        TSF("Trossamfund"),
+        X("Annan företagsform");
+
+        private final String description;
+
+        private Type(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return description;
+        }
 
         public static Type from(String string) {
             try {

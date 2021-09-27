@@ -1,11 +1,13 @@
 package sie.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import sie.domain.AccountingDimension;
 
 /**
  *
  * @author Håkan Lidén
  */
+@JsonPropertyOrder({"id", "label", "parentId"})
 public class AccountingDimensionDTO {
 
     private final AccountingDimension source;

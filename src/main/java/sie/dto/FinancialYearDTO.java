@@ -1,11 +1,13 @@
 package sie.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import sie.domain.FinancialYear;
 
 /**
  *
  * @author Håkan Lidén
  */
+@JsonPropertyOrder({"index", "startDate", "endDate"})
 public class FinancialYearDTO implements DTO {
 
     private final FinancialYear source;

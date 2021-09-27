@@ -1,6 +1,6 @@
-
 package sie.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -11,6 +11,8 @@ import sie.domain.Voucher;
  *
  * @author Håkan Lidén
  */
+@JsonPropertyOrder({"series", "number", "date", "text", "registrationDate",
+    "signature", "balanced", "diff", "transactions"})
 public class VoucherDTO {
 
     private final Voucher source;
@@ -18,11 +20,11 @@ public class VoucherDTO {
     private VoucherDTO(Voucher source) {
         this.source = source;
     }
+
     public static VoucherDTO from(Voucher source) {
         return new VoucherDTO(source);
-    } 
-            
-    
+    }
+
     public String getSeries() {
         return source.getSeries().orElse(null);
     }
@@ -58,5 +60,4 @@ public class VoucherDTO {
     public BigDecimal getDiff() {
         return source.getDiff();
     }
-
 }

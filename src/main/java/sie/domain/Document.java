@@ -159,30 +159,46 @@ public class Document implements Entity {
          * This type is typically used for exporting data to systems handling
          * tax returns et al.
          */
-        E1,
+        E1("Export av bokslutssaldon"),
         /**
          * Export of balances for periodical accounts.
          */
-        E2,
+        E2("Export av periodsaldon"),
         /**
          * Export of balances for object accounts.
          */
-        E3,
+        E3("Export av objektsaldon"),
         /**
          * Export of accounts, vouchers and transactions.
          * <p>
          * This type contains the most complete representation of the accounting
          * data.
          */
-        E4,
+        E4("Export av transaktioner"),
         /**
          * Import of accounts, vouchers and transactions.
          * <p>
          * Accounts are optional for documents of this type.
          */
-        I4;
+        I4("Import av transaktioner");
 
         public static Type DEFAULT = E1;
+        private final String description;
+
+        private Type(String description) {
+            this.description = description;
+        }
+
+        /**
+         * Returns the description.
+         * <p>
+         * The description is given in Swedish.
+         *
+         * @return Description (in Swedish) of the purpose of the type.
+         */
+        public String getDescription() {
+            return description;
+        }
 
         /**
          * Returns the number part of the type.

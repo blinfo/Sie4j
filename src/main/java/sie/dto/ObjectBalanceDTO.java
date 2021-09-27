@@ -1,13 +1,14 @@
 package sie.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.math.BigDecimal;
-import sie.domain.Account.ObjectId;
 import sie.domain.ObjectBalance;
 
 /**
  *
  * @author Håkan Lidén
  */
+@JsonPropertyOrder({"yearIndex", "objectId", "amount", "quantity"})
 public class ObjectBalanceDTO implements DTO {
 
     private final ObjectBalance source;
@@ -15,6 +16,7 @@ public class ObjectBalanceDTO implements DTO {
     private ObjectBalanceDTO(ObjectBalance source) {
         this.source = source;
     }
+
     public static ObjectBalanceDTO from(ObjectBalance source) {
         return new ObjectBalanceDTO(source);
     }
@@ -27,8 +29,8 @@ public class ObjectBalanceDTO implements DTO {
         return source.getYearIndex();
     }
 
-    public ObjectId getObjectId() {
-        return source.getObjectId();
+    public AccountDTO.ObjectIdDTO getObjectId() {
+        return AccountDTO.ObjectIdDTO.from(source.getObjectId());
     }
 
     public Double getQuantity() {

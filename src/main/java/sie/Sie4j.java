@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
+import sie.dto.DocumentDTO;
 import sie.exception.SieException;
 import sie.validate.DocumentValidator;
 
@@ -71,6 +72,14 @@ public class Sie4j {
         } catch (FileNotFoundException ex) {
             throw new SieException(ex);
         }
+    }
+
+    public static Document toDocument(String jsonInput) {
+        return Deserializer.fromJson(jsonInput);
+    }
+
+    public static Document toDocument(DocumentDTO dto) {
+        return Deserializer.fromJson(dto);
     }
 
     /**
