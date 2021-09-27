@@ -1,9 +1,6 @@
 package sie.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import sie.exception.SieException;
 import sie.validate.SieLog;
 
 /**
@@ -13,38 +10,49 @@ import sie.validate.SieLog;
 @JsonPropertyOrder({"level", "message", "tag", "origin"})
 public class SieLogDTO implements DTO {
 
-    private final SieLog log;
-
-    private SieLogDTO(SieLog log) {
-        this.log = log;
-    }
+    private String level;
+    private String message;
+    private String tag;
+    private String origin;
 
     public static SieLogDTO from(SieLog log) {
-        return new SieLogDTO(log);
-    }
-
-    public String getOrigin() {
-        return log.getOrigin().orElse(null);
+        SieLogDTO dto = new SieLogDTO();
+        dto.setLevel(log.getLevel().name());
+        dto.setMessage(log.getMessage());
+        log.getTag().ifPresent(dto::setTag);
+        log.getOrigin().ifPresent(dto::setOrigin);
+        return dto;
     }
 
     public String getLevel() {
-        return log.getLevel().name();
+        return level;
     }
 
-    public String getTag() {
-        return log.getTag().orElse(null);
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public String getMessage() {
-        return log.getMessage();
+        return message;
     }
 
-    @Override
-    public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException ex) {
-            throw new SieException(ex);
-        }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 }

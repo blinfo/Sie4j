@@ -1,12 +1,10 @@
 package sie.domain;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import sie.io.JsonDateSerializer;
 
 /**
  *
@@ -18,10 +16,8 @@ public class Voucher implements Entity, Comparable<Voucher> {
     private static final double DELTA = 0.005;
     private final String series;
     private final Integer number;
-    @JsonSerialize(using = JsonDateSerializer.class)
     private final LocalDate date;
     private final String text;
-    @JsonSerialize(using = JsonDateSerializer.class)
     private final LocalDate registrationDate;
     private final String signature;
     private final List<Transaction> transactions;

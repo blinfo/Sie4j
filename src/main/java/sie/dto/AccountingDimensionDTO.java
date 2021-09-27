@@ -10,26 +10,44 @@ import sie.domain.AccountingDimension;
 @JsonPropertyOrder({"id", "label", "parentId"})
 public class AccountingDimensionDTO {
 
-    private final AccountingDimension source;
+    private Integer id;
+    private String label;
+    private Integer parentId;
 
-    private AccountingDimensionDTO(AccountingDimension source) {
-        this.source = source;
+    public AccountingDimensionDTO() {
+    }
+
+    private AccountingDimensionDTO(Integer id, String label, Integer parentId) {
+        this.id = id;
+        this.label = label;
+        this.parentId = parentId;
     }
 
     public static AccountingDimensionDTO from(AccountingDimension source) {
-        return new AccountingDimensionDTO(source);
-    }
-    
-    public Integer getId() {
-        return source.getId();
-    }
-    
-    public String getLabel() {
-        return source.getLabel();
-    }
-    
-    public Integer getParentId() {
-        return source.getParentId().orElse(null);
+        return new AccountingDimensionDTO(source.getId(), source.getLabel(), source.getParentId().orElse(null));
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
 }

@@ -10,21 +10,34 @@ import sie.domain.Document;
 @JsonPropertyOrder({"type", "description"})
 public class SieTypeDTO {
 
-    private final Document.Type type;
+    private String type;
+    private String description;
 
-    private SieTypeDTO(Document.Type type) {
+    public SieTypeDTO() {
+    }
+
+    private SieTypeDTO(String type, String description) {
         this.type = type;
+        this.description = description;
     }
 
     public static SieTypeDTO from(Document.Type type) {
-        return new SieTypeDTO(type);
+        return new SieTypeDTO(type.name(), type.getDescription());
     }
 
     public String getType() {
-        return type.name();
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getDescription() {
-        return type.getDescription();
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

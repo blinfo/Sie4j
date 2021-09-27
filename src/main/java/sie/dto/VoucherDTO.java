@@ -15,49 +15,99 @@ import sie.domain.Voucher;
     "signature", "balanced", "diff", "transactions"})
 public class VoucherDTO {
 
-    private final Voucher source;
-
-    private VoucherDTO(Voucher source) {
-        this.source = source;
-    }
+    private String series;
+    private Integer number;
+    private String date;
+    private String text;
+    private String registrationDate;
+    private String signature;
+    private Boolean balanced;
+    private BigDecimal diff;
+    private List<TransactionDTO> transactions;
 
     public static VoucherDTO from(Voucher source) {
-        return new VoucherDTO(source);
+        VoucherDTO dto = new VoucherDTO();
+        source.getSeries().ifPresent(dto::setSeries);
+        source.getNumber().ifPresent(dto::setNumber);
+        dto.setDate(source.getDate().toString());
+        source.getText().ifPresent(dto::setText);
+        source.getRegistrationDate().map(LocalDate::toString).ifPresent(dto::setRegistrationDate);
+        source.getSignature().ifPresent(dto::setSignature);
+        dto.setBalanced(source.isBalanced());
+        dto.setDiff(dto.getDiff());
+        dto.setTransactions(source.getTransactions().stream().map(TransactionDTO::from).collect(Collectors.toList()));
+        return dto;
     }
 
     public String getSeries() {
-        return source.getSeries().orElse(null);
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
     }
 
     public Integer getNumber() {
-        return source.getNumber().orElse(null);
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public String getDate() {
-        return source.getDate().toString();
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getText() {
-        return source.getText().orElse(null);
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getRegistrationDate() {
-        return source.getRegistrationDate().map(LocalDate::toString).orElse(null);
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public String getSignature() {
-        return source.getSignature().orElse(null);
+        return signature;
     }
 
-    public List<TransactionDTO> getTransactions() {
-        return source.getTransactions().stream().map(TransactionDTO::from).collect(Collectors.toList());
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
     public Boolean isBalanced() {
-        return source.isBalanced();
+        return balanced;
+    }
+
+    public void setBalanced(Boolean balanced) {
+        this.balanced = balanced;
     }
 
     public BigDecimal getDiff() {
-        return source.getDiff();
+        return diff;
+    }
+
+    public void setDiff(BigDecimal diff) {
+        this.diff = diff;
+    }
+
+    public List<TransactionDTO> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<TransactionDTO> transactions) {
+        this.transactions = transactions;
     }
 }

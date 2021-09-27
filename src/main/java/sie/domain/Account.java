@@ -43,10 +43,10 @@ public class Account implements Entity, Comparable<Account> {
         this.openingBalances = openingBalances;
         this.closingBalances = closingBalances;
         this.results = results;
+        this.objectOpeningBalances = objectOpeningBalances;
         this.objectClosingBalances = objectClosingBalances;
         this.periodicalBudgets = periodicalBudgets;
         this.periodicalBalances = periodicalBalances;
-        this.objectOpeningBalances = objectOpeningBalances;
     }
 
     /**

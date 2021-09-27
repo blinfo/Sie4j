@@ -1,18 +1,32 @@
 {
-    "document": {
-        "type": {
-            "type": "E4",
-            "description": "Export av transaktioner"
-        },
+    "metaData": {
         "company": {
             "name": "Övningsföretaget AB",
-            "corporateID": "165571-0918",
+            "aquisitionNumber": null,
+            "sniCode": null,
             "type": {
                 "type": "AB",
                 "description": "Aktiebolag"
-            }
+            },
+            "address": null,
+            "id": "BLOV",
+            "corporateId": "165571-0918"
         },
-        "years": [
+        "program": {
+            "name": "BL Administration",
+            "version": "2018.2.101"
+        },
+        "generated": {
+            "date": "2018-05-07",
+            "signature": "1 Linda Henriksson"
+        },
+        "sieType": {
+            "type": "E4",
+            "description": "Export av transaktioner"
+        },
+        "comments": null,
+        "taxationYear": "2018",
+        "financialYears": [
             {
                 "index": 0,
                 "startDate": "2017-01-01",
@@ -24,8 +38,1076 @@
                 "endDate": "2016-12-31"
             }
         ],
-        "dimensions": [],
-        "objects": [],
+        "periodRange": null,
+        "currency": null,
+        "read": false
+    },
+    "dimensions": [],
+    "objects": [],
+    "voucherNumberSeries": [
+        "A",
+        "B",
+        "F",
+        "I",
+        "N"
+    ],
+    "vouchers": [
+        {
+            "series": "A",
+            "number": 1,
+            "date": "2017-01-01",
+            "text": "Representation måltid utan alkohol",
+            "registrationDate": "2017-01-19",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "1930",
+                    "amount": -1000.00,
+                    "text": null,
+                    "date": "2017-01-01",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "6072",
+                    "amount": 928.00,
+                    "text": null,
+                    "date": "2017-01-01",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "2640",
+                    "amount": 72.00,
+                    "text": null,
+                    "date": "2017-01-01",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "A",
+            "number": 2,
+            "date": "2017-01-01",
+            "text": "Representation måltid med alkohol",
+            "registrationDate": "2017-01-19",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "1930",
+                    "amount": -1000.00,
+                    "text": null,
+                    "date": "2017-01-01",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "6072",
+                    "amount": 908.00,
+                    "text": null,
+                    "date": "2017-01-01",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "2640",
+                    "amount": 92.00,
+                    "text": null,
+                    "date": "2017-01-01",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "A",
+            "number": 3,
+            "date": "2017-01-01",
+            "text": null,
+            "registrationDate": "2017-02-10",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "2440",
+                    "amount": -1000.00,
+                    "text": null,
+                    "date": "2017-01-01",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "4010",
+                    "amount": 800.00,
+                    "text": null,
+                    "date": "2017-01-01",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "2640",
+                    "amount": 200.00,
+                    "text": null,
+                    "date": "2017-01-01",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "A",
+            "number": 4,
+            "date": "2017-01-11",
+            "text": "STATOIL (DF:7)",
+            "registrationDate": "2017-03-08",
+            "signature": null,
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "1930",
+                    "amount": -606.76,
+                    "text": null,
+                    "date": "2017-01-11",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "2641",
+                    "amount": 121.35,
+                    "text": null,
+                    "date": "2017-01-11",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "5610",
+                    "amount": 485.41,
+                    "text": null,
+                    "date": "2017-01-11",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 1,
+            "date": "2017-01-31",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1666.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-01-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1666.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-01-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1666.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-01-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1666.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-01-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 2,
+            "date": "2017-02-28",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-02-28",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-02-28",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-02-28",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-02-28",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 3,
+            "date": "2017-03-31",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-03-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-03-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-03-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-03-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 4,
+            "date": "2017-04-30",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1666.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-04-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1666.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-04-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1666.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-04-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1666.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-04-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 5,
+            "date": "2017-05-31",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-05-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-05-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-05-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-05-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 6,
+            "date": "2017-06-30",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-06-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-06-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-06-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-06-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 7,
+            "date": "2017-07-31",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1666.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-07-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1666.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-07-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1666.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-07-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1666.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-07-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 8,
+            "date": "2017-08-31",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-08-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-08-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-08-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-08-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 9,
+            "date": "2017-09-30",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-09-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-09-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-09-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-09-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 10,
+            "date": "2017-10-31",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1666.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-10-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1666.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-10-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1666.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-10-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1666.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-10-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 11,
+            "date": "2017-11-30",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-11-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-11-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-11-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-11-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "B",
+            "number": 12,
+            "date": "2017-12-31",
+            "text": "Avskrivning anläggningsregister",
+            "registrationDate": "2017-01-09",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "7820",
+                    "amount": 1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-12-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1119",
+                    "amount": -1667.00,
+                    "text": "1110\\1002 Hus 1:1",
+                    "date": "2017-12-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7834",
+                    "amount": 1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-12-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1249",
+                    "amount": -1667.00,
+                    "text": "1240\\1000 TZD 608",
+                    "date": "2017-12-31",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "F",
+            "number": 1,
+            "date": "2017-12-29",
+            "text": "Kundfaktura 29 Peter Fredrikssons Försäl",
+            "registrationDate": "2017-12-29",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "1510",
+                    "amount": 2500.00,
+                    "text": null,
+                    "date": "2017-12-29",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "2610",
+                    "amount": -500.00,
+                    "text": null,
+                    "date": "2017-12-29",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "3010",
+                    "amount": -2000.00,
+                    "text": null,
+                    "date": "2017-12-29",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "F",
+            "number": 2,
+            "date": "2017-12-29",
+            "text": "Kundfaktura 31 Peter Fredrikssons Försäl",
+            "registrationDate": "2017-12-29",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "1510",
+                    "amount": 4125.00,
+                    "text": null,
+                    "date": "2017-12-29",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "2610",
+                    "amount": -825.00,
+                    "text": null,
+                    "date": "2017-12-29",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "3010",
+                    "amount": -3300.00,
+                    "text": null,
+                    "date": "2017-12-29",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "I",
+            "number": 1,
+            "date": "2017-12-30",
+            "text": "Inbet.journal 11",
+            "registrationDate": "2017-12-29",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "3010",
+                    "amount": -1400.00,
+                    "text": "[30] Peter Fredrikssons Försäljnings AB",
+                    "date": "2017-12-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "2610",
+                    "amount": -350.00,
+                    "text": "[30] Peter Fredrikssons Försäljnings AB",
+                    "date": "2017-12-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "1930",
+                    "amount": 1750.00,
+                    "text": "2017-12-30",
+                    "date": "2017-12-30",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        },
+        {
+            "series": "N",
+            "number": 1,
+            "date": "2017-01-25",
+            "text": "Löner",
+            "registrationDate": "2017-03-22",
+            "signature": "#6 Linda Henriksson",
+            "balanced": true,
+            "diff": null,
+            "transactions": [
+                {
+                    "accountNumber": "1930",
+                    "amount": -24268.00,
+                    "text": null,
+                    "date": "2017-01-25",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "2710",
+                    "amount": -8674.00,
+                    "text": null,
+                    "date": "2017-01-25",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7010",
+                    "amount": 32702.00,
+                    "text": null,
+                    "date": "2017-01-25",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "7510",
+                    "amount": 10590.38,
+                    "text": null,
+                    "date": "2017-01-25",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                },
+                {
+                    "accountNumber": "2730",
+                    "amount": -10350.38,
+                    "text": null,
+                    "date": "2017-01-25",
+                    "signature": null,
+                    "quantity": null,
+                    "costCenterIds": [],
+                    "costBearerIds": [],
+                    "projectIds": []
+                }
+            ]
+        }
+    ],
+    "accountingPlan": {
         "accounts": [
             {
                 "number": "1110",
@@ -76,62 +1158,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": -1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": -1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": -1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": -1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": -1667.00
                     }
                 ]
@@ -248,62 +1330,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": -1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": -1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": -1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": -1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": -1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": -1667.00
                     }
                 ]
@@ -435,62 +1517,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": -37326.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 48590.50
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -525,62 +1607,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 1000.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": -880.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -820,62 +1902,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": -16504.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 46406.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": -23300.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": -22643.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 48590.50
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": -21166.00
                     }
                 ]
@@ -1364,62 +2446,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": -1712.50
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": -19436.20
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -1655,62 +2737,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": -4496.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": -8347.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": -7357.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": -33334.00
                     }
                 ]
@@ -1749,62 +2831,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": -6284.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": -10368.53
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": -9426.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": -17123.90
                     }
                 ]
@@ -1966,62 +3048,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": -1320.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": -3600.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -2060,62 +3142,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 414.74
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.12
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -2210,62 +3292,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": -414.74
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": -37.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": -1131.12
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -2295,62 +3377,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": -7320.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": -77744.80
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -2436,62 +3518,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": -0.50
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.22
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -2532,62 +3614,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": -15.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -3544,62 +4626,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 5.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -3737,62 +4819,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 10000.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 32383.78
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 30000.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 54500.00
                     }
                 ]
@@ -3818,62 +4900,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 10000.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -3899,62 +4981,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 1320.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 3600.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -4025,62 +5107,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 143.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -4260,62 +5342,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 6284.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 10368.53
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 9426.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 17123.90
                     }
                 ]
@@ -4341,62 +5423,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 1131.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 0.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 0.00
                     }
                 ]
@@ -4577,62 +5659,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 1667.00
                     }
                 ]
@@ -4677,62 +5759,62 @@
                 "periodicalBudgets": [
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201701",
+                        "period": "2017-01",
                         "amount": 1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201702",
+                        "period": "2017-02",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201703",
+                        "period": "2017-03",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201704",
+                        "period": "2017-04",
                         "amount": 1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201705",
+                        "period": "2017-05",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201706",
+                        "period": "2017-06",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201707",
+                        "period": "2017-07",
                         "amount": 1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201708",
+                        "period": "2017-08",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201709",
+                        "period": "2017-09",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201710",
+                        "period": "2017-10",
                         "amount": 1666.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201711",
+                        "period": "2017-11",
                         "amount": 1667.00
                     },
                     {
                         "yearIndex": 0,
-                        "yearMonth": "201712",
+                        "period": "2017-12",
                         "amount": 1667.00
                     }
                 ]
@@ -5011,1226 +6093,6 @@
                 "periodicalBudgets": []
             }
         ],
-        "voucherNumberSeries": [
-            "A",
-            "B",
-            "F",
-            "I",
-            "N"
-        ],
-        "vouchers": [
-            {
-                "series": "A",
-                "number": 1,
-                "date": "2017-01-01",
-                "text": "Representation måltid utan alkohol",
-                "registrationDate": "2017-01-19",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "1930",
-                        "amount": -1000.00,
-                        "text": null,
-                        "date": "2017-01-01",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "6072",
-                        "amount": 928.00,
-                        "text": null,
-                        "date": "2017-01-01",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "2640",
-                        "amount": 72.00,
-                        "text": null,
-                        "date": "2017-01-01",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "A",
-                "number": 2,
-                "date": "2017-01-01",
-                "text": "Representation måltid med alkohol",
-                "registrationDate": "2017-01-19",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "1930",
-                        "amount": -1000.00,
-                        "text": null,
-                        "date": "2017-01-01",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "6072",
-                        "amount": 908.00,
-                        "text": null,
-                        "date": "2017-01-01",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "2640",
-                        "amount": 92.00,
-                        "text": null,
-                        "date": "2017-01-01",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "A",
-                "number": 3,
-                "date": "2017-01-01",
-                "text": null,
-                "registrationDate": "2017-02-10",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "2440",
-                        "amount": -1000.00,
-                        "text": null,
-                        "date": "2017-01-01",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "4010",
-                        "amount": 800.00,
-                        "text": null,
-                        "date": "2017-01-01",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "2640",
-                        "amount": 200.00,
-                        "text": null,
-                        "date": "2017-01-01",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "A",
-                "number": 4,
-                "date": "2017-01-11",
-                "text": "STATOIL (DF:7)",
-                "registrationDate": "2017-03-08",
-                "signature": null,
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "1930",
-                        "amount": -606.76,
-                        "text": null,
-                        "date": "2017-01-11",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "2641",
-                        "amount": 121.35,
-                        "text": null,
-                        "date": "2017-01-11",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "5610",
-                        "amount": 485.41,
-                        "text": null,
-                        "date": "2017-01-11",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 1,
-                "date": "2017-01-31",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1666.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-01-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1666.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-01-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1666.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-01-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1666.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-01-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 2,
-                "date": "2017-02-28",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-02-28",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-02-28",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-02-28",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-02-28",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 3,
-                "date": "2017-03-31",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-03-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-03-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-03-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-03-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 4,
-                "date": "2017-04-30",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1666.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-04-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1666.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-04-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1666.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-04-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1666.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-04-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 5,
-                "date": "2017-05-31",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-05-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-05-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-05-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-05-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 6,
-                "date": "2017-06-30",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-06-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-06-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-06-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-06-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 7,
-                "date": "2017-07-31",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1666.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-07-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1666.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-07-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1666.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-07-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1666.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-07-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 8,
-                "date": "2017-08-31",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-08-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-08-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-08-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-08-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 9,
-                "date": "2017-09-30",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-09-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-09-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-09-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-09-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 10,
-                "date": "2017-10-31",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1666.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-10-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1666.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-10-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1666.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-10-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1666.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-10-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 11,
-                "date": "2017-11-30",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-11-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-11-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-11-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-11-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "B",
-                "number": 12,
-                "date": "2017-12-31",
-                "text": "Avskrivning anläggningsregister",
-                "registrationDate": "2017-01-09",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "7820",
-                        "amount": 1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-12-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1119",
-                        "amount": -1667.00,
-                        "text": "1110\\1002 Hus 1:1",
-                        "date": "2017-12-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7834",
-                        "amount": 1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-12-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1249",
-                        "amount": -1667.00,
-                        "text": "1240\\1000 TZD 608",
-                        "date": "2017-12-31",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "F",
-                "number": 1,
-                "date": "2017-12-29",
-                "text": "Kundfaktura 29 Peter Fredrikssons Försäl",
-                "registrationDate": "2017-12-29",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "1510",
-                        "amount": 2500.00,
-                        "text": null,
-                        "date": "2017-12-29",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "2610",
-                        "amount": -500.00,
-                        "text": null,
-                        "date": "2017-12-29",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "3010",
-                        "amount": -2000.00,
-                        "text": null,
-                        "date": "2017-12-29",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "F",
-                "number": 2,
-                "date": "2017-12-29",
-                "text": "Kundfaktura 31 Peter Fredrikssons Försäl",
-                "registrationDate": "2017-12-29",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "1510",
-                        "amount": 4125.00,
-                        "text": null,
-                        "date": "2017-12-29",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "2610",
-                        "amount": -825.00,
-                        "text": null,
-                        "date": "2017-12-29",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "3010",
-                        "amount": -3300.00,
-                        "text": null,
-                        "date": "2017-12-29",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "I",
-                "number": 1,
-                "date": "2017-12-30",
-                "text": "Inbet.journal 11",
-                "registrationDate": "2017-12-29",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "3010",
-                        "amount": -1400.00,
-                        "text": "[30] Peter Fredrikssons Försäljnings AB",
-                        "date": "2017-12-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "2610",
-                        "amount": -350.00,
-                        "text": "[30] Peter Fredrikssons Försäljnings AB",
-                        "date": "2017-12-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "1930",
-                        "amount": 1750.00,
-                        "text": "2017-12-30",
-                        "date": "2017-12-30",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            },
-            {
-                "series": "N",
-                "number": 1,
-                "date": "2017-01-25",
-                "text": "Löner",
-                "registrationDate": "2017-03-22",
-                "signature": "#6 Linda Henriksson",
-                "balanced": true,
-                "diff": 0,
-                "transactions": [
-                    {
-                        "accountNumber": "1930",
-                        "amount": -24268.00,
-                        "text": null,
-                        "date": "2017-01-25",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "2710",
-                        "amount": -8674.00,
-                        "text": null,
-                        "date": "2017-01-25",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7010",
-                        "amount": 32702.00,
-                        "text": null,
-                        "date": "2017-01-25",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "7510",
-                        "amount": 10590.38,
-                        "text": null,
-                        "date": "2017-01-25",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    },
-                    {
-                        "accountNumber": "2730",
-                        "amount": -10350.38,
-                        "text": null,
-                        "date": "2017-01-25",
-                        "signature": null,
-                        "quantity": null,
-                        "costBearerIds": [],
-                        "costCentreIds": [],
-                        "projectIds": []
-                    }
-                ]
-            }
-        ]
-    },
-    "logs": [
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 1119 år 0 stämmer inte med summering av verifikationerna. Balans: -100000.00 Summa: -20000.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 1240 år 0 stämmer inte med summering av verifikationerna. Balans: 10000.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 1249 år 0 stämmer inte med summering av verifikationerna. Balans: -91667.00 Summa: -20000.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 1410 år 0 stämmer inte med summering av verifikationerna. Balans: 250000.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 1510 år 0 stämmer inte med summering av verifikationerna. Balans: -189424.50 Summa: 6625.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 1610 år 0 stämmer inte med summering av verifikationerna. Balans: 120.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 1910 år 0 stämmer inte med summering av verifikationerna. Balans: -6986.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 1920 år 0 stämmer inte med summering av verifikationerna. Balans: 632095.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 1930 år 0 stämmer inte med summering av verifikationerna. Balans: 984091.74 Summa: -25124.76",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2081 år 0 stämmer inte med summering av verifikationerna. Balans: -100000.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2091 år 0 stämmer inte med summering av verifikationerna. Balans: -140182.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2099 år 0 stämmer inte med summering av verifikationerna. Balans: -355937.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2350 år 0 stämmer inte med summering av verifikationerna. Balans: -300000.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2440 år 0 stämmer inte med summering av verifikationerna. Balans: -522509.00 Summa: -1000.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2610 år 0 stämmer inte med summering av verifikationerna. Balans: -39612.45 Summa: -1675.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2614 år 0 stämmer inte med summering av verifikationerna. Balans: -2500.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2630 år 0 stämmer inte med summering av verifikationerna. Balans: -84735.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2640 år 0 stämmer inte med summering av verifikationerna. Balans: 58930.78 Summa: 364.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2644 år 0 stämmer inte med summering av verifikationerna. Balans: 2500.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2710 år 0 stämmer inte med summering av verifikationerna. Balans: -152599.00 Summa: -8674.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2730 år 0 stämmer inte med summering av verifikationerna. Balans: -174846.32 Summa: -10350.38",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2820 år 0 stämmer inte med summering av verifikationerna. Balans: -950.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2920 år 0 stämmer inte med summering av verifikationerna. Balans: 43222.00 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2941 år 0 stämmer inte med summering av verifikationerna. Balans: 15541.20 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "WARNING",
-            "message": "Utgående balans för konto 2999 år 0 stämmer inte med summering av verifikationerna. Balans: -1582.86 Summa: 0.00",
-            "tag": "#UB",
-            "origin": "Document"
-        },
-        {
-            "level": "INFO",
-            "message": "Organisationsnummer ska vara av formatet nnnnnn-nnnn. 1655710918",
-            "tag": "#ORGNR",
-            "origin": "Document"
-        }
-    ]
+        "type": "EUBAS97"
+    }
 }

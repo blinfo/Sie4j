@@ -171,6 +171,13 @@ public class Address implements Entity {
             return this;
         }
 
+        public Boolean isEmpty() {
+            return (contact == null || contact.isBlank())
+                    && (streetAddress == null || streetAddress.isBlank())
+                    && (postalAddress == null || postalAddress.isBlank())
+                    && (phone == null || phone.isBlank());
+        }
+
         /**
          *
          * @return Address representing the data in the builder.
