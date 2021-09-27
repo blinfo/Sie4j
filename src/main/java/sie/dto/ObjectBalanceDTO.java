@@ -30,6 +30,9 @@ public class ObjectBalanceDTO implements DTO {
     }
 
     public AccountDTO.ObjectIdDTO getObjectId() {
+        if (source.getObjectId() == null) {
+            return null;
+        }
         return AccountDTO.ObjectIdDTO.from(source.getObjectId());
     }
 

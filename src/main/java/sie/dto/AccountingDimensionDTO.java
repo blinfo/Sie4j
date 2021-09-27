@@ -25,6 +25,9 @@ public class AccountingDimensionDTO {
     }
     
     public String getLabel() {
+        if (source.getLabel().isBlank()) {
+            return null;
+        }
         return source.getLabel();
     }
     

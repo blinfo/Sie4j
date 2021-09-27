@@ -48,6 +48,10 @@ public class Company implements Entity {
         return Optional.ofNullable(corporateId);
     }
 
+    public Optional<Integer> getAquisitionNumber() {
+        return Optional.ofNullable(aquisitionNumber);
+    }
+    
     public Optional<String> getSniCode() {
         return Optional.ofNullable(sniCode);
     }

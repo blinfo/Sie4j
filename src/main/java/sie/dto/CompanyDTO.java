@@ -7,7 +7,7 @@ import sie.domain.Company;
  *
  * @author Håkan Lidén
  */
-@JsonPropertyOrder({"name", "corporateID", "type"})
+@JsonPropertyOrder({"name", "corporateID", "aquisitionNumber", "sniCode", "type", "address", "id"})
 public class CompanyDTO implements DTO {
 
     private final Company source;
@@ -21,15 +21,34 @@ public class CompanyDTO implements DTO {
     }
 
     public String getName() {
+        if (source.getName().isBlank()) {
+            return null;
+        }
         return source.getName();
     }
 
     public String getCorporateID() {
-        return source.getCorporateID().orElse(null);
+        return source.getCorporateID().map(s -> s.isBlank() ? null : s).orElse(null);
+    }
+
+    public Integer getAquisitionNumber() {
+        return source.getAquisitionNumber().orElse(null);
+    }
+
+    public String getSniCode() {
+        return source.getSniCode().map(s -> s.isBlank() ? null : s).orElse(null);
     }
 
     public TypeDTO getType() {
         return source.getType().map(TypeDTO::from).orElse(null);
+    }
+
+    public AddressDTO getAddress() {
+        return source.getAddress().map(AddressDTO::from).orElse(null);
+    }
+    
+    public String getId() {
+        return source.getId().orElse(null);
     }
 
     @JsonPropertyOrder({"type", "description"})

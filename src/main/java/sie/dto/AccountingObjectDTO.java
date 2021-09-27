@@ -25,10 +25,16 @@ public class AccountingObjectDTO implements DTO {
     }
 
     public String getNumber() {
+        if (source.getNumber().isBlank()) {
+            return null;
+        }
         return source.getNumber();
     }
 
     public String getLabel() {
+        if (source.getLabel().isBlank()) {
+            return null;
+        }
         return source.getLabel();
     }
 }

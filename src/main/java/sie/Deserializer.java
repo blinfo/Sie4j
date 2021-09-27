@@ -3,12 +3,15 @@ package sie;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import sie.domain.Account;
 import sie.domain.AccountingDimension;
 import sie.domain.AccountingObject;
 import sie.domain.AccountingPlan;
+import sie.domain.Address;
 import sie.domain.Balance;
 import sie.domain.Company;
 import sie.domain.Document;
@@ -22,11 +25,15 @@ import sie.domain.Voucher;
 import sie.dto.AccountDTO;
 import sie.dto.AccountingDimensionDTO;
 import sie.dto.AccountingObjectDTO;
+import sie.dto.AddressDTO;
 import sie.dto.BalanceDTO;
 import sie.dto.CompanyDTO;
 import sie.dto.DocumentDTO;
 import sie.dto.FinancialYearDTO;
+import sie.dto.GeneratedDTO;
+import sie.dto.MetaDataDTO;
 import sie.dto.ObjectBalanceDTO;
+import sie.dto.ProgramDTO;
 import sie.dto.TransactionDTO;
 import sie.dto.VoucherDTO;
 import sie.exception.SieException;
@@ -53,24 +60,25 @@ class Deserializer {
 
     public Document parse(DocumentDTO dto) {
         return Document.builder()
-                .metaData(getMetaData(dto))
+                .metaData(getMetaData(dto.getMetaData()))
                 .dimensions(getDimensions(dto))
                 .objects(getObjects(dto))
                 .accountingPlan(getAccountingPlan(dto))
                 .vouchers(getVouchers(dto)).apply();
     }
 
-    private MetaData getMetaData(DocumentDTO dto) {
-        MetaData.Builder builder = MetaData.builder()
-                .generated(Generated.from(LocalDate.now())) // Ska det importeras?
-                .financialYears(dto.getYears().stream().map(this::createFinancialYear).collect(Collectors.toList()))
-                .read(Boolean.FALSE)
+    private MetaData getMetaData(MetaDataDTO dto) {
+        return MetaData.builder()
                 .company(createCompany(dto.getCompany()))
-                .program(Program.of("BL APP", "1.0"));
-        if (dto.getType() != null) {
-            builder.sieType(Document.Type.get(dto.getType().getType()));
-        }
-        return builder.apply();
+                .currency(dto.getCurrency())
+                .financialYears(dto.getFinancialYears().stream().map(this::createFinancialYear).collect(Collectors.toList()))
+                .generated(createGenerated(dto.getGenerated()))
+                .periodRange(Optional.ofNullable(dto.getPeriodRange()).map(LocalDate::parse).orElse(null))
+                .program(createProgram(dto.getProgram()))
+                .read(dto.isRead())
+                .sieType(Optional.ofNullable(dto.getSieType().getType()).map(Document.Type::get).orElse(null))
+                .taxationYear(Optional.ofNullable(dto.getTaxationYear()).map(Year::parse).orElse(null))
+                .apply();
     }
 
     private List<AccountingDimension> getDimensions(DocumentDTO dto) {
@@ -86,8 +94,13 @@ class Deserializer {
     }
 
     private AccountingPlan getAccountingPlan(DocumentDTO dto) {
+        if (dto.getAccountingPlan() == null) {
+            return null;
+        }
         return AccountingPlan.builder()
-                .accounts(dto.getAccounts().stream().map(this::createAccount).collect(Collectors.toList())).apply();
+                .accounts(dto.getAccountingPlan().getAccounts().stream().map(this::createAccount).collect(Collectors.toList()))
+                .type(dto.getAccountingPlan().getType())
+                .apply();
     }
 
     private List<Voucher> getVouchers(DocumentDTO dto) {
@@ -101,9 +114,46 @@ class Deserializer {
     }
 
     private Company createCompany(CompanyDTO company) {
+        if (company == null || isEmpty(company.getName()) && isEmpty(company.getCorporateID())) {
+            return null;
+        }
         return Company.builder(company.getName())
                 .corporateID(company.getCorporateID())
+                .address(createAddress(company.getAddress()))
+                .aquisitionNumber(company.getAquisitionNumber())
+                .sniCode(company.getSniCode())
+                .id(company.getId())
+                .type(Optional.ofNullable(company.getType()).map(t -> Company.Type.from(t.getType())).orElse(null))
                 .apply();
+    }
+
+    private Generated createGenerated(GeneratedDTO generated) {
+        if (generated == null || isEmpty(generated.getDate())) {
+            return null;
+        }
+        return Generated.of(LocalDate.parse(generated.getDate()), generated.getSignature());
+    }
+
+    private Program createProgram(ProgramDTO program) {
+        if (program == null || isEmpty(program.getName())) {
+            return Program.of("BL APP", "1.0");
+        }
+        return Program.of(program.getName(), program.getVersion());
+    }
+
+    private Address createAddress(AddressDTO address) {
+        if (address == null) {
+            return null;
+        }
+        Address.Builder builder = Address.builder();
+        builder.contact(address.getContact())
+                .streetAddress(address.getStreetAddress())
+                .postalAddress(address.getPostalAddress())
+                .phone(address.getPhone());
+        if (!builder.isEmpty()) {
+            return builder.apply();
+        }
+        return null;
     }
 
     private AccountingDimension createAccountingDimension(AccountingDimensionDTO input) {
@@ -142,13 +192,11 @@ class Deserializer {
     private Voucher createVoucher(VoucherDTO input) {
         Voucher.Builder builder = Voucher.builder()
                 .date(LocalDate.parse(input.getDate()))
-                .number(input.getNumber())
                 .series(input.getSeries())
+                .number(input.getNumber())
                 .signature(input.getSignature())
+                .registrationDate(Optional.ofNullable(input.getRegistrationDate()).map(LocalDate::parse).orElse(null))
                 .text(input.getText());
-        if (input.getRegistrationDate() != null) {
-            builder.registrationDate(LocalDate.parse(input.getRegistrationDate()));
-        }
         input.getTransactions().stream().map(this::createTransaction).forEach(builder::addTransaction);
         return builder.apply();
     }
@@ -159,13 +207,15 @@ class Deserializer {
                 .amount(input.getAmount())
                 .quantity(input.getQuantity())
                 .signature(input.getSignature())
-                .text(input.getText());
-        if (input.getDate() != null) {
-            builder.date(LocalDate.parse(input.getDate()));
-        }
+                .text(input.getText())
+                .date(Optional.ofNullable(input.getDate()).map(LocalDate::parse).orElse(null));
         input.getCostCentreIds().stream().map(num -> Account.ObjectId.of(AccountingDimension.COST_CENTRE, num)).forEach(builder::addObjectId);
         input.getCostBearerIds().stream().map(num -> Account.ObjectId.of(AccountingDimension.COST_BEARER, num)).forEach(builder::addObjectId);
         input.getProjectIds().stream().map(num -> Account.ObjectId.of(AccountingDimension.PROJECT, num)).forEach(builder::addObjectId);
         return builder.apply();
+    }
+
+    private Boolean isEmpty(String string) {
+        return string == null || string.isBlank();
     }
 }

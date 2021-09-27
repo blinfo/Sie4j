@@ -28,6 +28,9 @@ public class SieLogDTO implements DTO {
     }
 
     public String getLevel() {
+        if (log.getLevel() == null) {
+            return null;
+        }
         return log.getLevel().name();
     }
 

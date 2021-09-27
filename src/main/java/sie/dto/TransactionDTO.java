@@ -10,7 +10,7 @@ import sie.domain.Transaction;
  *
  * @author Håkan Lidén
  */
-@JsonPropertyOrder({"accountNumber", "amount", "text", "date", "signature", "quantity", "costCenterIds", "costBearerIds", "projeIds"})
+@JsonPropertyOrder({"accountNumber", "amount", "text", "date", "signature", "quantity", "costCenterIds", "costBearerIds", "projectIds"})
 public class TransactionDTO implements DTO {
 
     private final Transaction source;

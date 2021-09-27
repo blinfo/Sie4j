@@ -28,6 +28,9 @@ public class PeriodicalBalanceDTO implements DTO {
     }
 
     public String getYearMonth() {
+        if (source.getPeriod() == null) {
+            return null;
+        }
         return source.getPeriod().format(Entity.YEAR_MONTH_FORMAT);
     }
 
@@ -42,5 +45,4 @@ public class PeriodicalBalanceDTO implements DTO {
     public Double getQuantity() {
         return source.getQuantity().orElse(null);
     }
-
 }

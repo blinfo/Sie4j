@@ -27,6 +27,9 @@ public class PeriodicalBudgetDTO implements DTO {
     }
 
     public String getYearMonth() {
+        if (source.getPeriod() == null) {
+            return null;
+        }
         return source.getPeriod().format(Entity.YEAR_MONTH_FORMAT);
     }
 
