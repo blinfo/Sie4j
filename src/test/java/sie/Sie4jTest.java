@@ -27,7 +27,7 @@ public class Sie4jTest {
         List<SieLog> logs = validator.getLogs();
         long numberOfLogs = 1;
         SieLog.Level level = SieLog.Level.CRITICAL;
-        String message = "Kontonummer får inte vara null eller tom sträng";
+        String message = "Kontonummer saknas";
         assertEquals("Should contain" + numberOfLogs + " log", numberOfLogs, logs.size());
         SieLog log = logs.get(0);
         String origin = DocumentFactory.class.getSimpleName();
@@ -43,7 +43,7 @@ public class Sie4jTest {
     @Test
     public void test_file_with_missing_account_balance() {
         List<SieLog> logs = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_balance.SE")).getLogs();
-        long numberOfLogs = 1;
+        long numberOfLogs = 27;
         SieLog.Level level = SieLog.Level.CRITICAL;
         String message = "Strängen \"\" för balans, konto 1119, kan inte hanteras som belopp";
         assertEquals("Should contain" + numberOfLogs + " log", numberOfLogs, logs.size());

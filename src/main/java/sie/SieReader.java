@@ -34,12 +34,20 @@ class SieReader {
     private Document document;
 
     private SieReader(String input) {
-        init(input);
+        init(input, false);
     }
 
-    private void init(String input) {
+    private SieReader(String input, boolean validate) {
+        init(input, validate);
+    }
+
+    private void init(String input, boolean validate) {
         try {
-            factory = DocumentFactory.from(input);
+            if (validate) {
+                factory = DocumentFactory.validation(input);
+            } else {
+                factory = DocumentFactory.from(input);
+            }
             document = factory.getDocument();
             validator = DocumentValidator.from(document);
             validator.addLogs(factory.getLogs());
@@ -48,11 +56,20 @@ class SieReader {
         }
     }
 
+    public static SieReader validator(InputStream input) {
+        return createReader(input, true);
+
+    }
+
     public static SieReader from(InputStream input) {
+        return createReader(input, false);
+    }
+
+    private static SieReader createReader(InputStream input, boolean validate) throws SieException {
         if (input == null) {
             throw new SieException("Källan får inte vara null");
         }
-        return new SieReader(streamToString(input));
+        return new SieReader(streamToString(input), validate);
     }
 
     public Document read() {

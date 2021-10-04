@@ -3,7 +3,7 @@ package sie.domain;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.LocalDate;
 import java.util.Optional;
-import sie.io.JsonDateSerializer;
+import sie.io.LocalDateSerializer;
 
 /**
  *
@@ -12,7 +12,7 @@ import sie.io.JsonDateSerializer;
  */
 public class Generated implements Entity {
 
-    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate date;
     private final String signature;
 

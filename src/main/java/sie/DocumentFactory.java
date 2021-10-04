@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 import sie.domain.*;
 import sie.exception.AccountNumberException;
 import sie.exception.InvalidAmountException;
+import sie.exception.InvalidDocumentException;
 import sie.exception.InvalidQuantityException;
 import sie.exception.InvalidTransactionDataException;
 import sie.exception.InvalidVoucherDateException;
@@ -51,6 +52,7 @@ class DocumentFactory {
     private final List<FinancialYear> years = new ArrayList<>();
     private final List<SieLog> logs = new ArrayList<>();
     private Document document;
+    private boolean conversion = true;
 
     private DocumentFactory(String content) {
         this.content = content;
@@ -66,7 +68,29 @@ class DocumentFactory {
         return factory;
     }
 
+    static DocumentFactory validation(InputStream stream) {
+        return validation(SieReader.streamToString(stream));
+    }
+
+    static DocumentFactory validation(String content) {
+        DocumentFactory factory = new DocumentFactory(content);
+        factory.setValidation();
+        factory.parse();
+        return factory;
+    }
+
+    private void setValidation() {
+        this.conversion = false;
+    }
+
+    private boolean isConversion() {
+        return conversion;
+    }
+
     public Document getDocument() {
+        if (isConversion() && !getCriticalErrors().isEmpty()) {
+            throw new InvalidDocumentException(getCriticalErrors());
+        }
         return document;
     }
 
@@ -207,19 +231,16 @@ class DocumentFactory {
                 if (dateString.isEmpty()) {
                     SieException sieException = new MissingVoucherDateException();
                     addCritical(sieException);
-                    throw sieException;
                 }
                 try {
                     builder.date(LocalDate.parse(dateString, Entity.DATE_FORMAT));
                 } catch (DateTimeParseException e) {
                     SieException sieException = new InvalidVoucherDateException(dateString, e);
                     addCritical(sieException);
-                    throw sieException;
                 }
             } else {
                 SieException sieException = new MissingVoucherDateException();
                 addCritical(sieException);
-                throw sieException;
             }
             if (parts.size() > 4) {
                 Optional.ofNullable(parts.get(4) == null || handleQuotes(parts.get(4)).isEmpty() ? null : handleQuotes(parts.get(4)))
@@ -245,20 +266,17 @@ class DocumentFactory {
             if (parts.size() < 2) {
                 SieException ex = new MissingAccountNumberAndAmountException(Entity.TRANSACTION);
                 addCritical(ex);
-                throw ex;
             }
             Transaction.Builder tb = Transaction.builder();
             String accountNumber = parts.get(1).replaceAll(REPLACE_STRING, "");
             if (accountNumber.isEmpty()) {
                 SieException ex = new MissingAccountNumberException(Entity.TRANSACTION);
                 addCritical(ex);
-                throw ex;
             }
             tb.accountNumber(parts.get(1).replaceAll(REPLACE_STRING, ""));
             if (parts.size() < 3) {
                 SieException ex = new InvalidTransactionDataException(parts.stream().collect(Collectors.joining(" ")));
                 addCritical(ex);
-                throw ex;
             }
             Matcher matcher = OBJECT_ID_PATTERN.matcher(parts.get(2));
             while (matcher.find()) {
@@ -267,7 +285,6 @@ class DocumentFactory {
             if (parts.size() < 4) {
                 SieException ex = new MissingAmountException(Entity.TRANSACTION);
                 addCritical(ex);
-                throw ex;
             }
             String amount = parts.get(3);
             if (amount.contains(",")) {
@@ -279,7 +296,6 @@ class DocumentFactory {
             } catch (NumberFormatException e) {
                 SieException ex = new InvalidAmountException("Strängen \"" + amount + "\" för balans, konto " + accountNumber + ", kan inte hanteras som belopp", e, Entity.TRANSACTION);
                 addCritical(ex);
-                throw ex;
             }
             if (parts.size() > 4) {
                 Optional.ofNullable(parts.get(4) == null || parts.get(4).replaceAll(REPLACE_STRING, "").isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
@@ -318,14 +334,10 @@ class DocumentFactory {
                     if (number == null || number.trim().isEmpty()) {
                         SieException ex = new AccountNumberException("Kontonummer får inte vara null eller tom sträng");
                         addCritical(ex);
-                        throw ex;
-                    }
-                    if (!NUMERIC_PATTERN.matcher(number).matches()) {
+                    } else if (!NUMERIC_PATTERN.matcher(number).matches()) {
                         SieException ex = new AccountNumberException("Kontot har inte ett numeriskt värde: " + number);
                         addCritical(ex);
-                        throw ex;
-                    }
-                    if (!ACCOUNT_NUMBER_PATTERN.matcher(number).matches()) {
+                    } else if (!ACCOUNT_NUMBER_PATTERN.matcher(number).matches()) {
                         if (number.length() <= 3) {
                             addWarning(AccountingPlan.class, "Kontonummer ska innehålla minst fyra siffror: " + number, Entity.ACCOUNT);
                         } else if (number.length() > 4 && number.length() <= 6) {
@@ -333,7 +345,6 @@ class DocumentFactory {
                         } else if (number.length() > 6) {
                             SieException ex = new AccountNumberException("Kontot är längre än sex siffror: " + number);
                             addCritical(ex);
-                            throw ex;
                         }
                     }
                     Account.Builder accountBuilder = Account.builder(number);
@@ -410,7 +421,6 @@ class DocumentFactory {
                     } catch (NumberFormatException e) {
                         SieException ex = new InvalidAmountException("Strängen \"" + amountString + "\" för periodbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
                         addCritical(ex);
-                        throw ex;
                     }
                     Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(4));
                     while (matcher.find()) {
@@ -427,7 +437,6 @@ class DocumentFactory {
                         } catch (NumberFormatException e) {
                             SieException ex = new InvalidQuantityException("Strängen \"" + quantity + "\" för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
                             addCritical(ex);
-                            throw ex;
                         }
                     }
                     accountBuilder.addPeriodicalBalance(pbBuilder.apply());
@@ -455,7 +464,6 @@ class DocumentFactory {
                     } catch (NumberFormatException e) {
                         SieException ex = new InvalidAmountException("Strängen \"" + amountString + "\" för periodbudget, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BUDGET);
                         addCritical(ex);
-                        throw ex;
                     }
                     break;
             }
@@ -479,7 +487,6 @@ class DocumentFactory {
                 } catch (NumberFormatException e) {
                     SieException ex = new InvalidAmountException("Strängen \"" + amountString + "\" för objektbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
                     addCritical(ex);
-                    throw ex;
                 }
                 obBuilder.objectId(Integer.valueOf(matcher.group(2)), matcher.group(3));
             }
@@ -494,7 +501,6 @@ class DocumentFactory {
                 } catch (NumberFormatException e) {
                     SieException ex = new InvalidQuantityException("Strängen \"" + quantity + "\" för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
                     addCritical(ex);
-                    throw ex;
                 }
             }
             switch (l.get(0).replaceAll("#", "")) {
@@ -533,7 +539,6 @@ class DocumentFactory {
             } catch (NumberFormatException ex) {
                 SieException sieException = new InvalidAmountException("Strängen \"" + amountString + "\" för balans, konto " + number + ", kan inte hanteras som belopp", ex, tag);
                 addCritical(sieException);
-                throw sieException;
             }
         });
     }
@@ -639,7 +644,7 @@ class DocumentFactory {
                 corporateId = corporateId.substring(corporateId.length() - 10);
             } else if (corporateId.length() < 10) {
                 addInfo("Organisationsnummer är ogiltigt. " + corporateId, Entity.CORPORATE_ID);
-               return Optional.empty();
+                return Optional.empty();
             }
         }
         Optional<String> result = Optional.of(corporateId).filter(cid -> cid.matches("\\d{10}")).map(cid -> cid.substring(0, 6) + "-" + cid.substring(6));
@@ -686,7 +691,6 @@ class DocumentFactory {
             if (!start.equals(end.plusDays(1))) {
                 SieException ex = new NonConsecutiveFinancialYearsException(years.get(i + 1));
                 addCritical(ex);
-                throw ex;
             }
         });
         return years;
@@ -805,6 +809,9 @@ class DocumentFactory {
     }
 
     private void addCritical(SieException sieException) {
+        if (isConversion()) {
+            throw sieException;
+        }
         SieLog critical = SieLog.of(getClass(), sieException);
         if (!logs.contains(critical)) {
             logs.add(critical);

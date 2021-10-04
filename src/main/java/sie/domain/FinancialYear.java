@@ -2,7 +2,7 @@ package sie.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.LocalDate;
-import sie.io.JsonDateSerializer;
+import sie.io.LocalDateSerializer;
 
 /**
  *
@@ -12,9 +12,9 @@ import sie.io.JsonDateSerializer;
 public class FinancialYear implements Entity, Comparable<FinancialYear> {
 
     private final Integer index;
-    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate startDate;
-    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate endDate;
 
     private FinancialYear(Integer index, LocalDate startDate, LocalDate endDate) {
