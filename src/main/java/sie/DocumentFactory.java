@@ -334,12 +334,10 @@ class DocumentFactory {
                     if (number == null || number.trim().isEmpty()) {
                         SieException ex = new AccountNumberException("Kontonummer får inte vara null eller tom sträng");
                         addCritical(ex);
-                    }
-                    if (!NUMERIC_PATTERN.matcher(number).matches()) {
+                    } else if (!NUMERIC_PATTERN.matcher(number).matches()) {
                         SieException ex = new AccountNumberException("Kontot har inte ett numeriskt värde: " + number);
                         addCritical(ex);
-                    }
-                    if (!ACCOUNT_NUMBER_PATTERN.matcher(number).matches()) {
+                    } else if (!ACCOUNT_NUMBER_PATTERN.matcher(number).matches()) {
                         if (number.length() <= 3) {
                             addWarning(AccountingPlan.class, "Kontonummer ska innehålla minst fyra siffror: " + number, Entity.ACCOUNT);
                         } else if (number.length() > 4 && number.length() <= 6) {
