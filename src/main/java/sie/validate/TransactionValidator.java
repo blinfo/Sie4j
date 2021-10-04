@@ -28,5 +28,4 @@ class TransactionValidator extends AbstractValidator<Transaction> {
             addCritical(TRANSACTION, "Belopp saknas!");
         }
     }
-
 }

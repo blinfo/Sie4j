@@ -29,7 +29,6 @@ public class AccountDTO implements DTO {
 
 
     public static AccountDTO from(Account source) {
-        System.out.println(source);
         AccountDTO dto = new AccountDTO();
         dto.setNumber(source.getNumber());
         source.getLabel().ifPresent(dto::setLabel);

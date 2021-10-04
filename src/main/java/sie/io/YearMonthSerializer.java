@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  * @author Håkan Lidén 
  *
  */
-public class JsonYearMonthSerializer extends JsonSerializer<YearMonth> {
+public class YearMonthSerializer extends JsonSerializer<YearMonth> {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
 

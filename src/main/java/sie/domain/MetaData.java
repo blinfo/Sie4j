@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import sie.io.JsonDateSerializer;
-import sie.io.JsonYearSerializer;
+import sie.io.LocalDateSerializer;
+import sie.io.YearSerializer;
 
 /**
  *
@@ -24,10 +24,10 @@ public class MetaData implements Entity {
     private final Document.Type sieType;
     private final String comments;
     private final Company company;
-    @JsonSerialize(using = JsonYearSerializer.class)
+    @JsonSerialize(using = YearSerializer.class)
     private final Year taxationYear;
     private final List<FinancialYear> financialYears;
-    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate periodRange;
     private final String currency;
 

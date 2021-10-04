@@ -86,7 +86,7 @@ public class Voucher implements Entity, Comparable<Voucher> {
         if (result == 0 && getNumber().isPresent() && other.getNumber().isPresent()) {
             result = getNumber().get().compareTo(other.getNumber().get());
         }
-        if (result == 0) {
+        if (result == 0 && getDate() != null && other.getDate() != null) {
             result = getDate().compareTo(other.getDate());
         }
         return result;

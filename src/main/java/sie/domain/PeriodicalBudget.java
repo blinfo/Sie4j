@@ -3,7 +3,7 @@ package sie.domain;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.math.BigDecimal;
 import java.time.YearMonth;
-import sie.io.JsonYearMonthSerializer;
+import sie.io.YearMonthSerializer;
 
 /**
  *
@@ -13,7 +13,7 @@ import sie.io.JsonYearMonthSerializer;
 public class PeriodicalBudget implements Entity, Comparable<PeriodicalBudget> {
 
     private final Integer yearIndex;
-    @JsonSerialize(using = JsonYearMonthSerializer.class)
+    @JsonSerialize(using = YearMonthSerializer.class)
     private final YearMonth period;
     private final BigDecimal amount;
 

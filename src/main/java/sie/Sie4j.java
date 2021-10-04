@@ -66,6 +66,9 @@ public class Sie4j {
         return Deserializer.fromJson(input);
     }
 
+    public static Document toValidatedDocument(InputStream input) {
+        return SieReader.validator(input).read();
+    }
     public static Document toDocument(InputStream input) {
         return SieReader.from(input).read();
     }
@@ -151,7 +154,7 @@ public class Sie4j {
 
     public static DocumentValidator validate(InputStream input) {
         try {
-            SieReader reader = SieReader.from(input);
+            SieReader reader = SieReader.validator(input);
             return reader.validate();
         } catch (SieException ex) {
             return DocumentValidator.of(ex, Document.class);

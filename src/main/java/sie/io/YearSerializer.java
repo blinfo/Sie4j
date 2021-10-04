@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  * @author Håkan Lidén
  *
  */
-public class JsonYearSerializer extends JsonSerializer<Year> {
+public class YearSerializer extends JsonSerializer<Year> {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy");
 

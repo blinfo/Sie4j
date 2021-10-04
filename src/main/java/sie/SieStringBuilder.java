@@ -1,6 +1,7 @@
 package sie;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import sie.domain.Account;
@@ -47,7 +48,7 @@ class SieStringBuilder {
             add(Entity.VOUCHER,
                     "\"" + voucher.getSeries().orElse("") + "\"",
                     voucher.getNumber().map(num -> num.toString()).orElse("\"\""),
-                    voucher.getDate().format(Entity.DATE_FORMAT),
+                    Optional.ofNullable(voucher.getDate()).map(date  -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
                     "\"" + voucher.getText().orElse("") + "\"",
                     voucher.getRegistrationDate().map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
                     "\"" + voucher.getSignature().orElse("") + "\"", "\n{");

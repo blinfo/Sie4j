@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  * @author Håkan Lidén 
  *
  */
-public class JsonDateSerializer extends JsonSerializer<LocalDate> {
+public class LocalDateSerializer extends JsonSerializer<LocalDate> {
 
     @Override
     public void serialize(LocalDate date, JsonGenerator generator, SerializerProvider provider) throws IOException {

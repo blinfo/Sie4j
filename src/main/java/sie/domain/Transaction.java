@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import sie.domain.Account.ObjectId;
-import sie.io.JsonDateSerializer;
+import sie.io.LocalDateSerializer;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Transaction implements Entity {
 
     private final String accountNumber;
     private final BigDecimal amount;
-    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate date;
     private final String text;
     private final Double quantity;
