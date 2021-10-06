@@ -2,6 +2,8 @@ package sie.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
+import java.util.stream.Collectors;
+import sie.validate.SieLog;
 
 /**
  *
@@ -16,21 +18,31 @@ public class ValidationResultDTO implements DTO {
     public ValidationResultDTO() {
     }
 
-    private ValidationResultDTO(DocumentDTO document, List<SieLogDTO> logs) {
-        this.document = document;
-        this.logs = logs;
-    }
-
     public static ValidationResultDTO from(DocumentDTO doc, List<SieLogDTO> logs) {
-        return new ValidationResultDTO(doc, logs);
+        ValidationResultDTO dto = new ValidationResultDTO();
+        dto.setDocument(doc);
+        dto.setLogs(logs);
+        return dto;
     }
 
     public List<SieLogDTO> getLogs() {
         return logs;
     }
 
+    public List<SieLogDTO> getCriticals() {
+        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL.name())).collect(Collectors.toList());
+    }
+
+    public List<SieLogDTO> getWarnings() {
+        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING.name())).collect(Collectors.toList());
+    }
+
+    public List<SieLogDTO> getInfos() {
+        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.INFO.name())).collect(Collectors.toList());
+    }
+
     public void setLogs(List<SieLogDTO> logs) {
-        this.logs = logs;
+        this.logs = logs.stream().distinct().collect(Collectors.toList());
     }
 
     public DocumentDTO getDocument() {
@@ -40,5 +52,4 @@ public class ValidationResultDTO implements DTO {
     public void setDocument(DocumentDTO document) {
         this.document = document;
     }
-
 }

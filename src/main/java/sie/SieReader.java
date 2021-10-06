@@ -32,16 +32,18 @@ class SieReader {
     private DocumentValidator validator;
     private DocumentFactory factory;
     private Document document;
+    private final boolean validate;
 
     private SieReader(String input) {
-        init(input, false);
+        this(input, false);
     }
 
     private SieReader(String input, boolean validate) {
-        init(input, validate);
+        this.validate = validate;
+        init(input);
     }
 
-    private void init(String input, boolean validate) {
+    private void init(String input) {
         try {
             if (validate) {
                 factory = DocumentFactory.validation(input);
@@ -73,7 +75,7 @@ class SieReader {
     }
 
     public Document read() {
-        if (!validator.isValid()) {
+        if (!validate && !validator.isValid()) {
             String message = validator.getCriticalErrors().stream().map(SieLog::getMessage).collect(Collectors.joining("\n"));
             throw new SieException(message);
         }

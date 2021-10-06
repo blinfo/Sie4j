@@ -288,7 +288,7 @@ class DocumentFactory {
             }
             String amount = parts.get(3);
             if (amount.contains(",")) {
-                addInfo("Decimaltal måste anges med punkt.", Entity.TRANSACTION);
+                addInfo("Decimaltal måste anges med punkt", Entity.TRANSACTION);
                 amount = amount.replaceAll(",", ".");
             }
             try {
@@ -310,7 +310,7 @@ class DocumentFactory {
                 Optional.ofNullable(quantity == null || quantity.replaceAll(REPLACE_STRING, "").isEmpty() ? null : quantity.replaceAll(REPLACE_STRING, ""))
                         .map(part -> {
                             if (part.contains(",")) {
-                                addInfo("Decimaltal måste anges med punkt.", Entity.TRANSACTION);
+                                addInfo("Decimaltal måste anges med punkt", Entity.TRANSACTION);
                                 part = part.replaceAll(",", ".");
                             }
                             return part;
@@ -327,12 +327,13 @@ class DocumentFactory {
 
     private AccountingPlan getAccountingPlan() {
         List<Account> accounts = Stream.of(content.split("\n"))
+                .parallel()
                 .filter(line -> line.startsWith("#" + Entity.ACCOUNT))
                 .map(line -> {
                     List<String> accountParts = StringUtil.getParts(line);
                     String number = accountParts.get(1).replaceAll(REPLACE_STRING, "");
-                    if (number == null || number.trim().isEmpty()) {
-                        SieException ex = new AccountNumberException("Kontonummer får inte vara null eller tom sträng");
+                    if (number == null || number.isBlank()) {
+                        SieException ex = new MissingAccountNumberException(Entity.ACCOUNT);
                         addCritical(ex);
                     } else if (!NUMERIC_PATTERN.matcher(number).matches()) {
                         SieException ex = new AccountNumberException("Kontot har inte ett numeriskt värde: " + number);
@@ -347,18 +348,25 @@ class DocumentFactory {
                             addCritical(ex);
                         }
                     }
-                    Account.Builder accountBuilder = Account.builder(number);
-                    Optional.ofNullable(accountParts.size() > 2 ? accountParts.get(2) : null)
-                            .map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
-                    handleSruAccountTypeAndUnit(number, accountBuilder);
-                    handleAccountBalanceAndResult(number, accountBuilder);
-                    handleAccountObjectBalance(number, accountBuilder);
-                    handleAccountPeriodicalBudget(number, accountBuilder);
-                    handleAccountPeriodicalBalance(number, accountBuilder);
-                    return accountBuilder.apply();
-                }).collect(Collectors.toList());
+                    try {
+                        Account.Builder accountBuilder = Account.builder(number);
+                        Optional.ofNullable(accountParts.size() > 2 ? accountParts.get(2) : null)
+                                .map(label -> label.replaceAll(REPLACE_STRING, "")).ifPresent(accountBuilder::label);
+                        handleSruAccountTypeAndUnit(number, accountBuilder);
+                        handleAccountBalanceAndResult(number, accountBuilder);
+                        handleAccountObjectBalance(number, accountBuilder);
+                        handleAccountPeriodicalBudget(number, accountBuilder);
+                        handleAccountPeriodicalBalance(number, accountBuilder);
+                        return accountBuilder.apply();
+                    } catch (SieException ex) {
+                        addCritical(ex);
+                        return null;
+                    }
+                })
+                .filter(a -> a != null)
+                .collect(Collectors.toList());
         accounts.addAll(findMissingAccountNumbers().stream().map(number -> {
-            addInfo("Konto " + number + "saknas i kontolistan.", Entity.ACCOUNT);
+            addInfo("Konto " + number + " saknas i kontolistan", Entity.ACCOUNT);
             Account.Builder accountBuilder = Account.builder(number).label("Saknas vid import");
             handleSruAccountTypeAndUnit(number, accountBuilder);
             handleAccountBalanceAndResult(number, accountBuilder);
@@ -406,10 +414,10 @@ class DocumentFactory {
                 case Entity.PERIODICAL_BALANCE:
                     YearMonth period = YearMonth.parse(l.get(2).replaceAll(REPLACE_STRING, ""), Entity.YEAR_MONTH_FORMAT);
                     // Ensure the right year index is provided
-                    Integer yearIndex = findFinancialYearByPeriod(period).map(FinancialYear::getIndex).orElse(Integer.valueOf(l.get(1)));
+                    Integer yearIndex = findFinancialYearIndexByPeriod(period).orElse(Integer.valueOf(l.get(1)));
                     String amountString = l.get(5).replaceAll(REPLACE_STRING, "");
                     if (amountString.contains(",")) {
-                        addInfo("Decimaltal måste anges med punkt.", Entity.PERIODICAL_BALANCE);
+                        addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
                         amountString = amountString.replaceAll(",", ".");
                     }
                     PeriodicalBalance.Builder pbBuilder = PeriodicalBalance.builder()
@@ -429,7 +437,7 @@ class DocumentFactory {
                     if (l.size() > 6) {
                         String quantity = l.get(6).replaceAll(REPLACE_STRING, "");
                         if (quantity.contains(",")) {
-                            addInfo("Decimaltal måste anges med punkt.", Entity.PERIODICAL_BALANCE);
+                            addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
                             quantity = quantity.replaceAll(",", ".");
                         }
                         try {
@@ -453,13 +461,13 @@ class DocumentFactory {
                     YearMonth period = YearMonth.parse(l.get(2).replaceAll(REPLACE_STRING, ""), Entity.YEAR_MONTH_FORMAT);
                     String amountString = l.get(l.size() - 1).replaceAll(REPLACE_STRING, "");
                     if (amountString.contains(",")) {
-                        addInfo("Decimaltal måste anges med punkt.", Entity.PERIODICAL_BUDGET);
+                        addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BUDGET);
                         amountString = amountString.replaceAll(",", ".");
                     }
                     try {
                         BigDecimal amount = new BigDecimal(amountString);
-                        Integer index = findFinancialYearByPeriod(period).map(FinancialYear::getIndex).orElse(Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
-                        PeriodicalBudget budget = PeriodicalBudget.of(index, period, amount);
+                        Integer yearIndex = findFinancialYearIndexByPeriod(period).orElse(Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
+                        PeriodicalBudget budget = PeriodicalBudget.of(yearIndex, period, amount);
                         accountBuilder.addPeriodicalBudget(budget);
                     } catch (NumberFormatException e) {
                         SieException ex = new InvalidAmountException("Strängen \"" + amountString + "\" för periodbudget, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BUDGET);
@@ -478,7 +486,7 @@ class DocumentFactory {
             if (matcher.find()) {
                 String amountString = l.get(4).replaceAll(REPLACE_STRING, "");
                 if (amountString.contains(",")) {
-                    addInfo("Decimaltal måste anges med punkt.", Entity.PERIODICAL_BALANCE);
+                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
                     amountString = amountString.replaceAll(",", ".");
                 }
                 try {
@@ -493,7 +501,7 @@ class DocumentFactory {
             if (l.size() > 5) {
                 String quantity = l.get(5).replaceAll(REPLACE_STRING, "");
                 if (quantity.contains(",")) {
-                    addInfo("Decimaltal måste anges med punkt.", Entity.PERIODICAL_BALANCE);
+                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
                     quantity = quantity.replaceAll(",", ".");
                 }
                 try {
@@ -519,7 +527,7 @@ class DocumentFactory {
             String tag = l.get(0).trim();
             String amountString = l.get(3).replaceAll(REPLACE_STRING, "");
             if (amountString.contains(",")) {
-                addInfo("Decimaltal måste anges med punkt.", tag);
+                addInfo("Decimaltal måste anges med punkt", tag);
                 amountString = amountString.replaceAll(",", ".");
             }
             try {
@@ -628,7 +636,7 @@ class DocumentFactory {
     }
 
     private Optional<String> getCorporateID(String corporateId) {
-        if (corporateId == null || corporateId.trim().isEmpty()) {
+        if (corporateId == null || corporateId.isBlank()) {
             return Optional.empty();
         }
         if (corporateId.matches("\\d{8}-\\d{4}")) {
@@ -696,11 +704,11 @@ class DocumentFactory {
         return years;
     }
 
-    private Optional<FinancialYear> findFinancialYearByPeriod(YearMonth period) {
+    private Optional<Integer> findFinancialYearIndexByPeriod(YearMonth period) {
         LocalDate date = LocalDate.of(period.getYear(), period.getMonth(), 5);
         return getFinancialYears().stream().filter(fy -> {
             return fy.getStartDate().isBefore(date) && fy.getEndDate().isAfter(date);
-        }).findFirst();
+        }).map(FinancialYear::getIndex).findFirst();
     }
 
     private FinancialYear createFinancialYear(List<String> parts) {
@@ -812,10 +820,7 @@ class DocumentFactory {
         if (isConversion()) {
             throw sieException;
         }
-        SieLog critical = SieLog.of(getClass(), sieException);
-        if (!logs.contains(critical)) {
-            logs.add(critical);
-        }
+        logs.add(SieLog.of(getClass(), sieException));
     }
 
     private void addWarning(String message, String tag) {

@@ -11,8 +11,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sie.domain.Document;
 import sie.domain.Voucher;
+import sie.dto.SieLogDTO;
+import sie.dto.ValidationResultDTO;
 import sie.exception.SieException;
-import sie.validate.DocumentValidator;
 import sie.validate.SieLog;
 
 /**
@@ -23,62 +24,58 @@ public class Sie4jTest {
 
     @Test
     public void test_file_with_missing_accounts() {
-        DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
-        List<SieLog> logs = validator.getLogs();
-        long numberOfLogs = 1;
-        SieLog.Level level = SieLog.Level.CRITICAL;
+        ValidationResultDTO validate = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
+        List<SieLogDTO> logs = validate.getCriticals();
+        long numberOfCriticals = 1;
+        String level = SieLog.Level.CRITICAL.name();
         String message = "Kontonummer saknas";
-        assertEquals("Should contain" + numberOfLogs + " log", numberOfLogs, logs.size());
-        SieLog log = logs.get(0);
+        assertEquals("Should contain" + numberOfCriticals + " log", numberOfCriticals, logs.size());
+        SieLogDTO log = logs.get(0);
         String origin = DocumentFactory.class.getSimpleName();
         String tag = "#KONTO";
         assertEquals("Level should be " + level, level, log.getLevel());
         assertEquals("Message should be " + message, message, log.getMessage());
-        assertTrue("Log should contain an origin", log.getOrigin().isPresent());
-        assertEquals("Origin should be " + origin, origin, log.getOrigin().get());
-        assertTrue("Log should contain a tag", log.getTag().isPresent());
-        assertEquals("Tag should be " + tag, tag, log.getTag().get());
+        assertEquals("Origin should be " + origin, origin, log.getOrigin());
+        assertEquals("Tag should be " + tag, tag, log.getTag());
     }
 
     @Test
     public void test_file_with_missing_account_balance() {
-        List<SieLog> logs = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_balance.SE")).getLogs();
+        List<SieLogDTO> logs = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_balance.SE")).getLogs();
         long numberOfLogs = 27;
-        SieLog.Level level = SieLog.Level.CRITICAL;
+        String level = SieLog.Level.CRITICAL.name();
         String message = "Strängen \"\" för balans, konto 1119, kan inte hanteras som belopp";
         assertEquals("Should contain" + numberOfLogs + " log", numberOfLogs, logs.size());
-        SieLog log = logs.get(0);
+        SieLogDTO log = logs.get(0);
         String origin = DocumentFactory.class.getSimpleName();
         String tag = "#IB";
         assertEquals("Level should be " + level, level, log.getLevel());
         assertEquals("Message should be " + message, message, log.getMessage());
-        assertTrue("Log should contain an origin", log.getOrigin().isPresent());
-        assertEquals("Origin should be " + origin, origin, log.getOrigin().get());
-        assertTrue("Log should contain a tag", log.getTag().isPresent());
-        assertEquals("Tag should be " + tag, tag, log.getTag().get());
+        assertEquals("Origin should be " + origin, origin, log.getOrigin());
+        assertEquals("Tag should be " + tag, tag, log.getTag());
     }
 
     @Test
     public void test_null_input() {
         String message = "Källan får inte vara null";
-        DocumentValidator validator = Sie4j.validate(null);
+        ValidationResultDTO validator = Sie4j.validate(null);
         assertEquals("Validator should contain 1 log", 1l, validator.getLogs().size());
-        assertEquals("Validator should contain 1 critical error", 1l, validator.getCriticalErrors().size());
-        SieLog critical = validator.getCriticalErrors().get(0);
+        assertEquals("Validator should contain 1 critical error", 1l, validator.getCriticals().size());
+        SieLogDTO critical = validator.getCriticals().get(0);
         assertEquals("Message should be " + message, message, critical.getMessage());
-        assertFalse("Log contains no tag", critical.getTag().isPresent());
+        assertTrue("Log contains no tag", critical.getTag() == null);
     }
 
     @Test
     public void test_stream_throws_IOException() {
         InputStream stream = new ByteArrayInputStream("THROW".getBytes());
         String message = "Kunde inte läsa källan";
-        DocumentValidator validator = Sie4j.validate(stream);
+        ValidationResultDTO validator = Sie4j.validate(stream);
         assertEquals("Validator should contain 1 log", 1l, validator.getLogs().size());
-        assertEquals("Validator should contain 1 critical error", 1l, validator.getCriticalErrors().size());
-        SieLog critical = validator.getCriticalErrors().get(0);
+        assertEquals("Validator should contain 1 critical error", 1l, validator.getCriticals().size());
+        SieLogDTO critical = validator.getCriticals().get(0);
         assertEquals("Message should be " + message, message, critical.getMessage());
-        assertFalse("Log contains no tag", critical.getTag().isPresent());
+        assertTrue("Log contains no tag", critical.getTag() == null);
     }
 
     @Test
@@ -121,7 +118,7 @@ public class Sie4jTest {
 
     @Test
     public void test_validate_file_with_missing_company_name() {
-        DocumentValidator validator = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_company_name.SI"));
+        ValidationResultDTO validator = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_company_name.SI"));
         String expectedMessage = "Företagsnamn saknas";
         assertEquals("Should contain 1 warning", 1l, validator.getWarnings().size());
         assertEquals("Should contain message " + expectedMessage, expectedMessage, validator.getWarnings().get(0).getMessage());
