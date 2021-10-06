@@ -1,5 +1,6 @@
 package sie.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,14 +30,17 @@ public class ValidationResultDTO implements DTO {
         return logs;
     }
 
+    @JsonIgnore
     public List<SieLogDTO> getCriticals() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL.name())).collect(Collectors.toList());
     }
 
+    @JsonIgnore
     public List<SieLogDTO> getWarnings() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING.name())).collect(Collectors.toList());
     }
 
+    @JsonIgnore
     public List<SieLogDTO> getInfos() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.INFO.name())).collect(Collectors.toList());
     }
