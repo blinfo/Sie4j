@@ -16,7 +16,7 @@ public class BalanceValidatorTest extends AbstractValidatorTest {
         Document document = getDocument("Arousells_Visning_AB.SE");
         BalanceValidator validator = BalanceValidator.from(document);
         long expectedNumberOfLogs = 82;
-        String expectedFirstMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna. Resultat: -25035.36 Summa: 0.00";
+        String expectedFirstMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna Resultat: -25035.36 Summa: 0.00";
         assertTrue("Log list should not be empty", validator.getLogs().size() > 0);
         assertEquals("Validator should contain " + expectedNumberOfLogs + " logs", expectedNumberOfLogs, validator.getLogs().size());
         assertEquals("Validator should contain " + expectedNumberOfLogs + " warnings", expectedNumberOfLogs, validator.getWarnings().size());

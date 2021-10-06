@@ -179,7 +179,7 @@ public class SieReaderTest {
     @Test
     public void test_accountingPlan_with_missing_account_numbers() {
         SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
-        String expectedMessage = "Kontonummer får inte vara null eller tom sträng";
+        String expectedMessage = "Kontonummer saknas";
         assertFalse("Should not be valid", reader.validate().isValid());
         SieException thrown = assertThrows("", SieException.class, () -> reader.read());
         assertEquals("Message should be " + expectedMessage, expectedMessage, thrown.getMessage());
@@ -192,14 +192,17 @@ public class SieReaderTest {
         DocumentValidator validator = reader.validate();
         List<SieLog> logs = validator.getLogs();
         long numberOfLogs = 27;
+        String logMessage1 = "Konto 11AF saknas i kontolistan";
         String logMessage2 = "Organisationsnummer ska vara av formatet nnnnnn-nnnn. 1655710918";
         SieLog.Level level1 = SieLog.Level.INFO;
         String tag1 = "#ORGNR";
         String origin1 = Document.class.getSimpleName();
-        SieLog log1 = logs.get(25); // TODO: Lägg till koll av konto saknas
+        SieLog log1 = logs.get(25);
+        System.out.println(log1);
         SieLog log2 = logs.get(26);
         assertEquals("Should contain " + numberOfLogs + " logs", numberOfLogs, logs.size());
-        assertEquals("Log message should be " + logMessage2, logMessage2, log2.getMessage());
+        assertEquals("First log message should be " + logMessage1, logMessage1, log1.getMessage());
+        assertEquals("Second log message should be " + logMessage2, logMessage2, log2.getMessage());
         assertEquals("Log level should be " + level1, level1, log2.getLevel());
         assertTrue("Log should have a tag", log2.getTag().isPresent());
         assertEquals("Log tag should be " + tag1, tag1, log2.getTag().get());

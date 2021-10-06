@@ -53,11 +53,11 @@ class BalanceValidator extends AbstractValidator<Document> {
                         .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
                 // TODO: Kolla upp om inte ingående balans ska läggas till summeringen av verifikationernas rader. // HL 2021-05-24
                 sum.add(acc.getOpeningBalanceByYearIndex(index).map(Balance::getAmount).orElse(BigDecimal.ZERO).setScale(Entity.SCALE, Entity.ROUNDING_MODE));
-                
+
                 if (!sum.equals(balance.getAmount())) {
                     addWarning(CLOSING_BALANCE, "Utgående balans för konto " + acc.getNumber()
-                            + " år " + index + " stämmer inte med summering av verifikationerna."
-                                    + " Balans: " + balance.getAmount() + " Summa: " + sum);
+                            + " år " + index + " stämmer inte med summering av verifikationerna"
+                            + " Balans: " + balance.getAmount() + " Summa: " + sum);
                 }
             });
         });
@@ -72,8 +72,8 @@ class BalanceValidator extends AbstractValidator<Document> {
                         .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
                 if (!sum.equals(balance.getAmount())) {
                     addWarning(RESULT, "Resultat för konto " + acc.getNumber()
-                            + " år " + index + " stämmer inte med summering av verifikationerna."
-                                    + " Resultat: " + balance.getAmount() + " Summa: " + sum);
+                            + " år " + index + " stämmer inte med summering av verifikationerna"
+                            + " Resultat: " + balance.getAmount() + " Summa: " + sum);
                 }
             });
         });

@@ -23,10 +23,6 @@ class VoucherValidator extends AbstractValidator<Voucher> {
 
     @Override
     protected void validate() {
-//        if (Integer.valueOf(type.getNumber()) < 4) {
-//            addCritical(VOUCHER, "Filer av typen " + type.getNumber() + " får inte innehålla verifikationer!");
-//            return;
-//        }
         if (entity.getDate() == null) {
             addCritical(VOUCHER, "Verifikationsdatum saknas!");
         }
@@ -39,9 +35,9 @@ class VoucherValidator extends AbstractValidator<Voucher> {
             addCritical(VOUCHER, message);
         }
         if (entity.getTransactions().isEmpty()) {
-            String message = "Verifikationen innehåller inga transaktionsrader. "
-                    + entity.getSeries().map(s -> "Serie: " + s + ". ").orElse("")
-                    + entity.getNumber().map(n -> "Nummer: " + n + ". ").orElse("");
+            String message = "Verifikationen innehåller inga transaktionsrader"
+                    + entity.getSeries().map(s -> " Serie: " + s).orElse("")
+                    + entity.getNumber().map(n -> " Nummer: " + n).orElse("");
             addInfo(VOUCHER, message.trim());
         } else {
             entity.getTransactions().forEach(trans -> {
