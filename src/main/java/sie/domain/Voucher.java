@@ -65,14 +65,14 @@ public class Voucher implements Entity, Comparable<Voucher> {
     }
 
     public Boolean isBalanced() {
-        return getDiff().equals(BigDecimal.ZERO);
+        return getDiff().equals(BigDecimal.ZERO.setScale(Entity.SCALE));
     }
 
     public BigDecimal getDiff() {
         BigDecimal sum = new BigDecimal(getTransactions().stream()
                 .mapToDouble(t -> t.getAmount().doubleValue()).sum());
         if (sum.abs().doubleValue() <= DELTA) {
-            return BigDecimal.ZERO;
+            return BigDecimal.ZERO.setScale(Entity.SCALE);
         }
         return sum.setScale(Entity.SCALE, Entity.ROUNDING_MODE);
     }

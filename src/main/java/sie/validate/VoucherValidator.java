@@ -1,6 +1,5 @@
 package sie.validate;
 
-import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import sie.domain.Document;
 import sie.domain.Voucher;
@@ -26,7 +25,7 @@ class VoucherValidator extends AbstractValidator<Voucher> {
         if (entity.getDate() == null) {
             addCritical(VOUCHER, "Verifikationsdatum saknas!");
         }
-        if (!entity.getDiff().equals(BigDecimal.ZERO)) {
+        if (!entity.isBalanced()) {
             String message = "Verifikationen är i obalans. "
                     + entity.getSeries().map(s -> "Serie: " + s + ". ").orElse("")
                     + entity.getNumber().map(n -> "Nummer: " + n + ". ").orElse("")

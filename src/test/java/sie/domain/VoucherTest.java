@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -31,6 +32,30 @@ public class VoucherTest extends Helper {
                 + "Verifikationen är i obalans. Serie: K. Datum: 20180502. Differens: 0.55";
         SieException ex = assertThrows("", SieException.class, () -> Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+    }
+
+    @Test
+    public void test_Voucher_isBalanced() {
+        Transaction t1 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("10.005")).apply();
+        Transaction t2 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("-10.00")).apply();
+        Voucher v1 = Voucher.builder().addTransaction(t1).addTransaction(t2).date(LocalDate.now()).number(21).series("A").apply();
+        assertFalse("Voucher is imbalanced", v1.isBalanced());
+        Transaction t3 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("10.004")).apply();
+        Transaction t4 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("-10.00")).apply();
+        Voucher v2 = Voucher.builder().addTransaction(t3).addTransaction(t4).date(LocalDate.now()).number(21).series("A").apply();
+        assertTrue("Voucher is balanced", v2.isBalanced());
+    }
+
+    @Test
+    public void test_Voucher_getDiff() {
+        Transaction t1 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("10.005")).apply();
+        Transaction t2 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("-10.00")).apply();
+        Voucher v1 = Voucher.builder().addTransaction(t1).addTransaction(t2).date(LocalDate.now()).number(21).series("A").apply();
+        assertEquals("", new BigDecimal("0.01"), v1.getDiff());
+        Transaction t3 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("10.004")).apply();
+        Transaction t4 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("-10.00")).apply();
+        Voucher v2 = Voucher.builder().addTransaction(t3).addTransaction(t4).date(LocalDate.now()).number(21).series("A").apply();
+        assertEquals("", new BigDecimal("0.00"), v2.getDiff());
     }
 
     @Test
