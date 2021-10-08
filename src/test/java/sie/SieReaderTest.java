@@ -198,7 +198,6 @@ public class SieReaderTest {
         String tag1 = "#ORGNR";
         String origin1 = Document.class.getSimpleName();
         SieLog log1 = logs.get(25);
-        System.out.println(log1);
         SieLog log2 = logs.get(26);
         assertEquals("Should contain " + numberOfLogs + " logs", numberOfLogs, logs.size());
         assertEquals("First log message should be " + logMessage1, logMessage1, log1.getMessage());
