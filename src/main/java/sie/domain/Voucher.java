@@ -13,7 +13,6 @@ import java.util.Optional;
  */
 public class Voucher implements Entity, Comparable<Voucher> {
 
-    private static final double DELTA = 0.005;
     private final String series;
     private final Integer number;
     private final LocalDate date;
@@ -69,12 +68,9 @@ public class Voucher implements Entity, Comparable<Voucher> {
     }
 
     public BigDecimal getDiff() {
-        BigDecimal sum = new BigDecimal(getTransactions().stream()
-                .mapToDouble(t -> t.getAmount().doubleValue()).sum());
-        if (sum.abs().doubleValue() <= DELTA) {
-            return BigDecimal.ZERO.setScale(Entity.SCALE);
-        }
-        return sum.setScale(Entity.SCALE, Entity.ROUNDING_MODE);
+        return new BigDecimal(getTransactions().stream()
+                .mapToDouble(t -> t.getAmount().doubleValue()).sum())
+                .setScale(Entity.SCALE, Entity.ROUNDING_MODE);
     }
 
     @Override
