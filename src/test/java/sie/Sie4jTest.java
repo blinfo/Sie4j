@@ -44,7 +44,7 @@ public class Sie4jTest {
         List<SieLogDTO> logs = Sie4j.validate(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_balance.SE")).getLogs();
         long numberOfLogs = 27;
         String level = SieLog.Level.CRITICAL.name();
-        String message = "Strängen \"\" för balans, konto 1119, kan inte hanteras som belopp";
+        String message = "Strängen '' för balans, konto 1119, kan inte hanteras som belopp";
         assertEquals("Should contain" + numberOfLogs + " log", numberOfLogs, logs.size());
         SieLogDTO log = logs.get(0);
         String origin = DocumentFactory.class.getSimpleName();

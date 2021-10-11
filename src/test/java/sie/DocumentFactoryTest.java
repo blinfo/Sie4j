@@ -4,9 +4,12 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import sie.domain.Entity;
 import sie.domain.Voucher;
 import sie.exception.*;
+import sie.validate.SieLog;
 
 /**
  *
@@ -52,14 +55,14 @@ public class DocumentFactoryTest {
 
     @Test
     public void test_file_with_critical_voucher_date_error() {
-        String expectedMessage = "Kan inte läsa verifikationsdatum: \"rappakalja\"";
+        String expectedMessage = "Kan inte läsa verifikationsdatum: 'rappakalja'";
         SieException ex = assertThrows("", InvalidVoucherDateException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_critical_voucher_date_error.SI")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
 
     @Test
     public void test_file_with_erroneous_voucher_date() {
-        String expectedMessage = "Datum ska anges med åtta siffror - ååååmmdd - inte sex: \"180501\"";
+        String expectedMessage = "Datum ska anges med åtta siffror - ååååmmdd - inte sex: '180501'";
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_erroneous_voucher_date.SI"));
         assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
     }
@@ -73,16 +76,18 @@ public class DocumentFactoryTest {
 
     @Test
     public void test_file_with_erroneous_transaction_should_throw_exception() {
-        String expectedMessage = "Malformed line. \"#TRANS 1930\"";
+        String expectedMessage = "Malformed line. '#TRANS 1930'";
         InvalidTransactionDataException ex = assertThrows("", InvalidTransactionDataException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_faulty_transaction.SI")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
 
     @Test
-    public void test_file_with_erroneous_sru_line_should_throw_exception() {
-        String expectedMessage = "Malformed line. \"#SRU 1110\"";
-        MalformedLineException ex = assertThrows("", MalformedLineException.class, () -> DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_sru_code.SE")));
-        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+    public void test_file_with_erroneous_sru_line_should_contain_a_warning() {
+        String expectedMessage = "Raden ska ha tre delar men tredje delen saknas: '#SRU 1110'";
+        DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_sru_code.SE"));
+        Optional<SieLog> sieLog = factory.getWarnings().stream().filter(log -> log.getTag().isPresent() && log.getTag().get().equals("#" + Entity.SRU)).findFirst();
+        assertTrue("Should contain a warning", sieLog.isPresent());
+        assertEquals(expectedMessage, sieLog.get().getMessage());
     }
 
     @Test
@@ -108,14 +113,14 @@ public class DocumentFactoryTest {
 
     @Test
     public void test_file_with_erroneous_taxation_year() {
-        String expectedMessage = "Taxeringsår \"2018 ÅRL\" ska bara innehålla årtal";
+        String expectedMessage = "Taxeringsår '2018 ÅRL' ska bara innehålla årtal";
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_erroneous_taxar.SE"));
         assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
     }
 
     @Test
     public void test_file_with_unparseable_taxation_year() {
-        String expectedMessage = "Taxeringsår tas bort då \"CCMXVIII\" inte motsvarar ett årtal";
+        String expectedMessage = "Taxeringsår tas bort då 'CCMXVIII' inte motsvarar ett numeriskt årtal";
         DocumentFactory factory = DocumentFactory.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_unparseable_taxar.SE"));
         assertEquals("Message should be " + expectedMessage, expectedMessage, factory.getLogs().get(0).getMessage());
     }
