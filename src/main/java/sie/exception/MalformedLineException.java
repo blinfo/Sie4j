@@ -7,7 +7,7 @@ package sie.exception;
 public class MalformedLineException extends SieException {
 
     public MalformedLineException(String line, String tag) {
-        super("Malformed line. \"" + line + "\"", tag);
+        super("Malformed line. '" + line + "'", tag);
     }
 
     

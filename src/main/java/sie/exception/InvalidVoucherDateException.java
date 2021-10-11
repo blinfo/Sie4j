@@ -9,7 +9,7 @@ import sie.domain.Entity;
 public class InvalidVoucherDateException extends SieException {
 
     public InvalidVoucherDateException(String dateString, Throwable e) {
-        super("Kan inte läsa verifikationsdatum: \"" + dateString + "\"", e, Entity.VOUCHER);
+        super("Kan inte läsa verifikationsdatum: '" + dateString + "'", e, Entity.VOUCHER);
     }
 
     
