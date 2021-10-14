@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import sie.domain.Document;
 import sie.domain.Entity;
+import sie.exception.SieException;
 
 /**
  *
@@ -38,6 +39,10 @@ abstract class AbstractValidator<T extends Entity> implements Validator {
 
     protected void addCritical(String tag, String message) {
         logs.add(SieLog.builder().origin(entity.getClass()).level(SieLog.Level.CRITICAL).tag(tag).message(message).build());
+    }
+    
+    protected void addCritical(Class c, SieException ex) {
+        logs.add(SieLog.of(c, ex));
     }
 
     protected abstract void validate();

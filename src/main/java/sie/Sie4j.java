@@ -15,6 +15,7 @@ import sie.dto.DocumentDTO;
 import sie.dto.SieLogDTO;
 import sie.dto.ValidationResultDTO;
 import sie.exception.SieException;
+import sie.validate.DocumentValidator;
 import sie.validate.SieLog.Level;
 
 /**
@@ -164,6 +165,26 @@ public class Sie4j {
             List<SieLogDTO> logs = reader.validate().getLogs().stream().map(SieLogDTO::from).collect(Collectors.toList());
             DocumentDTO doc = DocumentDTO.from(reader.read());
             return ValidationResultDTO.from(doc, logs);
+        } catch (SieException ex) {
+            List<SieLogDTO> logs;
+            if (ex.getLocalizedMessage().contains("\n")) {
+                logs = Stream.of(ex.getLocalizedMessage().split("\n")).map(s -> {
+                    return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j");
+                }).collect(Collectors.toList());
+            } else {
+                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j"));
+            }
+            return ValidationResultDTO.from(null, logs);
+        }
+    }
+
+    public static ValidationResultDTO validateJson(InputStream input) {
+        try {
+            Document document = Sie4j.fromJson(input);
+            DocumentValidator validator = DocumentValidator.from(document);
+            List<SieLogDTO> logs = validator.getLogs().stream().map(SieLogDTO::from).collect(Collectors.toList());
+            DocumentDTO docDto = DocumentDTO.from(document);
+            return ValidationResultDTO.from(docDto, logs);
         } catch (SieException ex) {
             List<SieLogDTO> logs;
             if (ex.getLocalizedMessage().contains("\n")) {

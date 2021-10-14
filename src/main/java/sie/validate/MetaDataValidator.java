@@ -1,10 +1,14 @@
 package sie.validate;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 import sie.domain.Document;
 import sie.domain.FinancialYear;
 import sie.domain.MetaData;
+import sie.exception.NonConsecutiveFinancialYearsException;
+import sie.exception.SieException;
 
 /**
  *
@@ -107,6 +111,14 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
             addWarning(FINANCIAL_YEAR, "Räkenskapsår saknas");
             return;
         }
+        IntStream.range(0, years.size() - 1).forEach(i -> {
+            LocalDate start = years.get(i).getStartDate();
+            LocalDate end = years.get(i + 1).getEndDate();
+            if (!start.equals(end.plusDays(1))) {
+                SieException ex = new NonConsecutiveFinancialYearsException(years.get(i + 1));
+                addCritical(getClass(), ex);
+            }
+        });
         years.forEach(year -> {
             if (year.getIndex() == null) {
                 addWarning(FINANCIAL_YEAR, "Räkenskapsårets index (årsnummer) saknas");

@@ -692,14 +692,15 @@ class DocumentFactory {
                     .map(this::createFinancialYear)
                     .collect(Collectors.toList()));
         }
-        IntStream.range(0, years.size() - 1).forEach(i -> {
-            LocalDate start = years.get(i).getStartDate();
-            LocalDate end = years.get(i + 1).getEndDate();
-            if (!start.equals(end.plusDays(1))) {
-                SieException ex = new NonConsecutiveFinancialYearsException(years.get(i + 1));
-                addCritical(ex);
-            }
-        });
+        if (isConversion()) {
+            IntStream.range(0, years.size() - 1).forEach(i -> {
+                LocalDate start = years.get(i).getStartDate();
+                LocalDate end = years.get(i + 1).getEndDate();
+                if (!start.equals(end.plusDays(1))) {
+                    throw new NonConsecutiveFinancialYearsException(years.get(i + 1));
+                }
+            });
+        }
         return years;
     }
 
