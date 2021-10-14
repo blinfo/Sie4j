@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import sie.domain.Voucher;
+import sie.exception.MissingVoucherDateException;
 
 /**
  *
@@ -29,6 +30,9 @@ public class VoucherDTO {
         VoucherDTO dto = new VoucherDTO();
         source.getSeries().ifPresent(dto::setSeries);
         source.getNumber().ifPresent(dto::setNumber);
+        if (source.getDate() == null) {
+            throw new MissingVoucherDateException();
+        }
         dto.setDate(source.getDate().toString());
         source.getText().ifPresent(dto::setText);
         source.getRegistrationDate().map(LocalDate::toString).ifPresent(dto::setRegistrationDate);
