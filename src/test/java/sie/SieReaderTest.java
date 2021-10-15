@@ -191,14 +191,14 @@ public class SieReaderTest {
         Document doc = reader.read();
         DocumentValidator validator = reader.validate();
         List<SieLog> logs = validator.getLogs();
-        long numberOfLogs = 27;
+        long numberOfLogs = 2;
         String logMessage1 = "Konto 11AF saknas i kontolistan";
         String logMessage2 = "Organisationsnummer ska vara av formatet nnnnnn-nnnn. 1655710918";
         SieLog.Level level1 = SieLog.Level.INFO;
         String tag1 = "#ORGNR";
         String origin1 = Document.class.getSimpleName();
-        SieLog log1 = logs.get(25);
-        SieLog log2 = logs.get(26);
+        SieLog log1 = logs.get(0);
+        SieLog log2 = logs.get(1);
         assertEquals("Should contain " + numberOfLogs + " logs", numberOfLogs, logs.size());
         assertEquals("First log message should be " + logMessage1, logMessage1, log1.getMessage());
         assertEquals("Second log message should be " + logMessage2, logMessage2, log2.getMessage());
@@ -224,7 +224,7 @@ public class SieReaderTest {
         SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"));
         DocumentValidator validator = reader.validate();
         String expectedMessage = "Verifikationen är i obalans. Serie: A. Nummer: 1. Datum: 20170101. Differens: 0.10";
-        assertEquals("Log list should contain one log", 27l, validator.getLogs().size());
+        assertEquals("Log list should contain 3 logs", 3l, validator.getLogs().size());
         assertEquals("Log list should contain one critical error", 1l, validator.getCriticalErrors().size());
         assertEquals("Log message should be " + expectedMessage, expectedMessage, validator.getCriticalErrors().get(0).getMessage());
     }

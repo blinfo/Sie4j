@@ -47,17 +47,15 @@ class BalanceValidator extends AbstractValidator<Document> {
     private void checkClosingBalance(AccountingPlan plan, Integer index) {
         plan.getAccounts().forEach(acc -> {
             acc.getClosingBalanceByYearIndex(index).ifPresent((balance) -> {
-                BigDecimal sum = new BigDecimal(entity.getVouchers().parallelStream()
+                BigDecimal sumOfTransactions = new BigDecimal(entity.getVouchers().parallelStream()
                         .flatMap(voucher -> voucher.getTransactions().parallelStream())
                         .filter(transaction -> transaction.getAccountNumber().equals(acc.getNumber()))
                         .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
-                // TODO: Kolla upp om inte ingående balans ska läggas till summeringen av verifikationernas rader. // HL 2021-05-24
-                sum.add(acc.getOpeningBalanceByYearIndex(index).map(Balance::getAmount).orElse(BigDecimal.ZERO).setScale(Entity.SCALE, Entity.ROUNDING_MODE));
-
-                if (!sum.equals(balance.getAmount())) {
+                BigDecimal sumWithOpeningBalance = sumOfTransactions.add(acc.getOpeningBalanceByYearIndex(index).map(Balance::getAmount).orElse(BigDecimal.ZERO).setScale(Entity.SCALE, Entity.ROUNDING_MODE));
+                if (!sumWithOpeningBalance.equals(balance.getAmount())) {
                     addWarning(CLOSING_BALANCE, "Utgående balans för konto " + acc.getNumber()
-                            + " år " + index + " stämmer inte med summering av verifikationerna"
-                            + " Balans: " + balance.getAmount() + " Summa: " + sum);
+                            + " år " + index + " stämmer inte med summering av ingående balans och verifikationerna"
+                            + " Balans: " + balance.getAmount() + " Summa: " + sumWithOpeningBalance);
                 }
             });
         });
@@ -66,14 +64,14 @@ class BalanceValidator extends AbstractValidator<Document> {
     private void checkResult(AccountingPlan plan, Integer index) {
         plan.getAccounts().forEach(acc -> {
             acc.getResultByYearIndex(index).ifPresent((balance) -> {
-                BigDecimal sum = new BigDecimal(entity.getVouchers().parallelStream()
+                BigDecimal sumOfTransactions = new BigDecimal(entity.getVouchers().parallelStream()
                         .flatMap(voucher -> voucher.getTransactions().parallelStream())
                         .filter(transaction -> transaction.getAccountNumber().equals(acc.getNumber()))
                         .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
-                if (!sum.equals(balance.getAmount())) {
+                if (!sumOfTransactions.equals(balance.getAmount())) {
                     addWarning(RESULT, "Resultat för konto " + acc.getNumber()
                             + " år " + index + " stämmer inte med summering av verifikationerna"
-                            + " Resultat: " + balance.getAmount() + " Summa: " + sum);
+                            + " Resultat: " + balance.getAmount() + " Summa: " + sumOfTransactions);
                 }
             });
         });
