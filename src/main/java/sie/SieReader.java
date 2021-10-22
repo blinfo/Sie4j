@@ -17,7 +17,7 @@ import sie.validate.SieLog;
  * @author Håkan Lidén
  *
  */
-class SieReader {
+class SieReader implements DataReader {
 
     private static final List<String> BOX_DRAWING_CHARS = Arrays.asList("─", "━", "│",
             "┃", "┄", "┅", "┆", "┇", "┈", "┉", "┊", "┋", "┌", "┍", "┎", "┏", "┐",
@@ -58,7 +58,7 @@ class SieReader {
         }
     }
 
-    public static SieReader from(byte[] input) {
+    public static DataReader from(byte[] input) {
         return new SieReader(byteArrayToString(input));
     }
 
@@ -67,6 +67,7 @@ class SieReader {
         return new SieReader(byteArrayToString(source), validate);
     }
 
+    @Override
     public Document read() {
         if (!validate && !validator.isValid()) {
             String message = validator.getCriticalErrors().stream().map(SieLog::getMessage).collect(Collectors.joining("\n"));
@@ -75,6 +76,7 @@ class SieReader {
         return document;
     }
 
+    @Override
     public DocumentValidator validate() {
         return validator;
     }

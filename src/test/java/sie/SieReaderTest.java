@@ -133,7 +133,7 @@ public class SieReaderTest {
 
     @Test
     public void test_SIE2_file_with_errors() {
-        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE2_UTF_8_with_multiple_errors.SE"));
+        DataReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE2_UTF_8_with_multiple_errors.SE"));
         DocumentValidator validator = reader.validate();
         assertFalse("Logs should not be empty", validator.getLogs().isEmpty());
         assertEquals("Should contain 4 warnings", 4l, validator.getWarnings().size());
@@ -141,7 +141,7 @@ public class SieReaderTest {
 
     @Test
     public void test_accountingPlan_sie2() {
-        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE2_UTF_8_with_errors.SE"));
+        DataReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE2_UTF_8_with_errors.SE"));
         Document doc = reader.read();
         Document.Type type = doc.getMetaData().getSieType();
         List<SieLog> logs = reader.validate().getLogs();
@@ -175,7 +175,7 @@ public class SieReaderTest {
 
     @Test
     public void test_accountingPlan_with_missing_account_numbers() {
-        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
+        DataReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
         String expectedMessage = "Kontonummer saknas";
         assertFalse("Should not be valid", reader.validate().isValid());
         SieException thrown = assertThrows("", SieException.class, () -> reader.read());
@@ -184,7 +184,7 @@ public class SieReaderTest {
 
     @Test
     public void test_accountingPlan() {
-        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_errors.SE"));
+        DataReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_errors.SE"));
         Document doc = reader.read();
         DocumentValidator validator = reader.validate();
         List<SieLog> logs = validator.getLogs();
@@ -208,7 +208,7 @@ public class SieReaderTest {
 
     @Test
     public void test_type3_with_vouchers() {
-        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE3_UTF_8_with_vouchers.SE"));
+        DataReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE3_UTF_8_with_vouchers.SE"));
         DocumentValidator validator = reader.validate();
         String expectedWarningMessage = "Filer av typen E3 får inte innehålla verifikationer";
         assertEquals("Log list should contain one log", 6l, validator.getLogs().size());
@@ -218,7 +218,7 @@ public class SieReaderTest {
 
     @Test
     public void test_type4E_with_imbalanced_voucher() {
-        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"));
+        DataReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"));
         DocumentValidator validator = reader.validate();
         String expectedMessage = "Verifikationen är i obalans. Serie: A. Nummer: 1. Datum: 20170101. Differens: 0.10";
         assertEquals("Log list should contain 3 logs", 3l, validator.getLogs().size());
@@ -229,8 +229,8 @@ public class SieReaderTest {
     @Test
     public void test_compare_original_and_copy() {
         // The copy will have a correct format for the corporate id.
-        SieReader original = SieReader.from(asByteArray("/sample/BLBLOV_SIE1.SE"));
-        SieReader copy = SieReader.from(asByteArray("/sample/BLBLOV_SIE1_copy.SE"));
+        DataReader original = SieReader.from(asByteArray("/sample/BLBLOV_SIE1.SE"));
+        DataReader copy = SieReader.from(asByteArray("/sample/BLBLOV_SIE1_copy.SE"));
         String originalLog = "SieLog{origin=Document, level=INFO, tag=#ORGNR, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn. 1655710918}";
         assertEquals("Original should contain 1 log", 1, original.validate().getLogs().size());
         assertEquals("Original log should be " + originalLog, originalLog, original.validate().getLogs().get(0).toString());

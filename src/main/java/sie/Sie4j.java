@@ -72,6 +72,13 @@ public class Sie4j {
     public static Document fromJson(DocumentDTO dto) {
         return Deserializer.fromJson(dto);
     }
+    
+    public static DataReader readerFromSie(byte[] input) {
+        return SieReader.from(input);
+    }
+    public static DataReader readerFromJson(byte[] input) {
+        return JsonReader.from(input);
+    }
 
     public static Document toDocument(byte[] input) {
         return SieReader.from(input).read();
@@ -148,9 +155,27 @@ public class Sie4j {
         return Checksum.calculate(input);
     }
 
+    public static ValidationResultDTO validate(DataReader reader) {
+        try {
+            List<SieLogDTO> logs = reader.validate().getLogs().stream().map(SieLogDTO::from).collect(Collectors.toList());
+            DocumentDTO doc = DocumentDTO.from(reader.read());
+            return ValidationResultDTO.from(doc, logs);
+        } catch (SieException ex) {
+            List<SieLogDTO> logs;
+            if (ex.getLocalizedMessage().contains("\n")) {
+                logs = Stream.of(ex.getLocalizedMessage().split("\n")).map(s -> {
+                    return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j");
+                }).collect(Collectors.toList());
+            } else {
+                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j"));
+            }
+            return ValidationResultDTO.from(null, logs);
+        }
+    }
+
     public static ValidationResultDTO validate(byte[] input) {
         try {
-            SieReader reader = SieReader.from(input);
+            DataReader reader = SieReader.from(input);
             List<SieLogDTO> logs = reader.validate().getLogs().stream().map(SieLogDTO::from).collect(Collectors.toList());
             DocumentDTO doc = DocumentDTO.from(reader.read());
             return ValidationResultDTO.from(doc, logs);
