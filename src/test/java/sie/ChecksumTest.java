@@ -1,6 +1,5 @@
 package sie;
 
-import java.io.InputStream;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import sie.domain.Document;
@@ -13,8 +12,8 @@ public class ChecksumTest {
 
     private static final Document DOCUMENT = Sie4j.toDocument(ChecksumTest.class.getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
 
-    private static InputStream getStream() {
-        return ChecksumTest.class.getResourceAsStream("/sample/BLBLOV_SIE1.SE");
+    private static byte[] getStream() {
+        return SieReader.streamToByteArray(ChecksumTest.class.getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
     }
 
     public ChecksumTest() {

@@ -2,8 +2,6 @@ package sie;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.Year;
@@ -19,7 +17,6 @@ import sie.domain.Address;
 import sie.domain.Balance;
 import sie.domain.Company;
 import sie.domain.Document;
-import sie.domain.Entity;
 import sie.domain.FinancialYear;
 import sie.domain.Generated;
 import sie.domain.MetaData;
@@ -55,8 +52,8 @@ class Deserializer {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static Document fromJson(InputStream stream) {
-        return fromJson(streamToString(stream));
+    public static Document fromJson(byte[] source) {
+        return fromJson(bytesToString(source));
     }
 
     public static Document fromJson(DocumentDTO dto) {
@@ -249,13 +246,7 @@ class Deserializer {
         return string == null || string.isBlank();
     }
 
-    private static String streamToString(InputStream input) {
-        try {
-            byte[] buffer = new byte[input.available()];
-            input.read(buffer);
-            return new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException ex) {
-            throw new SieException("Kunde inte läsa källan", ex);
-        }
+    private static String bytesToString(byte[] input) {
+        return new String(input, StandardCharsets.UTF_8);
     }
 }

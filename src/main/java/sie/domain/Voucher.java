@@ -36,7 +36,7 @@ public class Voucher implements Entity, Comparable<Voucher> {
     }
 
     public Optional<String> getSeries() {
-        return Optional.ofNullable(series == null || series.trim().isEmpty() ? null : series);
+        return Optional.ofNullable(series == null || series.isBlank() ? null : series);
     }
 
     public Optional<Integer> getNumber() {
@@ -48,7 +48,7 @@ public class Voucher implements Entity, Comparable<Voucher> {
     }
 
     public Optional<String> getText() {
-        return Optional.ofNullable(text == null || text.trim().isEmpty() ? null : text);
+        return Optional.ofNullable(text == null || text.isBlank()? null : text);
     }
 
     public Optional<LocalDate> getRegistrationDate() {
@@ -56,7 +56,7 @@ public class Voucher implements Entity, Comparable<Voucher> {
     }
 
     public Optional<String> getSignature() {
-        return Optional.ofNullable(signature == null || signature.trim().isEmpty() ? null : signature);
+        return Optional.ofNullable(signature == null || signature.isBlank() ? null : signature);
     }
 
     public List<Transaction> getTransactions() {

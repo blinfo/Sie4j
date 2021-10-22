@@ -28,16 +28,19 @@ public class SieReaderTest {
     public void test_StreamReader_read() {
         String expectedProgramLine = "#PROGRAM \"BL Administration\" 2018.2.101";
         String expectedCompanyNameLine = "#FNAMN \"Övningsföretaget AB\"";
-        String content = SieReader.streamToString(Helper.getSIE(4, 'E'));
+        String content = SieReader.byteArrayToString(Helper.getSIE(4, 'E'));
         assertTrue("Should contain " + expectedProgramLine, content.contains(expectedProgramLine));
         assertTrue("Should contain " + expectedCompanyNameLine, content.contains(expectedCompanyNameLine));
     }
 
     @Test
     public void test_StreamReader_encoding_handling() {
-        String cp437content = SieReader.streamToString(getStream(""));
-        String utf8content = SieReader.streamToString(getStream("_UTF_8"));
-        String iso8859content = SieReader.streamToString(getStream("_ISO_8859_15"));
+        byte[] cp437source = SieReader.streamToByteArray(getStream(""));
+        String cp437content = SieReader.byteArrayToString(cp437source);
+        byte[] utf8source = SieReader.streamToByteArray(getStream("_UTF_8"));
+        String utf8content = SieReader.byteArrayToString(utf8source);
+        byte[] is08859source = SieReader.streamToByteArray(getStream("_ISO_8859_15"));
+        String iso8859content = SieReader.byteArrayToString(is08859source);
         assertEquals("Content should be same", cp437content, utf8content);
         assertEquals("Content should be same", cp437content, iso8859content);
     }
@@ -59,7 +62,7 @@ public class SieReaderTest {
 
     @Test
     public void test_BLA_Sie_SI_File() {
-        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/CC3.SI"));
+        Document doc = Sie4j.toDocument(asByteArray("/sample/CC3.SI"));
         assertTrue("Document should be of type I4", doc.getMetaData().getSieType().equals(Document.Type.I4));
         assertTrue("AccountingPlan should exist", doc.getAccountingPlan().isPresent());
         AccountingPlan accountingPlan = doc.getAccountingPlan().get();
@@ -72,7 +75,7 @@ public class SieReaderTest {
 
     @Test
     public void test_BLA_Sie_SE_File() {
-        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/CC2-foretaget.SE"));
+        Document doc = Sie4j.toDocument(asByteArray("/sample/CC2-foretaget.SE"));
         assertTrue("Document should be of type E4", doc.getMetaData().getSieType().equals(Document.Type.E4));
         assertTrue("AccountingPlan should exist", doc.getAccountingPlan().isPresent());
         AccountingPlan accountingPlan = doc.getAccountingPlan().get();
@@ -95,7 +98,7 @@ public class SieReaderTest {
 
     @Test
     public void test_readFaultyAddress() {
-        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_WITH_FAULTY_ADDRESS.SI"));
+        Document doc = Sie4j.toDocument(asByteArray("/sample/BLBLOV_SIE4_UTF_8_WITH_FAULTY_ADDRESS.SI"));
         Optional<Address> optAddr = doc.getMetaData().getCompany().getAddress();
         assertTrue("Document should have an address", optAddr.isPresent());
         Address address = optAddr.get();
@@ -111,7 +114,7 @@ public class SieReaderTest {
 
     @Test
     public void SIE_file_where_program_version_is_missing_should_be_handled() {
-        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/SIE_with_missing_program_version.se"));
+        Document doc = Sie4j.toDocument(asByteArray("/sample/SIE_with_missing_program_version.se"));
         String expectedFirstVoucherText = "Dagsrapport 110000775";
         assertNull("Version should be null", doc.getMetaData().getProgram().getVersion());
         assertEquals("Document should contain 3 vouchers", 3l, doc.getVouchers().size());
@@ -121,22 +124,16 @@ public class SieReaderTest {
 
     @Test
     public void test_strange_sie_file() {
-        Document strangeDoc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/Transaktioner per Z-rapport.se"));
+        Document strangeDoc = Sie4j.toDocument(asByteArray("/sample/Transaktioner per Z-rapport.se"));
         Company company = strangeDoc.getMetaData().getCompany();
         String expectedCid = "555555-5555";
         assertTrue("CID should be present", company.getCorporateID().isPresent());
         assertEquals("CID should be " + expectedCid, expectedCid, company.getCorporateID().get());
     }
 
-    private InputStream getStream(String string) {
-        String path = "/sample/BLBLOV_SIE4";
-        String suffix = ".SI";
-        return getClass().getResourceAsStream(path + string + suffix);
-    }
-
     @Test
     public void test_SIE2_file_with_errors() {
-        SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE2_UTF_8_with_multiple_errors.SE"));
+        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE2_UTF_8_with_multiple_errors.SE"));
         DocumentValidator validator = reader.validate();
         assertFalse("Logs should not be empty", validator.getLogs().isEmpty());
         assertEquals("Should contain 4 warnings", 4l, validator.getWarnings().size());
@@ -144,7 +141,7 @@ public class SieReaderTest {
 
     @Test
     public void test_accountingPlan_sie2() {
-        SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE2_UTF_8_with_errors.SE"));
+        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE2_UTF_8_with_errors.SE"));
         Document doc = reader.read();
         Document.Type type = doc.getMetaData().getSieType();
         List<SieLog> logs = reader.validate().getLogs();
@@ -178,7 +175,7 @@ public class SieReaderTest {
 
     @Test
     public void test_accountingPlan_with_missing_account_numbers() {
-        SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
+        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_numbers.SE"));
         String expectedMessage = "Kontonummer saknas";
         assertFalse("Should not be valid", reader.validate().isValid());
         SieException thrown = assertThrows("", SieException.class, () -> reader.read());
@@ -187,7 +184,7 @@ public class SieReaderTest {
 
     @Test
     public void test_accountingPlan() {
-        SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_errors.SE"));
+        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_errors.SE"));
         Document doc = reader.read();
         DocumentValidator validator = reader.validate();
         List<SieLog> logs = validator.getLogs();
@@ -211,7 +208,7 @@ public class SieReaderTest {
 
     @Test
     public void test_type3_with_vouchers() {
-        SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE3_UTF_8_with_vouchers.SE"));
+        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE3_UTF_8_with_vouchers.SE"));
         DocumentValidator validator = reader.validate();
         String expectedWarningMessage = "Filer av typen E3 får inte innehålla verifikationer";
         assertEquals("Log list should contain one log", 6l, validator.getLogs().size());
@@ -221,7 +218,7 @@ public class SieReaderTest {
 
     @Test
     public void test_type4E_with_imbalanced_voucher() {
-        SieReader reader = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"));
+        SieReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"));
         DocumentValidator validator = reader.validate();
         String expectedMessage = "Verifikationen är i obalans. Serie: A. Nummer: 1. Datum: 20170101. Differens: 0.10";
         assertEquals("Log list should contain 3 logs", 3l, validator.getLogs().size());
@@ -230,14 +227,32 @@ public class SieReaderTest {
     }
 
     @Test
-    public void compare_original_and_copy() {
+    public void test_compare_original_and_copy() {
         // The copy will have a correct format for the corporate id.
-        SieReader original = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
-        SieReader copy = SieReader.from(getClass().getResourceAsStream("/sample/BLBLOV_SIE1_copy.SE"));
+        SieReader original = SieReader.from(asByteArray("/sample/BLBLOV_SIE1.SE"));
+        SieReader copy = SieReader.from(asByteArray("/sample/BLBLOV_SIE1_copy.SE"));
         String originalLog = "SieLog{origin=Document, level=INFO, tag=#ORGNR, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn. 1655710918}";
         assertEquals("Original should contain 1 log", 1, original.validate().getLogs().size());
         assertEquals("Original log should be " + originalLog, originalLog, original.validate().getLogs().get(0).toString());
         assertTrue("Original Program and Copy Program should be equal", original.read().getMetaData().getProgram().toString()
                 .equals(copy.read().getMetaData().getProgram().toString()));
+    }
+
+    @Test
+    public void test_that_input_null_throws_SieException() {
+        String expectedMessage = "Källan får inte vara null";
+        InputStream input = null;
+        SieException ex = assertThrows("", SieException.class, () -> SieReader.createReader(input, true));
+        assertEquals(expectedMessage, ex.getMessage());
+    }
+
+    private InputStream getStream(String string) {
+        String path = "/sample/BLBLOV_SIE4";
+        String suffix = ".SI";
+        return getClass().getResourceAsStream(path + string + suffix);
+    }
+
+    private byte[] asByteArray(String path) {
+        return SieReader.streamToByteArray(getClass().getResourceAsStream(path));
     }
 }

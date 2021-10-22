@@ -1,6 +1,5 @@
 package sie;
 
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,7 +31,7 @@ class Checksum {
         return calculate(SieWriter.write(input));
     }
 
-    public static String calculate(InputStream input) {
+    public static String calculate(byte[] input) {
         return calculate(SieReader.from(input).read());
     }
 }

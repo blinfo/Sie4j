@@ -58,20 +58,13 @@ class SieReader {
         }
     }
 
-    public static SieReader validator(InputStream input) {
-        return createReader(input, true);
-
+    public static SieReader from(byte[] input) {
+        return new SieReader(byteArrayToString(input));
     }
 
-    public static SieReader from(InputStream input) {
-        return createReader(input, false);
-    }
-
-    private static SieReader createReader(InputStream input, boolean validate) throws SieException {
-        if (input == null) {
-            throw new SieException("Källan får inte vara null");
-        }
-        return new SieReader(streamToString(input), validate);
+    static SieReader createReader(InputStream input, boolean validate) throws SieException {
+        byte[] source = streamToByteArray(input);
+        return new SieReader(byteArrayToString(source), validate);
     }
 
     public Document read() {
@@ -86,10 +79,20 @@ class SieReader {
         return validator;
     }
 
-    static String streamToString(InputStream input) {
+    static byte[] streamToByteArray(InputStream input) {
         try {
             byte[] buffer = new byte[input.available()];
             input.read(buffer);
+            return buffer;
+        } catch (NullPointerException ex) {
+            throw new SieException("Källan får inte vara null", ex);
+        } catch (IOException ex) {
+            throw new SieException("Kunde inte läsa källan", ex);
+        }
+    }
+
+    static String byteArrayToString(byte[] buffer) {
+        try {
             String result = new String(buffer, Entity.CHARSET);
             isForTestPurpose(result);
             if (isUtf8(result)) {

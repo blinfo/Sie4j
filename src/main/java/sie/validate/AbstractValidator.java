@@ -48,7 +48,7 @@ abstract class AbstractValidator<T extends Entity> implements Validator {
     protected abstract void validate();
 
     protected Boolean isNullOrBlank(String input) {
-        return input == null || input.trim().isEmpty();
+        return input == null || input.isBlank();
     }
 
     private void init() {

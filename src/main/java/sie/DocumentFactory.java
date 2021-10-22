@@ -1,6 +1,5 @@
 package sie;
 
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Year;
@@ -57,18 +56,14 @@ class DocumentFactory {
         this.content = content;
     }
 
-    static DocumentFactory from(InputStream stream) {
-        return from(SieReader.streamToString(stream));
-    }
-
     static DocumentFactory from(String content) {
         DocumentFactory factory = new DocumentFactory(content);
         factory.parse();
         return factory;
     }
 
-    static DocumentFactory validation(InputStream stream) {
-        return validation(SieReader.streamToString(stream));
+    static DocumentFactory from(byte[] source) {
+        return from(SieReader.byteArrayToString(source));
     }
 
     static DocumentFactory validation(String content) {

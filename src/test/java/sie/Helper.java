@@ -10,8 +10,9 @@ import sie.domain.Document;
  */
 public class Helper {
 
-    protected static InputStream getSIE(Integer typeNr, char type) {
-        return Helper.class.getResourceAsStream("/sample/BLBLOV_SIE" + typeNr + ".S" + type);
+    protected static byte[] getSIE(Integer typeNr, char type) {
+        InputStream stream = Helper.class.getResourceAsStream("/sample/BLBLOV_SIE" + typeNr + ".S" + type);
+        return SieReader.streamToByteArray(stream);
     }
 
     protected static Document getDocument(Integer typeNr, char type) {

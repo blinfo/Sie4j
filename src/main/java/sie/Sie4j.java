@@ -1,19 +1,12 @@
 package sie;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
+import java.nio.charset.*;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.*;
 import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
-import sie.dto.DocumentDTO;
-import sie.dto.SieLogDTO;
-import sie.dto.ValidationResultDTO;
+import sie.dto.*;
 import sie.exception.SieException;
 import sie.validate.DocumentValidator;
 import sie.validate.SieLog.Level;
@@ -69,15 +62,23 @@ public class Sie4j {
     }
 
     public static Document fromJson(InputStream input) {
+        return Deserializer.fromJson(SieReader.streamToByteArray(input));
+    }
+
+    public static Document fromJson(String input) {
         return Deserializer.fromJson(input);
     }
 
-    public static Document toValidatedDocument(InputStream input) {
-        return SieReader.validator(input).read();
+    public static Document fromJson(DocumentDTO dto) {
+        return Deserializer.fromJson(dto);
+    }
+
+    public static Document toDocument(byte[] input) {
+        return SieReader.from(input).read();
     }
 
     public static Document toDocument(InputStream input) {
-        return SieReader.from(input).read();
+        return toDocument(SieReader.streamToByteArray(input));
     }
 
     public static Document toDocument(File input) {
@@ -86,14 +87,6 @@ public class Sie4j {
         } catch (FileNotFoundException ex) {
             throw new SieException(ex);
         }
-    }
-
-    public static Document toDocument(String jsonInput) {
-        return Deserializer.fromJson(jsonInput);
-    }
-
-    public static Document toDocument(DocumentDTO dto) {
-        return Deserializer.fromJson(dto);
     }
 
     /**
@@ -155,13 +148,9 @@ public class Sie4j {
         return Checksum.calculate(input);
     }
 
-    public static String calculateChecksum(InputStream input) {
-        return Checksum.calculate(input);
-    }
-
-    public static ValidationResultDTO validate(InputStream input) {
+    public static ValidationResultDTO validate(byte[] input) {
         try {
-            SieReader reader = SieReader.validator(input);
+            SieReader reader = SieReader.from(input);
             List<SieLogDTO> logs = reader.validate().getLogs().stream().map(SieLogDTO::from).collect(Collectors.toList());
             DocumentDTO doc = DocumentDTO.from(reader.read());
             return ValidationResultDTO.from(doc, logs);

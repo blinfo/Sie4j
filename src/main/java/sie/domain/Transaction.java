@@ -56,7 +56,7 @@ public class Transaction implements Entity {
     }
 
     public Optional<String> getText() {
-        return Optional.ofNullable(text);
+        return Optional.ofNullable(text == null || text.isBlank() ? null : text);
     }
 
     public Optional<Double> getQuantity() {
@@ -64,7 +64,7 @@ public class Transaction implements Entity {
     }
 
     public Optional<String> getSignature() {
-        return Optional.ofNullable(signature);
+        return Optional.ofNullable(signature == null || signature.isBlank() ? null : signature);
     }
 
     public List<ObjectId> getObjectIds() {

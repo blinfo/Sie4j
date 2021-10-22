@@ -14,7 +14,7 @@ public class SerializeDesirializeTest {
     @Test
     public void test_serialize() {
         String jsonFromSie = Sie4j.asJson(getSieSource());
-        Document doc = Sie4j.toDocument(jsonFromSie);
+        Document doc = Sie4j.fromJson(jsonFromSie);
         String jsonFromJson = Sie4j.asJson(doc);
         assertEquals("", jsonFromSie, jsonFromJson);
     }
