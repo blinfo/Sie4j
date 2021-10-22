@@ -39,11 +39,15 @@ public class ValidationResultDTO implements DTO {
     public List<SieLogDTO> getWarnings() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING.name())).collect(Collectors.toList());
     }
-
+    
     @JsonIgnore
     public List<SieLogDTO> getInfos() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.INFO.name())).collect(Collectors.toList());
     }
+
+    public void addLog(SieLogDTO log) {
+        this.logs.add(log);
+    } 
 
     public void setLogs(List<SieLogDTO> logs) {
         this.logs = logs.stream().distinct().collect(Collectors.toList());
