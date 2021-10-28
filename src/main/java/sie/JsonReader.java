@@ -1,7 +1,6 @@
 package sie;
 
 import sie.domain.Document;
-import sie.dto.DocumentDTO;
 import sie.validate.DocumentValidator;
 
 /**
@@ -17,16 +16,14 @@ class JsonReader implements DataReader {
         this.document = document;
         this.validator = validator;
     }
-    
+
     public static DataReader from(byte[] input) {
-        Document doc = Deserializer.fromJson(input);
-        DocumentValidator validator = DocumentValidator.from(doc);
-        return new JsonReader(doc, validator);
+        return of(input, false);
     }
 
-    public static DataReader from(DocumentDTO dto) {
-        Document doc = Deserializer.fromJson(dto);
-        DocumentValidator validator = DocumentValidator.from(doc);
+    public static DataReader of(byte[] input, Boolean checkBalances) {
+        Document doc = Deserializer.fromJson(input);
+        DocumentValidator validator = DocumentValidator.of(doc, checkBalances);
         return new JsonReader(doc, validator);
     }
 

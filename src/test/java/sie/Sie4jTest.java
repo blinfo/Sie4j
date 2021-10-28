@@ -137,17 +137,17 @@ public class Sie4jTest {
     }
 
     @Test
-    public void test_document_validator_balances_and_results_against_vouchers() {
+    public void test_account_number_lengths() {
         ValidationResultDTO result = Sie4j.validate(asByteArray("/sample/Arousells_Visning_AB.SE"));
-        long expectedNumberOfLogs = 67;
-        long expectedNumberOfWarnings = 65;
+        long expectedNumberOfLogs = 5l;
+        long expectedNumberOfWarnings = 3l;
         String expectedFirstMessage = "Kontonummer ska innehålla minst fyra siffror: 23";
-        String expectedFourthMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna Resultat: -25035.36 Summa: 0.00";
+        String expectedSecondMessage = "Kontot har fler än fyra siffror: 143010";
         assertFalse("Log list should not be empty", result.getLogs().isEmpty());
         assertEquals("Validator should contain " + expectedNumberOfLogs + " logs", expectedNumberOfLogs, result.getLogs().size());
         assertEquals("Validator should contain " + expectedNumberOfWarnings + " warnings", expectedNumberOfWarnings, result.getWarnings().size());
         assertEquals("First message should be " + expectedFirstMessage, expectedFirstMessage, result.getWarnings().get(0).getMessage());
-        assertEquals("Fourth message should be " + expectedFourthMessage, expectedFourthMessage, result.getWarnings().get(3).getMessage());
+        assertEquals("Fourth message should be " + expectedSecondMessage, expectedSecondMessage, result.getWarnings().get(1).getMessage());
     }
 
     @Test
@@ -175,8 +175,8 @@ public class Sie4jTest {
     @Test
     public void test_files() {
         ValidationResultDTO result1 = Sie4j.validate(asByteArray("/sample/Arousells_Visning_AB.SE"));
-        long expectedNumberOfLogs = 67l;
-        long expectedNumberOfWarnings = 65l;
+        long expectedNumberOfLogs = 5l;
+        long expectedNumberOfWarnings = 3l;
         assertEquals("First validator should contain " + expectedNumberOfLogs + "  logs", expectedNumberOfLogs, result1.getLogs().size());
         assertEquals("First validator should contain " + expectedNumberOfWarnings + " warning", expectedNumberOfWarnings, result1.getWarnings().size());
         assertEquals("First validator should contain 2 info", 2l, result1.getInfos().size());

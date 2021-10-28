@@ -19,19 +19,25 @@ public class DocumentValidator implements Validator {
     private final Document entity;
     private final LocalDateTime timestamp;
     private final List<SieLog> logs;
+    private final Boolean checkBalances;
 
     private DocumentValidator() {
-        this(null);
+        this(null, null);
     }
 
-    private DocumentValidator(Document document) {
+    private DocumentValidator(Document document, Boolean checkBalances) {
         this.entity = document;
         this.timestamp = LocalDateTime.now();
         this.logs = new ArrayList<>();
+        this.checkBalances = checkBalances;
     }
 
     public static DocumentValidator from(Document document) {
-        DocumentValidator documentValidator = new DocumentValidator(document);
+        return of(document, Boolean.FALSE);
+    }
+
+    public static DocumentValidator of(Document document, Boolean checkBalances) {
+        DocumentValidator documentValidator = new DocumentValidator(document, checkBalances);
         documentValidator.validate();
         return documentValidator;
     }
@@ -85,7 +91,9 @@ public class DocumentValidator implements Validator {
             logs.addAll(MetaDataValidator.from(entity.getMetaData()).getLogs());
             validateAccountingPlan();
             validateVouchers();
-            validateBalances();
+            if (checkBalances) {
+                validateBalances();
+            }
         }
     }
 

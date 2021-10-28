@@ -33,13 +33,19 @@ class SieReader implements DataReader {
     private DocumentFactory factory;
     private Document document;
     private final boolean validate;
+    private final boolean checkBalances;
 
     private SieReader(String input) {
         this(input, false);
     }
 
     private SieReader(String input, boolean validate) {
+        this(input, validate, false);
+    }
+
+    private SieReader(String input, boolean validate, boolean checkBalances) {
         this.validate = validate;
+        this.checkBalances = checkBalances;
         init(input);
     }
 
@@ -51,15 +57,35 @@ class SieReader implements DataReader {
                 factory = DocumentFactory.from(input);
             }
             document = factory.getDocument();
-            validator = DocumentValidator.from(document);
+            validator = DocumentValidator.of(document, checkBalances);
             validator.addLogs(factory.getLogs());
         } catch (SieException ex) {
             validator = DocumentValidator.of(ex, DocumentFactory.class);
         }
     }
 
+    /**
+     * Will not validate the content.
+     *
+     * @param input
+     * @return
+     */
     public static DataReader from(byte[] input) {
         return new SieReader(byteArrayToString(input));
+    }
+
+    /**
+     * Will always perform a validation of the content.
+     * <p>
+     * The parameter checkBalances tells whether or not the incoming and
+     * outgoing balances should be checked against the vouchers.
+     *
+     * @param input
+     * @param checkBalances
+     * @return
+     */
+    public static DataReader of(byte[] input, Boolean checkBalances) {
+        return new SieReader(byteArrayToString(input), true, checkBalances);
     }
 
     static SieReader createReader(InputStream input, boolean validate) throws SieException {

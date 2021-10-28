@@ -72,12 +72,21 @@ public class Sie4j {
     public static Document fromJson(DocumentDTO dto) {
         return Deserializer.fromJson(dto);
     }
-    
+
     public static DataReader readerFromSie(byte[] input) {
         return SieReader.from(input);
     }
+
+    public static DataReader readerFromSieWithBalanceCheckOption(byte[] input, Boolean checkBalances) {
+        return SieReader.of(input, checkBalances);
+    }
+
     public static DataReader readerFromJson(byte[] input) {
         return JsonReader.from(input);
+    }
+
+    public static DataReader readerFromJsonWithBalanceCheck(byte[] input, Boolean checkBalances) {
+        return JsonReader.of(input, checkBalances);
     }
 
     public static Document toDocument(byte[] input) {

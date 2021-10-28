@@ -218,7 +218,7 @@ public class SieReaderTest {
 
     @Test
     public void test_type4E_with_imbalanced_voucher() {
-        DataReader reader = SieReader.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"));
+        DataReader reader = SieReader.of(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"), true);
         DocumentValidator validator = reader.validate();
         String expectedMessage = "Verifikationen är i obalans. Serie: A. Nummer: 1. Datum: 20170101. Differens: 0.10";
         assertEquals("Log list should contain 3 logs", 3l, validator.getLogs().size());

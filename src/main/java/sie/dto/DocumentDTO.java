@@ -3,12 +3,7 @@ package sie.dto;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 import java.util.stream.Collectors;
-import sie.domain.AccountingDimension;
-import sie.domain.AccountingObject;
-import sie.domain.AccountingPlan;
 import sie.domain.Document;
-import sie.domain.MetaData;
-import sie.domain.Voucher;
 
 /**
  *
@@ -19,7 +14,6 @@ public class DocumentDTO implements DTO {
 
     private MetaDataDTO metaData;
     private AccountingPlanDTO accountingPlan;
-    private List<String> voucherNumberSeries;
     private List<VoucherDTO> vouchers;
     private List<AccountingDimensionDTO> dimensions;
     private List<AccountingObjectDTO> objects;
@@ -84,6 +78,6 @@ public class DocumentDTO implements DTO {
     }
 
     public void setVoucherNumberSeries(List<String> series) {
-        // Do nothing
+        // Read only, Do nothing
     }
 }
