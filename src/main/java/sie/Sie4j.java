@@ -4,7 +4,6 @@ import java.io.*;
 import java.nio.charset.*;
 import java.util.List;
 import java.util.stream.*;
-import sie.sample.SampleDocumentGenerator;
 import sie.domain.Document;
 import sie.dto.*;
 import sie.exception.SieException;
@@ -154,10 +153,6 @@ public class Sie4j {
      */
     public static File fromDocument(Document input, File target, Charset charset) {
         return SieWriter.write(input, target, charset);
-    }
-
-    public static Document fakeDocument() {
-        return SampleDocumentGenerator.generate();
     }
 
     public static String calculateChecksum(Document input) {
