@@ -1,4 +1,7 @@
 pipeline {
+  env {
+    DOCKER_REGISTRY='docker.repos.blinfo.se'
+  }
   agent any
     options {
         disableConcurrentBuilds()
@@ -7,7 +10,7 @@ pipeline {
     stage('Build and Test') {
        agent {
           docker {
-            image 'maven:3.6.1-jdk-11'
+            image "${DOCKER_REGISTRY}/blinfo/maven:3.6.1-jdk-11"
           }
        }
        steps {
@@ -23,7 +26,7 @@ pipeline {
     stage('Deploy Artifacts') {
         agent {
           docker {
-            image 'blinfo/maven:3.6.1-jdk-11'
+            image "${DOCKER_REGISTRY}/blinfo/maven:3.6.1-jdk-11"
             args '-e MAVEN_CONFIG=/home/jenkins/.m2'
           }
         }
