@@ -1,5 +1,5 @@
 pipeline {
-  env {
+  environment {
     DOCKER_REGISTRY='docker.repos.blinfo.se'
   }
   agent any
