@@ -184,6 +184,19 @@ public class Sie4jTest {
         assertEquals("Second validator should contain 3 info logs", 3l, result2.getLogs().size());
     }
 
+    @Test
+    public void test_that_CorpoprateID_error_only_is_reported_once() {
+        DataReader reader = Sie4j.readerFromSie(asByteArray("/sample/Testbolaget_Enskild_firma.SE"));
+        assertEquals("Should contain 1 error", 1l, reader.validate().getLogs().size());
+    }
+    
+    @Test
+    public void test_that_CorpoprateID_error_reports_original_cid() {
+        String expectedMessage = "Organisationsnummer ska vara av formatet nnnnnn-nnnn. 198605100000";
+        DataReader reader = Sie4j.readerFromSie(asByteArray("/sample/Testbolaget_Enskild_firma.SE"));
+        assertEquals("", expectedMessage, reader.validate().getLogs().get(0).getMessage());
+    }
+
     private byte[] asByteArray(String path) {
         return SieReader.streamToByteArray(getClass().getResourceAsStream(path));
     }

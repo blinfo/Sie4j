@@ -633,8 +633,9 @@ class DocumentFactory {
         if (corporateId == null || corporateId.isBlank()) {
             return Optional.empty();
         }
+        String originalCID = corporateId;
         if (corporateId.matches("\\d{8}-\\d{4}")) {
-            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + corporateId, Entity.CORPORATE_ID);
+            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + originalCID, Entity.CORPORATE_ID);
             corporateId = corporateId.substring(2);
         }
         if (corporateId.matches("\\d{6}-\\d{4}")) {
@@ -642,16 +643,15 @@ class DocumentFactory {
         }
         if (corporateId.matches("\\d*")) {
             if (corporateId.length() > 10) {
-                addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + corporateId, Entity.CORPORATE_ID);
                 corporateId = corporateId.substring(corporateId.length() - 10);
             } else if (corporateId.length() < 10) {
-                addInfo("Organisationsnummer är ogiltigt. " + corporateId, Entity.CORPORATE_ID);
+                addInfo("Organisationsnummer är ogiltigt. " + originalCID, Entity.CORPORATE_ID);
                 return Optional.empty();
             }
         }
         Optional<String> result = Optional.of(corporateId).filter(cid -> cid.matches("\\d{10}")).map(cid -> cid.substring(0, 6) + "-" + cid.substring(6));
         if (result.isPresent()) {
-            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + corporateId, Entity.CORPORATE_ID);
+            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + originalCID, Entity.CORPORATE_ID);
         }
         return result;
     }
