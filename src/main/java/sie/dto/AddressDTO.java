@@ -20,10 +20,10 @@ public class AddressDTO {
 
     public static AddressDTO from(Address source) {
         AddressDTO dto = new AddressDTO();
-        dto.setContact(source.getContact().isBlank() ? null : source.getContact());
-        dto.setStreetAddress(source.getStreetAddress().isBlank() ? null : source.getStreetAddress());
-        dto.setPostalAddress(source.getPostalAddress().isBlank() ? null : source.getPostalAddress());
-        dto.setPhone(source.getPhone().isBlank() ? null : source.getPhone());
+        dto.setContact(source.getContact() == null || source.getContact().isBlank() ? null : source.getContact());
+        dto.setStreetAddress(source.getStreetAddress() == null || source.getStreetAddress().isBlank() ? null : source.getStreetAddress());
+        dto.setPostalAddress(source.getPostalAddress() == null || source.getPostalAddress().isBlank() ? null : source.getPostalAddress());
+        dto.setPhone(source.getPhone() == null || source.getPhone().isBlank() ? null : source.getPhone());
         return dto;
     }
 

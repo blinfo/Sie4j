@@ -22,7 +22,7 @@ public class GeneratedDTO implements DTO {
     }
 
     public static GeneratedDTO from(Generated source) {
-        return new GeneratedDTO(source.getDate().toString(), source.getSignature().map(s -> s.isBlank() ? null : s).orElse(null));
+        return new GeneratedDTO(source.getDate().toString(), source.getSignature().map(s -> s == null || s.isBlank() ? null : s).orElse(null));
     }
 
     public String getDate() {
