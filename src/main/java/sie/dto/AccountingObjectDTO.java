@@ -24,7 +24,7 @@ public class AccountingObjectDTO implements DTO {
     }
 
     public static AccountingObjectDTO from(AccountingObject source) {
-        return new AccountingObjectDTO(source.getDimensionId(), source.getLabel(), source.getNumber());
+        return new AccountingObjectDTO(source.getDimensionId(), source.getNumber(), source.getLabel());
     }
 
     public Integer getDimensionId() {
