@@ -1,0 +1,2629 @@
+#FLAGGA 0
+#PROGRAM "BL Administration" 2021.4.102
+#FORMAT PC8
+#GEN 20211116 "1 Anders Engman"
+#SIETYP 4
+#FNR "4"
+#ORGNR 559162-1958
+#ADRESS "" "ArlîvsvÑgen 6" "21124 MALMô" "040-6174014"
+#FNAMN "4 - Testbolaget enskild firma"
+#FTYP E
+#RAR 0 20210101 20211231
+#TAXAR 2022
+#KPTYP EUBAS97
+#DIM 1 "KostnadsstÑlle"
+#OBJEKT 1 "100000" "ABC"
+#OBJEKT 1 "100001" "ASDF XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#DIM 2 "KostnadsbÑrare"
+#OBJEKT 2 "100000" "XCV"
+#OBJEKT 2 "100001" "XCVB XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#DIM 6 "Projekt"
+#OBJEKT 6 "1000" "TEST"
+#OBJEKT 6 "1234567891234567" "TEST av ett langt projektnamn fungerar dXXXXXXXXXXXXXXXXXXXX"
+#KONTO 1010 "Utvecklingsutgifter"
+#KONTO 1011 "Balanserade utgifter fîr forskning och u"
+#KONTO 1012 "Balanserade utgifter fîr programvaror"
+#KONTO 1018 "Ackumulerade nedskrivningar pÜ balansera"
+#KONTO 1019 "Ackumulerade avskrivningar pÜ balanserad"
+#KONTO 1020 "Koncessioner m.m."
+#KONTO 1028 "Ackumulerade nedskrivningar pÜ koncessio"
+#KONTO 1029 "Ackumulerade avskrivningar pÜ koncession"
+#KONTO 1030 "Patent"
+#KONTO 1038 "Ackumulerade nedskrivningar pÜ patent"
+#KONTO 1039 "Ackumulerade avskrivningar pÜ patent"
+#KONTO 1040 "Licenser"
+#KONTO 1048 "Ackumulerade nedskrivningar pÜ licenser"
+#KONTO 1049 "Ackumulerade avskrivningar pÜ licenser"
+#KONTO 1050 "VarumÑrken"
+#KONTO 1058 "Ackumulerade nedskrivningar pÜ varumÑrke"
+#KONTO 1059 "Ackumulerade avskrivningar pÜ varumÑrken"
+#KONTO 1060 "HyresrÑtter, tomtrÑtter och liknande"
+#KONTO 1068 "Ackumulerade nedskrivningar pÜ hyresrÑtt"
+#KONTO 1069 "Ackumulerade avskrivningar pÜ hyresrÑtte"
+#KONTO 1070 "Goodwill"
+#KONTO 1078 "Ackumulerade nedskrivningar pÜ goodwill"
+#KONTO 1079 "Ackumulerade avskrivningar pÜ goodwill"
+#KONTO 1080 "PÜgÜende projekt och fîrskott fîr immate"
+#KONTO 1081 "PÜgÜende projekt fîr immateriella anlÑgg"
+#KONTO 1088 "Fîrskott fîr immateriella anlÑggningstil"
+#KONTO 1110 "Byggnader"
+#KONTO 1111 "Byggnader pÜ egen mark"
+#KONTO 1112 "Byggnader pÜ annans mark"
+#KONTO 1118 "Ackumulerade nedskrivningar pÜ byggnader"
+#KONTO 1119 "Ackumulerade avskrivningar pÜ byggnader"
+#KONTO 1120 "FîrbÑttringsutgifter pÜ annans fastighet"
+#KONTO 1129 "Ackumulerade avskrivningar pÜ fîrbÑttrin"
+#KONTO 1130 "Mark"
+#KONTO 1140 "Tomter och obebyggda markomrÜden"
+#KONTO 1150 "MarkanlÑggningar"
+#KONTO 1158 "Ackumulerade nedskrivningar pÜ markanlÑg"
+#KONTO 1159 "Ackumulerade avskrivningar pÜ markanlÑgg"
+#KONTO 1180 "PÜgÜende nyanlÑggningar och fîrskott fîr"
+#KONTO 1181 "PÜgÜende ny-, till- och ombyggnad"
+#KONTO 1188 "Fîrskott fîr byggnader och mark"
+#KONTO 1210 "Maskiner och andra tekniska anlÑggningar"
+#KONTO 1211 "Maskiner"
+#KONTO 1213 "Andra tekniska anlÑggningar"
+#KONTO 1218 "Ackumulerade nedskrivningar pÜ maskiner "
+#KONTO 1219 "Ackumulerade avskrivningar pÜ maskiner o"
+#KONTO 1220 "Inventarier och verktyg"
+#KONTO 1221 "Inventarier"
+#KONTO 1222 "Byggnadsinventarier"
+#KONTO 1223 "Markinventarier"
+#KONTO 1225 "Verktyg"
+#KONTO 1228 "Ackumulerade nedskrivningar pÜ inventari"
+#KONTO 1229 "Ackumulerade avskrivningar pÜ inventarie"
+#KONTO 1230 "Installationer"
+#KONTO 1231 "Installationer pÜ egen fastighet"
+#KONTO 1232 "Installationer pÜ annans fastig het"
+#KONTO 1238 "Ackumulerade nedskrivningar pÜ installat"
+#KONTO 1239 "Ackumulerade avskrivningar pÜ installati"
+#KONTO 1240 "Bilar och andra transportmedel"
+#KONTO 1241 "Personbilar"
+#KONTO 1242 "Lastbilar"
+#KONTO 1243 "Truckar"
+#KONTO 1244 "Arbetsmaskiner"
+#KONTO 1245 "Traktorer"
+#KONTO 1246 "Motorcyklar, mopeder och skotrar"
+#KONTO 1247 "BÜtar, flygplan och helikoptrar"
+#KONTO 1248 "Ackumulerade nedskrivningar pÜ bilar och"
+#KONTO 1249 "Ackumulerade avskrivningar pÜ bilar och"
+#KONTO 1250 "Datorer"
+#KONTO 1251 "Datorer, fîretaget"
+#KONTO 1257 "Datorer, personal"
+#KONTO 1258 "Ackumulerade nedskrivningar pÜ datorer"
+#KONTO 1259 "Ackumulerade avskrivningar pÜ datorer"
+#KONTO 1280 "PÜgÜende nyanlÑggningar och fîrskott fîr"
+#KONTO 1281 "PÜgÜende nyanlÑggningar, maskiner och in"
+#KONTO 1288 "Fîrskott fîr maskiner och inventarier"
+#KONTO 1290 "ôvriga materiella anlÑggningstillgÜngar"
+#KONTO 1291 "Konst och liknande tillgÜngar"
+#KONTO 1292 "Djur som klassificeras som anlÑggningsti"
+#KONTO 1298 "Ackumulerade nedskrivningar pÜ îvriga ma"
+#KONTO 1299 "Ackumulerade avskrivningar pÜ îvriga mat"
+#KONTO 1310 "Andelar i koncernfîretag"
+#KONTO 1311 "Aktier i noterade svenska koncernfîretag"
+#KONTO 1312 "Aktier i onoterade svenska koncernfîreta"
+#KONTO 1313 "Aktier i noterade utlÑndska koncernfîret"
+#KONTO 1314 "Aktier i onoterade utlÑndska koncernfîre"
+#KONTO 1316 "ôvriga andelar i koncernfîretag"
+#KONTO 1318 "Ackumulerade nedskrivningar av andelar i"
+#KONTO 1320 "LÜngfristiga fordringar hos koncernfîret"
+#KONTO 1321 "LÜngfristiga fordringar hos moderfîretag"
+#KONTO 1322 "LÜngfristiga fordringar hos dotterfîreta"
+#KONTO 1323 "LÜngfristiga fordringar hos andra koncer"
+#KONTO 1328 "Ackumulerade nedskrivningar av lÜngfrist"
+#KONTO 1330 "Andelar i intressefîretag, gemensamt sty"
+#KONTO 1331 "Andelar i intressefîretag"
+#KONTO 1332 "Ackumulerade nedskrivningar av andelar i"
+#KONTO 1333 "Andelar i gemensamt styrda fîretag"
+#KONTO 1334 "Ackumulerade nedskrivningar av andelar i"
+#KONTO 1336 "Andelar i îvriga fîretag som det finns e"
+#KONTO 1337 "Ackumulerade nedskrivningar av andelar i"
+#KONTO 1338 "Ackumulerade nedskrivningar av andelar i"
+#KONTO 1340 "LÜngfristiga fordringar hos intressefîre"
+#KONTO 1341 "LÜngfristiga fordringar hos intressefîre"
+#KONTO 1342 "Ackumulerade nedskrivningar av lÜngfrist"
+#KONTO 1343 "LÜngfristiga fordringar hos gemensamt st"
+#KONTO 1344 "Ackumulerade nedskrivningar av lÜngfrist"
+#KONTO 1346 "LÜngfristiga fordringar hos îvriga fîret"
+#KONTO 1347 "Ackumulerade nedskrivningar av lÜngfrist"
+#KONTO 1348 "Ackumulerade nedskrivningar av lÜngfrist"
+#KONTO 1350 "Andelar och vÑrdepapper i andra fîretag"
+#KONTO 1351 "Andelar i noterade fîretag"
+#KONTO 1352 "Andra andelar"
+#KONTO 1353 "Andelar i bostadsrÑttsfîreningar"
+#KONTO 1354 "Obligationer"
+#KONTO 1356 "Andelar i ekonomiska fîreningar, îvriga "
+#KONTO 1357 "Andelar i handelsbolag, andra fîretag"
+#KONTO 1358 "Ackumulerade nedskrivningar av andra and"
+#KONTO 1360 "LÜn till delÑgare eller nÑrstÜende enlig"
+#KONTO 1369 "Ackumulerade nedskrivningar av lÜn till "
+#KONTO 1380 "Andra lÜngfristiga fordringar"
+#KONTO 1381 "LÜngfristiga reversfordringar"
+#KONTO 1382 "LÜngfristiga fordringar hos anstÑllda"
+#KONTO 1383 "LÑmnade depositioner, lÜngfristiga"
+#KONTO 1384 "Derivat"
+#KONTO 1385 "VÑrde av kapitalfîrsÑkring"
+#KONTO 1386 "Fîrutbetalda leasingavgifter, lÜngfristi"
+#KONTO 1387 "LÜngfristiga kontraktsfordringar"
+#KONTO 1388 "LÜngfristiga kundfordringar"
+#KONTO 1389 "Ackumulerade nedskrivningar av andra lÜn"
+#KONTO 1400 "Lager reg nr A, B,C, D"
+#KONTO 1401 "Lager reg nr E, F, G, H"
+#KONTO 1402 "Lager reg nr I, J,K,L"
+#KONTO 1403 "Lager reg nr M, N, O, P"
+#KONTO 1404 "Lager reg nr Q, R, S, T"
+#KONTO 1405 "Lager reg nr U,V,W, X, Y, Z"
+#KONTO 1406 "Lager kîp av utlÑndska bilar"
+#KONTO 1407 "FîrsÑljning utlÑndska bilar"
+#KONTO 1410 "Lager av rÜvaror"
+#KONTO 1419 "FîrÑndring av lager av rÜvaror"
+#KONTO 1420 "Lager av tillsatsmaterial och fîrnîdenhe"
+#KONTO 1429 "FîrÑndring av lager av tillsatsmaterial "
+#KONTO 1440 "Produkter i arbete"
+#KONTO 1449 "FîrÑndring av produkter i arbete"
+#KONTO 1450 "Lager av fÑrdiga varor"
+#KONTO 1459 "FîrÑndring av lager av fÑrdiga varor"
+#KONTO 1460 "Lager av handelsvaror"
+#KONTO 1465 "Lager av varor VMB"
+#KONTO 1466 "Nedskrivning av varor VMB"
+#KONTO 1467 "Lager av varor VMB fîrenklad"
+#KONTO 1469 "FîrÑndring av lager av handelsvaror"
+#KONTO 1470 "PÜgÜende arbeten"
+#KONTO 1471 "PÜgÜende arbeten, nedlagda kostnader"
+#KONTO 1478 "PÜgÜende arbeten, fakturering"
+#KONTO 1479 "FîrÑndring av pÜgÜende arbeten"
+#KONTO 1480 "Fîrskott fîr varor och tjÑnster"
+#KONTO 1481 "Remburser"
+#KONTO 1489 "ôvriga fîrskott till leverantîrer"
+#KONTO 1490 "ôvriga lagertillgÜngar"
+#KONTO 1491 "Lager av vÑrdepapper"
+#KONTO 1492 "Lager av fastigheter"
+#KONTO 1493 "Djur som klassificeras som omsÑttningsti"
+#KONTO 1510 "Kundfordringar"
+#KONTO 1511 "Kundfordringar"
+#KONTO 1512 "BelÜnade kundfordringar (factoring)"
+#KONTO 1513 "Kundfordringar - delad faktura"
+#KONTO 1515 "OsÑkra kundfordringar"
+#KONTO 1516 "Tvistiga kundfordringar"
+#KONTO 1518 "Ej reskontrafîrda kundfordringar"
+#KONTO 1519 "Nedskrivning av kundfordringar"
+#KONTO 1520 "VÑxelfordringar"
+#KONTO 1525 "OsÑkra vÑxelfordringar"
+#KONTO 1529 "Nedskrivning av vÑxelfordringar"
+#KONTO 1530 "Kontraktsfordringar"
+#KONTO 1531 "Kontraktsfordringar"
+#KONTO 1532 "BelÜnade kontraktsfordringar"
+#KONTO 1536 "Tvistiga kontraktsfordringar"
+#KONTO 1539 "Nedskrivning av kontraktsfordringar"
+#KONTO 1550 "Konsignationsfordringar"
+#KONTO 1560 "Kundfordringar hos koncernfîretag"
+#KONTO 1561 "Kundfordringar hos moderfîretag"
+#KONTO 1562 "Kundfordringar hos dotterfîretag"
+#KONTO 1563 "Kundfordringar hos andra koncernfîretag"
+#KONTO 1568 "Ej reskontrafîrda kundfordringar hos kon"
+#KONTO 1569 "Nedskrivning av kundfordringar hos konce"
+#KONTO 1570 "Kundfordringar hos intressefîretag, geme"
+#KONTO 1571 "Kundfordringar hos intressefîretag"
+#KONTO 1572 "Kundfordringar hos gemensamt styrda fîre"
+#KONTO 1573 "Kundfordringar hos îvriga fîretag som de"
+#KONTO 1580 "Fordringar fîr kontokort och kuponger"
+#KONTO 1582 "Saknas vid import"
+#KONTO 1583 "Saknas vid import"
+#KONTO 1610 "Kortfristiga fordringar hos anstÑllda"
+#KONTO 1611 "Resefîrskott"
+#KONTO 1612 "Kassafîrskott"
+#KONTO 1613 "ôvriga fîrskott"
+#KONTO 1614 "TillfÑlliga lÜn till anstÑllda"
+#KONTO 1619 "ôvriga fordringar hos anstÑllda"
+#KONTO 1620 "Upparbetad men ej fakturerad intÑkt"
+#KONTO 1630 "AvrÑkning fîr skatter och avgifter (skat"
+#KONTO 1640 "Skattefordringar"
+#KONTO 1650 "Momsfordran"
+#KONTO 1660 "Kortfristiga fordringar hos koncernfîret"
+#KONTO 1661 "Kortfristiga fordringar hos moderfîretag"
+#KONTO 1662 "Kortfristiga fordringar hos dotterfîreta"
+#KONTO 1663 "Kortfristiga fordringar hos andra koncer"
+#KONTO 1670 "Kortfristiga fordringar hos intressefîre"
+#KONTO 1671 "Kortfristiga fordringar hos intressefîre"
+#KONTO 1672 "Kortfristiga fordringar hos gemensamt st"
+#KONTO 1673 "Kortfristiga fordringar hos îvriga fîret"
+#KONTO 1680 "Andra kortfristiga fordringar"
+#KONTO 1681 "UtlÑgg fîr kunder"
+#KONTO 1682 "Kortfristiga lÜnefordringar"
+#KONTO 1683 "Derivat"
+#KONTO 1684 "Kortfristiga fordringar hos leverantîrer"
+#KONTO 1685 "Kortfristiga fordringar hos delÑgare ell"
+#KONTO 1687 "Kortfristig del av lÜngfristiga fordring"
+#KONTO 1688 "Fordran arbetsmarknadsfîrsÑkringar"
+#KONTO 1689 "ôvriga kortfristiga fordringar"
+#KONTO 1690 "Fordringar fîr tecknat men ej inbetalt a"
+#KONTO 1710 "Fîrutbetalda hyreskostnader"
+#KONTO 1720 "Fîrutbetalda leasingavgifter, kortfristi"
+#KONTO 1730 "Fîrutbetalda fîrsÑkringspremier"
+#KONTO 1740 "Fîrutbetalda rÑntekostnader"
+#KONTO 1750 "Upplupna hyresintÑkter"
+#KONTO 1760 "Upplupna rÑnteintÑkter"
+#KONTO 1770 "TillgÜngar av kostnadsnatur"
+#KONTO 1780 "Upplupna avtalsintÑkter"
+#KONTO 1790 "ôvriga fîrutbetalda kostnader och upplup"
+#KONTO 1810 "Andelar i bîrsnoterade fîretag"
+#KONTO 1820 "Obligationer"
+#KONTO 1830 "Konvertibla skuldebrev"
+#KONTO 1860 "Andelar i koncernfîretag"
+#KONTO 1869 "Nedskrivning av andelar i koncernfîretag"
+#KONTO 1880 "Andra kortfristiga placeringar"
+#KONTO 1886 "Derivat"
+#KONTO 1889 "Andelar i îvriga fîretag"
+#KONTO 1890 "Nedskrivning av kortfristiga placeringar"
+#KONTO 1900 "Observationskonto"
+#KONTO 1910 "Kassa"
+#KONTO 1911 "Huvudkassa"
+#KONTO 1912 "Kassa 2"
+#KONTO 1913 "Kassa 3"
+#KONTO 1914 "Saknas vid import"
+#KONTO 1920 "PlusGiro"
+#KONTO 1921 "TEST"
+#KONTO 1930 "Fîretagskonto/checkkonto/affÑrskonto"
+#KONTO 1939 "Depositionskonto"
+#KONTO 1940 "ôvriga bankkonton"
+#KONTO 1950 "Bankcertifikat"
+#KONTO 1960 "Koncernkonto moderfîretag"
+#KONTO 1970 "SÑrskilda bankkonton"
+#KONTO 1972 "Upphovsmannakonto"
+#KONTO 1973 "Skogskonto"
+#KONTO 1974 "SpÑrrade bankmedel"
+#KONTO 1979 "ôvriga sÑrskilda bankkonton"
+#KONTO 1980 "Valutakonton"
+#KONTO 1990 "Redovisningsmedel"
+#KONTO 2010 "Eget kapital, delÑgare 1"
+#KONTO 2011 "Egna varuuttag"
+#KONTO 2013 "ôvriga egna uttag"
+#KONTO 2017 "èrets kapitaltillskott"
+#KONTO 2018 "ôvriga egna insÑttningar"
+#KONTO 2019 "èrets resultat, delÑgare 1"
+#KONTO 2020 "Eget kapital, delÑgare 2"
+#KONTO 2030 "Eget kapital, delÑgare 3"
+#KONTO 2040 "Eget kapital, delÑgare 4"
+#KONTO 2050 "AvsÑttning till expansionsfond"
+#KONTO 2060 "Eget kapital i ideella fîreningar, stift"
+#KONTO 2061 "Eget kapital/stiftelsekapital/grundkapit"
+#KONTO 2065 "FîrÑndring i fond fîr verkligt vÑrde"
+#KONTO 2066 "VÑrdesÑkringsfond"
+#KONTO 2067 "Balanserad vinst eller fîrlust/balansera"
+#KONTO 2068 "Vinst eller fîrlust frÜn fîregÜende Ür"
+#KONTO 2069 "èrets resultat"
+#KONTO 2070 "éndamÜlsbestÑmda medel"
+#KONTO 2071 "éndamÜl 1"
+#KONTO 2072 "éndamÜl 2"
+#KONTO 2080 "Bundet eget kapital"
+#KONTO 2081 "Aktiekapital"
+#KONTO 2082 "Ej registrerat aktiekapital"
+#KONTO 2083 "Medlemsinsatser"
+#KONTO 2084 "Fîrlagsinsatser"
+#KONTO 2085 "Uppskrivningsfond"
+#KONTO 2086 "Reservfond"
+#KONTO 2087 "Insatsemission"
+#KONTO 2088 "Fond fîr yttre underhÜll"
+#KONTO 2089 "Fond fîr utvecklingsutgifter"
+#KONTO 2090 "Fritt eget kapital"
+#KONTO 2091 "Balanserad vinst eller fîrlust"
+#KONTO 2092 "Mottagna/lÑmnade koncernbidrag"
+#KONTO 2093 "ErhÜllna aktieÑgartillskott"
+#KONTO 2094 "Egna aktier"
+#KONTO 2095 "Fusionsresultat"
+#KONTO 2097 "ôverkursfond"
+#KONTO 2098 "Vinst eller fîrlust frÜn fîregÜende Ür"
+#KONTO 2099 "èrets resultat"
+#KONTO 2110 "Periodiseringsfond vid 2010 Ürs taxering"
+#KONTO 2111 "Periodiseringsfond vid 2011 Ürs taxering"
+#KONTO 2112 "Periodiseringsfond vid 2012 Ürs taxering"
+#KONTO 2113 "Periodiseringsfond vid 2013 Ürs taxering"
+#KONTO 2120 "Periodiseringsfonder"
+#KONTO 2121 "Periodiseringsfond 2021"
+#KONTO 2122 "Periodiseringsfond 2022"
+#KONTO 2123 "Periodiseringsfond 2013"
+#KONTO 2124 "Periodiseringsfond 2014"
+#KONTO 2125 "Periodiseringsfond 2015"
+#KONTO 2126 "Periodiseringsfond 2016"
+#KONTO 2127 "Periodiseringsfond 2017"
+#KONTO 2128 "Periodiseringsfond 2018"
+#KONTO 2129 "Periodiseringsfond 2019"
+#KONTO 2130 "Periodiseringsfond 2020 - nr 2"
+#KONTO 2131 "Periodiseringsfond 2021 - nr 2"
+#KONTO 2132 "Periodiseringsfond 2022 - nr 2"
+#KONTO 2133 "Periodiseringsfond 2023 - nr 2"
+#KONTO 2134 "Periodiseringsfond 2024 - nr 2"
+#KONTO 2135 "Periodiseringsfond 2015 - nr 2"
+#KONTO 2136 "Periodiseringsfond 2016 - nr 2"
+#KONTO 2137 "Periodiseringsfond 2017 - nr 2"
+#KONTO 2138 "Periodiseringsfond 2018 - nr 2"
+#KONTO 2139 "Periodiseringsfond 2019 - nr 2"
+#KONTO 2150 "Ackumulerade îveravskrivningar"
+#KONTO 2151 "Ackumulerade îveravskrivningar pÜ immate"
+#KONTO 2152 "Ackumulerade îveravskrivningar pÜ byggna"
+#KONTO 2153 "Ackumulerade îveravskrivningar pÜ maskin"
+#KONTO 2160 "ErsÑttningsfond"
+#KONTO 2161 "ErsÑttningsfond maskiner och inventarier"
+#KONTO 2162 "ErsÑttningsfond byggnader och markanlÑgg"
+#KONTO 2163 "ErsÑttningsfond mark"
+#KONTO 2164 "ErsÑttningsfond fîr djurlager i jordbruk"
+#KONTO 2190 "ôvriga obeskattade reserver"
+#KONTO 2196 "Lagerreserv"
+#KONTO 2199 "ôvriga obeskattade reserver"
+#KONTO 2210 "AvsÑttningar fîr pensioner enligt trygga"
+#KONTO 2220 "AvsÑttningar fîr garantier"
+#KONTO 2230 "ôvriga avsÑttningar fîr pensioner och li"
+#KONTO 2250 "ôvriga avsÑttningar fîr skatter"
+#KONTO 2252 "AvsÑttningar fîr tvistiga skatter"
+#KONTO 2253 "AvsÑttningar sÑrskild lîneskatt, deklara"
+#KONTO 2290 "ôvriga avsÑttningar"
+#KONTO 2310 "Obligations- och fîrlagslÜn"
+#KONTO 2320 "Konvertibla lÜn och liknande"
+#KONTO 2321 "Konvertibla lÜn"
+#KONTO 2322 "LÜn fîrenade med optionsrÑtt"
+#KONTO 2323 "VinstandelslÜn"
+#KONTO 2324 "KapitalandelslÜn"
+#KONTO 2330 "CheckrÑkningskredit"
+#KONTO 2331 "CheckrÑkningskredit 1"
+#KONTO 2332 "CheckrÑkningskredit 2"
+#KONTO 2335 "Beviljad checkrÑkningskredit 1"
+#KONTO 2336 "Beviljad checkrÑkningskredit 2"
+#KONTO 2340 "Byggnadskreditiv"
+#KONTO 2350 "Andra lÜngfristiga skulder till kreditin"
+#KONTO 2351 "FastighetslÜn, lÜngfristig del"
+#KONTO 2355 "LÜngfristiga lÜn i utlÑndsk valuta frÜn"
+#KONTO 2359 "ôvriga lÜngfristiga lÜn frÜn kreditinsti"
+#KONTO 2360 "LÜngfristiga skulder till koncernfîretag"
+#KONTO 2361 "LÜngfristiga skulder till moderfîretag"
+#KONTO 2362 "LÜngfristiga skulder till dotterfîretag"
+#KONTO 2363 "LÜngfristiga skulder till andra koncernf"
+#KONTO 2370 "LÜngfristiga skulder till intressefîreta"
+#KONTO 2371 "LÜngfristiga skulder till intressefîreta"
+#KONTO 2372 "LÜngfristiga skulder till gemensamt styr"
+#KONTO 2373 "LÜngfristiga skulder till îvriga fîretag"
+#KONTO 2390 "ôvriga lÜngfristiga skulder"
+#KONTO 2391 "Avbetalningskontrakt, lÜngfristig del"
+#KONTO 2392 "Villkorliga lÜngfristiga skulder"
+#KONTO 2393 "LÜn frÜn nÑrstÜende personer, lÜngfristi"
+#KONTO 2394 "LÜngfristiga leverantîrskrediter"
+#KONTO 2395 "Andra lÜngfristiga lÜn i utlÑndsk valuta"
+#KONTO 2396 "Derivat"
+#KONTO 2397 "Mottagna depositioner, lÜngfristiga"
+#KONTO 2399 "ôvriga lÜngfristiga skulder"
+#KONTO 2410 "Andra kortfristiga lÜneskulder till kred"
+#KONTO 2411 "Kortfristiga lÜn frÜn kreditinstitut"
+#KONTO 2417 "Kortfristig del av lÜngfristiga skulder "
+#KONTO 2419 "ôvriga kortfristiga skulder till krediti"
+#KONTO 2420 "Fîrskott frÜn kunder"
+#KONTO 2421 "Ej inlîsta presentkort"
+#KONTO 2424 "Saknas vid import"
+#KONTO 2427 "Saknas vid import"
+#KONTO 2429 "ôvriga fîrskott frÜn kunder"
+#KONTO 2430 "PÜgÜende arbeten"
+#KONTO 2431 "PÜgÜende arbeten, fakturering"
+#KONTO 2438 "PÜgÜende arbeten, nedlagda kostnader"
+#KONTO 2439 "BerÑknad fîrÑndring av pÜgÜende arbeten"
+#KONTO 2440 "Leverantîrsskulder"
+#KONTO 2441 "Leverantîrsskulder"
+#KONTO 2443 "Konsignationsskulder"
+#KONTO 2445 "Tvistiga leverantîrsskulder"
+#KONTO 2448 "Ej reskontrafîrda leverantîrsskulder"
+#KONTO 2450 "Fakturerad men ej upparbetad intÑkt"
+#KONTO 2460 "Leverantîrsskulder till koncernfîretag"
+#KONTO 2461 "Leverantîrsskulder till moderfîretag"
+#KONTO 2462 "Leverantîrsskulder till dotterfîretag"
+#KONTO 2463 "Leverantîrsskulder till andra koncernfîr"
+#KONTO 2470 "Leverantîrsskulder till intressefîretag,"
+#KONTO 2471 "Leverantîrsskulder till intressefîretag"
+#KONTO 2472 "Leverantîrsskulder till gemensamt styrda"
+#KONTO 2473 "Leverantîrsskulder till îvriga fîretag s"
+#KONTO 2480 "CheckrÑkningskredit, kortfristig"
+#KONTO 2490 "ôvriga kortfristiga skulder till krediti"
+#KONTO 2491 "AvrÑkning spelarrangîrer"
+#KONTO 2492 "VÑxelskulder"
+#KONTO 2499 "Andra îvriga kortfristiga skulder"
+#KONTO 2510 "BerÑknad inkomstskatt"
+#KONTO 2512 "BerÑknad inkomstskatt"
+#KONTO 2513 "BerÑknad fastighetsskatt/fastighetsavgif"
+#KONTO 2514 "BerÑknad sÑrskild lîneskatt pÜ pensionsk"
+#KONTO 2515 "BerÑknad avkastningsskatt"
+#KONTO 2516 "Moms"
+#KONTO 2517 "BerÑknad utlÑndsk skatt"
+#KONTO 2518 "Betald F-skatt"
+#KONTO 2610 "UtgÜende moms, 25 %"
+#KONTO 2611 "UtgÜende moms pÜ fîrsÑljning inom Sverig"
+#KONTO 2612 "UtgÜende moms pÜ egna uttag, 25 %"
+#KONTO 2613 "UtgÜende moms fîr uthyrning, 25 %"
+#KONTO 2614 "UtgÜende moms omvÑnd skattskyldighet, 25"
+#KONTO 2615 "UtgÜende moms import av varor, 25 %"
+#KONTO 2616 "UtgÜende moms VMB 25ˇ%"
+#KONTO 2618 "Vilande utgÜende moms, 25 %"
+#KONTO 2620 "UtgÜende moms, 12 %"
+#KONTO 2621 "UtgÜende moms pÜ fîrsÑljning inom Sverig"
+#KONTO 2622 "UtgÜende moms pÜ egna uttag, 12 %"
+#KONTO 2623 "UtgÜende moms fîr uthyrning, 12 %"
+#KONTO 2624 "UtgÜende moms omvÑnd skattskyldighet, 12"
+#KONTO 2625 "UtgÜende moms import av varor, 12 %"
+#KONTO 2626 "UtgÜende moms VMB 12ˇ%"
+#KONTO 2628 "Vilande utgÜende moms, 12 %"
+#KONTO 2630 "UtgÜende moms, 6 %"
+#KONTO 2631 "UtgÜende moms pÜ fîrsÑljning inom Sverig"
+#KONTO 2632 "UtgÜende moms pÜ egna uttag, 6 %"
+#KONTO 2633 "UtgÜende moms fîr uthyrning, 6 %"
+#KONTO 2634 "UtgÜende moms omvÑnd skattskyldighet, 6 "
+#KONTO 2635 "UtgÜende moms import av varor, 6 %"
+#KONTO 2636 "UtgÜende moms VMB 6ˇ%"
+#KONTO 2638 "Vilande utgÜende moms, 6 %"
+#KONTO 2640 "IngÜende moms"
+#KONTO 2641 "Debiterad ingÜende moms"
+#KONTO 2642 "Debiterad ingÜende moms i anslutning til"
+#KONTO 2644 "IngÜende moms omvÑnd skattskyldighet"
+#KONTO 2645 "BerÑknad ingÜende moms pÜ fîrvÑrv frÜn u"
+#KONTO 2646 "IngÜende moms pÜ uthyrning"
+#KONTO 2647 "IngÜende moms omvÑnd skattskyldighet var"
+#KONTO 2648 "Vilande ingÜende moms"
+#KONTO 2649 "IngÜende moms, blandad verksamhet"
+#KONTO 2650 "Redovisningskonto fîr moms"
+#KONTO 2660 "SÑrskilda punktskatter"
+#KONTO 2661 "Reklamskatt"
+#KONTO 2669 "ôvriga punktskatter"
+#KONTO 2710 "Personalskatt"
+#KONTO 2730 "Lagstadgade sociala avgifter och sÑrskil"
+#KONTO 2731 "AvrÑkning lagstadgade sociala avgifter"
+#KONTO 2732 "AvrÑkning sÑrskild lîneskatt"
+#KONTO 2740 "Avtalade sociala avgifter"
+#KONTO 2750 "UtmÑtning i lîn m.m."
+#KONTO 2760 "Semestermedel"
+#KONTO 2761 "AvrÑkning semesterlîner"
+#KONTO 2762 "Semesterlînekassa"
+#KONTO 2790 "ôvriga lîneavdrag"
+#KONTO 2791 "Personalens intressekonto"
+#KONTO 2792 "Lînsparande"
+#KONTO 2793 "GruppfîrsÑkringspremier"
+#KONTO 2794 "Fackfîreningsavgifter"
+#KONTO 2795 "MÑtnings- och granskningsarvoden"
+#KONTO 2799 "ôvriga lîneavdrag"
+#KONTO 2810 "AvrÑkning fîr factoring och belÜnade kon"
+#KONTO 2811 "AvrÑkning fîr factoring"
+#KONTO 2812 "AvrÑkning fîr belÜnade kontraktsfordring"
+#KONTO 2820 "Kortfristiga skulder till anstÑllda"
+#KONTO 2821 "Lîneskulder"
+#KONTO 2822 "ReserÑkningar"
+#KONTO 2823 "Tantiem, gratifikationer"
+#KONTO 2829 "ôvriga kortfristiga skulder till anstÑll"
+#KONTO 2830 "AvrÑkning fîr annans rÑkning"
+#KONTO 2840 "Kortfristiga lÜneskulder, Omar Al-Obaidi"
+#KONTO 2841 "Kortfristig skulder, Mustafa"
+#KONTO 2849 "ôvriga kortfristiga lÜneskulder"
+#KONTO 2850 "AvrÑkning fîr skatter och avgifter (skat"
+#KONTO 2852 "AnstÜndsbelopp, moms, AG, personalskatt"
+#KONTO 2860 "Kortfristiga skulder till koncernfîretag"
+#KONTO 2861 "Kortfristiga skulder till moderfîretag"
+#KONTO 2862 "Kortfristiga skulder till dotterfîretag"
+#KONTO 2863 "Kortfristiga skulder till andra koncernf"
+#KONTO 2870 "Kortfristiga skulder till intressefîreta"
+#KONTO 2871 "Kortfristiga skulder till intressefîreta"
+#KONTO 2872 "Kortfristiga skulder till gemensamt styr"
+#KONTO 2873 "Kortfristiga skulder till îvriga fîretag"
+#KONTO 2880 "Skuld erhÜllna bidrag"
+#KONTO 2890 "ôvriga kortfristiga skulder"
+#KONTO 2891 "Skuld EF"
+#KONTO 2892 "Skuld Svea Ekonomi"
+#KONTO 2893 "Skulder till nÑrstÜende personer, kortfr"
+#KONTO 2894 "Handlarfinans"
+#KONTO 2895 "Derivat (kortfristiga skulder)"
+#KONTO 2897 "Mottagna depositioner, kortfristiga"
+#KONTO 2898 "Outtagen vinstutdelning"
+#KONTO 2899 "ôvriga kortfristiga skulder"
+#KONTO 2910 "Upplupna lîner"
+#KONTO 2911 "Lîneskulder"
+#KONTO 2912 "Ackordsîverskott"
+#KONTO 2919 "ôvriga upplupna lîner"
+#KONTO 2920 "Upplupna semesterlîner"
+#KONTO 2930 "Upplupna pensionskostnader"
+#KONTO 2931 "Upplupna pensionsutbetalningar"
+#KONTO 2940 "Upplupna lagstadgade sociala och andra a"
+#KONTO 2941 "BerÑknade upplupna lagstadgade sociala a"
+#KONTO 2942 "BerÑknad upplupen sÑrskild lîneskatt"
+#KONTO 2943 "BerÑknad upplupen sÑrskild lîneskatt pÜ "
+#KONTO 2944 "BerÑknad upplupen avkastningsskatt pÜ pe"
+#KONTO 2950 "Upplupna avtalade sociala avgifter"
+#KONTO 2951 "Upplupna avtalade arbetsmarknadsfîrsÑkri"
+#KONTO 2959 "Upplupna avtalade pensionsfîrsÑkringsavg"
+#KONTO 2960 "Upplupna rÑntekostnader"
+#KONTO 2970 "Fîrutbetalda intÑkter"
+#KONTO 2971 "Fîrutbetalda hyresintÑkter"
+#KONTO 2972 "Fîrutbetalda medlemsavgifter"
+#KONTO 2979 "ôvriga fîrutbetalda intÑkter"
+#KONTO 2980 "Upplupna avtalskostnader"
+#KONTO 2990 "ôvriga upplupna kostnader och fîrutbetal"
+#KONTO 2991 "BerÑknat arvode fîr bokslut"
+#KONTO 2992 "BerÑknat arvode fîr revision"
+#KONTO 2993 "Ospecificerad skuld till leverantîrer"
+#KONTO 2998 "ôvriga upplupna kostnader och fîrutbetal"
+#KONTO 2999 "OBS-konto"
+#KONTO 3000 "FîrsÑljning inom Sverige"
+#KONTO 3001 "FîrsÑljning inom Sverige, 25 % moms"
+#KONTO 3002 "FîrsÑljning inom Sverige, 12 % moms"
+#KONTO 3003 "FîrsÑljning inom Sverige, 6 % moms"
+#KONTO 3004 "FîrsÑljning inom Sverige, momsfri"
+#KONTO 3005 "Saknas vid import"
+#KONTO 3010 "Fîrmedlingsprovisioner"
+#KONTO 3011 "Provision Santander"
+#KONTO 3012 "Vidarefakturerade kostnader"
+#KONTO 3013 "Provision Santander, ej momspliktig"
+#KONTO 3100 "FîrsÑljning av varor utanfîr Sverige"
+#KONTO 3105 "FîrsÑljning varor till land utanfîr EU"
+#KONTO 3106 "FîrsÑljning varor till annat EU-land, mo"
+#KONTO 3108 "FîrsÑljning varor till annat EU-land, mo"
+#KONTO 3110 "FîrsÑljning handelsvaror"
+#KONTO 3180 "Reduktion f.pris handelsvaror"
+#KONTO 3181 "LÑmnade kassarab handelsvaror"
+#KONTO 3200 "FîrsÑljning VMB och omvÑnd moms"
+#KONTO 3211 "FîrsÑljning positiv VMB 25 %"
+#KONTO 3212 "FîrsÑljning negativ VMB 25 %"
+#KONTO 3231 "FîrsÑljning inom byggsektorn, omvÑnd ska"
+#KONTO 3300 "FîrsÑljning av tjÑnster utanfîr Sverige"
+#KONTO 3305 "FîrsÑljning tjÑnster till land utanfîr E"
+#KONTO 3308 "FîrsÑljning tjÑnster till annat EU-land"
+#KONTO 3400 "FîrsÑljning, egna uttag"
+#KONTO 3401 "Egna uttag momspliktiga, 25 %"
+#KONTO 3402 "Egna uttag momspliktiga, 12 %"
+#KONTO 3403 "Egna uttag momspliktiga, 6 %"
+#KONTO 3404 "Egna uttag, momsfria"
+#KONTO 3408 "Pos vinstmarginal, omf.konto"
+#KONTO 3411 "Pos vinstmarginal, moms 25%"
+#KONTO 3500 "Fakturerade kostnader (gruppkonto)"
+#KONTO 3510 "Fakturerat emballage"
+#KONTO 3511 "Fakturerat emballage"
+#KONTO 3518 "Returnerat emballage"
+#KONTO 3520 "Fakturerade frakter"
+#KONTO 3521 "Fakturerade frakter, EU-land"
+#KONTO 3522 "Fakturerade frakter, export"
+#KONTO 3530 "Fakturerade tull- och speditionskostnade"
+#KONTO 3540 "Faktureringsavgifter"
+#KONTO 3541 "Faktureringsavgifter, EU-land"
+#KONTO 3542 "Faktureringsavgifter, export"
+#KONTO 3550 "Fakturerade resekostnader"
+#KONTO 3560 "Fakturerade kostnader till koncernfîreta"
+#KONTO 3561 "Fakturerade kostnader till moderfîretag"
+#KONTO 3562 "Fakturerade kostnader till dotterfîretag"
+#KONTO 3563 "Fakturerade kostnader till andra koncern"
+#KONTO 3570 "Fakturerade kostnader till intressefîret"
+#KONTO 3590 "ôvriga fakturerade kostnader"
+#KONTO 3600 "Rîrelsens sidointÑkter (gruppkonto)"
+#KONTO 3610 "FîrsÑljning av material"
+#KONTO 3611 "FîrsÑljning av rÜmaterial"
+#KONTO 3612 "FîrsÑljning av skrot"
+#KONTO 3613 "FîrsÑljning av fîrbrukningsmaterial"
+#KONTO 3619 "FîrsÑljning av îvrigt material"
+#KONTO 3620 "TillfÑllig uthyrning av personal"
+#KONTO 3630 "TillfÑllig uthyrning av transportmedel"
+#KONTO 3670 "IntÑkter frÜn vÑrdepapper"
+#KONTO 3671 "FîrsÑljning av vÑrdepapper"
+#KONTO 3672 "Utdelning frÜn vÑrdepapper"
+#KONTO 3679 "ôvriga intÑkter frÜn vÑrdepapper"
+#KONTO 3680 "Management fees"
+#KONTO 3690 "ôvriga sidointÑkter"
+#KONTO 3700 "IntÑktskorrigeringar (gruppkonto)"
+#KONTO 3710 "Ofîrdelade intÑktsreduktioner"
+#KONTO 3730 "LÑmnade rabatter"
+#KONTO 3731 "LÑmnade kassarabatter"
+#KONTO 3732 "LÑmnade mÑngdrabatter"
+#KONTO 3740 "ôres- och kronutjÑmning"
+#KONTO 3750 "Punktskatter"
+#KONTO 3751 "IntÑktsfîrda punktskatter (kreditkonto)"
+#KONTO 3752 "Skuldfîrda punktskatter (debetkonto)"
+#KONTO 3790 "ôvriga intÑktskorrigeringar"
+#KONTO 3800 "Aktiverat arbete fîr egen rÑkning (grupp"
+#KONTO 3840 "Aktiverat arbete (material)"
+#KONTO 3850 "Aktiverat arbete (omkostnader)"
+#KONTO 3870 "Aktiverat arbete (personal)"
+#KONTO 3900 "ôvriga rîrelseintÑkter (gruppkonto)"
+#KONTO 3910 "Hyres- och arrendeintÑkter"
+#KONTO 3911 "HyresintÑkter"
+#KONTO 3912 "ArrendeintÑkter"
+#KONTO 3913 "Frivilligt momspliktiga hyresintÑkter"
+#KONTO 3914 "ôvriga momspliktiga hyresintÑkter"
+#KONTO 3920 "ProvisionsintÑkter, licensintÑkter och r"
+#KONTO 3921 "ProvisionsintÑkter"
+#KONTO 3922 "LicensintÑkter och royalties"
+#KONTO 3925 "FranchiseintÑkter"
+#KONTO 3940 "Orealiserade negativa/positiva vÑrdefîrÑ"
+#KONTO 3950 "ètervunna, tidigare avskrivna kundfordri"
+#KONTO 3960 "Valutakursvinster pÜ fordringar och skul"
+#KONTO 3970 "Vinst vid avyttring av immateriella och "
+#KONTO 3971 "Vinst vid avyttring av immateriella anlÑ"
+#KONTO 3972 "Vinst vid avyttring av byggnader och mar"
+#KONTO 3973 "Vinst vid avyttring av maskiner och inve"
+#KONTO 3980 "ErhÜllna offentliga stîd m.m."
+#KONTO 3981 "ErhÜllna EU-bidrag"
+#KONTO 3985 "ErhÜllna statliga bidrag"
+#KONTO 3987 "ErhÜllna kommunala bidrag"
+#KONTO 3988 "ErhÜllna bidrag och ersÑttningar fîr per"
+#KONTO 3989 "ôvriga erhÜllna bidrag"
+#KONTO 3990 "ôvriga ersÑttningar och intÑkter"
+#KONTO 3991 "KonfliktersÑttning"
+#KONTO 3992 "ErhÜllna skadestÜnd"
+#KONTO 3993 "ErhÜllna donationer och gÜvor"
+#KONTO 3994 "FîrsÑkringsersÑttningar"
+#KONTO 3995 "ErhÜllet ackord pÜ skulder av rîrelsekar"
+#KONTO 3996 "ErhÜllna reklambidrag"
+#KONTO 3997 "SjuklîneersÑttning"
+#KONTO 3998 "Sjukpenning"
+#KONTO 3999 "ôvriga rîrelseintÑkter"
+#KONTO 4000 "Inkîp av varor frÜn Sverige"
+#KONTO 4009 "Inkîp av bilar"
+#KONTO 4010 "Inkîp av reservdelar"
+#KONTO 4011 "BilfîrsÑkringar"
+#KONTO 4013 "Drivmedel"
+#KONTO 4014 "UnderhÜll bilar"
+#KONTO 4015 "Bilbesiktning"
+#KONTO 4016 "TrÑngselskatt, vÑgavgift"
+#KONTO 4017 "Reperationer"
+#KONTO 4018 "Hyrbilskostnader/Transportkostnader"
+#KONTO 4019 "ôvriga bilkostnader"
+#KONTO 4020 "Garantier"
+#KONTO 4021 "Garantier, avdrag"
+#KONTO 4022 "Transportstyrelsen, avstÑllning"
+#KONTO 4110 "Inkîp handelsvaror,Sv"
+#KONTO 4151 "Inkîp handelsvaror, utanfîr EU"
+#KONTO 4155 "Trepartsfîrv, handelsvaror, EU"
+#KONTO 4156 "Inkîp handelsvaror, EU, ored"
+#KONTO 4157 "Inkîp handelsvaror, EU, red1"
+#KONTO 4158 "Inkîp handelsvaror, EU momsfri"
+#KONTO 4190 "FîrÑndring handelsvaror"
+#KONTO 4200 "SÜlda varor VMB"
+#KONTO 4211 "SÜlda varor positiv VMB 25 %"
+#KONTO 4212 "SÜlda varor negativ VMB 25 %"
+#KONTO 4400 "Momspliktiga inkîp i Sverige"
+#KONTO 4415 "Inkîpta varor i Sverige, omvÑnd skattsky"
+#KONTO 4416 "Inkîpta varor i Sverige, omvÑnd skattsky"
+#KONTO 4417 "Inkîpta varor i Sverige, omvÑnd skattsky"
+#KONTO 4425 "Inkîpta tjÑnster i Sverige, omvÑnd skatt"
+#KONTO 4426 "Inkîpta tjÑnster i Sverige, omvÑnd skatt"
+#KONTO 4427 "Inkîpta tjÑnster i Sverige, omvÑnd skatt"
+#KONTO 4500 "ôvriga momspliktiga inkîp"
+#KONTO 4515 "Inkîp av varor frÜn annat EU-land, 25 %"
+#KONTO 4516 "Inkîp av varor frÜn annat EU-land, 12 %"
+#KONTO 4517 "Inkîp av varor frÜn annat EU-land, 6 %"
+#KONTO 4518 "Inkîp av varor frÜn annat EU-land, momsf"
+#KONTO 4531 "Inkîp av tjÑnster frÜn ett land utanfîr "
+#KONTO 4532 "Inkîp av tjÑnster frÜn ett land utanfîr "
+#KONTO 4533 "Inkîp av tjÑnster frÜn ett land utanfîr "
+#KONTO 4535 "Inkîp av tjÑnster frÜn annat EU-land, 25"
+#KONTO 4536 "Inkîp av tjÑnster frÜn annat EU-land, 12"
+#KONTO 4537 "Inkîp av tjÑnster frÜn annat EU-land, 6 "
+#KONTO 4538 "Inkîp av tjÑnster frÜn annat EU-land, mo"
+#KONTO 4545 "Import av varor, 25 % moms"
+#KONTO 4546 "Import av varor, 12 % moms"
+#KONTO 4547 "Import av varor, 6 % moms"
+#KONTO 4600 "Legoarbeten och underentreprenader (grup"
+#KONTO 4610 "Reparation/underh salufordon"
+#KONTO 4612 "ôvr kostn fîr salufordon"
+#KONTO 4619 "Hemtagningskostnader fordon"
+#KONTO 4700 "Reduktion av inkîpspriser (gruppkonto)"
+#KONTO 4730 "ErhÜllna rabatter"
+#KONTO 4731 "ErhÜllna kassarabatter"
+#KONTO 4732 "ErhÜllna mÑngdrabatter (inkl. bonus)"
+#KONTO 4733 "ErhÜllet aktivitetsstîd"
+#KONTO 4790 "ôvriga reduktioner av inkîpspriser"
+#KONTO 4900 "FîrÑndring av lager (gruppkonto)"
+#KONTO 4910 "FîrÑndring av lager av rÜvaror"
+#KONTO 4920 "FîrÑndring av lager av tillsatsmaterial "
+#KONTO 4940 "FîrÑndring av produkter i arbete"
+#KONTO 4944 "FîrÑndring av produkter i arbete, materi"
+#KONTO 4945 "FîrÑndring av produkter i arbete, omkost"
+#KONTO 4947 "FîrÑndring av produkter i arbete, person"
+#KONTO 4950 "FîrÑndring av lager av fÑrdiga varor"
+#KONTO 4960 "FîrÑndring av lager av handelsvaror"
+#KONTO 4970 "FîrÑndring av pÜgÜende arbeten, nedlagda"
+#KONTO 4974 "FîrÑndring av pÜgÜende arbeten, material"
+#KONTO 4975 "FîrÑndring av pÜgÜende arbeten, omkostna"
+#KONTO 4977 "FîrÑndring av pÜgÜende arbeten, personal"
+#KONTO 4980 "FîrÑndring av lager av vÑrdepapper"
+#KONTO 4981 "SÜlda vÑrdepappers anskaffningsvÑrde"
+#KONTO 4987 "Nedskrivning av vÑrdepapper"
+#KONTO 4988 "èterfîring av nedskrivning av vÑrdepappe"
+#KONTO 5000 "Lokalkostnader (gruppkonto)"
+#KONTO 5010 "Lokalhyra"
+#KONTO 5011 "Hyra fîr kontorslokaler"
+#KONTO 5012 "Hyra fîr garage"
+#KONTO 5013 "Hyra fîr lagerlokaler"
+#KONTO 5020 "El fîr belysning"
+#KONTO 5030 "VÑrme"
+#KONTO 5040 "Vatten och avlopp"
+#KONTO 5050 "Lokaltillbehîr"
+#KONTO 5060 "StÑdning och renhÜllning"
+#KONTO 5061 "StÑdning"
+#KONTO 5062 "SophÑmtning"
+#KONTO 5063 "Hyra fîr sopcontainer"
+#KONTO 5064 "Snîrîjning"
+#KONTO 5065 "TrÑdgÜrdsskîtsel"
+#KONTO 5070 "Reparation och underhÜll av lokaler"
+#KONTO 5090 "ôvriga lokalkostnader"
+#KONTO 5098 "ôvriga lokalkostnader, avdragsgilla"
+#KONTO 5099 "ôvriga lokalkostnader, ej avdragsgilla"
+#KONTO 5100 "Fastighetskostnader (gruppkonto)"
+#KONTO 5110 "TomtrÑttsavgÑld/arrende"
+#KONTO 5120 "El fîr belysning"
+#KONTO 5130 "VÑrme"
+#KONTO 5131 "UppvÑrmning"
+#KONTO 5132 "Sotning"
+#KONTO 5140 "Vatten och avlopp"
+#KONTO 5160 "StÑdning och renhÜllning"
+#KONTO 5161 "StÑdning"
+#KONTO 5162 "SophÑmtning"
+#KONTO 5163 "Hyra fîr sopcontainer"
+#KONTO 5164 "Snîrîjning"
+#KONTO 5165 "TrÑdgÜrdsskîtsel"
+#KONTO 5170 "Reparation och underhÜll av fastighet"
+#KONTO 5190 "ôvriga fastighetskostnader"
+#KONTO 5191 "Fastighetsskatt/fastighetsavgift"
+#KONTO 5192 "FastighetsfîrsÑkringspremier"
+#KONTO 5193 "Fastighetsskîtsel och fîrvaltning"
+#KONTO 5198 "ôvriga fastighetskostnader, avdragsgilla"
+#KONTO 5199 "ôvriga fastighetskostnader, ej avdragsgi"
+#KONTO 5200 "Hyra av anlÑggningstillgÜngar (gruppkont"
+#KONTO 5210 "Hyra av maskiner och andra tekniska anlÑ"
+#KONTO 5211 "Korttidshyra av maskiner och andra tekni"
+#KONTO 5212 "Leasing av maskiner och andra tekniska a"
+#KONTO 5220 "Hyra av inventarier och verktyg"
+#KONTO 5221 "Korttidshyra av inventarier och verktyg"
+#KONTO 5222 "Leasing av inventarier och verktyg"
+#KONTO 5250 "Hyra av datorer"
+#KONTO 5251 "Korttidshyra av datorer"
+#KONTO 5252 "Leasing av datorer"
+#KONTO 5290 "ôvriga hyreskostnader fîr anlÑggningstil"
+#KONTO 5300 "Energikostnader (gruppkonto)"
+#KONTO 5310 "El fîr drift"
+#KONTO 5320 "Gas"
+#KONTO 5330 "Eldningsolja"
+#KONTO 5340 "Stenkol och koks"
+#KONTO 5350 "Torv, trÑkol, ved och annat trÑbrÑnsle"
+#KONTO 5360 "Bensin, fotogen och motorbrÑnnolja"
+#KONTO 5370 "FjÑrrvÑrme, kyla och Ünga"
+#KONTO 5380 "Vatten"
+#KONTO 5390 "ôvriga energikostnader"
+#KONTO 5400 "Fîrbrukningsinventarier och fîrbruknings"
+#KONTO 5410 "Fîrbrukningsinventarier"
+#KONTO 5411 "Fîrbrukningsinventarier med en livslÑngd"
+#KONTO 5412 "Fîrbrukningsinventarier med en livslÑngd"
+#KONTO 5420 "Programvaror"
+#KONTO 5430 "Transportinventarier"
+#KONTO 5440 "Fîrbrukningsemballage"
+#KONTO 5460 "Fîrbrukningsmaterial"
+#KONTO 5480 "ArbetsklÑder och skyddsmaterial"
+#KONTO 5490 "ôvriga fîrbrukningsinventarier och fîrbr"
+#KONTO 5491 "ôvriga fîrbrukningsinventarier med en li"
+#KONTO 5492 "ôvriga fîrbrukningsinventarier med en li"
+#KONTO 5493 "ôvrigt fîrbrukningsmaterial"
+#KONTO 5500 "Reparation och underhÜll (gruppkonto)"
+#KONTO 5510 "Reparation och underhÜll av maskiner och"
+#KONTO 5520 "Reparation och underhÜll av inventarier,"
+#KONTO 5530 "Reparation och underhÜll av installation"
+#KONTO 5550 "Reparation och underhÜll av fîrbruknings"
+#KONTO 5580 "UnderhÜll och tvÑtt av arbetsklÑder"
+#KONTO 5590 "ôvriga kostnader fîr reparation och unde"
+#KONTO 5600 "Kostnader fîr transportmedel (gruppkonto"
+#KONTO 5610 "Personbilskostnader"
+#KONTO 5611 "Drivmedel fîr personbilar"
+#KONTO 5612 "FîrsÑkring och skatt fîr personbilar"
+#KONTO 5613 "Reparation och underhÜll av personbilar"
+#KONTO 5615 "Leasing av personbilar"
+#KONTO 5616 "TrÑngselskatt, avdragsgill"
+#KONTO 5619 "ôvriga personbilskostnader"
+#KONTO 5620 "Lastbilskostnader"
+#KONTO 5630 "Truckkostnader"
+#KONTO 5640 "Kostnader fîr arbetsmaskiner"
+#KONTO 5650 "Traktorkostnader"
+#KONTO 5660 "Motorcykel-, moped- och skoterkostnader"
+#KONTO 5670 "BÜt-, flygplans- och helikopterkostnader"
+#KONTO 5690 "ôvriga kostnader fîr transportmedel"
+#KONTO 5700 "Frakter och transporter (gruppkonto)"
+#KONTO 5710 "Frakter, transporter och fîrsÑkringar vi"
+#KONTO 5720 "Tull- och speditionskostnader m.m."
+#KONTO 5730 "Arbetstransporter"
+#KONTO 5790 "ôvriga kostnader fîr frakter och transpo"
+#KONTO 5800 "Resekostnader (gruppkonto)"
+#KONTO 5810 "Biljetter"
+#KONTO 5820 "Hyrbilskostnader"
+#KONTO 5830 "Kost och logi"
+#KONTO 5831 "Kost och logi i Sverige"
+#KONTO 5832 "Kost och logi i utlandet"
+#KONTO 5890 "ôvriga resekostnader"
+#KONTO 5900 "Reklam och PR (gruppkonto)"
+#KONTO 5910 "Annonsering"
+#KONTO 5920 "Utomhus- och trafikreklam"
+#KONTO 5930 "Reklamtrycksaker och direktreklam"
+#KONTO 5940 "UtstÑllningar och mÑssor"
+#KONTO 5950 "Butiksreklam och ÜterfîrsÑljarreklam"
+#KONTO 5960 "Varuprover, reklamgÜvor, presentreklam o"
+#KONTO 5970 "Film-, radio-, TV- och Internetreklam"
+#KONTO 5980 "PR, institutionell reklam och sponsring"
+#KONTO 5990 "ôvriga kostnader fîr reklam och PR"
+#KONTO 6000 "ôvriga fîrsÑljningskostnader (gruppkonto"
+#KONTO 6010 "Kataloger, prislistor m.m."
+#KONTO 6020 "Egna facktidskrifter"
+#KONTO 6030 "Speciella orderkostnader"
+#KONTO 6040 "Kontokortsavgifter"
+#KONTO 6050 "FîrsÑljningsprovisioner"
+#KONTO 6055 "Franchisekostnader o.dyl."
+#KONTO 6060 "KreditfîrsÑljningskostnader"
+#KONTO 6061 "Kreditupplysning"
+#KONTO 6062 "Inkasso och KFM-avgifter"
+#KONTO 6063 "KreditfîrsÑkringspremier"
+#KONTO 6064 "Factoringavgifter"
+#KONTO 6069 "ôvriga kreditfîrsÑljningskostnader"
+#KONTO 6070 "Representation"
+#KONTO 6071 "Representation, avdragsgill"
+#KONTO 6072 "Representation, ej avdragsgill"
+#KONTO 6080 "Bankgarantier"
+#KONTO 6090 "ôvriga fîrsÑljningskostnader"
+#KONTO 6100 "Kontorsmateriel och trycksaker (gruppkon"
+#KONTO 6110 "Kontorsmateriel"
+#KONTO 6150 "Trycksaker"
+#KONTO 6200 "Tele och post (gruppkonto)"
+#KONTO 6210 "Telekommunikation"
+#KONTO 6211 "Fast telefoni"
+#KONTO 6212 "Mobiltelefon"
+#KONTO 6213 "Mobilsîkning"
+#KONTO 6214 "Fax"
+#KONTO 6215 "Telex"
+#KONTO 6230 "Datakommunikation"
+#KONTO 6250 "Postbefordran"
+#KONTO 6300 "FîretagsfîrsÑkringar och îvriga riskkost"
+#KONTO 6310 "FîretagsfîrsÑkringar"
+#KONTO 6320 "SjÑlvrisker vid skada"
+#KONTO 6330 "Fîrluster i pÜgÜende arbeten"
+#KONTO 6340 "LÑmnade skadestÜnd"
+#KONTO 6341 "LÑmnade skadestÜnd, avdragsgilla"
+#KONTO 6342 "LÑmnade skadestÜnd, ej avdragsgilla"
+#KONTO 6350 "Fîrluster pÜ kundfordringar"
+#KONTO 6351 "Konstaterade fîrluster pÜ kundfordringar"
+#KONTO 6352 "Befarade fîrluster pÜ kundfordringar"
+#KONTO 6360 "Garantikostnader"
+#KONTO 6361 "FîrÑndring av garantiavsÑttning"
+#KONTO 6362 "Faktiska garantikostnader"
+#KONTO 6370 "Kostnader fîr bevakning och larm"
+#KONTO 6380 "Fîrluster pÜ îvriga kortfristiga fordrin"
+#KONTO 6390 "ôvriga riskkostnader"
+#KONTO 6400 "Fîrvaltningskostnader (gruppkonto)"
+#KONTO 6410 "Styrelsearvoden som inte Ñr lîn"
+#KONTO 6420 "ErsÑttningar till revisor"
+#KONTO 6421 "Revision"
+#KONTO 6422 "Revisonsverksamhet utîver revision"
+#KONTO 6423 "SkatterÜdgivning - revisor"
+#KONTO 6424 "ôvriga tjÑnster - revisor"
+#KONTO 6430 "Management fees"
+#KONTO 6440 "èrsredovisning och delÜrsrapporter"
+#KONTO 6450 "BolagsstÑmma/Ürs- eller fîreningsstÑmma"
+#KONTO 6490 "ôvriga fîrvaltningskostnader"
+#KONTO 6500 "ôvriga externa tjÑnster (gruppkonto)"
+#KONTO 6510 "MÑtningskostnader"
+#KONTO 6520 "Ritnings- och kopieringskostnader"
+#KONTO 6530 "RedovisningstjÑnster"
+#KONTO 6540 "IT-tjÑnster"
+#KONTO 6550 "Konsultarvoden"
+#KONTO 6560 "Serviceavgifter till branschorganisation"
+#KONTO 6570 "Bankkostnader"
+#KONTO 6580 "Advokat- och rÑttegÜngskostnader"
+#KONTO 6590 "ôvriga externa tjÑnster"
+#KONTO 6800 "Inhyrd personal (gruppkonto)"
+#KONTO 6810 "Inhyrd produktionspersonal"
+#KONTO 6820 "Inhyrd lagerpersonal"
+#KONTO 6830 "Inhyrd transportpersonal"
+#KONTO 6840 "Inhyrd kontors- och ekonomipersonal"
+#KONTO 6850 "Inhyrd IT-personal"
+#KONTO 6860 "Inhyrd marknads- och fîrsÑljningspersona"
+#KONTO 6870 "Inhyrd restaurang- och butikspersonal"
+#KONTO 6880 "Inhyrda fîretagsledare"
+#KONTO 6890 "ôvrig inhyrd personal"
+#KONTO 6900 "ôvriga externa kostnader (gruppkonto)"
+#KONTO 6910 "Licensavgifter och royalties"
+#KONTO 6920 "Kostnader fîr egna patent"
+#KONTO 6930 "Kostnader fîr varumÑrken m.m."
+#KONTO 6940 "Kontroll-, provnings- och stÑmpelavgifte"
+#KONTO 6950 "Tillsynsavgifter myndigheter"
+#KONTO 6970 "Tidningar, tidskrifter och facklitteratu"
+#KONTO 6980 "Fîreningsavgifter"
+#KONTO 6981 "Fîreningsavgifter, avdragsgilla"
+#KONTO 6982 "Fîreningsavgifter, ej avdragsgilla"
+#KONTO 6990 "ôvriga externa kostnader"
+#KONTO 6991 "ôvriga externa kostnader, avdragsgilla"
+#KONTO 6992 "ôvriga externa kostnader, ej avdragsgill"
+#KONTO 6993 "LÑmnade bidrag och gÜvor"
+#KONTO 6996 "Betald utlÑndsk inkomstskatt"
+#KONTO 6997 "Obetald utlÑndsk inkomstskatt"
+#KONTO 6998 "UtlÑndsk moms"
+#KONTO 6999 "IngÜende moms, blandad verksamhet"
+#KONTO 7000 "Lîner till kollektivanstÑllda (gruppkont"
+#KONTO 7010 "Lîner till kollektivanstÑllda"
+#KONTO 7011 "Lîner till kollektivanstÑllda"
+#KONTO 7012 "Vinstandelar till kollektivanstÑllda"
+#KONTO 7013 "Lîn vÑxa-stîd kollektivanstÑllda 10,21%"
+#KONTO 7014 "Lîner till kollektivanstÑllda 16,36 %"
+#KONTO 7015 "Lîner till kollektivanstÑllda 6,15 %"
+#KONTO 7016 "Vinstandelar till kollektivanstÑllda 6,1"
+#KONTO 7017 "AvgÜngsvederlag till kollektivanstÑllda"
+#KONTO 7018 "Bruttolîneavdrag, kollektivanstÑllda"
+#KONTO 7019 "Upplupna lîner och vinstandelar till kol"
+#KONTO 7030 "Lîner till kollektivanstÑllda 25,46 %"
+#KONTO 7031 "Lîner till kollektivanstÑllda (utlandsan"
+#KONTO 7032 "Vinstandelar till kollektivanstÑllda (ut"
+#KONTO 7034 "Lîner kollektivanstÑllda 16,36% (utlands"
+#KONTO 7035 "Lîner till kollektivanstÑllda 6,15% (utl"
+#KONTO 7036 "Vinstandelar till kollektivanstÑllda 6,1"
+#KONTO 7037 "AvgÜngsvederlag till kollektivanstÑllda "
+#KONTO 7038 "Bruttolîneavdrag, kollektivanstÑllda (ut"
+#KONTO 7039 "Upplupna lîner och vinstandelar till kol"
+#KONTO 7080 "Lîner till kollektivanstÑllda fîr ej arb"
+#KONTO 7081 "Sjuklîner till kollektivanstÑllda"
+#KONTO 7082 "Semesterlîner till kollektivanstÑllda"
+#KONTO 7083 "FîrÑldraersÑttning till kollektivanstÑll"
+#KONTO 7089 "ôvriga lîner till kollektivanstÑllda fîr"
+#KONTO 7090 "FîrÑndring av semesterlîneskuld"
+#KONTO 7200 "Lîner till tjÑnstemÑn och fîretagsledare"
+#KONTO 7210 "Lîner till tjÑnstemÑn"
+#KONTO 7211 "Lîner till tjÑnstemÑn"
+#KONTO 7212 "Vinstandelar till tjÑnstemÑn"
+#KONTO 7213 "Lîn vÑxa-stîd tjÑnstemÑn 10,21%"
+#KONTO 7214 "Lîner till tjÑnstemÑn 16,36 %"
+#KONTO 7215 "Lîner till tjÑnstemÑn 6,15 %"
+#KONTO 7216 "Vinstandelar till tjÑnstemÑn 6,15 %"
+#KONTO 7217 "AvgÜngsvederlag till tjÑnstemÑn"
+#KONTO 7218 "Bruttolîneavdrag, tjÑnstemÑn"
+#KONTO 7219 "Upplupna lîner och vinstandelar till tjÑ"
+#KONTO 7220 "Lîner till fîretagsledare"
+#KONTO 7221 "Lîner till fîretagsledare"
+#KONTO 7222 "Tantiem till fîretagsledare"
+#KONTO 7224 "Lîner till fîretagsledare 16,36 %"
+#KONTO 7225 "Lîner till fîretagsledare 6,15 %"
+#KONTO 7227 "AvgÜngsvederlag till fîretagsledare"
+#KONTO 7228 "Bruttolîneavdrag, fîretagsledare"
+#KONTO 7229 "Upplupna lîner och tantiem till fîretags"
+#KONTO 7230 "Lîner till tjÑnstemÑn och ftgsledare (ut"
+#KONTO 7231 "Lîner till tjÑnstemÑn och ftgsledare (ut"
+#KONTO 7232 "Vinstandelar till tjÑnstemÑn och ftgsled"
+#KONTO 7234 "Lîner till tjÑnstemÑn och ftgsledare 16,"
+#KONTO 7235 "Lîner till tjÑnstemÑn och ftgsledare 6,1"
+#KONTO 7236 "Vinstandelar till tjÑnstemÑn och ftgsled"
+#KONTO 7237 "AvgÜngsvederlag till tjÑnstemÑn och ftgs"
+#KONTO 7238 "Bruttolîneavdrag, tjÑnstemÑn och ftgsled"
+#KONTO 7239 "Upplupna lîner och vinstandelar till tjÑ"
+#KONTO 7240 "Styrelsearvoden"
+#KONTO 7280 "Lîner till tjÑnstemÑn och fîretagsledare"
+#KONTO 7281 "Sjuklîner till tjÑnstemÑn"
+#KONTO 7282 "Sjuklîner till fîretagsledare"
+#KONTO 7283 "FîrÑldraersÑttning till tjÑnstemÑn"
+#KONTO 7284 "FîrÑldraersÑttning till fîretagsledare"
+#KONTO 7285 "Semesterlîner till tjÑnstemÑn"
+#KONTO 7286 "Semesterlîner till fîretagsledare"
+#KONTO 7288 "ôvriga lîner till tjÑnstemÑn fîr ej arbe"
+#KONTO 7289 "ôvriga lîner till fîretagsledare fîr ej "
+#KONTO 7290 "FîrÑndring av semesterlîneskuld"
+#KONTO 7291 "FîrÑndring av semesterlîneskuld till tjÑ"
+#KONTO 7292 "FîrÑndring av semesterlîneskuld till fîr"
+#KONTO 7300 "KostnadsersÑttningar och fîrmÜner (grupp"
+#KONTO 7310 "Kontanta extraersÑttningar"
+#KONTO 7311 "ErsÑttningar fîr sammantrÑden m.m."
+#KONTO 7312 "ErsÑttningar fîr fîrslagsverksamhet och "
+#KONTO 7313 "ErsÑttningar fîr/bidrag till bostadskost"
+#KONTO 7314 "ErsÑttningar fîr/bidrag till mÜltidskost"
+#KONTO 7315 "ErsÑttningar fîr/bidrag till resor till "
+#KONTO 7316 "ErsÑttningar fîr/bidrag till arbetsklÑde"
+#KONTO 7317 "ErsÑttningar fîr/bidrag till arbetsmater"
+#KONTO 7318 "FelrÑkningspengar"
+#KONTO 7319 "ôvriga kontanta extraersÑttningar"
+#KONTO 7320 "Traktamenten vid tjÑnsteresa"
+#KONTO 7321 "Skattefria traktamenten, Sverige"
+#KONTO 7322 "Skattepliktiga traktamenten, Sverige"
+#KONTO 7323 "Skattefria traktamenten, utlandet"
+#KONTO 7324 "Skattepliktiga traktamenten, utlandet"
+#KONTO 7330 "BilersÑttningar"
+#KONTO 7331 "Skattefria bilersÑttningar"
+#KONTO 7332 "Skattepliktiga bilersÑttningar"
+#KONTO 7333 "ErsÑttning fîr trÑngselskatt, skattefri"
+#KONTO 7350 "ErsÑttningar fîr fîreskrivna arbetsklÑde"
+#KONTO 7370 "RepresentationsersÑttningar"
+#KONTO 7380 "Kostnader fîr fîrmÜner till anstÑllda"
+#KONTO 7381 "Kostnader fîr fri bostad"
+#KONTO 7382 "Kostnader fîr fria eller subventionerade"
+#KONTO 7383 "Kostnader fîr fria resor till och frÜn a"
+#KONTO 7384 "Kostnader fîr fria eller subventionerade"
+#KONTO 7385 "Kostnader fîr fri bil"
+#KONTO 7386 "Subventionerad rÑnta"
+#KONTO 7387 "Kostnader fîr lÜnedatorer"
+#KONTO 7388 "AnstÑlldas ersÑttning fîr erhÜllna fîrmÜ"
+#KONTO 7389 "ôvriga kostnader fîr fîrmÜner"
+#KONTO 7390 "ôvriga kostnadsersÑttningar och fîrmÜner"
+#KONTO 7391 "Kostnad fîr trÑngselskattefîrmÜn"
+#KONTO 7392 "Kostnad fîr fîrmÜn av hushÜllsnÑra tjÑns"
+#KONTO 7399 "Motkontering fîrmÜn"
+#KONTO 7400 "Pensionskostnader (gruppkonto)"
+#KONTO 7410 "PensionsfîrsÑkringspremier"
+#KONTO 7411 "Premier fîr kollektiva pensionsfîrsÑkrin"
+#KONTO 7412 "Premier fîr individuella pensionsfîrsÑkr"
+#KONTO 7418 "èterbÑring frÜn fîrsÑkringsfîretag"
+#KONTO 7420 "FîrÑndring av pensionsskuld"
+#KONTO 7430 "Avdrag fîr rÑntedel i pensionskostnad"
+#KONTO 7440 "FîrÑndring av pensionsstiftelsekapital"
+#KONTO 7441 "AvsÑttning till pensionsstiftelse"
+#KONTO 7448 "Gottgîrelse frÜn pensionsstiftelse"
+#KONTO 7460 "Pensionsutbetalningar"
+#KONTO 7461 "Pensionsutbetalningar till f.d. kollekti"
+#KONTO 7462 "Pensionsutbetalningar till f.d. tjÑnstem"
+#KONTO 7463 "Pensionsutbetalningar till f.d. fîretags"
+#KONTO 7470 "Fîrvaltnings- och kreditfîrsÑkringsavgif"
+#KONTO 7490 "ôvriga pensionskostnader"
+#KONTO 7500 "Sociala och andra avgifter enligt lag oc"
+#KONTO 7510 "Arbetsgivaravgifter 31,42 %"
+#KONTO 7511 "Arbetsgivaravgifter fîr lîner och ersÑtt"
+#KONTO 7512 "Arbetsgivaravgifter fîr fîrmÜnsvÑrden"
+#KONTO 7515 "Arbetsgivaravgifter pÜ skattepliktiga ko"
+#KONTO 7516 "Arbetsgivaravgifter pÜ arvoden"
+#KONTO 7518 "Arbetsgivaravgifter pÜ bruttolîneavdrag "
+#KONTO 7519 "Arbetsgivaravgifter fîr semester- och lî"
+#KONTO 7520 "Avgifter 16,36 %"
+#KONTO 7521 "Avgifter fîr lîner och ersÑttningar"
+#KONTO 7522 "Avgifter fîr fîrmÜnsvÑrden"
+#KONTO 7525 "Avgifter pÜ skattepliktiga kostnadsersÑt"
+#KONTO 7526 "Avgifter pÜ arvoden"
+#KONTO 7528 "Avgifter pÜ bruttolîneavdrag m.m."
+#KONTO 7529 "Avgifter fîr semester- och lîneskulder"
+#KONTO 7530 "SÑrskild lîneskatt"
+#KONTO 7531 "SÑrskild lîneskatt fîr vissa fîrsÑkrings"
+#KONTO 7532 "SÑrskild lîneskatt pensionskostnader, de"
+#KONTO 7533 "SÑrskild lîneskatt fîr pensionskostnader"
+#KONTO 7534 "SÑrskild lîneskatt fîrvÑrvsinkomster 6,1"
+#KONTO 7550 "Avkastningsskatt pÜ pensionsmedel"
+#KONTO 7551 "Avkastningsskatt 15% fîrsÑkringsfîretag "
+#KONTO 7552 "Avkastningsskatt 15% utlÑndska pensionsf"
+#KONTO 7553 "Avkastningsskatt 30% utlÑndska fîrsÑkrin"
+#KONTO 7554 "Avkastningsskatt 30% utlÑndska kapitalfî"
+#KONTO 7570 "Premier fîr arbetsmarknadsfîrsÑkringar"
+#KONTO 7571 "ArbetsmarknadsfîrsÑkringar"
+#KONTO 7572 "ArbetsmarknadsfîrsÑkringar pensionsfîrsÑ"
+#KONTO 7580 "GruppfîrsÑkringspremier"
+#KONTO 7581 "GrupplivfîrsÑkringspremier"
+#KONTO 7582 "GruppsjukfîrsÑkringspremier"
+#KONTO 7583 "GruppolycksfallsfîrsÑkringspremier"
+#KONTO 7589 "ôvriga gruppfîrsÑkringspremier"
+#KONTO 7590 "ôvriga sociala och andra avgifter enligt"
+#KONTO 7600 "ôvriga personalkostnader (gruppkonto)"
+#KONTO 7610 "Utbildning"
+#KONTO 7620 "Sjuk- och hÑlsovÜrd"
+#KONTO 7621 "Sjuk- och hÑlsovÜrd, avdragsgill"
+#KONTO 7622 "Sjuk- och hÑlsovÜrd, ej avdragsgill"
+#KONTO 7623 "SjukvÜrdsfîrsÑkring, ej avdragsgill"
+#KONTO 7630 "Personalrepresentation"
+#KONTO 7631 "Personalrepresentation, avdragsgill"
+#KONTO 7632 "Personalrepresentation, ej avdragsgill"
+#KONTO 7650 "SjuklînefîrsÑkring"
+#KONTO 7670 "FîrÑndring av personalstiftelsekapital"
+#KONTO 7671 "AvsÑttning till personalstiftelse"
+#KONTO 7678 "Gottgîrelse frÜn personalstiftelse"
+#KONTO 7690 "ôvriga personalkostnader"
+#KONTO 7691 "Personalrekrytering"
+#KONTO 7692 "BegravningshjÑlp"
+#KONTO 7693 "Fritidsverksamhet"
+#KONTO 7699 "ôvriga personalkostnader"
+#KONTO 7710 "Nedskrivningar av immateriella anlÑggnin"
+#KONTO 7720 "Nedskrivningar av byggnader och mark"
+#KONTO 7730 "Nedskrivningar av maskiner och inventari"
+#KONTO 7740 "Nedskrivningar av vissa omsÑttningstillg"
+#KONTO 7760 "èterfîring av nedskrivningar av immateri"
+#KONTO 7770 "èterfîring av nedskrivningar av byggnade"
+#KONTO 7780 "èterfîring av nedskrivningar av maskiner"
+#KONTO 7790 "èterfîring av nedskrivningar av vissa om"
+#KONTO 7810 "Avskrivningar pÜ immateriella anlÑggning"
+#KONTO 7811 "Avskrivningar pÜ balanserade utgifter"
+#KONTO 7812 "Avskrivningar pÜ koncessioner m.m."
+#KONTO 7813 "Avskrivningar pÜ patent"
+#KONTO 7814 "Avskrivningar pÜ licenser"
+#KONTO 7815 "Avskrivningar pÜ varumÑrken"
+#KONTO 7816 "Avskrivningar pÜ hyresrÑtter"
+#KONTO 7817 "Avskrivningar pÜ goodwill"
+#KONTO 7819 "Avskrivningar pÜ îvriga immateriella anl"
+#KONTO 7820 "Avskrivningar pÜ byggnader och markanlÑg"
+#KONTO 7821 "Avskrivningar pÜ byggnader"
+#KONTO 7824 "Avskrivningar pÜ markanlÑggningar"
+#KONTO 7829 "Avskrivningar pÜ îvriga byggnader"
+#KONTO 7830 "Avskrivningar pÜ maskiner och inventarie"
+#KONTO 7831 "Avskrivningar pÜ maskiner och andra tekn"
+#KONTO 7832 "Avskrivningar pÜ inventarier och verktyg"
+#KONTO 7833 "Avskrivningar pÜ installationer"
+#KONTO 7834 "Avskrivningar pÜ bilar och andra transpo"
+#KONTO 7835 "Avskrivningar pÜ datorer"
+#KONTO 7836 "Avskrivningar pÜ leasade tillgÜngar"
+#KONTO 7839 "Avskrivningar pÜ îvriga maskiner och inv"
+#KONTO 7840 "Avskrivningar pÜ fîrbÑttringsutgifter pÜ"
+#KONTO 7960 "Valutakursfîrluster pÜ fordringar och sk"
+#KONTO 7970 "Fîrlust vid avyttring av immateriella oc"
+#KONTO 7971 "Fîrlust vid avyttring av immateriella an"
+#KONTO 797199 "Saknas vid import"
+#KONTO 7972 "Fîrlust vid avyttring av byggnader och m"
+#KONTO 7973 "Fîrlust vid avyttring av maskiner och in"
+#KONTO 7990 "ôvriga rîrelsekostnader"
+#KONTO 8010 "Utdelning pÜ andelar i koncernfîretag"
+#KONTO 8012 "Utdelning pÜ andelar i dotterfîretag"
+#KONTO 8013 "Utdelning pÜ andelar i andra koncernfîre"
+#KONTO 8014 "Koncernbidrag"
+#KONTO 8016 "Insatsemission, koncernfîretag"
+#KONTO 8019 "ôvriga utdelningar pÜ andelar i koncernf"
+#KONTO 8020 "Resultat vid fîrsÑljning av andelar i ko"
+#KONTO 8022 "Resultat vid fîrsÑljning av andelar i do"
+#KONTO 8023 "Resultat vid fîrsÑljning av andelar i an"
+#KONTO 8030 "Resultatandelar frÜn handelsbolag (dotte"
+#KONTO 8070 "Nedskrivningar av andelar i och lÜngfris"
+#KONTO 8072 "Nedskrivningar av andelar i dotterfîreta"
+#KONTO 8073 "Nedskrivningar av andelar i andra koncer"
+#KONTO 8076 "Nedskrivningar av lÜngfristiga fordringa"
+#KONTO 8077 "Nedskrivningar av lÜngfristiga fordringa"
+#KONTO 8078 "Nedskrivningar av lÜngfristiga fordringa"
+#KONTO 8080 "èterfîringar av nedskrivningar av andela"
+#KONTO 8082 "èterfîringar av nedskrivningar av andela"
+#KONTO 8083 "èterfîringar av nedskrivningar av andela"
+#KONTO 8086 "èterfîringar av nedskrivningar av lÜngfr"
+#KONTO 8087 "èterfîringar av nedskrivningar av lÜngfr"
+#KONTO 8088 "èterfîringar av nedskrivningar av lÜngfr"
+#KONTO 8110 "Utdelningar pÜ andelar i intressefîretag"
+#KONTO 8111 "Utdelningar pÜ andelar i intressefîretag"
+#KONTO 8112 "Utdelningar pÜ andelar i gemensamt styrd"
+#KONTO 8113 "Utdelningar pÜ andelar i îvriga fîretag "
+#KONTO 8116 "Insatsemission, intressefîretag"
+#KONTO 8117 "Insatsemission, gemensamt styrda fîretag"
+#KONTO 8118 "Insatsemission, îvriga fîretag som det f"
+#KONTO 8120 "Resultat vid fîrsÑljning av andelar i in"
+#KONTO 8121 "Resultat vid fîrsÑljning av andelar i in"
+#KONTO 8122 "Resultat vid fîrsÑljning av andelar i ge"
+#KONTO 8123 "Resultat vid fîrsÑljning av andelar i îv"
+#KONTO 8130 "Resultatandelar frÜn handelsbolag (intre"
+#KONTO 8131 "Resultatandelar frÜn handelsbolag (intre"
+#KONTO 8132 "Resultatandelar frÜn handelsbolag (gemen"
+#KONTO 8133 "Resultatandelar frÜn handelsbolag (îvrig"
+#KONTO 8170 "Nedskrivningar av andelar i och lÜngfris"
+#KONTO 8171 "Nedskrivningar av andelar i intressefîre"
+#KONTO 8172 "Nedskrivningar av lÜngfristiga fordringa"
+#KONTO 8173 "Nedskrivningar av andelar i gemensamt st"
+#KONTO 8174 "Nedskrivningar av lÜngfristiga fordringa"
+#KONTO 8176 "Nedskrivningar av andelar i îvriga fîret"
+#KONTO 8177 "Nedskrivningar av lÜngfristiga fordringa"
+#KONTO 8180 "èterfîringar av nedskrivningar av andela"
+#KONTO 8181 "èterfîringar av nedskrivningar av andela"
+#KONTO 8182 "èterfîringar av nedskrivningar av lÜngfr"
+#KONTO 8183 "èterfîringar av nedskrivningar av andela"
+#KONTO 8184 "èterfîringar av nedskrivningar av lÜngfr"
+#KONTO 8186 "èterfîringar av nedskrivningar av andela"
+#KONTO 8187 "èterfîringar av nedskrivningar av lÜngfr"
+#KONTO 8210 "Utdelningar pÜ andelar i andra fîretag"
+#KONTO 8212 "Utdelningar, îvriga fîretag"
+#KONTO 8216 "Insatsemissioner, îvriga fîretag"
+#KONTO 8220 "Resultat vid fîrsÑljning av vÑrdepapper "
+#KONTO 8221 "Resultat vid fîrsÑljning av andelar i an"
+#KONTO 8222 "Resultat vid fîrsÑljning av lÜngfristiga"
+#KONTO 8223 "Resultat vid fîrsÑljning av derivat (lÜn"
+#KONTO 8230 "Valutakursdifferenser pÜ lÜngfristiga fo"
+#KONTO 8231 "Valutakursvinster pÜ lÜngfristiga fordri"
+#KONTO 8236 "Valutakursfîrluster pÜ lÜngfristiga ford"
+#KONTO 8240 "Resultatandelar frÜn handelsbolag (andra"
+#KONTO 8250 "RÑnteintÑkter frÜn lÜngfristiga fordring"
+#KONTO 8251 "RÑnteintÑkter frÜn lÜngfristiga fordring"
+#KONTO 8252 "RÑnteintÑkter frÜn îvriga vÑrdepapper"
+#KONTO 8254 "Skattefria rÑnteintÑkter, lÜngfristiga t"
+#KONTO 8255 "Avkastningsskatt kapitalplacering"
+#KONTO 8260 "RÑnteintÑkter frÜn lÜngfristiga fordring"
+#KONTO 8261 "RÑnteintÑkter frÜn lÜngfristiga fordring"
+#KONTO 8262 "RÑnteintÑkter frÜn lÜngfristiga fordring"
+#KONTO 8263 "RÑnteintÑkter frÜn lÜngfristiga fordring"
+#KONTO 8270 "Nedskrivningar av innehav av andelar i o"
+#KONTO 8271 "Nedskrivningar av andelar i andra fîreta"
+#KONTO 8272 "Nedskrivningar av lÜngfristiga fordringa"
+#KONTO 8273 "Nedskrivningar av îvriga vÑrdepapper hos"
+#KONTO 8280 "èterfîringar av nedskrivningar av andela"
+#KONTO 8281 "èterfîringar av nedskrivningar av andela"
+#KONTO 8282 "èterfîringar av nedskrivningar av lÜngfr"
+#KONTO 8283 "èterfîringar av nedskrivningar av îvriga"
+#KONTO 8310 "RÑnteintÑkter frÜn omsÑttningstillgÜngar"
+#KONTO 8311 "RÑnteintÑkter frÜn bank"
+#KONTO 8312 "RÑnteintÑkter frÜn kortfristiga placerin"
+#KONTO 8313 "RÑnteintÑkter frÜn kortfristiga fordring"
+#KONTO 8314 "Skattefria rÑnteintÑkter"
+#KONTO 8317 "RÑnteintÑkter fîr dold rÑntekompensation"
+#KONTO 8319 "ôvriga rÑnteintÑkter frÜn omsÑttningstil"
+#KONTO 8330 "Valutakursdifferenser pÜ kortfristiga fo"
+#KONTO 8331 "Valutakursvinster pÜ kortfristiga fordri"
+#KONTO 8336 "Valutakursfîrluster pÜ kortfristiga ford"
+#KONTO 8340 "Utdelningar pÜ kortfristiga placeringar"
+#KONTO 8350 "Resultat vid fîrsÑljning av kortfristiga"
+#KONTO 8360 "ôvriga rÑnteintÑkter frÜn koncernfîretag"
+#KONTO 8361 "ôvriga rÑnteintÑkter frÜn moderfîretag"
+#KONTO 8362 "ôvriga rÑnteintÑkter frÜn dotterfîretag"
+#KONTO 8363 "ôvriga rÑnteintÑkter frÜn andra koncernf"
+#KONTO 8370 "Nedskrivningar av kortfristiga placering"
+#KONTO 8380 "èterfîringar av nedskrivningar av kortfr"
+#KONTO 8390 "ôvriga finansiella intÑkter"
+#KONTO 8400 "RÑntekostnader (gruppkonto)"
+#KONTO 8410 "RÑntekostnader fîr lÜngfristiga skulder"
+#KONTO 8411 "RÑntekostnader fîr obligations-, fîrlags"
+#KONTO 8412 "RÑntedel i Ürets pensionskostnad"
+#KONTO 8413 "RÑntekostnader fîr checkrÑkningskredit"
+#KONTO 8414 "RÑntekostnader fîr byggnadskreditiv"
+#KONTO 8415 "RÑntekostnader fîr andra skulder till kr"
+#KONTO 8417 "RÑntekostnader fîr dold rÑntekompensatio"
+#KONTO 8418 "Avdragspost fîr rÑntesubventioner"
+#KONTO 8419 "ôvriga rÑntekostnader fîr lÜngfristiga s"
+#KONTO 8420 "RÑntekostnader fîr kortfristiga skulder"
+#KONTO 8421 "RÑntekostnader till kreditinstitut"
+#KONTO 8422 "DrîjsmÜlsrÑntor fîr leverantîrsskulder"
+#KONTO 8423 "RÑntekostnader fîr skatter och avgifter"
+#KONTO 8429 "ôvriga rÑntekostnader fîr kortfristiga s"
+#KONTO 8430 "Valutakursdifferenser pÜ skulder"
+#KONTO 8431 "Valutakursvinster pÜ skulder"
+#KONTO 8436 "Valutakursfîrluster pÜ skulder"
+#KONTO 8440 "ErhÜllna rÑntebidrag"
+#KONTO 8460 "RÑntekostnader till koncernfîretag"
+#KONTO 8461 "RÑntekostnader till moderfîretag"
+#KONTO 8462 "RÑntekostnader till dotterfîretag"
+#KONTO 8463 "RÑntekostnader till andra koncernfîretag"
+#KONTO 8490 "ôvriga skuldrelaterade poster"
+#KONTO 8491 "ErhÜllet ackord pÜ skulder till kreditin"
+#KONTO 8710 "ExtraordinÑra intÑkter"
+#KONTO 8750 "ExtraordinÑra kostnader"
+#KONTO 8810 "FîrÑndring av periodiseringsfond"
+#KONTO 8811 "AvsÑttning till periodiseringsfond"
+#KONTO 8819 "èterfîring frÜn periodiseringsfond"
+#KONTO 8820 "Mottagna koncernbidrag"
+#KONTO 8830 "LÑmnade koncernbidrag"
+#KONTO 8840 "LÑmnade gottgîrelser"
+#KONTO 8850 "FîrÑndring av îveravskrivningar"
+#KONTO 8851 "FîrÑndring av îveravskrivningar, immater"
+#KONTO 8852 "FîrÑndring av îveravskrivningar, byggnad"
+#KONTO 8853 "FîrÑndring av îveravskrivningar, maskine"
+#KONTO 8860 "FîrÑndring av ersÑttningsfond"
+#KONTO 8861 "AvsÑttning till ersÑttningsfond fîr inve"
+#KONTO 8862 "AvsÑttning till ersÑttningsfond fîr bygg"
+#KONTO 8863 "AvsÑttning till ersÑttningsfond fîr mark"
+#KONTO 8864 "AvsÑttning till ersÑttningsfond fîr djur"
+#KONTO 8865 "IansprÜktagande av ersÑttningsfond fîr a"
+#KONTO 8866 "IansprÜktagande av ersÑttningsfond fîr a"
+#KONTO 8869 "èterfîring frÜn ersÑttningsfond"
+#KONTO 8890 "ôvriga bokslutsdispositioner"
+#KONTO 8892 "Nedskrivningar av konsolideringskaraktÑr"
+#KONTO 8896 "FîrÑndring av lagerreserv"
+#KONTO 8899 "ôvriga bokslutsdispositioner"
+#KONTO 8910 "Skatt som belastar Ürets resultat"
+#KONTO 8920 "Skatt pÜ grund av Ñndrad beskattning"
+#KONTO 8930 "Restituerad skatt"
+#KONTO 8980 "ôvriga skatter"
+#KONTO 8990 "Resultat"
+#KONTO 8999 "èrets resultat"
+#SRU 1010 7201
+#SRU 1011 7201
+#SRU 1012 7201
+#SRU 1018 7201
+#SRU 1019 7201
+#SRU 1020 7201
+#SRU 1028 7201
+#SRU 1029 7201
+#SRU 1030 7201
+#SRU 1038 7201
+#SRU 1039 7201
+#SRU 1040 7201
+#SRU 1048 7201
+#SRU 1049 7201
+#SRU 1050 7201
+#SRU 1058 7201
+#SRU 1059 7201
+#SRU 1060 7201
+#SRU 1068 7201
+#SRU 1069 7201
+#SRU 1070 7201
+#SRU 1078 7201
+#SRU 1079 7201
+#SRU 1080 7201
+#SRU 1081 7201
+#SRU 1088 7202
+#SRU 1110 7210
+#SRU 1111 7214
+#SRU 1112 7214
+#SRU 1118 7214
+#SRU 1119 7210
+#SRU 1120 7216
+#SRU 1129 7216
+#SRU 1130 7214
+#SRU 1140 7214
+#SRU 1150 7214
+#SRU 1158 7214
+#SRU 1159 7214
+#SRU 1180 7217
+#SRU 1181 7217
+#SRU 1188 7217
+#SRU 1210 7215
+#SRU 1211 7215
+#SRU 1213 7215
+#SRU 1218 7215
+#SRU 1219 7215
+#SRU 1220 7212
+#SRU 1221 7215
+#SRU 1222 7215
+#SRU 1223 7215
+#SRU 1225 7215
+#SRU 1228 7215
+#SRU 1229 7212
+#SRU 1230 7215
+#SRU 1231 7215
+#SRU 1232 7215
+#SRU 1238 7215
+#SRU 1239 7215
+#SRU 1240 7212
+#SRU 1241 7215
+#SRU 1242 7215
+#SRU 1243 7215
+#SRU 1244 7215
+#SRU 1245 7215
+#SRU 1246 7215
+#SRU 1247 7215
+#SRU 1248 7215
+#SRU 1249 7212
+#SRU 1250 7215
+#SRU 1251 7215
+#SRU 1257 7215
+#SRU 1258 7215
+#SRU 1259 7215
+#SRU 1280 7217
+#SRU 1281 7217
+#SRU 1288 7217
+#SRU 1290 7215
+#SRU 1291 7215
+#SRU 1292 7215
+#SRU 1298 7215
+#SRU 1299 7215
+#SRU 1310 7230
+#SRU 1311 7230
+#SRU 1312 7230
+#SRU 1313 7230
+#SRU 1314 7230
+#SRU 1316 7230
+#SRU 1318 7230
+#SRU 1320 7232
+#SRU 1321 7232
+#SRU 1322 7232
+#SRU 1323 7232
+#SRU 1328 7232
+#SRU 1330 7231
+#SRU 1331 7231
+#SRU 1332 7231
+#SRU 1333 7231
+#SRU 1334 7231
+#SRU 1336 7233
+#SRU 1337 7233
+#SRU 1338 7231
+#SRU 1340 7232
+#SRU 1341 7232
+#SRU 1342 7232
+#SRU 1343 7232
+#SRU 1344 7232
+#SRU 1346 7235
+#SRU 1347 7235
+#SRU 1348 7232
+#SRU 1350 7213
+#SRU 1351 7233
+#SRU 1352 7233
+#SRU 1353 7233
+#SRU 1354 7233
+#SRU 1356 7233
+#SRU 1357 7233
+#SRU 1358 7233
+#SRU 1360 7234
+#SRU 1369 7234
+#SRU 1380 7213
+#SRU 1381 7235
+#SRU 1382 7235
+#SRU 1383 7213
+#SRU 1384 7235
+#SRU 1385 7235
+#SRU 1386 7235
+#SRU 1387 7235
+#SRU 1388 7235
+#SRU 1389 7235
+#SRU 1400 7241
+#SRU 1401 7241
+#SRU 1402 7241
+#SRU 1403 7241
+#SRU 1404 7241
+#SRU 1405 7241
+#SRU 1406 7241
+#SRU 1407 7241
+#SRU 1410 7240
+#SRU 1419 7241
+#SRU 1420 7241
+#SRU 1429 7241
+#SRU 1440 7242
+#SRU 1449 7242
+#SRU 1450 7243
+#SRU 1459 7243
+#SRU 1460 7243
+#SRU 1465 7243
+#SRU 1466 7243
+#SRU 1467 7243
+#SRU 1469 7243
+#SRU 1470 7240
+#SRU 1471 7245
+#SRU 1478 7245
+#SRU 1479 7245
+#SRU 1480 7246
+#SRU 1481 7246
+#SRU 1489 7246
+#SRU 1490 7244
+#SRU 1491 7244
+#SRU 1492 7244
+#SRU 1493 7244
+#SRU 1510 7250
+#SRU 1511 7250
+#SRU 1512 7251
+#SRU 1513 7251
+#SRU 1515 7251
+#SRU 1516 7251
+#SRU 1518 7251
+#SRU 1519 7251
+#SRU 1520 7251
+#SRU 1525 7251
+#SRU 1529 7251
+#SRU 1530 7251
+#SRU 1531 7251
+#SRU 1532 7251
+#SRU 1536 7251
+#SRU 1539 7251
+#SRU 1550 7251
+#SRU 1560 7252
+#SRU 1561 7252
+#SRU 1562 7252
+#SRU 1563 7252
+#SRU 1568 7252
+#SRU 1569 7252
+#SRU 1570 7252
+#SRU 1571 7252
+#SRU 1572 7252
+#SRU 1573 7261
+#SRU 1580 7251
+#SRU 1582 7250
+#SRU 1583 7250
+#SRU 1610 7260
+#SRU 1611 7261
+#SRU 1612 7261
+#SRU 1613 7261
+#SRU 1614 7261
+#SRU 1619 7261
+#SRU 1620 7262
+#SRU 1630 7260
+#SRU 1640 7261
+#SRU 1650 7260
+#SRU 1660 7252
+#SRU 1661 7252
+#SRU 1662 7252
+#SRU 1663 7252
+#SRU 1670 7252
+#SRU 1671 7252
+#SRU 1672 7252
+#SRU 1673 7261
+#SRU 1680 7260
+#SRU 1681 7261
+#SRU 1682 7261
+#SRU 1683 7261
+#SRU 1684 7261
+#SRU 1685 7261
+#SRU 1687 7261
+#SRU 1688 7261
+#SRU 1689 7261
+#SRU 1690 7261
+#SRU 1710 7260
+#SRU 1720 7260
+#SRU 1730 7260
+#SRU 1740 7260
+#SRU 1750 7263
+#SRU 1760 7260
+#SRU 1770 7263
+#SRU 1780 7263
+#SRU 1790 7260
+#SRU 1810 7271
+#SRU 1820 7271
+#SRU 1830 7271
+#SRU 1860 7270
+#SRU 1869 7270
+#SRU 1880 7271
+#SRU 1886 7271
+#SRU 1889 7271
+#SRU 1890 7271
+#SRU 1900 7281
+#SRU 1910 7280
+#SRU 1911 7281
+#SRU 1912 7281
+#SRU 1913 7281
+#SRU 1914 7280
+#SRU 1920 7280
+#SRU 1921 7280
+#SRU 1930 7280
+#SRU 1939 7281
+#SRU 1940 7281
+#SRU 1950 7281
+#SRU 1960 7281
+#SRU 1970 7281
+#SRU 1972 7281
+#SRU 1973 7281
+#SRU 1974 7281
+#SRU 1979 7281
+#SRU 1980 7281
+#SRU 1990 7281
+#SRU 2010 7301
+#SRU 2011 7301
+#SRU 2013 7301
+#SRU 2017 7301
+#SRU 2018 7301
+#SRU 2019 7301
+#SRU 2020 7301
+#SRU 2030 7301
+#SRU 2040 7301
+#SRU 2050 7301
+#SRU 2060 7301
+#SRU 2061 7301
+#SRU 2065 7301
+#SRU 2066 7301
+#SRU 2067 7301
+#SRU 2068 7301
+#SRU 2069 7301
+#SRU 2070 7301
+#SRU 2071 7301
+#SRU 2072 7301
+#SRU 2080 7301
+#SRU 2081 7300
+#SRU 2082 7301
+#SRU 2083 7301
+#SRU 2084 7301
+#SRU 2085 7301
+#SRU 2086 7300
+#SRU 2087 7301
+#SRU 2088 7301
+#SRU 2089 7301
+#SRU 2090 7302
+#SRU 2091 7300
+#SRU 2092 7300
+#SRU 2093 7302
+#SRU 2094 7302
+#SRU 2095 7302
+#SRU 2097 7302
+#SRU 2098 7302
+#SRU 2099 7300
+#SRU 2110 7321
+#SRU 2111 7321
+#SRU 2112 7321
+#SRU 2113 7320
+#SRU 2120 7321
+#SRU 2121 7321
+#SRU 2122 7321
+#SRU 2123 7320
+#SRU 2124 7320
+#SRU 2125 7321
+#SRU 2126 7321
+#SRU 2127 7321
+#SRU 2128 7320
+#SRU 2129 7320
+#SRU 2130 7321
+#SRU 2131 7321
+#SRU 2132 7321
+#SRU 2133 7321
+#SRU 2134 7321
+#SRU 2135 7321
+#SRU 2136 7321
+#SRU 2137 7321
+#SRU 2138 7321
+#SRU 2139 7321
+#SRU 2150 7320
+#SRU 2151 7322
+#SRU 2152 7322
+#SRU 2153 7322
+#SRU 2160 7323
+#SRU 2161 7323
+#SRU 2162 7323
+#SRU 2163 7323
+#SRU 2164 7323
+#SRU 2190 7323
+#SRU 2196 7323
+#SRU 2199 7323
+#SRU 2210 7331
+#SRU 2220 7333
+#SRU 2230 7332
+#SRU 2250 7333
+#SRU 2252 7333
+#SRU 2253 7333
+#SRU 2290 7333
+#SRU 2310 7350
+#SRU 2320 7350
+#SRU 2321 7350
+#SRU 2322 7350
+#SRU 2323 7350
+#SRU 2324 7350
+#SRU 2330 7380
+#SRU 2331 7351
+#SRU 2332 7351
+#SRU 2335 7351
+#SRU 2336 7351
+#SRU 2340 7380
+#SRU 2350 7380
+#SRU 2351 7352
+#SRU 2355 7380
+#SRU 2359 7352
+#SRU 2360 7353
+#SRU 2361 7353
+#SRU 2362 7353
+#SRU 2363 7353
+#SRU 2370 7353
+#SRU 2371 7353
+#SRU 2372 7353
+#SRU 2373 7354
+#SRU 2390 7380
+#SRU 2391 7354
+#SRU 2392 7354
+#SRU 2393 7354
+#SRU 2394 7354
+#SRU 2395 7354
+#SRU 2396 7354
+#SRU 2397 7354
+#SRU 2399 7354
+#SRU 2410 7361
+#SRU 2411 7361
+#SRU 2417 7361
+#SRU 2419 7361
+#SRU 2420 7383
+#SRU 2421 7362
+#SRU 2424 7383
+#SRU 2427 7383
+#SRU 2429 7362
+#SRU 2430 7363
+#SRU 2431 7363
+#SRU 2438 7363
+#SRU 2439 7363
+#SRU 2440 7382
+#SRU 2441 7365
+#SRU 2443 7365
+#SRU 2445 7365
+#SRU 2448 7365
+#SRU 2450 7364
+#SRU 2460 7367
+#SRU 2461 7367
+#SRU 2462 7367
+#SRU 2463 7367
+#SRU 2470 7367
+#SRU 2471 7367
+#SRU 2472 7367
+#SRU 2473 7369
+#SRU 2480 7360
+#SRU 2490 7383
+#SRU 2491 7369
+#SRU 2492 7366
+#SRU 2499 7369
+#SRU 2510 7381
+#SRU 2512 7368
+#SRU 2513 7368
+#SRU 2514 7368
+#SRU 2515 7368
+#SRU 2516 7368
+#SRU 2517 7368
+#SRU 2518 7368
+#SRU 2610 7381
+#SRU 2611 7369
+#SRU 2612 7369
+#SRU 2613 7369
+#SRU 2614 7381
+#SRU 2615 7381
+#SRU 2616 7369
+#SRU 2618 7369
+#SRU 2620 7381
+#SRU 2621 7369
+#SRU 2622 7369
+#SRU 2623 7369
+#SRU 2624 7369
+#SRU 2625 7369
+#SRU 2626 7369
+#SRU 2628 7369
+#SRU 2630 7381
+#SRU 2631 7369
+#SRU 2632 7369
+#SRU 2633 7369
+#SRU 2634 7369
+#SRU 2635 7369
+#SRU 2636 7369
+#SRU 2638 7369
+#SRU 2640 7381
+#SRU 2641 7369
+#SRU 2642 7369
+#SRU 2644 7381
+#SRU 2645 7369
+#SRU 2646 7369
+#SRU 2647 7369
+#SRU 2648 7369
+#SRU 2649 7369
+#SRU 2650 7381
+#SRU 2660 7381
+#SRU 2661 7369
+#SRU 2669 7369
+#SRU 2710 7381
+#SRU 2730 7381
+#SRU 2731 7369
+#SRU 2732 7369
+#SRU 2740 7369
+#SRU 2750 7369
+#SRU 2760 7383
+#SRU 2761 7369
+#SRU 2762 7369
+#SRU 2790 7369
+#SRU 2791 7369
+#SRU 2792 7369
+#SRU 2793 7369
+#SRU 2794 7383
+#SRU 2795 7369
+#SRU 2799 7369
+#SRU 2810 7383
+#SRU 2811 7369
+#SRU 2812 7369
+#SRU 2820 7383
+#SRU 2821 7369
+#SRU 2822 7369
+#SRU 2823 7369
+#SRU 2829 7369
+#SRU 2830 7369
+#SRU 2840 7383
+#SRU 2841 7369
+#SRU 2849 7369
+#SRU 2850 7369
+#SRU 2852 7369
+#SRU 2860 7367
+#SRU 2861 7367
+#SRU 2862 7367
+#SRU 2863 7367
+#SRU 2870 7367
+#SRU 2871 7367
+#SRU 2872 7367
+#SRU 2873 7369
+#SRU 2880 7369
+#SRU 2890 7383
+#SRU 2891 7369
+#SRU 2892 7369
+#SRU 2893 7369
+#SRU 2894 7369
+#SRU 2895 7369
+#SRU 2897 7369
+#SRU 2898 7369
+#SRU 2899 7369
+#SRU 2910 7383
+#SRU 2911 7370
+#SRU 2912 7370
+#SRU 2919 7370
+#SRU 2920 7383
+#SRU 2930 7370
+#SRU 2931 7370
+#SRU 2940 7370
+#SRU 2941 7383
+#SRU 2942 7383
+#SRU 2943 7370
+#SRU 2944 7370
+#SRU 2950 7370
+#SRU 2951 7370
+#SRU 2959 7370
+#SRU 2960 7383
+#SRU 2970 7370
+#SRU 2971 7370
+#SRU 2972 7370
+#SRU 2979 7370
+#SRU 2980 7383
+#SRU 2990 7383
+#SRU 2991 7370
+#SRU 2992 7370
+#SRU 2993 7370
+#SRU 2998 7370
+#SRU 2999 7383
+#SRU 3000 7410
+#SRU 3001 7400
+#SRU 3002 7400
+#SRU 3003 7410
+#SRU 3004 7410
+#SRU 3005 7400
+#SRU 3010 7400
+#SRU 3011 7410
+#SRU 3012 7410
+#SRU 3013 7410
+#SRU 3100 7410
+#SRU 3105 7410
+#SRU 3106 7410
+#SRU 3108 7410
+#SRU 3110 7410
+#SRU 3180 7410
+#SRU 3181 7410
+#SRU 3200 7410
+#SRU 3211 7410
+#SRU 3212 7410
+#SRU 3231 7410
+#SRU 3300 7410
+#SRU 3305 7410
+#SRU 3308 7410
+#SRU 3400 7410
+#SRU 3401 7410
+#SRU 3402 7410
+#SRU 3403 7410
+#SRU 3404 7410
+#SRU 3408 7410
+#SRU 3411 7410
+#SRU 3500 7400
+#SRU 3510 7410
+#SRU 3511 7410
+#SRU 3518 7410
+#SRU 3520 7400
+#SRU 3521 7410
+#SRU 3522 7410
+#SRU 3530 7410
+#SRU 3540 7410
+#SRU 3541 7410
+#SRU 3542 7410
+#SRU 3550 7410
+#SRU 3560 7410
+#SRU 3561 7410
+#SRU 3562 7410
+#SRU 3563 7410
+#SRU 3570 7410
+#SRU 3590 7410
+#SRU 3600 7410
+#SRU 3610 7410
+#SRU 3611 7410
+#SRU 3612 7410
+#SRU 3613 7410
+#SRU 3619 7410
+#SRU 3620 7410
+#SRU 3630 7410
+#SRU 3670 7410
+#SRU 3671 7410
+#SRU 3672 7410
+#SRU 3679 7410
+#SRU 3680 7410
+#SRU 3690 7400
+#SRU 3700 7410
+#SRU 3710 7410
+#SRU 3730 7410
+#SRU 3731 7410
+#SRU 3732 7410
+#SRU 3740 7400
+#SRU 3750 7410
+#SRU 3751 7410
+#SRU 3752 7410
+#SRU 3790 7410
+#SRU 3800 7412
+#SRU 3840 7412
+#SRU 3850 7412
+#SRU 3870 7412
+#SRU 3900 7413
+#SRU 3910 7400
+#SRU 3911 7413
+#SRU 3912 7413
+#SRU 3913 7413
+#SRU 3914 7413
+#SRU 3920 7413
+#SRU 3921 7413
+#SRU 3922 7413
+#SRU 3925 7413
+#SRU 3940 7413
+#SRU 3950 7413
+#SRU 3960 7401
+#SRU 3970 7413
+#SRU 3971 7413
+#SRU 3972 7413
+#SRU 3973 7400
+#SRU 3980 7413
+#SRU 3981 7401
+#SRU 3985 7401
+#SRU 3987 7401
+#SRU 3988 7413
+#SRU 3989 7401
+#SRU 3990 7401
+#SRU 3991 7413
+#SRU 3992 7413
+#SRU 3993 7413
+#SRU 3994 7413
+#SRU 3995 7413
+#SRU 3996 7413
+#SRU 3997 7413
+#SRU 3998 7413
+#SRU 3999 7413
+#SRU 4000 7511
+#SRU 4009 7511
+#SRU 4010 7500
+#SRU 4011 7511
+#SRU 4013 7511
+#SRU 4014 7511
+#SRU 4015 7511
+#SRU 4016 7511
+#SRU 4017 7511
+#SRU 4018 7511
+#SRU 4019 7511
+#SRU 4020 7511
+#SRU 4021 7511
+#SRU 4022 7511
+#SRU 4110 7511
+#SRU 4151 7511
+#SRU 4155 7511
+#SRU 4156 7511
+#SRU 4157 7511
+#SRU 4158 7511
+#SRU 4190 7511
+#SRU 4200 7511
+#SRU 4211 7511
+#SRU 4212 7511
+#SRU 4400 7511
+#SRU 4415 7511
+#SRU 4416 7511
+#SRU 4417 7511
+#SRU 4425 7500
+#SRU 4426 7511
+#SRU 4427 7511
+#SRU 4500 7511
+#SRU 4515 7500
+#SRU 4516 7511
+#SRU 4517 7511
+#SRU 4518 7511
+#SRU 4531 7511
+#SRU 4532 7511
+#SRU 4533 7511
+#SRU 4535 7511
+#SRU 4536 7511
+#SRU 4537 7511
+#SRU 4538 7511
+#SRU 4545 7511
+#SRU 4546 7511
+#SRU 4547 7511
+#SRU 4600 7500
+#SRU 4610 7511
+#SRU 4612 7511
+#SRU 4619 7511
+#SRU 4700 7511
+#SRU 4730 7511
+#SRU 4731 7511
+#SRU 4732 7511
+#SRU 4733 7511
+#SRU 4790 7511
+#SRU 4900 7411
+#SRU 4910 7511
+#SRU 4920 7511
+#SRU 4940 7411
+#SRU 4944 7411
+#SRU 4945 7411
+#SRU 4947 7411
+#SRU 4950 7411
+#SRU 4960 7512
+#SRU 4970 7411
+#SRU 4974 7411
+#SRU 4975 7411
+#SRU 4977 7411
+#SRU 4980 7512
+#SRU 4981 7512
+#SRU 4987 7512
+#SRU 4988 7512
+#SRU 5000 7513
+#SRU 5010 7501
+#SRU 5011 7513
+#SRU 5012 7513
+#SRU 5013 7513
+#SRU 5020 7501
+#SRU 5030 7513
+#SRU 5040 7513
+#SRU 5050 7501
+#SRU 5060 7501
+#SRU 5061 7513
+#SRU 5062 7513
+#SRU 5063 7513
+#SRU 5064 7513
+#SRU 5065 7513
+#SRU 5070 7501
+#SRU 5090 7501
+#SRU 5098 7513
+#SRU 5099 7513
+#SRU 5099 7653
+#SRU 5100 7513
+#SRU 5110 7513
+#SRU 5120 7513
+#SRU 5130 7513
+#SRU 5131 7513
+#SRU 5132 7513
+#SRU 5140 7513
+#SRU 5160 7513
+#SRU 5161 7513
+#SRU 5162 7513
+#SRU 5163 7513
+#SRU 5164 7513
+#SRU 5165 7513
+#SRU 5170 7513
+#SRU 5190 7513
+#SRU 5191 7513
+#SRU 5192 7513
+#SRU 5193 7513
+#SRU 5198 7513
+#SRU 5199 7513
+#SRU 5199 7653
+#SRU 5200 7513
+#SRU 5210 7501
+#SRU 5211 7513
+#SRU 5212 7513
+#SRU 5220 7501
+#SRU 5221 7513
+#SRU 5222 7513
+#SRU 5250 7513
+#SRU 5251 7513
+#SRU 5252 7513
+#SRU 5290 7513
+#SRU 5300 7513
+#SRU 5310 7513
+#SRU 5320 7513
+#SRU 5330 7513
+#SRU 5340 7513
+#SRU 5350 7513
+#SRU 5360 7513
+#SRU 5370 7513
+#SRU 5380 7513
+#SRU 5390 7513
+#SRU 5400 7513
+#SRU 5410 7501
+#SRU 5411 7513
+#SRU 5412 7513
+#SRU 5420 7501
+#SRU 5430 7513
+#SRU 5440 7501
+#SRU 5460 7501
+#SRU 5480 7513
+#SRU 5490 7513
+#SRU 5491 7513
+#SRU 5492 7513
+#SRU 5493 7513
+#SRU 5500 7513
+#SRU 5510 7513
+#SRU 5520 7501
+#SRU 5530 7513
+#SRU 5550 7513
+#SRU 5580 7501
+#SRU 5590 7513
+#SRU 5600 7513
+#SRU 5610 7501
+#SRU 5611 7501
+#SRU 5612 7501
+#SRU 5613 7501
+#SRU 5615 7501
+#SRU 5616 7501
+#SRU 5619 7501
+#SRU 5620 7513
+#SRU 5630 7513
+#SRU 5640 7513
+#SRU 5650 7513
+#SRU 5660 7513
+#SRU 5670 7513
+#SRU 5690 7513
+#SRU 5700 7513
+#SRU 5710 7501
+#SRU 5720 7513
+#SRU 5730 7513
+#SRU 5790 7513
+#SRU 5800 7513
+#SRU 5810 7501
+#SRU 5820 7501
+#SRU 5830 7501
+#SRU 5831 7513
+#SRU 5832 7513
+#SRU 5890 7501
+#SRU 5900 7513
+#SRU 5910 7501
+#SRU 5920 7501
+#SRU 5930 7501
+#SRU 5940 7501
+#SRU 5950 7513
+#SRU 5960 7501
+#SRU 5970 7513
+#SRU 5980 7513
+#SRU 5990 7501
+#SRU 6000 7513
+#SRU 6010 7501
+#SRU 6020 7513
+#SRU 6030 7513
+#SRU 6040 7513
+#SRU 6050 7501
+#SRU 6055 7513
+#SRU 6060 7501
+#SRU 6061 7513
+#SRU 6062 7513
+#SRU 6063 7513
+#SRU 6064 7513
+#SRU 6069 7513
+#SRU 6070 7513
+#SRU 6071 7501
+#SRU 6072 7501
+#SRU 6072 7601
+#SRU 6080 7513
+#SRU 6090 7501
+#SRU 6100 7513
+#SRU 6110 7501
+#SRU 6150 7501
+#SRU 6200 7513
+#SRU 6210 7501
+#SRU 6211 7513
+#SRU 6212 7513
+#SRU 6213 7513
+#SRU 6214 7513
+#SRU 6215 7513
+#SRU 6230 7501
+#SRU 6250 7501
+#SRU 6300 7513
+#SRU 6310 7501
+#SRU 6320 7513
+#SRU 6330 7513
+#SRU 6340 7513
+#SRU 6341 7513
+#SRU 6342 7513
+#SRU 6342 7653
+#SRU 6350 7501
+#SRU 6351 7513
+#SRU 6352 7513
+#SRU 6360 7501
+#SRU 6361 7513
+#SRU 6362 7513
+#SRU 6370 7501
+#SRU 6380 7513
+#SRU 6390 7513
+#SRU 6400 7513
+#SRU 6410 7513
+#SRU 6420 7501
+#SRU 6421 7513
+#SRU 6422 7513
+#SRU 6423 7513
+#SRU 6424 7513
+#SRU 6430 7513
+#SRU 6440 7513
+#SRU 6450 7513
+#SRU 6490 7513
+#SRU 6500 7513
+#SRU 6510 7513
+#SRU 6520 7513
+#SRU 6530 7501
+#SRU 6540 7501
+#SRU 6550 7501
+#SRU 6560 7501
+#SRU 6570 7501
+#SRU 6580 7513
+#SRU 6590 7501
+#SRU 6800 7513
+#SRU 6810 7513
+#SRU 6820 7513
+#SRU 6830 7513
+#SRU 6840 7513
+#SRU 6850 7513
+#SRU 6860 7513
+#SRU 6870 7513
+#SRU 6880 7513
+#SRU 6890 7513
+#SRU 6900 7513
+#SRU 6910 7513
+#SRU 6920 7513
+#SRU 6930 7513
+#SRU 6940 7513
+#SRU 6950 7513
+#SRU 6970 7501
+#SRU 6980 7513
+#SRU 6981 7501
+#SRU 6982 7501
+#SRU 6982 7601
+#SRU 6990 7513
+#SRU 6991 7501
+#SRU 6992 7501
+#SRU 6992 7601
+#SRU 6993 7501
+#SRU 6996 7513
+#SRU 6997 7513
+#SRU 6998 7513
+#SRU 6999 7513
+#SRU 7000 7514
+#SRU 7010 7502
+#SRU 7011 7514
+#SRU 7012 7514
+#SRU 7013 7514
+#SRU 7014 7514
+#SRU 7015 7514
+#SRU 7016 7514
+#SRU 7017 7514
+#SRU 7018 7514
+#SRU 7019 7514
+#SRU 7030 7514
+#SRU 7031 7514
+#SRU 7032 7514
+#SRU 7034 7514
+#SRU 7035 7514
+#SRU 7036 7514
+#SRU 7037 7514
+#SRU 7038 7514
+#SRU 7039 7514
+#SRU 7080 7514
+#SRU 7081 7514
+#SRU 7082 7514
+#SRU 7083 7514
+#SRU 7089 7514
+#SRU 7090 7502
+#SRU 7200 7514
+#SRU 7210 7502
+#SRU 7211 7514
+#SRU 7212 7514
+#SRU 7213 7514
+#SRU 7214 7514
+#SRU 7215 7514
+#SRU 7216 7514
+#SRU 7217 7514
+#SRU 7218 7514
+#SRU 7219 7514
+#SRU 7220 7502
+#SRU 7221 7514
+#SRU 7222 7514
+#SRU 7224 7514
+#SRU 7225 7514
+#SRU 7227 7514
+#SRU 7228 7514
+#SRU 7229 7514
+#SRU 7230 7514
+#SRU 7231 7514
+#SRU 7232 7514
+#SRU 7234 7514
+#SRU 7235 7514
+#SRU 7236 7514
+#SRU 7237 7514
+#SRU 7238 7514
+#SRU 7239 7514
+#SRU 7240 7514
+#SRU 7280 7514
+#SRU 7281 7514
+#SRU 7282 7514
+#SRU 7283 7514
+#SRU 7284 7514
+#SRU 7285 7514
+#SRU 7286 7514
+#SRU 7288 7514
+#SRU 7289 7514
+#SRU 7290 7514
+#SRU 7291 7514
+#SRU 7292 7514
+#SRU 7300 7514
+#SRU 7310 7502
+#SRU 7311 7514
+#SRU 7312 7514
+#SRU 7313 7514
+#SRU 7314 7514
+#SRU 7315 7514
+#SRU 7316 7514
+#SRU 7317 7514
+#SRU 7318 7514
+#SRU 7319 7514
+#SRU 7320 7514
+#SRU 7321 7502
+#SRU 7322 7502
+#SRU 7323 7502
+#SRU 7324 7502
+#SRU 7330 7514
+#SRU 7331 7502
+#SRU 7332 7502
+#SRU 7333 7514
+#SRU 7350 7514
+#SRU 7370 7502
+#SRU 7380 7502
+#SRU 7381 7514
+#SRU 7382 7514
+#SRU 7383 7514
+#SRU 7384 7514
+#SRU 7385 7514
+#SRU 7386 7514
+#SRU 7387 7514
+#SRU 7388 7514
+#SRU 7389 7514
+#SRU 7390 7502
+#SRU 7391 7514
+#SRU 7392 7514
+#SRU 7399 7514
+#SRU 7400 7514
+#SRU 7410 7502
+#SRU 7411 7514
+#SRU 7412 7514
+#SRU 7418 7514
+#SRU 7420 7514
+#SRU 7430 7514
+#SRU 7440 7514
+#SRU 7441 7514
+#SRU 7448 7514
+#SRU 7460 7502
+#SRU 7461 7514
+#SRU 7462 7514
+#SRU 7463 7514
+#SRU 7470 7514
+#SRU 7490 7514
+#SRU 7500 7514
+#SRU 7510 7502
+#SRU 7511 7514
+#SRU 7512 7514
+#SRU 7515 7514
+#SRU 7516 7514
+#SRU 7518 7514
+#SRU 7519 7502
+#SRU 7520 7514
+#SRU 7521 7514
+#SRU 7522 7514
+#SRU 7525 7514
+#SRU 7526 7514
+#SRU 7528 7514
+#SRU 7529 7514
+#SRU 7530 7502
+#SRU 7531 7514
+#SRU 7532 7514
+#SRU 7532 7653
+#SRU 7533 7514
+#SRU 7534 7514
+#SRU 7550 7514
+#SRU 7551 7514
+#SRU 7552 7514
+#SRU 7553 7514
+#SRU 7554 7514
+#SRU 7570 7502
+#SRU 7571 7514
+#SRU 7572 7514
+#SRU 7572 7653
+#SRU 7580 7502
+#SRU 7581 7514
+#SRU 7582 7514
+#SRU 7583 7514
+#SRU 7589 7514
+#SRU 7590 7502
+#SRU 7600 7514
+#SRU 7610 7502
+#SRU 7620 7502
+#SRU 7621 7514
+#SRU 7622 7514
+#SRU 7622 7653
+#SRU 7623 7514
+#SRU 7623 7653
+#SRU 7630 7514
+#SRU 7631 7502
+#SRU 7632 7502
+#SRU 7632 7601
+#SRU 7650 7514
+#SRU 7670 7514
+#SRU 7671 7514
+#SRU 7678 7514
+#SRU 7690 7502
+#SRU 7691 7514
+#SRU 7692 7514
+#SRU 7693 7514
+#SRU 7699 7514
+#SRU 7710 7515
+#SRU 7720 7515
+#SRU 7730 7515
+#SRU 7740 7516
+#SRU 7760 7515
+#SRU 7770 7515
+#SRU 7780 7515
+#SRU 7790 7516
+#SRU 7810 7505
+#SRU 7811 7515
+#SRU 7812 7515
+#SRU 7813 7515
+#SRU 7814 7515
+#SRU 7815 7515
+#SRU 7816 7515
+#SRU 7817 7515
+#SRU 7819 7515
+#SRU 7820 7504
+#SRU 7821 7515
+#SRU 7824 7515
+#SRU 7829 7515
+#SRU 7830 7505
+#SRU 7831 7515
+#SRU 7832 7515
+#SRU 7833 7515
+#SRU 7834 7515
+#SRU 7835 7515
+#SRU 7836 7515
+#SRU 7839 7515
+#SRU 7840 7515
+#SRU 7960 7503
+#SRU 7970 7517
+#SRU 7971 7517
+#SRU 797199 7503
+#SRU 7972 7517
+#SRU 7973 7503
+#SRU 7990 7517
+#SRU 8010 7414
+#SRU 8012 7414
+#SRU 8012 7753
+#SRU 8013 7414
+#SRU 8014 7414
+#SRU 8016 7414
+#SRU 8016 7753
+#SRU 8019 7414
+#SRU 8020 7414
+#SRU 8022 7414
+#SRU 8023 7414
+#SRU 8030 7414
+#SRU 8070 7521
+#SRU 8072 7521
+#SRU 8073 7521
+#SRU 8076 7521
+#SRU 8077 7521
+#SRU 8078 7521
+#SRU 8080 7521
+#SRU 8082 7521
+#SRU 8083 7521
+#SRU 8086 7521
+#SRU 8087 7521
+#SRU 8088 7521
+#SRU 8110 7415
+#SRU 8110 7753
+#SRU 8111 7415
+#SRU 8111 7753
+#SRU 8112 7415
+#SRU 8112 7753
+#SRU 8113 7423
+#SRU 8113 7753
+#SRU 8116 7415
+#SRU 8116 7753
+#SRU 8117 7415
+#SRU 8117 7753
+#SRU 8118 7423
+#SRU 8118 7753
+#SRU 8120 7415
+#SRU 8121 7415
+#SRU 8122 7415
+#SRU 8123 7423
+#SRU 8130 7415
+#SRU 8131 7415
+#SRU 8132 7415
+#SRU 8133 7423
+#SRU 8170 7521
+#SRU 8171 7521
+#SRU 8172 7521
+#SRU 8173 7521
+#SRU 8174 7521
+#SRU 8176 7521
+#SRU 8177 7521
+#SRU 8180 7521
+#SRU 8181 7521
+#SRU 8182 7521
+#SRU 8183 7521
+#SRU 8184 7521
+#SRU 8186 7521
+#SRU 8187 7521
+#SRU 8210 7416
+#SRU 8212 7416
+#SRU 8216 7416
+#SRU 8216 7753
+#SRU 8220 7416
+#SRU 8221 7416
+#SRU 8222 7416
+#SRU 8223 7416
+#SRU 8230 7416
+#SRU 8231 7416
+#SRU 8236 7416
+#SRU 8240 7416
+#SRU 8250 7416
+#SRU 8251 7416
+#SRU 8252 7416
+#SRU 8254 7416
+#SRU 8254 7754
+#SRU 8255 7416
+#SRU 8260 7416
+#SRU 8261 7416
+#SRU 8262 7416
+#SRU 8263 7416
+#SRU 8270 7521
+#SRU 8270 7652
+#SRU 8271 7521
+#SRU 8272 7521
+#SRU 8272 7652
+#SRU 8273 7521
+#SRU 8280 7521
+#SRU 8280 7754
+#SRU 8281 7521
+#SRU 8282 7521
+#SRU 8282 7754
+#SRU 8283 7521
+#SRU 8310 7403
+#SRU 8311 7403
+#SRU 8312 7417
+#SRU 8313 7417
+#SRU 8314 7403
+#SRU 8314 7700
+#SRU 8317 7417
+#SRU 8319 7417
+#SRU 8330 7417
+#SRU 8331 7417
+#SRU 8336 7417
+#SRU 8340 7417
+#SRU 8350 7417
+#SRU 8360 7417
+#SRU 8361 7417
+#SRU 8362 7417
+#SRU 8363 7417
+#SRU 8370 7521
+#SRU 8370 7652
+#SRU 8380 7521
+#SRU 8380 7754
+#SRU 8390 7403
+#SRU 8400 7522
+#SRU 8410 7503
+#SRU 8411 7522
+#SRU 8412 7522
+#SRU 8413 7522
+#SRU 8414 7522
+#SRU 8415 7522
+#SRU 8417 7522
+#SRU 8418 7522
+#SRU 8419 7522
+#SRU 8420 7522
+#SRU 8421 7503
+#SRU 8422 7522
+#SRU 8423 7503
+#SRU 8423 7601
+#SRU 8429 7522
+#SRU 8430 7522
+#SRU 8431 7522
+#SRU 8436 7522
+#SRU 8440 7522
+#SRU 8460 7522
+#SRU 8461 7522
+#SRU 8462 7522
+#SRU 8463 7522
+#SRU 8490 7403
+#SRU 8491 7522
+#SRU 8710 7403
+#SRU 8750 7403
+#SRU 8810 7525
+#SRU 8811 7503
+#SRU 8819 7403
+#SRU 8819 7608
+#SRU 8820 7419
+#SRU 8830 7524
+#SRU 8840 7527
+#SRU 8850 7504
+#SRU 8851 7421
+#SRU 8852 7421
+#SRU 8853 7421
+#SRU 8860 7422
+#SRU 8861 7422
+#SRU 8862 7422
+#SRU 8863 7422
+#SRU 8864 7422
+#SRU 8865 7422
+#SRU 8866 7422
+#SRU 8869 7422
+#SRU 8890 7422
+#SRU 8892 7422
+#SRU 8896 7422
+#SRU 8899 7422
+#SRU 8910 7503
+#SRU 8920 7528
+#SRU 8920 7651
+#SRU 8930 7528
+#SRU 8930 7651
+#SRU 8980 7528
+#SRU 8990 7450
+#SRU 8999 7440
+#UB 0 1910 -300.00
+#RES 0 5010 300.00
+#OUB 0 5010 {1 "100000"} 100.00
+#OUB 0 5010 {1 "100001"} 200.00
+#OUB 0 5010 {2 "100000"} 100.00
+#OUB 0 5010 {2 "100001"} 200.00
+#OUB 0 5010 {6 "1000"} 200.00
+#OUB 0 5010 {6 "1234567891234567"} 100.00
+#VER A 1 20210101 "test" 20211116 "#1 Anders Engman"
+{
+#TRANS 5010 {1 "100000" 2 "100000" 6 "1234567891234567"} 100.00 20210101 ""
+#TRANS 5010 {1 "100001" 2 "100001" 6 "1000"} 200.00 20210101 ""
+#TRANS 1910 {} -300.00 20210101 ""
+}

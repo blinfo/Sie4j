@@ -2,6 +2,7 @@ package sie;
 
 import java.io.File;
 import java.io.InputStream;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
@@ -189,12 +190,28 @@ public class Sie4jTest {
         DataReader reader = Sie4j.readerFromSie(asByteArray("/sample/Testbolaget_Enskild_firma.SE"));
         assertEquals("Should contain 1 error", 1l, reader.validate().getLogs().size());
     }
-    
+
     @Test
     public void test_that_CorpoprateID_error_reports_original_cid() {
         String expectedMessage = "Organisationsnummer ska vara av formatet nnnnnn-nnnn. 198605100000";
         DataReader reader = Sie4j.readerFromSie(asByteArray("/sample/Testbolaget_Enskild_firma.SE"));
         assertEquals("", expectedMessage, reader.validate().getLogs().get(0).getMessage());
+    }
+
+    @Test
+    public void test_project_costBearer_and_costCenter_with_long_numbers_and_labels() {
+        DataReader reader = Sie4j.readerFromSie(asByteArray("/sample/SIE_test_av_KST_projekt_Testbolaget_e - kopia.SE"));
+        String expectedLabel = "TEST alldeles for langt projektnamn fungerar detta att importera";
+        String expectedNumber = "1234567891234567999";
+        assertTrue("", reader.read().getObjects().stream().map(ao -> ao.getLabel()).anyMatch(s -> s.equals(expectedLabel)));
+        assertTrue("", reader.read().getObjects().stream().map(ao -> ao.getNumber()).anyMatch(s -> s.equals(expectedNumber)));
+    }
+
+    @Test
+    public void test2_project_costBearer_and_costCenter_with_long_numbers_and_labels() {
+        String expectedLabel = "ASDF XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+        DataReader reader = Sie4j.readerFromSie(asByteArray("/sample/SIE_test_av_KST_projekt_Testbolaget_e - kopia ny.SE"));
+        assertTrue("", reader.read().getObjects().stream().map(ao -> ao.getLabel()).anyMatch(s -> s.equals(expectedLabel)));
     }
 
     private byte[] asByteArray(String path) {
