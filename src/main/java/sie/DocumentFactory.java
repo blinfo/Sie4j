@@ -374,7 +374,7 @@ class DocumentFactory {
         }
         AccountingPlan.Builder builder = AccountingPlan.builder();
         if (hasLine(Entity.ACCOUNTING_PLAN_TYPE)) {
-            builder.type(getLineParts(Entity.ACCOUNTING_PLAN_TYPE).get(1).trim());
+            builder.type(getLineAsString(Entity.ACCOUNTING_PLAN_TYPE));
         } else {
             addInfo("Kontoplanstyp saknas");
         }

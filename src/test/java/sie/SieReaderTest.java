@@ -106,10 +106,11 @@ public class SieReaderTest {
         String expectedContact = "Ada Adamsson";
         String expectedStreet = "Fjärde långatan 127";
         String expectedPostalAddress = "413 05 Göteborg";
+        String expectedEmptyPhone = "";
         assertEquals("Contact should be ", expectedContact, address.getContact());
         assertEquals("Street should be ", expectedStreet, address.getStreetAddress());
         assertEquals("Postal address should be ", expectedPostalAddress, address.getPostalAddress());
-        assertNull("Phone should be null", address.getPhone());
+        assertEquals("Phone should be empty (\"\")", expectedEmptyPhone, address.getPhone());
     }
 
     @Test

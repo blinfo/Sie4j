@@ -1,5 +1,7 @@
 package sie.domain;
 
+import java.util.Optional;
+
 /**
  * Address - The address of the Company present in the document.
  * <p>
@@ -50,7 +52,7 @@ public class Address implements Entity {
      * @return String - the contact.
      */
     public String getContact() {
-        return contact;
+        return Optional.ofNullable(contact).orElse("");
     }
 
     /**
@@ -59,7 +61,7 @@ public class Address implements Entity {
      * @return String - the address.
      */
     public String getStreetAddress() {
-        return streetAddress;
+        return Optional.ofNullable(streetAddress).orElse("");
     }
 
     /**
@@ -70,7 +72,7 @@ public class Address implements Entity {
      * @return String - the postal address
      */
     public String getPostalAddress() {
-        return postalAddress;
+        return Optional.ofNullable(postalAddress).orElse("");
     }
 
     /**
@@ -79,7 +81,7 @@ public class Address implements Entity {
      * @return String - the phone number
      */
     public String getPhone() {
-        return phone;
+        return Optional.ofNullable(phone).orElse("");
     }
 
     public Boolean isEmpty() {
@@ -120,7 +122,7 @@ public class Address implements Entity {
          * @return Address.Builder
          */
         public Builder contact(String contact) {
-            this.contact = contact;
+            this.contact = contact == null ? null : contact.trim();
             return this;
         }
 
@@ -134,7 +136,7 @@ public class Address implements Entity {
          * @return Address.Builder
          */
         public Builder streetAddress(String streetAddress) {
-            this.streetAddress = streetAddress;
+            this.streetAddress = streetAddress == null ? null : streetAddress.trim();
             return this;
         }
 
@@ -150,7 +152,7 @@ public class Address implements Entity {
          * @return Address.Builder
          */
         public Builder postalAddress(String postalAddress) {
-            this.postalAddress = postalAddress;
+            this.postalAddress = postalAddress == null ? null : postalAddress.trim();
             return this;
         }
 
@@ -167,7 +169,7 @@ public class Address implements Entity {
          * @return Address.Builder
          */
         public Builder phone(String phone) {
-            this.phone = phone;
+            this.phone = phone == null ? null : phone.trim();
             return this;
         }
 
