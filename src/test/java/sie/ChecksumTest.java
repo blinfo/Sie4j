@@ -10,7 +10,7 @@ import sie.domain.Document;
  */
 public class ChecksumTest {
 
-    private static final Document DOCUMENT = Sie4j.toDocument(ChecksumTest.class.getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
+    private static final Document DOCUMENT = Sie4j.fromSie(ChecksumTest.class.getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
 
     private static byte[] getStream() {
         return SieReader.streamToByteArray(ChecksumTest.class.getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
@@ -34,5 +34,24 @@ public class ChecksumTest {
         assertEquals("Document checksum should be " + expResult, expResult, DOCUMENT.getChecksum().get());
         assertEquals("Document checksum should be " + expResult, expResult, Checksum.calculate(DOCUMENT));
         assertEquals("InputStream checksum should be " + expResult, expResult, Checksum.calculate(getStream()));
+    }
+
+    @Test
+    public void test1_that_calculate_with_sources_from_both_sie_and_json_matches() {
+        Document jsonDoc = Sie4j.fromJson(getClass().getResourceAsStream("/sample/json/BLBLOV_SIE4_UTF_8_SI.json"));
+        Document sieDoc = Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8.SI"));
+        String jsonChecksum = Sie4j.calculateChecksum(jsonDoc);
+        String sieChecksum = Sie4j.calculateChecksum(sieDoc);
+        assertEquals("Both checksums should match", sieChecksum, jsonChecksum);
+    }
+
+    @Test
+    public void test2_that_calculate_with_sources_from_both_sie_and_json_matches() {
+        String jsonString = Sie4j.asJson(getClass().getResourceAsStream("/sample/Arousells_Visning_AB.SE"));
+        Document jsonDoc = Sie4j.fromJson(jsonString);
+        Document sieDoc = Sie4j.fromSie(getClass().getResourceAsStream("/sample/Arousells_Visning_AB.SE"));
+        String jsonChecksum = Sie4j.calculateChecksum(jsonDoc);
+        String sieChecksum = Sie4j.calculateChecksum(sieDoc);
+        assertEquals("Both checksums should match", sieChecksum, jsonChecksum);
     }
 }

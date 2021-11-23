@@ -107,13 +107,7 @@ class DocumentFactory {
                 .dimensions(getDimensions())
                 .objects(getObjects())
                 .vouchers(getVouchers());
-        addChecksum(builder);
         document = builder.apply();
-    }
-
-    private void addChecksum(Document.Builder builder) {
-        Document doc = builder.apply();
-        builder.checksum(Checksum.calculate(doc));
     }
 
     private MetaData getMetaData() {

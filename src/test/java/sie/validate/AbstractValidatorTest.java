@@ -10,6 +10,6 @@ import sie.domain.Document;
 public abstract class AbstractValidatorTest {
 
     protected Document getDocument(String filename) {
-        return Sie4j.toDocument(getClass().getResourceAsStream("/sample/" + filename));
+        return Sie4j.fromSie(getClass().getResourceAsStream("/sample/" + filename));
     }
 }

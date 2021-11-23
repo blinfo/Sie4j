@@ -9,7 +9,7 @@ import sie.domain.Document;
  *
  * @author Håkan Lidén
  */
-@JsonPropertyOrder({"metaData", "dimensions", "objects", "accounts", "voucherNumberSeries", "vouchers"})
+@JsonPropertyOrder({"metaData", "dimensions", "objects", "accounts", "voucherNumberSeries", "vouchers", "checksum"})
 public class DocumentDTO implements DTO {
 
     private MetaDataDTO metaData;
@@ -17,6 +17,7 @@ public class DocumentDTO implements DTO {
     private List<VoucherDTO> vouchers;
     private List<AccountingDimensionDTO> dimensions;
     private List<AccountingObjectDTO> objects;
+    private String checksum;
 
     public static DocumentDTO from(Document document) {
         DocumentDTO dto = new DocumentDTO();
@@ -25,6 +26,7 @@ public class DocumentDTO implements DTO {
         dto.setVouchers(document.getVouchers().stream().map(VoucherDTO::from).collect(Collectors.toList()));
         dto.setDimensions(document.getDimensions().stream().map(AccountingDimensionDTO::from).collect(Collectors.toList()));
         dto.setObjects(document.getObjects().stream().map(AccountingObjectDTO::from).collect(Collectors.toList()));
+        document.getChecksum().ifPresent(dto::setChecksum);
         return dto;
     }
 
@@ -79,5 +81,13 @@ public class DocumentDTO implements DTO {
 
     public void setVoucherNumberSeries(List<String> series) {
         // Read only, Do nothing
+    }
+
+    public String getChecksum() {
+        return checksum;
+    }
+
+    public void setChecksum(String checksum) {
+        this.checksum = checksum;
     }
 }

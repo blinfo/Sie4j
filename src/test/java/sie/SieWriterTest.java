@@ -35,7 +35,7 @@ public class SieWriterTest {
                 .accountingPlan(createAccountingPlan())
                 .vouchers(createVouchers())
                 .apply();
-        String result = Sie4j.fromDocument(doc);
+        String result = Sie4j.asSie(doc);
         String expectedResult = getResult();
         assertEquals("Result should be " + expectedResult, expectedResult, result);
     }

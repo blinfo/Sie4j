@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import sie.Sie4j;
 import sie.domain.Document;
 import sie.domain.Program;
 import sie.exception.SieException;

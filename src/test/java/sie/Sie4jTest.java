@@ -73,11 +73,11 @@ public class Sie4jTest {
 
     @Test
     public void test_write_sie_file() {
-        Document document = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
+        Document document = Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE1.SE"));
         File target = new File(System.getProperty("user.home") + "/sie-test/BLBLOV_SIE1_copy.SE");
         assertFalse("File should not exist", target.exists());
         target.getParentFile().mkdirs();
-        Sie4j.fromDocument(document, target);
+        Sie4j.asSie(document, target);
         assertTrue("File should exist", target.exists());
         target.delete();
         assertFalse("File should not exist", target.exists());
@@ -87,7 +87,7 @@ public class Sie4jTest {
     public void test_file_with_missing_voucher_series_marker() {
         // If no series is given, an empty string should be used in the SIE file:
         // #VER "" 1 20170101 " " 20170119 " " 
-        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_voucher_series.SE"));
+        Document doc = Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_voucher_series.SE"));
         Voucher firstVoucher = doc.getVouchers().get(0);
         assertEquals("First vouchers number should be 1", 1l, firstVoucher.getNumber().get().longValue());
         assertFalse("First vouchers serie should be empty", firstVoucher.getSeries().isPresent());
@@ -97,14 +97,14 @@ public class Sie4jTest {
 
     @Test
     public void test_SIE2_with_non_numeric_account_number_should_throw_exception() {
-        SieException ex = assertThrows("", SieException.class, () -> Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE2_UTF_8_with_non_numeric_account_number.SE")));
+        SieException ex = assertThrows("", SieException.class, () -> Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE2_UTF_8_with_non_numeric_account_number.SE")));
         String expectedMessage = "Kontot har inte ett numeriskt värde: 11AF";
         assertEquals("Should have message: " + expectedMessage, expectedMessage, ex.getMessage());
     }
 
     @Test
     public void test_that_too_long_account_number_throws_exception() {
-        SieException ex = assertThrows("", SieException.class, () -> Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_8_digit_account_number.SE")));
+        SieException ex = assertThrows("", SieException.class, () -> Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_8_digit_account_number.SE")));
         String expectedMessage = "Kontot är längre än sex siffror: 11100111";
         assertEquals("Should have message: " + expectedMessage, expectedMessage, ex.getMessage());
     }
@@ -119,7 +119,7 @@ public class Sie4jTest {
 
     @Test
     public void test_file_with_missing_company_name() {
-        Document doc = Sie4j.toDocument(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_company_name.SI"));
+        Document doc = Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_missing_company_name.SI"));
         assertTrue("Company name should be empty", doc.getMetaData().getCompany().getName().isEmpty());
     }
 

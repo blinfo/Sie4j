@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import sie.Sie4j;
 import sie.exception.InvalidSieTypeException;
 import sie.exception.SieException;
 
@@ -131,6 +132,9 @@ public class Document implements Entity {
         }
 
         public Document apply() {
+            if (checksum == null) {
+                checksum = Sie4j.calculateChecksum(new Document(metaData, accountingPlan, vouchers, dimensions, objects, null));
+            }
             return new Document(metaData, accountingPlan, vouchers, dimensions, objects, checksum);
         }
     }

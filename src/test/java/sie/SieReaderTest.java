@@ -48,9 +48,9 @@ public class SieReaderTest {
     @Test
     public void test_checkSumForDocument() {
         String expectedChecksum = "705756706151497349476164793776747166613756673D3D";
-        Document cp437doc = Sie4j.toDocument(getStream(""));
-        Document utf8doc = Sie4j.toDocument(getStream("_UTF_8"));
-        Document iso8859doc = Sie4j.toDocument(getStream("_ISO_8859_15"));
+        Document cp437doc = Sie4j.fromSie(getStream(""));
+        Document utf8doc = Sie4j.fromSie(getStream("_UTF_8"));
+        Document iso8859doc = Sie4j.fromSie(getStream("_ISO_8859_15"));
         assertTrue("Document checksum should exist", cp437doc.getChecksum().isPresent());
         assertTrue("Document checksum should exist", utf8doc.getChecksum().isPresent());
         assertTrue("Document checksum should exist", iso8859doc.getChecksum().isPresent());
@@ -62,7 +62,7 @@ public class SieReaderTest {
 
     @Test
     public void test_BLA_Sie_SI_File() {
-        Document doc = Sie4j.toDocument(asByteArray("/sample/CC3.SI"));
+        Document doc = Sie4j.fromSie(asByteArray("/sample/CC3.SI"));
         assertTrue("Document should be of type I4", doc.getMetaData().getSieType().equals(Document.Type.I4));
         assertTrue("AccountingPlan should exist", doc.getAccountingPlan().isPresent());
         AccountingPlan accountingPlan = doc.getAccountingPlan().get();
@@ -75,7 +75,7 @@ public class SieReaderTest {
 
     @Test
     public void test_BLA_Sie_SE_File() {
-        Document doc = Sie4j.toDocument(asByteArray("/sample/CC2-foretaget.SE"));
+        Document doc = Sie4j.fromSie(asByteArray("/sample/CC2-foretaget.SE"));
         assertTrue("Document should be of type E4", doc.getMetaData().getSieType().equals(Document.Type.E4));
         assertTrue("AccountingPlan should exist", doc.getAccountingPlan().isPresent());
         AccountingPlan accountingPlan = doc.getAccountingPlan().get();
@@ -98,7 +98,7 @@ public class SieReaderTest {
 
     @Test
     public void test_readFaultyAddress() {
-        Document doc = Sie4j.toDocument(asByteArray("/sample/BLBLOV_SIE4_UTF_8_WITH_FAULTY_ADDRESS.SI"));
+        Document doc = Sie4j.fromSie(asByteArray("/sample/BLBLOV_SIE4_UTF_8_WITH_FAULTY_ADDRESS.SI"));
         Optional<Address> optAddr = doc.getMetaData().getCompany().getAddress();
         assertTrue("Document should have an address", optAddr.isPresent());
         Address address = optAddr.get();
@@ -115,7 +115,7 @@ public class SieReaderTest {
 
     @Test
     public void SIE_file_where_program_version_is_missing_should_be_handled() {
-        Document doc = Sie4j.toDocument(asByteArray("/sample/SIE_with_missing_program_version.se"));
+        Document doc = Sie4j.fromSie(asByteArray("/sample/SIE_with_missing_program_version.se"));
         String expectedFirstVoucherText = "Dagsrapport 110000775";
         assertNull("Version should be null", doc.getMetaData().getProgram().getVersion());
         assertEquals("Document should contain 3 vouchers", 3l, doc.getVouchers().size());
@@ -125,7 +125,7 @@ public class SieReaderTest {
 
     @Test
     public void test_strange_sie_file() {
-        Document strangeDoc = Sie4j.toDocument(asByteArray("/sample/Transaktioner per Z-rapport.se"));
+        Document strangeDoc = Sie4j.fromSie(asByteArray("/sample/Transaktioner per Z-rapport.se"));
         Company company = strangeDoc.getMetaData().getCompany();
         String expectedCid = "555555-5555";
         assertTrue("CID should be present", company.getCorporateID().isPresent());

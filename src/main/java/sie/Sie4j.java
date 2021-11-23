@@ -26,10 +26,13 @@ import sie.validate.SieLog.Level;
  * <th align="left">sie.domain<td>Contains all the domain entities and their
  * builders
  * <tr>
- * <th align="left">sie.sample<td>Contains a single class,
- * SampleDocumentGenerator. Use it to generate sample SIE data.
+ * <th align="left">sie.dto<td>Contains all the dto:s of the entities.
  * <tr>
- * <th align="left">sie.io<td>Serializers for java.time
+ * <th align="left">sie.exception<td>Contains a Sie4j specific Exceptions,
+ * <tr>
+ * <th align="left">sie.io<td>Serializers for java.time.
+ * <tr>
+ * <th align="left">sie.validate<td>Validators for the Sie4j content.
  * </table>
  * <p>
  * <em>Referenser:</em>
@@ -47,82 +50,161 @@ import sie.validate.SieLog.Level;
 public class Sie4j {
 
     /**
-     * Convert SIE data to JSON
+     * Convert SIE data to JSON.
      *
-     * @param input
+     * @param input InputStream
      * @return
      */
     public static String asJson(InputStream input) {
         return Serializer.asJson(input);
     }
 
+    /**
+     * Convert Document to JSON
+     *
+     * @param input Document
+     * @return
+     */
     public static String asJson(Document input) {
         return Serializer.asJson(input);
     }
 
+    /**
+     * Generate Document from a JSON InputStream.
+     *
+     * @param input InputStream
+     * @return
+     */
     public static Document fromJson(InputStream input) {
         return Deserializer.fromJson(SieReader.streamToByteArray(input));
     }
 
+    /**
+     * Generate Document from a JSON String.
+     *
+     * @param input String
+     * @return
+     */
     public static Document fromJson(String input) {
         return Deserializer.fromJson(input);
     }
 
+    /**
+     * Generate Document from a DocumentDTO.
+     *
+     * @param dto DocumentDTO
+     * @return
+     */
     public static Document fromJson(DocumentDTO dto) {
         return Deserializer.fromJson(dto);
     }
 
+    /**
+     * Create a DataReader from SIE as a byte array.
+     *
+     * @param input byte[]
+     * @return
+     */
     public static DataReader readerFromSie(byte[] input) {
         return SieReader.from(input);
     }
 
+    /**
+     * Create a DataReader from SIE as a byte array.
+     * <p>
+     * If the Boolean "checkBalances" is set to true, a check will be made that
+     * the opening balances and transactions will match the closing balances.
+     * This will only be true if the file contains all transactions for the
+     * financial year (and they do indeed balance).
+     *
+     * @param input byte[]
+     * @param checkBalances Boolean
+     * @return
+     */
     public static DataReader readerFromSieWithBalanceCheckOption(byte[] input, Boolean checkBalances) {
         return SieReader.of(input, checkBalances);
     }
 
+    /**
+     * Create a DataReader from JSON as a byte array.
+     *
+     * @param input byte[]
+     * @return
+     */
     public static DataReader readerFromJson(byte[] input) {
         return JsonReader.from(input);
     }
 
+
+    /**
+     * Create a DataReader from JSON as a byte array.
+     * <p>
+     * If the Boolean "checkBalances" is set to true, a check will be made that
+     * the opening balances and transactions will match the closing balances.
+     * This will only be true if the file contains all transactions for the
+     * financial year (and they do indeed balance).
+     *
+     * @param input byte[]
+     * @param checkBalances Boolean
+     * @return
+     */
     public static DataReader readerFromJsonWithBalanceCheck(byte[] input, Boolean checkBalances) {
         return JsonReader.of(input, checkBalances);
     }
 
-    public static Document toDocument(byte[] input) {
+    /**
+     * Generate Document from a SIE byte array.
+     *
+     * @param input byte[]
+     * @return
+     */
+    public static Document fromSie(byte[] input) {
         return SieReader.from(input).read();
     }
 
-    public static Document toDocument(InputStream input) {
-        return toDocument(SieReader.streamToByteArray(input));
+    /**
+     * Generate Document from a SIE String.
+     *
+     * @param input String
+     * @return
+     */
+    public static Document fromSie(InputStream input) {
+        return fromSie(SieReader.streamToByteArray(input));
     }
 
-    public static Document toDocument(File input) {
+    /**
+     * Generate Document from a SIE File.
+     *
+     * @param input File
+     * @return
+     */
+    public static Document fromSie(File input) {
         try {
-            return toDocument(new FileInputStream(input));
+            return fromSie(new FileInputStream(input));
         } catch (FileNotFoundException ex) {
             throw new SieException(ex);
         }
     }
 
     /**
-     * This method produces a UTF-8 String with SIE content.
+     * Produces a UTF-8 String with SIE content.
      *
      * @param input Document
      * @return
      */
-    public static String fromDocument(Document input) {
-        return fromDocument(input, StandardCharsets.UTF_8);
+    public static String asSie(Document input) {
+        return asSie(input, StandardCharsets.UTF_8);
     }
 
     /**
-     * This method produces a String with SIE content with the charset
+     * Produces a String with SIE content with the charset
      * specified.
      *
      * @param input Document
      * @param charset Charset for the output.
      * @return String
      */
-    public static String fromDocument(Document input, Charset charset) {
+    public static String asSie(Document input, Charset charset) {
         return SieWriter.write(input, charset).trim();
     }
 
@@ -136,8 +218,8 @@ public class Sie4j {
      * @param target Target file
      * @return
      */
-    public static File fromDocument(Document input, File target) {
-        return fromDocument(input, target, StandardCharsets.UTF_8);
+    public static File asSie(Document input, File target) {
+        return asSie(input, target, StandardCharsets.UTF_8);
     }
 
     /**
@@ -151,7 +233,7 @@ public class Sie4j {
      * @param charset Charset for the file
      * @return
      */
-    public static File fromDocument(Document input, File target, Charset charset) {
+    public static File asSie(Document input, File target, Charset charset) {
         return SieWriter.write(input, target, charset);
     }
 
