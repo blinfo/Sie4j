@@ -12,6 +12,7 @@ import sie.domain.Entity;
 import sie.domain.Generated;
 import sie.domain.MetaData;
 import sie.domain.Program;
+import sie.exception.InvalidDocumentException;
 
 /**
  *
@@ -48,7 +49,7 @@ class SieStringBuilder {
             add(Entity.VOUCHER,
                     "\"" + voucher.getSeries().orElse("") + "\"",
                     voucher.getNumber().map(num -> num.toString()).orElse("\"\""),
-                    Optional.ofNullable(voucher.getDate()).map(date  -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
+                    Optional.ofNullable(voucher.getDate()).map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
                     "\"" + voucher.getText().orElse("") + "\"",
                     voucher.getRegistrationDate().map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
                     "\"" + voucher.getSignature().orElse("") + "\"", "\n{");
@@ -107,6 +108,9 @@ class SieStringBuilder {
     }
 
     private void addMetaData() {
+        if (document.getMetaData() == null) {
+            throw new InvalidDocumentException("MetaData is missing");
+        }
         MetaData data = document.getMetaData();
         add(Entity.READ, "0");
         addProgram();
@@ -131,11 +135,17 @@ class SieStringBuilder {
     }
 
     private void addProgram() {
+        if (document.getMetaData().getProgram() == null) {
+            return;
+        }
         Program prog = document.getMetaData().getProgram();
         add(Entity.PROGRAM, "\"" + prog.getName() + "\"", "\"" + prog.getVersion() + "\"");
     }
 
     private void addGenerated() {
+        if (document.getMetaData().getGenerated() == null) {
+            return;
+        }
         Generated gen = document.getMetaData().getGenerated();
         add(Entity.GENERATED, gen.getDate().format(Entity.DATE_FORMAT), gen.getSignature().map(sign -> "\"" + sign + "\"").orElse(""));
     }
@@ -145,6 +155,9 @@ class SieStringBuilder {
     }
 
     private void addCompany() {
+        if (document.getMetaData().getCompany() == null) {
+            return;
+        }
         Company company = document.getMetaData().getCompany();
         company.getType().ifPresent(type -> add(Entity.COMPANY_TYPE, type.name()));
         company.getId().ifPresent(id -> add(Entity.COMPANY_ID, "\"" + id + "\""));

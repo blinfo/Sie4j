@@ -2,7 +2,6 @@ package sie;
 
 import java.io.File;
 import java.io.InputStream;
-import java.time.YearMonth;
 import java.util.List;
 import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;

@@ -10,6 +10,10 @@ import sie.validate.SieLog;
  */
 public class InvalidDocumentException extends SieException {
 
+    public InvalidDocumentException(String message) {
+        super(message);
+    }
+
     public InvalidDocumentException(List<SieLog> criticalErrors) {
         super(criticalErrors.stream().map(SieLog::toString).collect(Collectors.joining("\n")));
     }
