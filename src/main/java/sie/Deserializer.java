@@ -203,13 +203,15 @@ class Deserializer {
     }
 
     private PeriodicalBalance createPeriodicalBalance(PeriodicalBalanceDTO input) {
-        return PeriodicalBalance.builder()
+        PeriodicalBalance.Builder builder = PeriodicalBalance.builder()
                 .amount(input.getAmount())
                 .period(YearMonth.parse(input.getPeriod()))
                 .yearIndex(input.getYearIndex())
-                .quantity(input.getQuantity())
-                .specification(input.getObjectId().getDimensionId(), input.getObjectId().getObjectNumber())
-                .apply();
+                .quantity(input.getQuantity());
+        if (input.getObjectId() != null) {
+            builder.specification(input.getObjectId().getDimensionId(), input.getObjectId().getObjectNumber());
+        }
+        return builder.apply();
     }
 
     private PeriodicalBudget createPeriodicalBudget(PeriodicalBudgetDTO input) {

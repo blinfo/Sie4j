@@ -46,10 +46,6 @@ public class AccountingDimension implements Entity, Comparable<AccountingDimensi
         this.parentId = parentId;
     }
 
-    public static AccountingDimension of(Integer id, String label) {
-        return new AccountingDimension(id, label, null);
-    }
-
     public static AccountingDimension of(Integer id, String label, Integer parentId) {
         return new AccountingDimension(id, label, parentId);
     }

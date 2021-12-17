@@ -53,7 +53,7 @@ class DocumentFactory {
     private boolean conversion = true;
 
     private DocumentFactory(String content) {
-        this.content = content;
+        this.content = content.replaceAll("\r", "");
     }
 
     static DocumentFactory from(String content) {
@@ -398,47 +398,42 @@ class DocumentFactory {
 
     private void handleAccountPeriodicalBalance(String number, Account.Builder accountBuilder) {
         getLineParts(number, 3, Entity.PERIODICAL_BALANCE).stream().forEach(l -> {
-            switch (l.get(0).replaceAll("#", "")) {
-                case Entity.PERIODICAL_BALANCE:
-                    YearMonth period = YearMonth.parse(l.get(2).replaceAll(REPLACE_STRING, ""), Entity.YEAR_MONTH_FORMAT);
-                    // Ensure the right year index is provided
-                    Integer yearIndex = findFinancialYearIndexByPeriod(period).orElse(Integer.valueOf(l.get(1)));
-                    String amountString = l.get(5).replaceAll(REPLACE_STRING, "");
-                    if (amountString.contains(",")) {
-                        addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
-                        amountString = amountString.replaceAll(",", ".");
-                    }
-                    PeriodicalBalance.Builder pbBuilder = PeriodicalBalance.builder()
-                            .yearIndex(yearIndex)
-                            .period(period);
-                    try {
-                        BigDecimal amount = new BigDecimal(amountString);
-                        pbBuilder.amount(amount);
-                    } catch (NumberFormatException e) {
-                        SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för periodbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
-                        addCritical(ex);
-                    }
-                    Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(4));
-                    while (matcher.find()) {
-                        pbBuilder.specification(Integer.valueOf(matcher.group(2)), matcher.group(3));
-                    }
-                    if (l.size() > 6) {
-                        String quantity = l.get(6).replaceAll(REPLACE_STRING, "");
-                        if (quantity.contains(",")) {
-                            addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
-                            quantity = quantity.replaceAll(",", ".");
-                        }
-                        try {
-                            pbBuilder.quantity(Double.valueOf(quantity));
-                        } catch (NumberFormatException e) {
-                            SieException ex = new InvalidQuantityException("Strängen '" + quantity + "' för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
-                            addCritical(ex);
-                        }
-                    }
-                    accountBuilder.addPeriodicalBalance(pbBuilder.apply());
-                    break;
-
+            YearMonth period = YearMonth.parse(l.get(2).replaceAll(REPLACE_STRING, ""), Entity.YEAR_MONTH_FORMAT);
+            // Ensure the right year index is provided
+            Integer yearIndex = findFinancialYearIndexByPeriod(period).orElse(Integer.valueOf(l.get(1)));
+            String amountString = l.get(5).replaceAll(REPLACE_STRING, "");
+            if (amountString.contains(",")) {
+                addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
+                amountString = amountString.replaceAll(",", ".");
             }
+            PeriodicalBalance.Builder pbBuilder = PeriodicalBalance.builder()
+                    .yearIndex(yearIndex)
+                    .period(period);
+            try {
+                BigDecimal amount = new BigDecimal(amountString);
+                pbBuilder.amount(amount);
+            } catch (NumberFormatException e) {
+                SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för periodbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
+                addCritical(ex);
+            }
+            Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(4));
+            while (matcher.find()) {
+                pbBuilder.specification(Integer.valueOf(matcher.group(2)), matcher.group(3));
+            }
+            if (l.size() > 6) {
+                String quantity = l.get(6).replaceAll(REPLACE_STRING, "");
+                if (quantity.contains(",")) {
+                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
+                    quantity = quantity.replaceAll(",", ".");
+                }
+                try {
+                    pbBuilder.quantity(Double.valueOf(quantity));
+                } catch (NumberFormatException e) {
+                    SieException ex = new InvalidQuantityException("Strängen '" + quantity + "' för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
+                    addCritical(ex);
+                }
+            }
+            accountBuilder.addPeriodicalBalance(pbBuilder.apply());
         });
     }
 
@@ -541,13 +536,10 @@ class DocumentFactory {
 
     private List<AccountingDimension> getDimensions() {
         List<AccountingDimension> dimList = getLinesParts(Entity.DIMENSION).stream().map(line -> {
-            if (line.size() > 3) {
-                return AccountingDimension.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
-                        line.get(2).replaceAll(REPLACE_STRING, ""),
-                        Integer.valueOf(line.get(3).replaceAll(REPLACE_STRING, "")));
-            }
+            Integer parentId = line.size() > 3 ? Integer.valueOf(line.get(3).replaceAll(REPLACE_STRING, "")) : null;
             return AccountingDimension.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
-                    line.get(2).replaceAll(REPLACE_STRING, ""));
+                    line.get(2).replaceAll(REPLACE_STRING, ""),
+                    parentId);
         }).collect(Collectors.toList());
         if (!dimList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
             addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.DIMENSION, Entity.DIMENSION);
