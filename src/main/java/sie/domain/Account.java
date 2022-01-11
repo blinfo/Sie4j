@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import sie.exception.MissingAccountNumberException;
 
 /**
@@ -510,25 +511,34 @@ public class Account implements Entity, Comparable<Account> {
          * <p>
          * Usually accounts 1000 through 1999
          */
-        T,
+        T("asset"),
         /**
          * Debt (Skuld)
          * <p>
          * Usually accounts 2000 through 2999
          */
-        S,
+        S("debt"),
         /**
          * Income (Intäkt)
          * <p>
          * Usually accounts 3000 through 3999
          */
-        I,
+        I("income"),
         /**
          * Cost (Kostnad)
          * <p>
          * Usually accounts 4000 through 7999
          */
-        K;
+        K("cost");
+        private final String label;
+
+        private Type(String label) {
+            this.label = label;
+        }
+
+        public String label() {
+            return label;
+        }
 
         /**
          * Find type by string.
@@ -536,15 +546,16 @@ public class Account implements Entity, Comparable<Account> {
          * Returns an optional of the type matching the string, or an empty
          * optional if no type is found.
          *
-         * @param string String to be found: Type.find("T")
+         * @param string String to be found: Type.find("T"), Type.find("asset")
          * @return Optional of Type
          */
         public static Optional<Type> find(String string) {
-            try {
-                return Optional.of(valueOf(string.toUpperCase()));
-            } catch (IllegalArgumentException | NullPointerException ex) {
+            if (string == null || string.isBlank()) {
                 return Optional.empty();
             }
+            return Stream.of(values()).filter(t -> t.name().equalsIgnoreCase(string)
+                    || t.label().startsWith(string.substring(0, 1).toLowerCase())
+                    || t.name().startsWith(string.substring(0, 1).toUpperCase())).findFirst();
         }
     }
 
