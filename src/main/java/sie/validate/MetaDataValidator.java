@@ -60,7 +60,7 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
             addWarning(PROGRAM, "Programnamn saknas");
         }
         if (isNullOrBlank(entity.getProgram().getVersion())) {
-            addWarning(PROGRAM, "Programversion saknas");
+            addInfo(PROGRAM, "Programversion saknas");
         }
     }
 

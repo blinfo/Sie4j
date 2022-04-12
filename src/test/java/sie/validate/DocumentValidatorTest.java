@@ -58,7 +58,7 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         Document document = getDocument("SIE_with_missing_program_version.se");
         DocumentValidator validator = DocumentValidator.from(document);
         SieLog log = validator.getLogs().get(0);
-        String expectedLog = "SieLog{origin=MetaData, level=WARNING, tag=#PROGRAM, message=Programversion saknas}";
+        String expectedLog = "SieLog{origin=MetaData, level=INFO, tag=#PROGRAM, message=Programversion saknas}";
         assertEquals("SieLog should be " + expectedLog, expectedLog, log.toString());
     }
 }
