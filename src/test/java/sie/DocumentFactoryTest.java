@@ -23,7 +23,7 @@ public class DocumentFactoryTest {
         String message = "Programversion saknas";
         long size = 10l;
         assertEquals("List should contain " + size + " log", size, factory.getLogs().size());
-        assertEquals("Message should be " + message, message, factory.getWarnings().get(0).getMessage());
+        assertTrue("List should contain " + message,  factory.getLogs().stream().map(l -> l.getMessage()).anyMatch(m -> m.equals(message)));
     }
 
     @Test

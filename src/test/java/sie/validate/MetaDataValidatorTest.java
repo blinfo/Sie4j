@@ -27,7 +27,7 @@ public class MetaDataValidatorTest extends AbstractValidatorTest {
     public void test_faulty_program() {
         Document document = getDocument("SIE_with_missing_program_version.se");
         String result = MetaDataValidator.from(document.getMetaData()).getLogs().get(0).toString();
-        String log = "SieLog{origin=MetaData, level=WARNING, tag=#PROGRAM, message=Programversion saknas}";
+        String log = "SieLog{origin=MetaData, level=INFO, tag=#PROGRAM, message=Programversion saknas}";
         assertEquals("Log should be " + log, log, result);
     }
 

@@ -572,7 +572,7 @@ class DocumentFactory {
         Boolean hasVersion = lineParts.size() > 2 && lineParts.get(2) != null && !handleQuotes(lineParts.get(2)).isEmpty();
         String version = Optional.ofNullable(hasVersion ? handleQuotes(lineParts.get(2)) : null).orElse(null);
         if (version == null) {
-            addWarning("Programversion saknas", Entity.PROGRAM);
+            addInfo("Programversion saknas", Entity.PROGRAM);
         }
         try {
             return Program.of(lineParts.get(1).replaceAll(REPLACE_STRING, ""), version);
