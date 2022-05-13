@@ -1,13 +1,9 @@
 package sie.validate;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-import sie.Sie4j;
-import sie.domain.Document;
-import sie.domain.Program;
+import sie.domain.*;
 import sie.exception.SieException;
 
 /**

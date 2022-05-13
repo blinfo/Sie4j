@@ -1,13 +1,8 @@
 package sie;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import sie.domain.Address;
-import sie.domain.Company;
-import sie.domain.Document;
-import sie.domain.MetaData;
-import sie.domain.Program;
+import sie.domain.*;
 
 /**
  *

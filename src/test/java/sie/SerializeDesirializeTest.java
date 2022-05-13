@@ -1,9 +1,10 @@
 package sie;
 
 import java.io.InputStream;
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import sie.domain.Document;
+
 
 /**
  *

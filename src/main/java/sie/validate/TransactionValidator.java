@@ -1,7 +1,6 @@
 package sie.validate;
 
-import sie.domain.Document;
-import sie.domain.Transaction;
+import sie.domain.*;
 
 /**
  *

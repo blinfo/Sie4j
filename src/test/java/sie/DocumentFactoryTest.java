@@ -1,13 +1,9 @@
 package sie;
 
 import java.util.Optional;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import sie.domain.Entity;
-import sie.domain.Voucher;
+import sie.domain.*;
 import sie.exception.*;
 import sie.validate.SieLog;
 

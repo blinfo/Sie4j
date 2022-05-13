@@ -4,11 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
-import sie.domain.Document;
-import sie.domain.FinancialYear;
-import sie.domain.MetaData;
-import sie.exception.NonConsecutiveFinancialYearsException;
-import sie.exception.SieException;
+import sie.domain.*;
+import sie.exception.*;
 
 /**
  *

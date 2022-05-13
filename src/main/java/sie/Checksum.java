@@ -1,10 +1,8 @@
 package sie;
 
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
+import java.security.*;
+import org.apache.commons.codec.binary.*;
 import sie.domain.Document;
 import sie.exception.SieException;
 

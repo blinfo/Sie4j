@@ -1,15 +1,10 @@
 package sie.domain;
 
-import java.time.LocalDate;
-import java.time.Year;
-import java.util.List;
-import java.util.Optional;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.time.*;
+import java.util.*;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import sie.Helper;
-import sie.Sie4j;
+import sie.*;
 
 /**
  *

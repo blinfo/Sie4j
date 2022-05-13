@@ -1,10 +1,7 @@
 package sie.validate;
 
 import java.math.BigDecimal;
-import sie.domain.AccountingPlan;
-import sie.domain.Balance;
-import sie.domain.Document;
-import sie.domain.Entity;
+import sie.domain.*;
 
 /**
  *

@@ -2,12 +2,10 @@ package sie.domain;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
 import sie.Helper;
-import static sie.domain.Entity.ROUNDING_MODE;
-import static sie.domain.Entity.SCALE;
+import static sie.domain.Entity.*;
 
 /**
  *

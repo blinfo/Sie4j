@@ -3,8 +3,7 @@ package sie.validate;
 import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import sie.domain.Document;
-import sie.domain.Transaction;
+import sie.domain.*;
 
 /**
  *

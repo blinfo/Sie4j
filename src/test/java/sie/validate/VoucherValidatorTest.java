@@ -2,8 +2,7 @@ package sie.validate;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import sie.domain.Document;
-import sie.domain.Voucher;
+import sie.domain.*;
 
 /**
  *

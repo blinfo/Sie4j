@@ -1,20 +1,15 @@
 package sie;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import sie.domain.Document;
-import sie.domain.Voucher;
-import sie.dto.SieLogDTO;
-import sie.dto.ValidationResultDTO;
+import sie.domain.*;
+import sie.dto.*;
 import sie.exception.SieException;
 import sie.validate.SieLog;
+
 
 /**
  *

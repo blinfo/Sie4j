@@ -2,8 +2,7 @@ package sie.domain;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import sie.Helper;
-import sie.Sie4j;
+import sie.*;
 
 /**
  *

@@ -1,21 +1,13 @@
 package sie;
 
 import java.io.InputStream;
-import java.util.List;
-import java.util.Optional;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import java.util.*;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import sie.domain.AccountingPlan;
-import sie.domain.Address;
-import sie.domain.Company;
-import sie.domain.Document;
+import sie.domain.*;
 import sie.exception.SieException;
-import sie.validate.DocumentValidator;
-import sie.validate.SieLog;
+import sie.validate.*;
+
 
 /**
  *

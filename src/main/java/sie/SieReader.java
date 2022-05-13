@@ -1,16 +1,12 @@
 package sie;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import sie.domain.Document;
-import sie.domain.Entity;
+import sie.domain.*;
 import sie.exception.SieException;
-import sie.validate.DocumentValidator;
-import sie.validate.SieLog;
+import sie.validate.*;
 
 /**
  *

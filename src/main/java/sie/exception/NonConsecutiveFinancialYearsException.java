@@ -1,7 +1,6 @@
 package sie.exception;
 
-import sie.domain.Entity;
-import sie.domain.FinancialYear;
+import sie.domain.*;
 
 /**
  *

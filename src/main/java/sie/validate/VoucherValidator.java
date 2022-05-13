@@ -1,8 +1,7 @@
 package sie.validate;
 
 import java.time.format.DateTimeFormatter;
-import sie.domain.Document;
-import sie.domain.Voucher;
+import sie.domain.*;
 
 /**
  *

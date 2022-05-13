@@ -1,14 +1,10 @@
 package sie.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.time.LocalDate;
-import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.*;
+import java.util.*;
 import java.util.stream.Collectors;
-import sie.io.LocalDateSerializer;
-import sie.io.YearSerializer;
+import sie.io.*;
 
 /**
  *

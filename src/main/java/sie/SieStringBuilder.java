@@ -1,17 +1,8 @@
 package sie;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import sie.domain.Account;
-import sie.domain.Balance;
-import sie.domain.Company;
-import sie.domain.Document;
-import sie.domain.Entity;
-import sie.domain.Generated;
-import sie.domain.MetaData;
-import sie.domain.Program;
+import java.util.*;
+import java.util.stream.*;
+import sie.domain.*;
 import sie.exception.InvalidDocumentException;
 
 /**

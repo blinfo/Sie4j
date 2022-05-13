@@ -1,26 +1,14 @@
 package sie;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import sie.domain.Account;
-import sie.domain.AccountingPlan;
-import sie.domain.Company;
-import sie.domain.Document;
-import sie.domain.FinancialYear;
-import sie.domain.Generated;
-import sie.domain.MetaData;
-import sie.domain.Program;
-import sie.domain.Transaction;
-import sie.domain.Voucher;
+import sie.domain.*;
 
 /**
  *

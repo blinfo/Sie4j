@@ -1,12 +1,9 @@
 package sie.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import sie.Sie4j;
-import sie.exception.InvalidSieTypeException;
-import sie.exception.SieException;
+import sie.exception.*;
 
 /**
  *

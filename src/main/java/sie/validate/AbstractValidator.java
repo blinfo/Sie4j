@@ -1,10 +1,8 @@
 package sie.validate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import sie.domain.Document;
-import sie.domain.Entity;
+import sie.domain.*;
 import sie.exception.SieException;
 
 /**
