@@ -1,5 +1,6 @@
 package sie;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.*;
 
@@ -10,6 +11,7 @@ import java.util.stream.*;
 class StringUtil {
 
     public static List<String> getParts(String line) {
+        List<String> result = new ArrayList<>();
         String[] chars = line.replaceAll("\\s+", " ").split("");
         boolean quote = false;
         boolean inlineQuote = false;
@@ -33,7 +35,9 @@ class StringUtil {
             }
             builder.append(c);
         }
-        return Stream.of(builder.toString().split("\n")).map(String::trim).collect(Collectors.toList());
+        result.addAll(Stream.of(builder.toString().split("\n")).map(String::trim).collect(Collectors.toList()));
+        result.add(line);
+        return result;
     }
 
 }

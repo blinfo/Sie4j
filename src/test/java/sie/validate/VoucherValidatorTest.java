@@ -16,8 +16,10 @@ public class VoucherValidatorTest extends AbstractValidatorTest {
         Document.Type type = document.getMetaData().getSieType();
         Voucher voucher = document.getVouchers().get(1);
         VoucherValidator result = VoucherValidator.of(voucher, type);
-        String expectedMessage = "Verifikationen innehåller inga transaktionsrader Serie: A Nummer: 2";
+        String expectedMessage = "Verifikationen saknar transaktionsrader. ";
+        String expectedLine = "#VER \"A\" 2 20170101 \"Representation måltid med alkohol\" 20170119 \"#6 Linda Henriksson\"";
         assertEquals("Log list should contain one log", 1l, result.getLogs().size());
         assertEquals("Log message should be " + expectedMessage, expectedMessage, result.getLogs().get(0).getMessage());
+        assertEquals("Log line should be " + expectedLine, expectedLine, result.getLogs().get(0).getLine().orElse(""));
     }
 }

@@ -36,18 +36,29 @@ public class AccountingDimension implements Entity, Comparable<AccountingDimensi
      * Reserved dimension id for Invoice
      */
     public static final Integer INVOICE = 10;
+    private final String line;
     private final Integer id;
     private final String label;
     private final Integer parentId;
 
-    private AccountingDimension(Integer id, String label, Integer parentId) {
+    private AccountingDimension(String line, Integer id, String label, Integer parentId) {
+        this.line = line;
         this.id = id;
         this.label = label;
         this.parentId = parentId;
     }
 
     public static AccountingDimension of(Integer id, String label, Integer parentId) {
-        return new AccountingDimension(id, label, parentId);
+        return of(null, id, label, parentId);
+    }
+
+    public static AccountingDimension of(String line, Integer id, String label, Integer parentId) {
+        return new AccountingDimension(line, id, label, parentId);
+    }
+
+    @Override
+    public Optional<String> getLine() {
+        return Optional.ofNullable(line);
     }
 
     public Integer getId() {

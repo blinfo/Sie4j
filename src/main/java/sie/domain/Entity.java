@@ -3,6 +3,7 @@ package sie.domain;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import sie.dto.DTO;
 
 /**
@@ -54,4 +55,5 @@ public interface Entity extends DTO {
     public static final Charset CHARSET = Charset.forName("Cp437");
     public static final String DEFAULT_CURRENCY = "SEK";
 
+    Optional<String> getLine();
 }

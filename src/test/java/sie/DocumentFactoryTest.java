@@ -17,15 +17,15 @@ public class DocumentFactoryTest {
     public void test_file_with_missing_program_version() {
         DocumentFactory factory = DocumentFactory.from(asByteArray("/sample/SIE_with_missing_program_version.se"));
         String message = "Programversion saknas";
-        long size = 10l;
+        long size = 12l;
         assertEquals("List should contain " + size + " log", size, factory.getLogs().size());
-        assertTrue("List should contain " + message,  factory.getLogs().stream().map(l -> l.getMessage()).anyMatch(m -> m.equals(message)));
+        assertTrue("List should contain " + message, factory.getLogs().stream().map(l -> l.getMessage()).anyMatch(m -> m.equals(message)));
     }
 
     @Test
     public void test_file_with_erroneous_voucher_numbers() {
         DocumentFactory factory = DocumentFactory.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_erroneous_voucher_numbers.SI"));
-        long size = 1l;
+        long size = 2l;
         String message = "Filer av typen I4 bör inte innehålla verifikationsnummer";
         assertEquals("List should contain " + size + " logs", size, factory.getLogs().size());
         assertEquals("Message should be " + message, message, factory.getLogs().get(0).getMessage());
@@ -51,7 +51,8 @@ public class DocumentFactoryTest {
 
     @Test
     public void test_file_with_critical_voucher_date_error() {
-        String expectedMessage = "Kan inte läsa verifikationsdatum: 'rappakalja'";
+        String expectedMessage = "Kan inte läsa verifikationsdatum: 'rappakalja'\n"
+                + " #VER \"K\" \"\" \"rappakalja\" \"Försäljning 25% (DF:157)\"  20180503";
         SieException ex = assertThrows("", InvalidVoucherDateException.class, () -> DocumentFactory.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_critical_voucher_date_error.SI")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
@@ -72,14 +73,14 @@ public class DocumentFactoryTest {
 
     @Test
     public void test_file_with_erroneous_transaction_should_throw_exception() {
-        String expectedMessage = "Malformed line. '#TRANS 1930'";
+        String expectedMessage = "Malformed line. '	#TRANS 1930'";
         InvalidTransactionDataException ex = assertThrows("", InvalidTransactionDataException.class, () -> DocumentFactory.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_faulty_transaction.SI")));
         assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
     }
 
     @Test
     public void test_file_with_erroneous_sru_line_should_contain_a_warning() {
-        String expectedMessage = "Raden ska ha tre delar men tredje delen saknas: '#SRU 1110'";
+        String expectedMessage = "Raden ska ha tre delar men tredje delen saknas: '#SRU 1110 '";
         DocumentFactory factory = DocumentFactory.from(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_missing_sru_code.SE"));
         Optional<SieLog> sieLog = factory.getWarnings().stream().filter(log -> log.getTag().isPresent() && log.getTag().get().equals("#" + Entity.SRU)).findFirst();
         assertTrue("Should contain a warning", sieLog.isPresent());

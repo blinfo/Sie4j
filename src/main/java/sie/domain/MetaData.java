@@ -46,6 +46,11 @@ public class MetaData implements Entity {
         return new Builder();
     }
 
+    @Override
+    public Optional<String> getLine() {
+        return Optional.empty();
+    }
+
     /**
      * Shows if the file has been read.
      * <p>

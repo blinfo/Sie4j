@@ -54,10 +54,10 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
             return;
         }
         if (isNullOrBlank(entity.getProgram().getName())) {
-            addWarning(PROGRAM, "Programnamn saknas");
+            addWarning(PROGRAM, "Programnamn saknas" + entity.getProgram().getLine().map(l -> "\n " + l).orElse(""));
         }
         if (isNullOrBlank(entity.getProgram().getVersion())) {
-            addInfo(PROGRAM, "Programversion saknas");
+            addInfo(PROGRAM, "Programversion saknas" + entity.getProgram().getLine().map(l -> "\n " + l).orElse(""));
         }
     }
 
@@ -67,23 +67,23 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
             return;
         }
         if (isNullOrBlank(entity.getCompany().getName())) {
-            addWarning(COMPANY, "Företagsnamn saknas");
+            addWarning(COMPANY, "Företagsnamn saknas" + entity.getCompany().getLine().map(l -> "\n " + l).orElse(""));
         }
         entity.getCompany().getAddress().ifPresent(addr -> {
             if (addr.isEmpty()) {
                 addWarning(ADDRESS, "Addressen är tom");
             } else {
                 if (isNullOrBlank(addr.getContact())) {
-                    addInfo(ADDRESS, "Kontaktperson saknas i adress");
+                    addInfo(ADDRESS, "Kontaktperson saknas i adress" + addr.getLine().map(l -> "\n " + l).orElse(""));
                 }
                 if (isNullOrBlank(addr.getPhone())) {
-                    addInfo(ADDRESS, "Telefonnummer saknas i adress");
+                    addInfo(ADDRESS, "Telefonnummer saknas i adress" + addr.getLine().map(l -> "\n " + l).orElse(""));
                 }
                 if (isNullOrBlank(addr.getStreetAddress())) {
-                    addInfo(ADDRESS, "Utdelningsadress saknas");
+                    addInfo(ADDRESS, "Utdelningsadress saknas" + addr.getLine().map(l -> "\n " + l).orElse(""));
                 }
                 if (isNullOrBlank(addr.getPostalAddress())) {
-                    addInfo(ADDRESS, "Postnummer och/eller ort saknas");
+                    addInfo(ADDRESS, "Postnummer och/eller ort saknas" + addr.getLine().map(l -> "\n " + l).orElse(""));
                 }
             }
         });
@@ -98,7 +98,7 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
 
     private void validateGenerated() {
         if (entity.getGenerated() == null || entity.getGenerated().getDate() == null) {
-            addWarning(GENERATED, "Uppgift om när filen skapades saknas");
+            addWarning(GENERATED, "Uppgift om när filen skapades saknas" + entity.getGenerated().getLine().map(l -> "\n " + l).orElse(""));
         }
     }
 
@@ -118,13 +118,13 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
         });
         years.forEach(year -> {
             if (year.getIndex() == null) {
-                addWarning(FINANCIAL_YEAR, "Räkenskapsårets index (årsnummer) saknas");
+                addWarning(FINANCIAL_YEAR, "Räkenskapsårets index (årsnummer) saknas" + year.getLine().map(l -> "\n " + l).orElse(""));
             }
             if (year.getStartDate() == null) {
-                addWarning(FINANCIAL_YEAR, "Räkenskapsårets startdatum saknas");
+                addWarning(FINANCIAL_YEAR, "Räkenskapsårets startdatum saknas" + year.getLine().map(l -> "\n " + l).orElse(""));
             }
             if (year.getEndDate() == null) {
-                addWarning(FINANCIAL_YEAR, "Räkenskapsårets slutdatum saknas");
+                addWarning(FINANCIAL_YEAR, "Räkenskapsårets slutdatum saknas" + year.getLine().map(l -> "\n " + l).orElse(""));
             }
         });
     }
@@ -140,7 +140,7 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
     private void validateCurrency() {
         entity.getCurrency().ifPresent(curr -> {
             if (!CURRENCY_PATTERN.matcher(curr).matches()) {
-                addInfo(CURRENCY, "Valutakoden är felaktig");
+                addInfo(CURRENCY, "Valutakoden är felaktig: " + curr);
             }
         });
     }

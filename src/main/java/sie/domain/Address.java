@@ -23,12 +23,14 @@ import java.util.Optional;
  */
 public class Address implements Entity {
 
+    private final String line;
     private final String contact;
     private final String streetAddress;
     private final String postalAddress;
     private final String phone;
 
-    private Address(String contact, String streetAddress, String postalAddress, String phone) {
+    private Address(String line, String contact, String streetAddress, String postalAddress, String phone) {
+        this.line = line;
         this.contact = contact;
         this.streetAddress = streetAddress;
         this.postalAddress = postalAddress;
@@ -42,6 +44,11 @@ public class Address implements Entity {
      */
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public Optional<String> getLine() {
+        return Optional.ofNullable(line);
     }
 
     /**
@@ -102,12 +109,18 @@ public class Address implements Entity {
 
     public static class Builder {
 
+        private String line;
         private String contact;
         private String streetAddress;
         private String postalAddress;
         private String phone;
 
         private Builder() {
+        }
+        
+        public Builder line(String line) {
+            this.line = line;
+            return this;
         }
 
         /**
@@ -185,7 +198,7 @@ public class Address implements Entity {
          * @return Address representing the data in the builder.
          */
         public Address apply() {
-            return new Address(contact, streetAddress, postalAddress, phone);
+            return new Address(line, contact, streetAddress, postalAddress, phone);
         }
 
     }

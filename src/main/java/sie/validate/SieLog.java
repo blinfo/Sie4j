@@ -1,6 +1,8 @@
 package sie.validate;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import sie.exception.SieException;
 
 /**
@@ -13,45 +15,40 @@ public class SieLog implements Comparable<SieLog> {
     private final Level level;
     private final String tag;
     private final String message;
+    private final String line;
 
-    private SieLog(String origin, Level level, String tag, String message) {
+    private SieLog(String origin, Level level, String tag, String message, String line) {
         this.origin = origin;
         this.level = level;
         this.tag = tag;
         this.message = message;
+        this.line = line;
     }
 
     public static SieLog of(Class origin, SieException exception) {
+        return of(origin, exception, null);
+    }
+
+    public static SieLog of(Class origin, SieException exception, String line) {
         SieLog.Builder builder = builder()
                 .level(Level.CRITICAL)
                 .origin(origin)
-                .message(exception.getLocalizedMessage());
+                .message(exception.getLocalizedMessage())
+                .line(line);
         exception.getTag().ifPresent(builder::tag);
         return builder.build();
     }
 
-    public static SieLog info(Class origin, String message) {
-        return info(origin, message, null);
+    public static SieLog info(Class origin, String message, String tag, String line) {
+        return builder().origin(origin).message(message).tag(tag).level(Level.INFO).line(line).build();
     }
 
-    public static SieLog info(Class origin, String message, String tag) {
-        return builder().origin(origin).message(message).tag(tag).level(Level.INFO).build();
+    public static SieLog warning(Class origin, String message, String tag, String line) {
+        return builder().origin(origin).message(message).tag(tag).level(Level.WARNING).line(line).build();
     }
 
-    public static SieLog warning(Class origin, String message) {
-        return warning(origin, message, null);
-    }
-
-    public static SieLog warning(Class origin, String message, String tag) {
-        return builder().origin(origin).message(message).tag(tag).level(Level.WARNING).build();
-    }
-
-    public static SieLog critical(Class origin, String message) {
-        return critical(origin, message, null);
-    }
-
-    public static SieLog critical(Class origin, String message, String tag) {
-        return builder().origin(origin).message(message).tag(tag).level(Level.INFO).build();
+    public static SieLog critical(Class origin, String message, String tag, String line) {
+        return builder().origin(origin).message(message).tag(tag).level(Level.INFO).line(line).build();
     }
 
     static SieLog.Builder builder() {
@@ -71,12 +68,19 @@ public class SieLog implements Comparable<SieLog> {
     }
 
     public String getMessage() {
-        return message;
+        return Stream.of(message.split("\n")).filter(l -> !l.startsWith(" #")).collect(Collectors.joining("\n"));
+    }
+
+    public Optional<String> getLine() {
+        if (line != null) {
+            return Optional.of(line);
+        }
+        return Stream.of(message.split("\n")).filter(l -> l.startsWith(" #")).map(l -> l.substring(1)).findFirst();
     }
 
     @Override
     public String toString() {
-        return "SieLog{" + "origin=" + origin + ", level=" + level + ", tag=" + getTag().orElse("") + ", message=" + message + '}';
+        return "SieLog{" + "origin=" + origin + ", level=" + level + ", tag=" + tag + ", message=" + message + '}';
     }
 
     @Override
@@ -93,11 +97,12 @@ public class SieLog implements Comparable<SieLog> {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.origin);
-        hash = 17 * hash + Objects.hashCode(this.level);
-        hash = 17 * hash + Objects.hashCode(this.tag);
-        hash = 17 * hash + Objects.hashCode(this.message);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.origin);
+        hash = 37 * hash + Objects.hashCode(this.level);
+        hash = 37 * hash + Objects.hashCode(this.tag);
+        hash = 37 * hash + Objects.hashCode(this.message);
+        hash = 37 * hash + Objects.hashCode(this.line);
         return hash;
     }
 
@@ -122,6 +127,9 @@ public class SieLog implements Comparable<SieLog> {
         if (!Objects.equals(this.message, other.message)) {
             return false;
         }
+        if (!Objects.equals(this.line, other.line)) {
+            return false;
+        }
         return this.level == other.level;
     }
 
@@ -136,6 +144,7 @@ public class SieLog implements Comparable<SieLog> {
         private Level level;
         private String tag;
         private String message;
+        private String line;
 
         private Builder() {
         }
@@ -165,8 +174,13 @@ public class SieLog implements Comparable<SieLog> {
             return this;
         }
 
+        public Builder line(String line) {
+            this.line = line;
+            return this;
+        }
+
         public SieLog build() {
-            return new SieLog(origin, level, tag, message);
+            return new SieLog(origin, level, tag, message, line);
         }
     }
 }

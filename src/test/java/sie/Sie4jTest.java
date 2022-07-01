@@ -99,7 +99,7 @@ public class Sie4jTest {
     @Test
     public void test_that_too_long_account_number_throws_exception() {
         SieException ex = assertThrows("", SieException.class, () -> Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_with_8_digit_account_number.SE")));
-        String expectedMessage = "Kontot är längre än sex siffror: 11100111";
+        String expectedMessage = "Kontot är längre än sex siffror: 11100111\n #KONTO 11100111 \"Byggnader\"";
         assertEquals("Should have message: " + expectedMessage, expectedMessage, ex.getMessage());
     }
 
@@ -147,12 +147,12 @@ public class Sie4jTest {
 
     @Test
     public void test_corrected_corporate_id() {
-        String log1 = "SieLogDTO{level=INFO, message=Kontoplanstyp saknas, tag=null, origin=Document}";
-        String log2 = "SieLogDTO{level=INFO, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn. 5555555555, tag=#ORGNR, origin=Document}";
-        String log3 = "SieLogDTO{level=INFO, message=Filer av typen I4 bör inte innehålla verifikationsnummer, tag=#VER, origin=Document}";
+        String log1 = "SieLogDTO{level=INFO, message=Kontoplanstyp saknas, tag=null, origin=Document, line=null}";
+        String log2 = "SieLogDTO{level=INFO, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn. 5555555555, tag=#ORGNR, origin=Document, line=#ORGNR 5555555555}";
+        String log3 = "SieLogDTO{level=INFO, message=Filer av typen I4 bör inte innehålla verifikationsnummer, tag=#VER, origin=Document, line=#VER \"\" \"64\" 20210505 \" nr. 64\" 20210505  }";
         ValidationResultDTO result = Sie4j.validate(asByteArray("/sample/Transaktioner per Z-rapport.se"));
         List<String> logs = result.getLogs().stream().map(SieLogDTO::toString).collect(Collectors.toList());
-        assertEquals("Should contain 3 logs", 3, logs.size());
+        assertEquals("Should contain 12 logs", 12, logs.size());
         assertTrue("Should contain " + log1, logs.contains(log1));
         assertTrue("Should contain " + log2, logs.contains(log2));
         assertTrue("Should contain " + log3, logs.contains(log3));
@@ -162,7 +162,7 @@ public class Sie4jTest {
     public void test_too_long_account_number() {
         ValidationResultDTO result = Sie4j.validate(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_8_digit_account_number.SE"));
         long expectedNumberOfCriticalErrors = 1l;
-        String error = "SieLogDTO{level=CRITICAL, message=Kontot är längre än sex siffror: 11100111, tag=null, origin=Sie4j}";
+        String error = "SieLogDTO{level=CRITICAL, message=Kontot är längre än sex siffror: 11100111, tag=#KONTO, origin=Sie4j, line=#KONTO 11100111 \"Byggnader\"}";
         assertEquals("Should contain " + expectedNumberOfCriticalErrors + " critical errors", expectedNumberOfCriticalErrors, result.getCriticals().size());
         assertTrue("Should contain " + error, result.getCriticals().stream().map(SieLogDTO::toString).collect(Collectors.toList()).contains(error));
     }
@@ -176,7 +176,7 @@ public class Sie4jTest {
         assertEquals("First validator should contain " + expectedNumberOfWarnings + " warning", expectedNumberOfWarnings, result1.getWarnings().size());
         assertEquals("First validator should contain 2 info", 2l, result1.getInfos().size());
         ValidationResultDTO result2 = Sie4j.validate(asByteArray("/sample/Transaktioner per Z-rapport.se"));
-        assertEquals("Second validator should contain 3 info logs", 3l, result2.getLogs().size());
+        assertEquals("Second validator should contain 12 info logs", 12l, result2.getLogs().size());
     }
 
     @Test

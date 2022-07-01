@@ -18,12 +18,14 @@ import sie.domain.Account.ObjectId;
  */
 public class ObjectBalance implements Entity {
 
+    private final String line;
     private final BigDecimal amount;
     private final Integer yearIndex;
     private final ObjectId objectId;
     private final Double quantity;
 
-    private ObjectBalance(BigDecimal amount, Integer yearIndex, ObjectId objectId, Double quantity) {
+    private ObjectBalance(String line, BigDecimal amount, Integer yearIndex, ObjectId objectId, Double quantity) {
+        this.line = line;
         this.amount = Objects.requireNonNull(amount);
         this.yearIndex = Objects.requireNonNull(yearIndex);
         this.objectId = Objects.requireNonNull(objectId);
@@ -32,6 +34,11 @@ public class ObjectBalance implements Entity {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public Optional<String> getLine() {
+        return Optional.ofNullable(line);
     }
 
     /**
@@ -76,12 +83,18 @@ public class ObjectBalance implements Entity {
 
     public static class Builder {
 
+        private String line;
         private BigDecimal amount;
         private Integer yearIndex;
         private ObjectId objectId;
         private Double quantity;
 
         private Builder() {
+        }
+
+        public Builder line(String line) {
+            this.line = line;
+            return this;
         }
 
         public Builder amount(BigDecimal amount) {
@@ -110,7 +123,7 @@ public class ObjectBalance implements Entity {
         }
 
         public ObjectBalance apply() {
-            return new ObjectBalance(amount, yearIndex, objectId, quantity);
+            return new ObjectBalance(line, amount, yearIndex, objectId, quantity);
         }
     }
 }

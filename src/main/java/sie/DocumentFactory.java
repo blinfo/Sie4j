@@ -108,10 +108,10 @@ class DocumentFactory {
             try {
                 builder.taxationYear(Year.parse(yearString));
                 if (!message.isEmpty()) {
-                    addInfo(message, Entity.TAXATION_YEAR);
+                    addInfo(message, Entity.TAXATION_YEAR, null);
                 }
             } catch (DateTimeParseException ex) {
-                addWarning("Taxeringsår tas bort då '" + originalString + "' inte motsvarar ett numeriskt årtal", Entity.TAXATION_YEAR);
+                addWarning("Taxeringsår tas bort då '" + originalString + "' inte motsvarar ett numeriskt årtal", Entity.TAXATION_YEAR, getLineFromTag(Entity.TAXATION_YEAR).orElse(null));
             }
         }
         if (hasLine(Entity.FINANCIAL_YEAR)) {
@@ -119,7 +119,7 @@ class DocumentFactory {
         }
         if (hasLine(Entity.PERIOD_RANGE)) {
             if (getType().equals(Document.Type.E1) || getType().equals(Document.Type.I4)) {
-                addInfo("Filer av typen " + getType() + " får inte innehålla den här taggen", Entity.PERIOD_RANGE);
+                addInfo("Filer av typen " + getType() + " får inte innehålla den här taggen", Entity.PERIOD_RANGE, getLineFromTag(Entity.PERIOD_RANGE).orElse(null));
             } else {
                 builder.periodRange(LocalDate.parse(getLineAsString(Entity.PERIOD_RANGE), Entity.DATE_FORMAT));
             }
@@ -127,7 +127,7 @@ class DocumentFactory {
         if (hasLine(Entity.CURRENCY)) {
             String curr = getLineAsString(Entity.CURRENCY);
             if (!CURRENCY_PATTERN.matcher(curr).matches()) {
-                addWarning("Valuta ska anges enligt ISO-4217. Felaktigt format: " + curr, Entity.CURRENCY);
+                addWarning("Valuta ska anges enligt ISO-4217. Felaktigt format: " + curr, Entity.CURRENCY, getLineFromTag(Entity.CURRENCY).orElse(null));
             } else {
                 builder.currency(getLineAsString(Entity.CURRENCY));
             }
@@ -138,7 +138,7 @@ class DocumentFactory {
     private List<Voucher> getVouchers() {
         List<Voucher> vouchers = new ArrayList<>();
         if (hasLine(Entity.VOUCHER) && getType().getNumber() < 4) {
-            addWarning("Filer av typen " + getType() + " får inte innehålla verifikationer", Entity.VOUCHER);
+            addWarning("Filer av typen " + getType() + " får inte innehålla verifikationer", Entity.VOUCHER, null);
             return vouchers;
         }
         List<String> lines = Stream.of(content.split("\n"))
@@ -146,10 +146,12 @@ class DocumentFactory {
                 .map(this::handleMissingVoucherNumberSeries)
                 .collect(Collectors.toList());
         Voucher.Builder builder = null;
-        for (String line : lines) {
-            List<String> parts = StringUtil.getParts(line.trim());
-            builder = handleVoucher(line, builder, vouchers, parts);
-            handleTransaction(line, builder, parts);
+        if (lines.stream().collect(Collectors.joining()).contains("#" + Entity.TRANSACTION)) {
+            for (String line : lines) {
+                List<String> parts = StringUtil.getParts(line.trim());
+                builder = handleVoucher(line, builder, vouchers, parts);
+                handleTransaction(line, builder, parts);
+            }
         }
         if (builder != null) {
             vouchers.add(builder.apply());
@@ -174,50 +176,51 @@ class DocumentFactory {
                 vouchers.add(builder.apply());
             }
             builder = Voucher.builder();
+            builder.line(line);
             Optional.ofNullable(parts.get(1) == null || parts.get(1).isEmpty() ? null : parts.get(1).replaceAll(REPLACE_STRING, ""))
                     .ifPresent(builder::series);
-            if (parts.size() > 2) {
+            if (parts.size() > 3) {
                 Optional<String> optVoucherNumber = Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
                         ? null : parts.get(2).replaceAll(REPLACE_STRING, ""));
                 if (getType().equals(Document.Type.I4) && optVoucherNumber.isPresent()) {
-                    addInfo("Filer av typen " + getType() + " bör inte innehålla verifikationsnummer", Entity.VOUCHER);
+                    addInfo(Document.class, "Filer av typen " + getType() + " bör inte innehålla verifikationsnummer", Entity.VOUCHER, line);
                 } else {
                     optVoucherNumber.map(Integer::valueOf).ifPresent(builder::number);
                 }
             }
-            if (parts.size() > 3) {
+            if (parts.size() > 4) {
                 String dateString = parts.get(3).replaceAll(REPLACE_STRING, "");
                 if (dateString.contains("-")) {
-                    addInfo("Datum ska anges med åtta siffror - ååååmmdd utan bindestreck", Entity.VOUCHER);
+                    addInfo("Datum ska anges med åtta siffror - ååååmmdd utan bindestreck", Entity.VOUCHER, line);
                     dateString = dateString.replaceAll("-", "");
                 }
                 if (dateString.length() == 6) {
-                    addInfo("Datum ska anges med åtta siffror - ååååmmdd - inte sex: '" + dateString + "'", Entity.VOUCHER);
+                    addInfo("Datum ska anges med åtta siffror - ååååmmdd - inte sex: '" + dateString + "'", Entity.VOUCHER, line);
                     dateString = "20" + dateString;
                 }
                 if (dateString.isEmpty()) {
-                    SieException sieException = new MissingVoucherDateException();
-                    addCritical(sieException);
+                    SieException ex = new MissingVoucherDateException();
+                    addCritical(ex, line);
                 }
                 try {
                     builder.date(LocalDate.parse(dateString, Entity.DATE_FORMAT));
                 } catch (DateTimeParseException e) {
-                    SieException sieException = new InvalidVoucherDateException(dateString, e);
-                    addCritical(sieException);
+                    SieException ex = new InvalidVoucherDateException(dateString, line, e);
+                    addCritical(ex, line);
                 }
             } else {
-                SieException sieException = new MissingVoucherDateException();
-                addCritical(sieException);
+                SieException ex = new MissingVoucherDateException();
+                addCritical(ex, line);
             }
-            if (parts.size() > 4) {
+            if (parts.size() > 5) {
                 Optional.ofNullable(parts.get(4) == null || handleQuotes(parts.get(4)).isEmpty() ? null : handleQuotes(parts.get(4)))
                         .ifPresent(builder::text);
             }
-            if (parts.size() > 5) {
+            if (parts.size() > 6) {
                 Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() || !DATE_PATTERN.matcher(parts.get(5)).matches() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
                         .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(builder::registrationDate);
             }
-            if (parts.size() > 6) {
+            if (parts.size() > 7) {
                 Optional.ofNullable(parts.get(6) == null || handleQuotes(parts.get(6)).isEmpty() ? null : handleQuotes(parts.get(6)))
                         .ifPresent(builder::signature);
             }
@@ -232,59 +235,59 @@ class DocumentFactory {
             }
             if (parts.size() < 2) {
                 SieException ex = new MissingAccountNumberAndAmountException(Entity.TRANSACTION);
-                addCritical(ex);
+                addCritical(ex, line);
             }
             Transaction.Builder tb = Transaction.builder();
             String accountNumber = parts.get(1).replaceAll(REPLACE_STRING, "");
             if (accountNumber.isEmpty()) {
                 SieException ex = new MissingAccountNumberException(Entity.TRANSACTION);
-                addCritical(ex);
+                addCritical(ex, line);
             }
             tb.accountNumber(parts.get(1).replaceAll(REPLACE_STRING, ""));
-            if (parts.size() < 3) {
-                SieException ex = new InvalidTransactionDataException(parts.stream().collect(Collectors.joining(" ")));
-                addCritical(ex);
+            if (parts.size() < 4) {
+                SieException ex = new InvalidTransactionDataException(line);
+                addCritical(ex, line);
             }
             Matcher matcher = OBJECT_ID_PATTERN.matcher(parts.get(2));
             while (matcher.find()) {
                 tb.addObjectId(Account.ObjectId.of(Integer.valueOf(matcher.group(2)), matcher.group(3)));
             }
-            if (parts.size() < 4) {
-                SieException ex = new MissingAmountException(Entity.TRANSACTION);
-                addCritical(ex);
+            if (parts.size() < 5) {
+                SieException ex = new MissingAmountException(line);
+                addCritical(ex, line);
             }
             String amount = parts.get(3);
             if (amount.contains(",")) {
-                addInfo("Decimaltal måste anges med punkt", Entity.TRANSACTION);
+                addInfo("Decimaltal måste anges med punkt", Entity.TRANSACTION, line);
                 amount = amount.replaceAll(",", ".");
             }
             try {
                 tb.amount(new BigDecimal(amount));
             } catch (NumberFormatException e) {
                 SieException ex = new InvalidAmountException("Strängen '" + amount + "'för balans, konto " + accountNumber + ", kan inte hanteras som belopp", e, Entity.TRANSACTION);
-                addCritical(ex);
+                addCritical(ex, line);
             }
-            if (parts.size() > 4) {
+            if (parts.size() > 5) {
                 Optional.ofNullable(parts.get(4) == null || parts.get(4).replaceAll(REPLACE_STRING, "").isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
                         .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(tb::date);
             }
-            if (parts.size() > 5) {
+            if (parts.size() > 6) {
                 Optional.ofNullable(parts.get(5) == null || handleQuotes(parts.get(5)).isEmpty() ? null : handleQuotes(parts.get(5)))
                         .ifPresent(tb::text);
             }
-            if (parts.size() > 6) {
+            if (parts.size() > 7) {
                 String quantity = parts.get(6);
                 Optional.ofNullable(quantity == null || quantity.replaceAll(REPLACE_STRING, "").isEmpty() ? null : quantity.replaceAll(REPLACE_STRING, ""))
                         .map(part -> {
                             if (part.contains(",")) {
-                                addInfo("Decimaltal måste anges med punkt", Entity.TRANSACTION);
+                                addInfo("Decimaltal måste anges med punkt", Entity.TRANSACTION, line);
                                 part = part.replaceAll(",", ".");
                             }
                             return part;
                         })
                         .map(Double::valueOf).ifPresent(tb::quantity);
             }
-            if (parts.size() > 7) {
+            if (parts.size() > 8) {
                 Optional.ofNullable(parts.get(7) == null || handleQuotes(parts.get(7)).isEmpty() ? null : handleQuotes(parts.get(7)))
                         .ifPresent(tb::signature);
             }
@@ -301,18 +304,18 @@ class DocumentFactory {
                     String number = accountParts.get(1).replaceAll(REPLACE_STRING, "");
                     if (number == null || number.isBlank()) {
                         SieException ex = new MissingAccountNumberException(Entity.ACCOUNT);
-                        addCritical(ex);
+                        addCritical(ex, line);
                     } else if (!NUMERIC_PATTERN.matcher(number).matches()) {
                         SieException ex = new AccountNumberException("Kontot har inte ett numeriskt värde: " + number);
-                        addCritical(ex);
+                        addCritical(ex, line);
                     } else if (!ACCOUNT_NUMBER_PATTERN.matcher(number).matches()) {
                         if (number.length() <= 3) {
-                            addWarning(AccountingPlan.class, "Kontonummer ska innehålla minst fyra siffror: " + number, Entity.ACCOUNT);
+                            addWarning(AccountingPlan.class, "Kontonummer ska innehålla minst fyra siffror: " + number, Entity.ACCOUNT, line);
                         } else if (number.length() > 4 && number.length() <= 6) {
-                            addWarning(AccountingPlan.class, "Kontot har fler än fyra siffror: " + number, Entity.ACCOUNT);
+                            addWarning(AccountingPlan.class, "Kontot har fler än fyra siffror: " + number, Entity.ACCOUNT, line);
                         } else if (number.length() > 6) {
-                            SieException ex = new AccountNumberException("Kontot är längre än sex siffror: " + number);
-                            addCritical(ex);
+                            SieException ex = new AccountNumberException("Kontot är längre än sex siffror: " + number + "\n " + line);
+                            addCritical(ex, line);
                         }
                     }
                     try {
@@ -326,14 +329,14 @@ class DocumentFactory {
                         handleAccountPeriodicalBalance(number, accountBuilder);
                         return accountBuilder.apply();
                     } catch (SieException ex) {
-                        addCritical(ex);
+                        addCritical(ex, line);
                         return null;
                     }
                 })
                 .filter(a -> a != null)
                 .collect(Collectors.toList());
         accounts.addAll(findMissingAccountNumbers().stream().map(number -> {
-            addInfo("Konto " + number + " saknas i kontolistan", Entity.ACCOUNT);
+            addInfo("Konto " + number + " saknas i kontolistan", Entity.ACCOUNT, null);
             Account.Builder accountBuilder = Account.builder(number).label("Saknas vid import");
             handleSruAccountTypeAndUnit(number, accountBuilder);
             handleAccountBalanceAndResult(number, accountBuilder);
@@ -358,8 +361,9 @@ class DocumentFactory {
     private void handleSruAccountTypeAndUnit(String number, Account.Builder accountBuilder) {
         getLineParts(number, 1, Entity.SRU, Entity.ACCOUNT_TYPE, Entity.UNIT).stream().forEach(l -> {
             String tag = l.get(0).replaceAll("#", "");
-            if (l.size() < 3 || l.get(2).isBlank()) {
-                addWarning("Raden ska ha tre delar men tredje delen saknas: '" + l.stream().collect(Collectors.joining(" ")).trim() + "'", tag);
+            if (l.size() < 4 || l.get(2).isBlank()) {
+                String line = l.get(l.size() - 1);
+                addWarning("Raden ska ha tre delar men tredje delen saknas: '" + line + "'", tag, line);
             }
             switch (tag) {
                 case Entity.SRU:
@@ -382,7 +386,7 @@ class DocumentFactory {
             Integer yearIndex = findFinancialYearIndexByPeriod(period).orElse(Integer.valueOf(l.get(1)));
             String amountString = l.get(5).replaceAll(REPLACE_STRING, "");
             if (amountString.contains(",")) {
-                addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
+                addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE, l.get(l.size() - 1));
                 amountString = amountString.replaceAll(",", ".");
             }
             PeriodicalBalance.Builder pbBuilder = PeriodicalBalance.builder()
@@ -392,24 +396,24 @@ class DocumentFactory {
                 BigDecimal amount = new BigDecimal(amountString);
                 pbBuilder.amount(amount);
             } catch (NumberFormatException e) {
-                SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för periodbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
-                addCritical(ex);
+                SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för periodbalans, konto " + number + ", kan inte hanteras som belopp\n " + l.get(l.size() - 1), e, Entity.PERIODICAL_BALANCE);
+                addCritical(ex, l.get(l.size() - 1));
             }
             Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(4));
             while (matcher.find()) {
                 pbBuilder.specification(Integer.valueOf(matcher.group(2)), matcher.group(3));
             }
-            if (l.size() > 6) {
+            if (l.size() > 7) {
                 String quantity = l.get(6).replaceAll(REPLACE_STRING, "");
                 if (quantity.contains(",")) {
-                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
+                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE, l.stream().collect(Collectors.joining(" ")));
                     quantity = quantity.replaceAll(",", ".");
                 }
                 try {
                     pbBuilder.quantity(Double.valueOf(quantity));
                 } catch (NumberFormatException e) {
-                    SieException ex = new InvalidQuantityException("Strängen '" + quantity + "' för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
-                    addCritical(ex);
+                    SieException ex = new InvalidQuantityException("Strängen '" + quantity + "' för kvantitet, konto " + number + ", kan inte hanteras som kvantitet\n " + l.get(l.size() - 1), e, Entity.PERIODICAL_BALANCE);
+                    addCritical(ex, l.get(l.size() - 1));
                 }
             }
             accountBuilder.addPeriodicalBalance(pbBuilder.apply());
@@ -421,19 +425,19 @@ class DocumentFactory {
             switch (l.get(0).replaceAll("#", "")) {
                 case Entity.PERIODICAL_BUDGET:
                     YearMonth period = YearMonth.parse(l.get(2).replaceAll(REPLACE_STRING, ""), Entity.YEAR_MONTH_FORMAT);
-                    String amountString = l.get(l.size() - 1).replaceAll(REPLACE_STRING, "");
+                    String amountString = l.get(l.size() - 2).replaceAll(REPLACE_STRING, "");
                     if (amountString.contains(",")) {
-                        addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BUDGET);
+                        addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BUDGET, l.get(l.size() - 1));
                         amountString = amountString.replaceAll(",", ".");
                     }
                     try {
                         BigDecimal amount = new BigDecimal(amountString);
                         Integer yearIndex = findFinancialYearIndexByPeriod(period).orElse(Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
-                        PeriodicalBudget budget = PeriodicalBudget.of(yearIndex, period, amount);
+                        PeriodicalBudget budget = PeriodicalBudget.of(l.get(l.size() - 2), yearIndex, period, amount);
                         accountBuilder.addPeriodicalBudget(budget);
                     } catch (NumberFormatException e) {
-                        SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för periodbudget, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BUDGET);
-                        addCritical(ex);
+                        SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för periodbudget, konto " + number + ", kan inte hanteras som belopp\n " + l.get(l.size() - 1), e, Entity.PERIODICAL_BUDGET);
+                        addCritical(ex, l.get(l.size() - 1));
                     }
                     break;
             }
@@ -448,29 +452,29 @@ class DocumentFactory {
             if (matcher.find()) {
                 String amountString = l.get(4).replaceAll(REPLACE_STRING, "");
                 if (amountString.contains(",")) {
-                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
+                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE, l.get(l.size() - 1));
                     amountString = amountString.replaceAll(",", ".");
                 }
                 try {
                     BigDecimal amount = new BigDecimal(amountString);
                     obBuilder.amount(amount);
                 } catch (NumberFormatException e) {
-                    SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för objektbalans, konto " + number + ", kan inte hanteras som belopp", e, Entity.PERIODICAL_BALANCE);
-                    addCritical(ex);
+                    SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för objektbalans, konto " + number + ", kan inte hanteras som belopp\n " + l.get(l.size() - 1), e, Entity.PERIODICAL_BALANCE);
+                    addCritical(ex, l.get(l.size() - 1));
                 }
                 obBuilder.objectId(Integer.valueOf(matcher.group(2)), matcher.group(3));
             }
-            if (l.size() > 5) {
+            if (l.size() > 6) {
                 String quantity = l.get(5).replaceAll(REPLACE_STRING, "");
                 if (quantity.contains(",")) {
-                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE);
+                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE, l.get(l.size() - 1));
                     quantity = quantity.replaceAll(",", ".");
                 }
                 try {
                     obBuilder.quantity(Double.valueOf(quantity));
                 } catch (NumberFormatException e) {
-                    SieException ex = new InvalidQuantityException("Strängen '" + quantity + "' för kvantitet, konto " + number + ", kan inte hanteras som kvantitet", e, Entity.PERIODICAL_BALANCE);
-                    addCritical(ex);
+                    SieException ex = new InvalidQuantityException("Strängen '" + quantity + "' för kvantitet, konto " + number + ", kan inte hanteras som kvantitet\n " + l.get(l.size() - 1), e, Entity.PERIODICAL_BALANCE);
+                    addCritical(ex, l.get(l.size() - 1));
                 }
             }
             switch (l.get(0).replaceAll("#", "")) {
@@ -489,12 +493,12 @@ class DocumentFactory {
             String tag = l.get(0).trim();
             String amountString = l.get(3).replaceAll(REPLACE_STRING, "");
             if (amountString.contains(",")) {
-                addInfo("Decimaltal måste anges med punkt", tag);
+                addInfo("Decimaltal måste anges med punkt", tag, l.get(l.size() - 1));
                 amountString = amountString.replaceAll(",", ".");
             }
             try {
                 BigDecimal amount = new BigDecimal(amountString);
-                Balance balance = Balance.of(amount, Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
+                Balance balance = Balance.of(l.get(l.size() - 1), amount, Integer.valueOf(l.get(1).replaceAll(REPLACE_STRING, "")));
                 switch (tag.replaceAll("#", "")) {
                     case Entity.OPENING_BALANCE:
                         accountBuilder.addOpeningBalance(balance);
@@ -506,22 +510,22 @@ class DocumentFactory {
                         accountBuilder.addResult(balance);
                         break;
                 }
-            } catch (NumberFormatException ex) {
-                SieException sieException = new InvalidAmountException("Strängen '" + amountString + "' för balans, konto " + number + ", kan inte hanteras som belopp", ex, tag);
-                addCritical(sieException);
+            } catch (NumberFormatException e) {
+                SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för balans, konto " + number + ", kan inte hanteras som belopp\n " + l.get(l.size() - 1), e, tag);
+                addCritical(ex, l.get(l.size() - 1));
             }
         });
     }
 
     private List<AccountingDimension> getDimensions() {
         List<AccountingDimension> dimList = getLinesParts(Entity.DIMENSION).stream().map(line -> {
-            Integer parentId = line.size() > 3 ? Integer.valueOf(line.get(3).replaceAll(REPLACE_STRING, "")) : null;
-            return AccountingDimension.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
+            Integer parentId = line.size() > 4 ? Integer.valueOf(line.get(3).replaceAll(REPLACE_STRING, "")) : null;
+            return AccountingDimension.of(line.get(line.size() - 1), Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
                     line.get(2).replaceAll(REPLACE_STRING, ""),
                     parentId);
         }).collect(Collectors.toList());
         if (!dimList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
-            addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.DIMENSION, Entity.DIMENSION);
+            addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.DIMENSION, Entity.DIMENSION, null);
             return Collections.emptyList();
         }
         return dimList;
@@ -529,12 +533,12 @@ class DocumentFactory {
 
     private List<AccountingObject> getObjects() {
         List<AccountingObject> objList = getLinesParts(Entity.OBJECT).stream().map(line -> {
-            return AccountingObject.of(Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
+            return AccountingObject.of(line.get(line.size() - 1), Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
                     line.get(2).replaceAll(REPLACE_STRING, ""),
                     handleQuotes(line.get(3)));
         }).collect(Collectors.toList());
         if (!objList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
-            addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.OBJECT, Entity.OBJECT);
+            addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.OBJECT, Entity.OBJECT, null);
             return Collections.emptyList();
         }
         return objList;
@@ -542,21 +546,21 @@ class DocumentFactory {
 
     private Program getProgram() {
         if (!hasLine(Entity.PROGRAM)) {
-            addWarning("Programinformation saknas", Entity.PROGRAM);
+            addWarning("Programinformation saknas", Entity.PROGRAM, null);
         }
         List<String> lineParts = getLineParts(Entity.PROGRAM);
-        if (lineParts.size() < 2) {
-            addWarning("Programnamn saknas", Entity.PROGRAM);
+        if (lineParts.size() < 3) {
+            addWarning("Programnamn saknas", Entity.PROGRAM, getLineFromTag(Entity.PROGRAM).orElse(null));
         }
-        Boolean hasVersion = lineParts.size() > 2 && lineParts.get(2) != null && !handleQuotes(lineParts.get(2)).isEmpty();
+        Boolean hasVersion = lineParts.size() > 3 && lineParts.get(2) != null && !handleQuotes(lineParts.get(2)).isEmpty();
         String version = Optional.ofNullable(hasVersion ? handleQuotes(lineParts.get(2)) : null).orElse(null);
         if (version == null) {
-            addInfo("Programversion saknas", Entity.PROGRAM);
+            addInfo("Programversion saknas", Entity.PROGRAM, getLineFromTag(Entity.PROGRAM).orElse(null));
         }
         try {
-            return Program.of(lineParts.get(1).replaceAll(REPLACE_STRING, ""), version);
+            return Program.of(lineParts.get(lineParts.size() - 1), lineParts.get(1).replaceAll(REPLACE_STRING, ""), version);
         } catch (NullPointerException ex) {
-            addWarning("Kunde inte skapa programinformation från raden", Entity.PROGRAM);
+            addWarning("Kunde inte skapa programinformation från raden", Entity.PROGRAM, getLineFromTag(Entity.PROGRAM).orElse(null));
             return null;
         }
     }
@@ -565,7 +569,7 @@ class DocumentFactory {
         List<String> lineParts = getLineParts(Entity.GENERATED);
         String sign = Optional.ofNullable(lineParts.size() > 2 ? lineParts.get(2) : null)
                 .map(s -> handleQuotes(s).isEmpty() ? null : handleQuotes(s)).orElse(null);
-        return Generated.of(LocalDate.parse(lineParts.get(1).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT), sign);
+        return Generated.of(lineParts.get(lineParts.size() - 1), LocalDate.parse(lineParts.get(1).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT), sign);
     }
 
     private Company getCompany() {
@@ -575,7 +579,7 @@ class DocumentFactory {
         }
         if (hasLine(Entity.COMPANY_SNI_CODE)) {
             if (getType().equals(Document.Type.I4)) {
-                addInfo("Filer av typen " + getType() + " får inte innehålla den här taggen", Entity.COMPANY_SNI_CODE);
+                addInfo("Filer av typen " + getType() + " får inte innehålla den här taggen", Entity.COMPANY_SNI_CODE, getLineFromTag(Entity.COMPANY_SNI_CODE).orElse(null));
             } else {
                 builder.sniCode(getLineAsString(Entity.COMPANY_SNI_CODE));
             }
@@ -600,7 +604,7 @@ class DocumentFactory {
         }
         String originalCID = corporateId;
         if (corporateId.matches("\\d{8}-\\d{4}")) {
-            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + originalCID, Entity.CORPORATE_ID);
+            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + originalCID, Entity.CORPORATE_ID, getLineFromTag(Entity.CORPORATE_ID).orElse(null));
             corporateId = corporateId.substring(2);
         }
         if (corporateId.matches("\\d{6}-\\d{4}")) {
@@ -610,13 +614,16 @@ class DocumentFactory {
             if (corporateId.length() > 10) {
                 corporateId = corporateId.substring(corporateId.length() - 10);
             } else if (corporateId.length() < 10) {
-                addInfo("Organisationsnummer är ogiltigt. " + originalCID, Entity.CORPORATE_ID);
+                addInfo("Organisationsnummer är ogiltigt. " + originalCID, Entity.CORPORATE_ID, getLineFromTag(Entity.CORPORATE_ID).orElse(null));
                 return Optional.empty();
             }
         }
+        if (corporateId.matches("\\d*-\\d*")) {
+            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. \n", Entity.CORPORATE_ID, getLineFromTag(Entity.CORPORATE_ID).orElse(null));
+        }
         Optional<String> result = Optional.of(corporateId).filter(cid -> cid.matches("\\d{10}")).map(cid -> cid.substring(0, 6) + "-" + cid.substring(6));
         if (result.isPresent()) {
-            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + originalCID, Entity.CORPORATE_ID);
+            addInfo("Organisationsnummer ska vara av formatet nnnnnn-nnnn. " + originalCID, Entity.CORPORATE_ID, getLineFromTag(Entity.CORPORATE_ID).orElse(null));
         }
         return result;
     }
@@ -631,16 +638,17 @@ class DocumentFactory {
 
     private Address handleAddress(List<String> parts) {
         Address.Builder builder = Address.builder();
-        if (parts.size() > 1) {
+        getLineFromTag(Entity.ADDRESS).ifPresent(builder::line);
+        if (parts.size() > 2) {
             builder.contact(handleQuotes(parts.get(1)));
         }
-        if (parts.size() > 2) {
+        if (parts.size() > 3) {
             builder.streetAddress(handleQuotes(parts.get(2)));
         }
-        if (parts.size() > 3) {
+        if (parts.size() > 4) {
             builder.postalAddress(handleQuotes(parts.get(3)));
         }
-        if (parts.size() > 4) {
+        if (parts.size() > 5) {
             builder.phone(handleQuotes(parts.get(4)));
         }
         return builder.apply();
@@ -650,6 +658,7 @@ class DocumentFactory {
         if (years.isEmpty()) {
             years.addAll(getLinesParts(Entity.FINANCIAL_YEAR).stream()
                     .map(this::createFinancialYear)
+                    .filter(fy -> fy != null)
                     .collect(Collectors.toList()));
         }
         if (isConversion()) {
@@ -672,10 +681,16 @@ class DocumentFactory {
     }
 
     private FinancialYear createFinancialYear(List<String> parts) {
-        Integer index = Integer.valueOf(parts.get(1).replaceAll(REPLACE_STRING, ""));
-        LocalDate start = LocalDate.parse(parts.get(2).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT);
-        LocalDate end = LocalDate.parse(parts.get(3).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT);
-        return FinancialYear.of(index, start, end);
+        try {
+            Integer index = Integer.valueOf(parts.get(1).replaceAll(REPLACE_STRING, ""));
+            LocalDate start = LocalDate.parse(parts.get(2).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT);
+            LocalDate end = LocalDate.parse(parts.get(3).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT);
+            return FinancialYear.of(parts.get(parts.size() - 1), index, start, end);
+        } catch (DateTimeParseException | NumberFormatException ex) {
+            SieException sieException = new SieException("Ogiltigt räkenskapsår.", ex);
+            addCritical(sieException, parts.stream().collect(Collectors.joining(" ")));
+            throw sieException;
+        }
     }
 
     private List<String> findMissingAccountNumbers() {
@@ -721,7 +736,8 @@ class DocumentFactory {
 
     private Optional<String> getComments() {
         if (hasLine(Entity.COMMENTS)) {
-            return Optional.of(handleQuotes(getLineParts(Entity.COMMENTS).get(1)));
+            List<String> lineParts = getLineParts(Entity.COMMENTS);
+            return Optional.of(handleQuotes(lineParts.get(1)));
         }
         return Optional.empty();
     }
@@ -741,6 +757,13 @@ class DocumentFactory {
 
     private String getLineAsString(String prefix) {
         return handleQuotes(getLineParts(prefix).stream().filter(p -> ignorePrefix(p)).collect(Collectors.joining(" ")).trim());
+    }
+
+    private Optional<String> getLineFromTag(String prefix) {
+        return Stream.of(content.split("\n"))
+                .filter(line -> !line.isBlank())
+                .filter(line -> line.startsWith("#" + prefix))
+                .findFirst();
     }
 
     private static boolean ignorePrefix(String p) {
@@ -776,36 +799,36 @@ class DocumentFactory {
         return result.replaceAll("\\\\\"", "\"").replaceAll("[{}]", "");
     }
 
-    private void addCritical(SieException sieException) {
+    private void addCritical(SieException sieException, String line) {
         if (isConversion()) {
             throw sieException;
         }
-        logs.add(SieLog.of(getClass(), sieException));
+        logs.add(SieLog.of(getClass(), sieException, line));
     }
 
-    private void addWarning(String message, String tag) {
-        addWarning(Document.class, message, tag);
+    private void addWarning(String message, String tag, String line) {
+        addWarning(Document.class, message, tag, line);
     }
 
-    private void addWarning(Class origin, String message, String tag) {
+    private void addWarning(Class origin, String message, String tag, String line) {
         tag = handleLogTag(tag);
-        SieLog warning = SieLog.warning(origin, message, tag);
+        SieLog warning = SieLog.warning(origin, message, tag, line);
         if (!logs.contains(warning)) {
             logs.add(warning);
         }
     }
 
     private void addInfo(String message) {
-        addInfo(Document.class, message, null);
+        addInfo(Document.class, message, null, null);
     }
 
-    private void addInfo(String message, String tag) {
-        addInfo(Document.class, message, tag);
+    private void addInfo(String message, String tag, String line) {
+        addInfo(Document.class, message, tag, line);
     }
 
-    private void addInfo(Class origin, String message, String tag) {
+    private void addInfo(Class origin, String message, String tag, String line) {
         tag = handleLogTag(tag);
-        SieLog info = SieLog.info(origin, message, tag);
+        SieLog info = SieLog.info(origin, message, tag, line);
         if (!logs.contains(info)) {
             logs.add(info);
         }

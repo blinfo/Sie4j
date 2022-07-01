@@ -83,6 +83,11 @@ public class Account implements Entity, Comparable<Account> {
         return new Builder(number.toString());
     }
 
+    @Override
+    public Optional<String> getLine() {
+        return Optional.empty();
+    }
+
     /**
      * Getter for the number of the account.
      *
@@ -568,6 +573,11 @@ public class Account implements Entity, Comparable<Account> {
 
         public static ObjectId of(Integer dimensionId, String objectNumber) {
             return new ObjectId(dimensionId, objectNumber);
+        }
+
+        @Override
+        public Optional<String> getLine() {
+            return Optional.empty();
         }
 
         public Integer getDimensionId() {
