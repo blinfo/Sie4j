@@ -11,6 +11,7 @@ import java.util.*;
  */
 public class Voucher implements Entity, Comparable<Voucher> {
 
+    private final String line;
     private final String series;
     private final Integer number;
     private final LocalDate date;
@@ -19,7 +20,8 @@ public class Voucher implements Entity, Comparable<Voucher> {
     private final String signature;
     private final List<Transaction> transactions;
 
-    private Voucher(String series, Integer number, LocalDate date, String text, LocalDate registrationDate, String signature, List<Transaction> transactions) {
+    private Voucher(String line, String series, Integer number, LocalDate date, String text, LocalDate registrationDate, String signature, List<Transaction> transactions) {
+        this.line = line;
         this.series = series;
         this.number = number;
         this.date = date;
@@ -31,6 +33,11 @@ public class Voucher implements Entity, Comparable<Voucher> {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public Optional<String> getLine() {
+        return Optional.ofNullable(line);
     }
 
     public Optional<String> getSeries() {
@@ -46,7 +53,7 @@ public class Voucher implements Entity, Comparable<Voucher> {
     }
 
     public Optional<String> getText() {
-        return Optional.ofNullable(text == null || text.isBlank()? null : text);
+        return Optional.ofNullable(text == null || text.isBlank() ? null : text);
     }
 
     public Optional<LocalDate> getRegistrationDate() {
@@ -107,6 +114,7 @@ public class Voucher implements Entity, Comparable<Voucher> {
         private LocalDate registrationDate;
         private String signature;
         private final List<Transaction> transactions = new ArrayList<>();
+        private String line;
 
         private Builder() {
         }
@@ -146,8 +154,13 @@ public class Voucher implements Entity, Comparable<Voucher> {
             return this;
         }
 
+        public Builder line(String line) {
+            this.line = line;
+            return this;
+        }
+
         public Voucher apply() {
-            return new Voucher(series, number, date, text, registrationDate, signature, transactions);
+            return new Voucher(line, series, number, date, text, registrationDate, signature, transactions);
         }
 
     }

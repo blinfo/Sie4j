@@ -11,13 +11,15 @@ import sie.domain.Account.ObjectId;
  */
 public class PeriodicalBalance implements Entity {
 
+    private final String line;
     private final Integer yearIndex;
     private final YearMonth period;
     private final ObjectId objectId;
     private final BigDecimal amount;
     private final Double quantity;
 
-    private PeriodicalBalance(Integer yearIndex, YearMonth period, ObjectId objectId, BigDecimal amount, Double quantity) {
+    private PeriodicalBalance(String line, Integer yearIndex, YearMonth period, ObjectId objectId, BigDecimal amount, Double quantity) {
+        this.line = line;
         this.yearIndex = yearIndex;
         this.period = period;
         this.objectId = objectId;
@@ -27,6 +29,11 @@ public class PeriodicalBalance implements Entity {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public Optional<String> getLine() {
+        return Optional.ofNullable(line);
     }
 
     public Integer getYearIndex() {
@@ -62,6 +69,7 @@ public class PeriodicalBalance implements Entity {
 
     public static class Builder {
 
+        private String line;
         private Integer yearIndex;
         private YearMonth period;
         private ObjectId objectId;
@@ -71,6 +79,10 @@ public class PeriodicalBalance implements Entity {
         private Builder() {
         }
 
+        public Builder line(String line) {
+            this.line = line;
+            return this;
+        }
         public Builder yearIndex(Integer yearIndex) {
             this.yearIndex = yearIndex;
             return this;
@@ -102,7 +114,7 @@ public class PeriodicalBalance implements Entity {
         }
 
         public PeriodicalBalance apply() {
-            return new PeriodicalBalance(yearIndex, period, objectId, amount, quantity);
+            return new PeriodicalBalance(line, yearIndex, period, objectId, amount, quantity);
         }
     }
 }

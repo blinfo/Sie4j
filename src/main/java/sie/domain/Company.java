@@ -26,9 +26,14 @@ public class Company implements Entity {
         this.sniCode = sniCode;
         this.address = address;
     }
-
+    
     public static Builder builder(String name) {
         return new Builder(name);
+    }
+
+    @Override
+    public Optional<String> getLine() {
+        return Optional.empty();
     }
 
     public String getName() {

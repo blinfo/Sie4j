@@ -27,6 +27,11 @@ public class AccountingPlan implements Entity {
         return new Builder();
     }
 
+    @Override
+    public Optional<String> getLine() {
+        return Optional.empty();
+    }
+
     /**
      * Getter for the type of accounting plan.
      * <p>

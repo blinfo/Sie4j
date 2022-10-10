@@ -34,11 +34,14 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         Document document = getDocument("Arousells_Visning_AB.SE");
         DocumentValidator validator = DocumentValidator.of(document, Boolean.TRUE);
         long expectedNumberOfWarnings = 62;
-        String expectedFirstMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna Resultat: -25035.36 Summa: 0.00";
+        String expectedFirstMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna\n"
+                + " Resultat: -25035.36 Summa: 0.00";
+        String expectedFirstLine = "#RES 0 3001 -25035.36";
         assertTrue("Log list should not be empty", validator.getLogs().size() > 0);
         assertTrue("Validator should show imbalance", validator.hasResultBalanceVsVoucherImbalance());
         assertEquals("Validator should contain " + expectedNumberOfWarnings + " warnings", expectedNumberOfWarnings, validator.getWarnings().size());
         assertEquals("First message should be " + expectedFirstMessage, expectedFirstMessage, validator.getWarnings().get(0).getMessage());
+        assertEquals("First line should be " + expectedFirstLine, expectedFirstLine, validator.getWarnings().get(0).getLine().orElse(""));
     }
 
     @Test
@@ -57,7 +60,8 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         Document document = getDocument("SIE_with_missing_program_version.se");
         DocumentValidator validator = DocumentValidator.from(document);
         SieLog log = validator.getLogs().get(0);
-        String expectedLog = "SieLog{origin=MetaData, level=INFO, tag=#PROGRAM, message=Programversion saknas}";
+        String expectedLog = "SieLog{origin=MetaData, level=INFO, tag=#PROGRAM, message=Programversion saknas\n"
+                + " #PROGRAM SIR}";
         assertEquals("SieLog should be " + expectedLog, expectedLog, log.toString());
     }
 }

@@ -15,7 +15,7 @@ public class StringUtilTest {
         String line = "#OIB 0 2421 {1 \"1\"} -12513.00";
         String expectedAmount = "-12513.00";
         List<String> parts = StringUtil.getParts(line);
-        long numberOfParts = 5;
+        long numberOfParts = 6;
         assertEquals("line should contain " + numberOfParts + "parts", numberOfParts, parts.size());
         assertEquals("Part 4 should be " + expectedAmount, expectedAmount, parts.get(4));
         String secondLine = "#OIB 0 1511 {1 \"HOTELL\"} -295370.00";

@@ -52,7 +52,7 @@ class BalanceValidator extends AbstractValidator<Document> {
                 if (!sumWithOpeningBalance.equals(balance.getAmount())) {
                     addWarning(CLOSING_BALANCE, "Utgående balans för konto " + acc.getNumber()
                             + " år " + index + " stämmer inte med summering av ingående balans och verifikationerna"
-                            + " Balans: " + balance.getAmount() + " Summa: " + sumWithOpeningBalance);
+                            + "\n Balans: " + balance.getAmount() + " Summa: " + sumWithOpeningBalance + balance.getLine().map(l -> "\n " + l).orElse(""));
                 }
             });
         });
@@ -68,7 +68,7 @@ class BalanceValidator extends AbstractValidator<Document> {
                 if (!sumOfTransactions.equals(balance.getAmount())) {
                     addWarning(RESULT, "Resultat för konto " + acc.getNumber()
                             + " år " + index + " stämmer inte med summering av verifikationerna"
-                            + " Resultat: " + balance.getAmount() + " Summa: " + sumOfTransactions);
+                            + "\n Resultat: " + balance.getAmount() + " Summa: " + sumOfTransactions + balance.getLine().map(l -> "\n " + l).orElse(""));
                 }
             });
         });
@@ -78,23 +78,23 @@ class BalanceValidator extends AbstractValidator<Document> {
         if (type.equals(Document.Type.I4)) {
             entity.getAccountingPlan().ifPresent(ac -> {
                 ac.getAccounts().stream().flatMap(acc -> acc.getClosingBalances().stream()).findFirst().ifPresent(b -> {
-                    addWarning(CLOSING_BALANCE, "Filer av typen " + type + " får inte innehålla utgående balans");
+                    addWarning(CLOSING_BALANCE, "Filer av typen " + type + " får inte innehålla utgående balans" + b.getLine().map(l -> "\n " + l).orElse(""));
                 });
                 ac.getAccounts().stream().flatMap(acc -> acc.getOpeningBalances().stream()).findFirst().ifPresent(b -> {
-                    addWarning(OPENING_BALANCE, "Filer av typen " + type + " får inte innehålla ingående balans");
+                    addWarning(OPENING_BALANCE, "Filer av typen " + type + " får inte innehålla ingående balans" + b.getLine().map(l -> "\n " + l).orElse(""));
                 });
                 ac.getAccounts().stream().flatMap(acc -> acc.getResults().stream()).findFirst().ifPresent(b -> {
-                    addWarning(RESULT, "Filer av typen " + type + " får inte innehålla resultat");
+                    addWarning(RESULT, "Filer av typen " + type + " får inte innehålla resultat" + b.getLine().map(l -> "\n " + l).orElse(""));
                 });
             });
         }
         if (!type.equals(Document.Type.E3) && !type.equals(Document.Type.E4)) {
             entity.getAccountingPlan().ifPresent(ac -> {
                 ac.getAccounts().stream().flatMap(acc -> acc.getObjectClosingBalances().stream()).findFirst().ifPresent(b -> {
-                    addWarning(CLOSING_OBJECT_BALANCE, "Filer av typen " + type + " får inte innehålla utgåend balans för objekt");
+                    addWarning(CLOSING_OBJECT_BALANCE, "Filer av typen " + type + " får inte innehålla utgåend balans för objekt" + b.getLine().map(l -> "\n " + l).orElse(""));
                 });
                 ac.getAccounts().stream().flatMap(acc -> acc.getObjectOpeningBalances().stream()).findFirst().ifPresent(b -> {
-                    addWarning(OPENING_OBJECT_BALANCE, "Filer av typen " + type + " får inte innehålla ingående balans för objekt");
+                    addWarning(OPENING_OBJECT_BALANCE, "Filer av typen " + type + " får inte innehålla ingående balans för objekt" + b.getLine().map(l -> "\n " + l).orElse(""));
                 });
             });
         }

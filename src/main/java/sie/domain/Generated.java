@@ -7,26 +7,41 @@ import sie.io.LocalDateSerializer;
 
 /**
  *
- * @author Håkan Lidén 
+ * @author Håkan Lidén
  *
  */
 public class Generated implements Entity {
 
+    private final String line;
     @JsonSerialize(using = LocalDateSerializer.class)
     private final LocalDate date;
     private final String signature;
 
-    private Generated(LocalDate date, String signature) {
+    private Generated(String line, LocalDate date, String signature) {
+        this.line = line;
         this.date = date;
         this.signature = signature;
     }
 
-    public static Generated from(LocalDate date) {
-        return of(date, null);
+    public static Generated of(LocalDate date) {
+        return of(null, date, null);
+    }
+
+    public static Generated of(String line, LocalDate date) {
+        return of(line, date, null);
     }
 
     public static Generated of(LocalDate date, String signature) {
-        return new Generated(date, signature);
+        return new Generated(null, date, signature);
+    }
+
+    public static Generated of(String line, LocalDate date, String signature) {
+        return new Generated(line, date, signature);
+    }
+
+    @Override
+    public Optional<String> getLine() {
+        return Optional.ofNullable(line);
     }
 
     public LocalDate getDate() {

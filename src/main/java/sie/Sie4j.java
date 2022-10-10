@@ -248,12 +248,15 @@ public class Sie4j {
             return ValidationResultDTO.from(doc, logs);
         } catch (SieException ex) {
             List<SieLogDTO> logs;
-            if (ex.getLocalizedMessage().contains("\n")) {
+            if (ex.getLocalizedMessage().contains("\n") && !ex.getLocalizedMessage().contains("\n #")) {
                 logs = Stream.of(ex.getLocalizedMessage().split("\n")).map(s -> {
-                    return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j");
+                    return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j", null);
                 }).collect(Collectors.toList());
+            } else if (ex.getLocalizedMessage().contains("\n #")) {
+                String[] parts = ex.getLocalizedMessage().split("\n #");
+                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), parts[0], ex.getTag().orElse(null), "Sie4j", "#" + parts[1]));
             } else {
-                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j"));
+                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j", null));
             }
             return ValidationResultDTO.from(null, logs);
         }
@@ -267,12 +270,15 @@ public class Sie4j {
             return ValidationResultDTO.from(doc, logs);
         } catch (SieException ex) {
             List<SieLogDTO> logs;
-            if (ex.getLocalizedMessage().contains("\n")) {
+            if (ex.getLocalizedMessage().contains("\n") && !ex.getLocalizedMessage().contains("\n #")) {
                 logs = Stream.of(ex.getLocalizedMessage().split("\n")).map(s -> {
-                    return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j");
+                    return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j", null);
                 }).collect(Collectors.toList());
+            } else if (ex.getLocalizedMessage().contains("\n #")) {
+                String[] parts = ex.getLocalizedMessage().split("\n #");
+                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), parts[0], ex.getTag().orElse(null), "Sie4j", "#" + parts[1]));
             } else {
-                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j"));
+                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j", null));
             }
             return ValidationResultDTO.from(null, logs);
         }
@@ -289,10 +295,10 @@ public class Sie4j {
             List<SieLogDTO> logs;
             if (ex.getLocalizedMessage().contains("\n")) {
                 logs = Stream.of(ex.getLocalizedMessage().split("\n")).map(s -> {
-                    return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j");
+                    return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j", null);
                 }).collect(Collectors.toList());
             } else {
-                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j"));
+                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j", null));
             }
             return ValidationResultDTO.from(null, logs);
         }

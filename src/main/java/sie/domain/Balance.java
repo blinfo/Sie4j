@@ -2,6 +2,7 @@ package sie.domain;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Balance are required for accounts in documents of types E1 through E4,
@@ -17,10 +18,12 @@ import java.util.Objects;
  */
 public class Balance implements Entity {
 
+    private final String line;
     private final BigDecimal amount;
     private final Integer yearIndex;
 
-    private Balance(BigDecimal amount, Integer yearIndex) {
+    private Balance(String line, BigDecimal amount, Integer yearIndex) {
+        this.line = line;
         this.amount = Objects.requireNonNull(amount);
         this.yearIndex = Objects.requireNonNull(yearIndex);
     }
@@ -41,7 +44,16 @@ public class Balance implements Entity {
      * @throws NullPointerException if either or both parameters are null.
      */
     public static Balance of(BigDecimal amount, Integer yearIndex) {
-        return new Balance(amount, yearIndex);
+        return of(null, amount, yearIndex);
+    }
+
+    public static Balance of(String line, BigDecimal amount, Integer yearIndex) {
+        return new Balance(line, amount, yearIndex);
+    }
+
+    @Override
+    public Optional<String> getLine() {
+        return Optional.ofNullable(line);
     }
 
     /**

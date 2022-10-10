@@ -15,6 +15,7 @@ import sie.io.LocalDateSerializer;
  */
 public class Transaction implements Entity {
 
+    private final String line;
     private final String accountNumber;
     private final BigDecimal amount;
     @JsonSerialize(using = LocalDateSerializer.class)
@@ -24,7 +25,8 @@ public class Transaction implements Entity {
     private final String signature;
     private final List<ObjectId> objectIds;
 
-    private Transaction(String accountNumber, BigDecimal amount, LocalDate date, String text, Double quantity, String signature, List<ObjectId> objectIds) {
+    private Transaction(String line, String accountNumber, BigDecimal amount, LocalDate date, String text, Double quantity, String signature, List<ObjectId> objectIds) {
+        this.line = line;
         this.accountNumber = accountNumber;
         this.amount = amount;
         this.date = date;
@@ -36,6 +38,11 @@ public class Transaction implements Entity {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public Optional<String> getLine() {
+        return Optional.ofNullable(line);
     }
 
     public String getAccountNumber() {
@@ -92,7 +99,9 @@ public class Transaction implements Entity {
 
     @Override
     public String toString() {
-        return "Transaction{" + "accountNumber=" + accountNumber + ", "
+        return "Transaction{" 
+                + "line=" + line + ", "
+                + "accountNumber=" + accountNumber + ", "
                 + "amount=" + amount + ", "
                 + "date=" + date + ", "
                 + "text=" + text + ", "
@@ -103,6 +112,7 @@ public class Transaction implements Entity {
 
     public static class Builder {
 
+        private String line;
         private String accountNumber;
         private BigDecimal amount;
         private LocalDate date;
@@ -110,6 +120,11 @@ public class Transaction implements Entity {
         private Double quantity;
         private String signature;
         private final List<ObjectId> objectIds = new ArrayList<>();
+
+        public Builder line(String line) {
+            this.line = line;
+            return this;
+        }
 
         public Builder accountNumber(String accountNumber) {
             this.accountNumber = accountNumber;
@@ -147,7 +162,7 @@ public class Transaction implements Entity {
         }
 
         public Transaction apply() {
-            return new Transaction(accountNumber, amount, date, text, quantity, signature, objectIds);
+            return new Transaction(line, accountNumber, amount, date, text, quantity, signature, objectIds);
         }
     }
 

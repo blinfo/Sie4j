@@ -15,15 +15,17 @@ public class SieLogDTO implements DTO {
     private String message;
     private String tag;
     private String origin;
+    private String line;
 
-    public SieLogDTO() {
+    private SieLogDTO() {
     }
 
-    private SieLogDTO(String level, String message, String tag, String origin) {
+    private SieLogDTO(String level, String message, String tag, String origin, String line) {
         this.level = level;
         this.message = message;
         this.tag = tag;
         this.origin = origin;
+        this.line = line;
     }
 
     public static SieLogDTO from(SieLog log) {
@@ -32,11 +34,12 @@ public class SieLogDTO implements DTO {
         dto.setMessage(log.getMessage());
         log.getTag().ifPresent(dto::setTag);
         log.getOrigin().ifPresent(dto::setOrigin);
+        log.getLine().ifPresent(dto::setLine);
         return dto;
     }
     
-    public static SieLogDTO of(String level, String message, String tag, String origin){
-        return new SieLogDTO(level, message, tag, origin);
+    public static SieLogDTO of(String level, String message, String tag, String origin, String line){
+        return new SieLogDTO(level, message, tag, origin, line);
     }
 
     public String getLevel() {
@@ -71,6 +74,14 @@ public class SieLogDTO implements DTO {
         this.origin = origin;
     }
 
+    public String getLine() {
+        return line;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -78,6 +89,7 @@ public class SieLogDTO implements DTO {
         hash = 89 * hash + Objects.hashCode(this.message);
         hash = 89 * hash + Objects.hashCode(this.tag);
         hash = 89 * hash + Objects.hashCode(this.origin);
+        hash = 89 * hash + Objects.hashCode(this.line);
         return hash;
     }
 
@@ -99,17 +111,14 @@ public class SieLogDTO implements DTO {
         if (!Objects.equals(this.message, other.message)) {
             return false;
         }
-        if (!Objects.equals(this.tag, other.tag)) {
-            return false;
-        }
         if (!Objects.equals(this.origin, other.origin)) {
             return false;
         }
-        return true;
+        return Objects.equals(this.line, other.line);
     }
 
     @Override
     public String toString() {
-        return "SieLogDTO{" + "level=" + level + ", message=" + message + ", tag=" + tag + ", origin=" + origin + '}';
+        return "SieLogDTO{" + "level=" + level + ", message=" + message + ", tag=" + tag + ", origin=" + origin + ", line=" + line + '}';
     }
 }

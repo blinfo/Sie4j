@@ -34,6 +34,11 @@ public class Document implements Entity {
         return new Builder();
     }
 
+    @Override
+    public Optional<String> getLine() {
+        return Optional.empty();
+    }
+
     public MetaData getMetaData() {
         return metaData;
     }

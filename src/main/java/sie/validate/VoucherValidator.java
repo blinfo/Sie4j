@@ -1,6 +1,5 @@
 package sie.validate;
 
-import java.time.format.DateTimeFormatter;
 import sie.domain.*;
 
 /**
@@ -22,20 +21,19 @@ class VoucherValidator extends AbstractValidator<Voucher> {
     @Override
     protected void validate() {
         if (entity.getDate() == null) {
-            addCritical(VOUCHER, "Verifikationsdatum saknas!");
+            addCritical(VOUCHER, "Verifikationsdatum saknas!" + entity.getLine().map(l -> "\n " + l).orElse(""));
         }
         if (!entity.isBalanced()) {
             String message = "Verifikationen är i obalans. "
-                    + entity.getSeries().map(s -> "Serie: " + s + ". ").orElse("")
-                    + entity.getNumber().map(n -> "Nummer: " + n + ". ").orElse("")
-                    + "Datum: " + entity.getDate().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ". "
+                    + entity.getLine().map(l -> "\n " + l + "\n ").orElse(entity.getSeries().map(s -> "Serie: " + s + ". ").orElse("")
+                    + entity.getNumber().map(n -> "Nummer: " + n + ". ").orElse(""))
                     + "Differens: " + entity.getDiff();
             addCritical(VOUCHER, message);
         }
         if (entity.getTransactions().isEmpty()) {
-            String message = "Verifikationen innehåller inga transaktionsrader"
-                    + entity.getSeries().map(s -> " Serie: " + s).orElse("")
-                    + entity.getNumber().map(n -> " Nummer: " + n).orElse("");
+            String message = "Verifikationen saknar transaktionsrader. "
+                    + entity.getLine().map(l -> "\n " + l).orElse(entity.getSeries().map(s -> "Serie: " + s).orElse("")
+                    + entity.getNumber().map(n -> " Nummer: " + n).orElse(""));
             addInfo(VOUCHER, message.trim());
         } else {
             entity.getTransactions().forEach(trans -> {

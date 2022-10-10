@@ -8,7 +8,6 @@ import sie.domain.*;
 import sie.exception.SieException;
 import sie.validate.*;
 
-
 /**
  *
  * @author Håkan Lidén
@@ -213,10 +212,13 @@ public class SieReaderTest {
     public void test_type4E_with_imbalanced_voucher() {
         DataReader reader = SieReader.of(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"), true);
         DocumentValidator validator = reader.validate();
-        String expectedMessage = "Verifikationen är i obalans. Serie: A. Nummer: 1. Datum: 20170101. Differens: 0.10";
+        String expectedMessage = "Verifikationen är i obalans. \n"
+                + " Differens: 0.10";
+        String expectedLine = "#VER \"A\" 1 20170101 \"Representation måltid utan alkohol\" 20170119 \"#6 Linda Henriksson\" ";
         assertEquals("Log list should contain 3 logs", 3l, validator.getLogs().size());
         assertEquals("Log list should contain one critical error", 1l, validator.getCriticalErrors().size());
         assertEquals("Log message should be " + expectedMessage, expectedMessage, validator.getCriticalErrors().get(0).getMessage());
+        assertEquals("Log line should be " + expectedLine, expectedLine, validator.getCriticalErrors().get(0).getLine().orElse(""));
     }
 
     @Test
@@ -227,8 +229,8 @@ public class SieReaderTest {
         String originalLog = "SieLog{origin=Document, level=INFO, tag=#ORGNR, message=Organisationsnummer ska vara av formatet nnnnnn-nnnn. 1655710918}";
         assertEquals("Original should contain 1 log", 1, original.validate().getLogs().size());
         assertEquals("Original log should be " + originalLog, originalLog, original.validate().getLogs().get(0).toString());
-        assertTrue("Original Program and Copy Program should be equal", original.read().getMetaData().getProgram().toString()
-                .equals(copy.read().getMetaData().getProgram().toString()));
+        assertTrue("Original Program and Copy Program should be equal", original.read().getMetaData().getProgram()
+                .equals(copy.read().getMetaData().getProgram()));
     }
 
     @Test
