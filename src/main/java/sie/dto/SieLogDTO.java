@@ -37,8 +37,12 @@ public class SieLogDTO implements DTO {
         log.getLine().ifPresent(dto::setLine);
         return dto;
     }
-    
-    public static SieLogDTO of(String level, String message, String tag, String origin, String line){
+
+    public static SieLogDTO of(String level, String message, String tag, String origin) {
+        return of(level, message, tag, origin, null);
+    }
+
+    public static SieLogDTO of(String level, String message, String tag, String origin, String line) {
         return new SieLogDTO(level, message, tag, origin, line);
     }
 
