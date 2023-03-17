@@ -43,6 +43,9 @@ public class SieLog implements Comparable<SieLog> {
         return builder().origin(origin).message(message).tag(tag).level(Level.INFO).line(line).build();
     }
 
+    public static SieLog warning(Class origin, String message) {
+        return builder().origin(origin).message(message).level(Level.WARNING).build();
+    }
     public static SieLog warning(Class origin, String message, String tag, String line) {
         return builder().origin(origin).message(message).tag(tag).level(Level.WARNING).line(line).build();
     }
