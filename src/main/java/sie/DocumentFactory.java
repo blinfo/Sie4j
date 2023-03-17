@@ -92,7 +92,7 @@ class DocumentFactory {
     private MetaData getMetaData() {
         MetaData.Builder builder = MetaData.builder();
         builder.program(getProgram());
-        builder.generated(getGenerated());
+        getGenerated().ifPresent(builder::generated);
         builder.read(isRead());
         builder.sieType(getType());
         getComments().ifPresent(builder::comments);
@@ -177,19 +177,20 @@ class DocumentFactory {
             }
             builder = Voucher.builder();
             builder.line(line);
-            Optional.ofNullable(parts.get(1) == null || parts.get(1).isEmpty() ? null : parts.get(1).replaceAll(REPLACE_STRING, ""))
+            int series = 1, voucherNum = 2, date = 3, comment = 4, registrationDate = 5, signature = 6;
+            Optional.ofNullable(parts.get(series) == null || parts.get(series).isEmpty() ? null : parts.get(series).replaceAll(REPLACE_STRING, ""))
                     .ifPresent(builder::series);
-            if (parts.size() > 3) {
-                Optional<String> optVoucherNumber = Optional.ofNullable(parts.get(2) == null || parts.get(2).replaceAll(REPLACE_STRING, "").isEmpty()
-                        ? null : parts.get(2).replaceAll(REPLACE_STRING, ""));
+            if (parts.size() > voucherNum + 1) {
+                Optional<String> optVoucherNumber = Optional.ofNullable(parts.get(voucherNum) == null || parts.get(voucherNum).replaceAll(REPLACE_STRING, "").isEmpty()
+                        ? null : parts.get(voucherNum).replaceAll(REPLACE_STRING, ""));
                 if (getType().equals(Document.Type.I4) && optVoucherNumber.isPresent()) {
                     addInfo(Document.class, "Filer av typen " + getType() + " bör inte innehålla verifikationsnummer", Entity.VOUCHER, line);
                 } else {
                     optVoucherNumber.map(Integer::valueOf).ifPresent(builder::number);
                 }
             }
-            if (parts.size() > 4) {
-                String dateString = parts.get(3).replaceAll(REPLACE_STRING, "");
+            if (parts.size() > date + 1) {
+                String dateString = parts.get(date).replaceAll(REPLACE_STRING, "");
                 if (dateString.contains("-")) {
                     addInfo("Datum ska anges med åtta siffror - ååååmmdd utan bindestreck", Entity.VOUCHER, line);
                     dateString = dateString.replaceAll("-", "");
@@ -212,16 +213,16 @@ class DocumentFactory {
                 SieException ex = new MissingVoucherDateException();
                 addCritical(ex, line);
             }
-            if (parts.size() > 5) {
-                Optional.ofNullable(parts.get(4) == null || handleQuotes(parts.get(4)).isEmpty() ? null : handleQuotes(parts.get(4)))
+            if (parts.size() > comment + 1) {
+                Optional.ofNullable(parts.get(comment) == null || handleQuotes(parts.get(comment)).isEmpty() ? null : handleQuotes(parts.get(comment)))
                         .ifPresent(builder::text);
             }
-            if (parts.size() > 6) {
-                Optional.ofNullable(parts.get(5) == null || parts.get(5).isEmpty() || !DATE_PATTERN.matcher(parts.get(5)).matches() ? null : parts.get(5).replaceAll(REPLACE_STRING, ""))
+            if (parts.size() > registrationDate + 1) {
+                Optional.ofNullable(parts.get(registrationDate) == null || parts.get(registrationDate).isEmpty() || !DATE_PATTERN.matcher(parts.get(registrationDate)).matches() ? null : parts.get(registrationDate).replaceAll(REPLACE_STRING, ""))
                         .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(builder::registrationDate);
             }
-            if (parts.size() > 7) {
-                Optional.ofNullable(parts.get(6) == null || handleQuotes(parts.get(6)).isEmpty() ? null : handleQuotes(parts.get(6)))
+            if (parts.size() > signature + 1) {
+                Optional.ofNullable(parts.get(signature) == null || handleQuotes(parts.get(signature)).isEmpty() ? null : handleQuotes(parts.get(signature)))
                         .ifPresent(builder::signature);
             }
         }
@@ -565,11 +566,17 @@ class DocumentFactory {
         }
     }
 
-    private Generated getGenerated() {
+    private Optional<Generated> getGenerated() {
         List<String> lineParts = getLineParts(Entity.GENERATED);
         String sign = Optional.ofNullable(lineParts.size() > 2 ? lineParts.get(2) : null)
                 .map(s -> handleQuotes(s).isEmpty() ? null : handleQuotes(s)).orElse(null);
-        return Generated.of(lineParts.get(lineParts.size() - 1), LocalDate.parse(lineParts.get(1).replaceAll(REPLACE_STRING, ""), Entity.DATE_FORMAT), sign);
+        String dateString = Optional.ofNullable(lineParts.size() > 1 ? lineParts.get(1) : null)
+                .map(s -> handleQuotes(s).isBlank() ? null : handleQuotes(s)).orElse(null);
+        if (dateString == null) {
+            return Optional.empty();
+        }
+        LocalDate date = LocalDate.parse(dateString, Entity.DATE_FORMAT);
+        return Optional.of(Generated.of(date, sign));
     }
 
     private Company getCompany() {
