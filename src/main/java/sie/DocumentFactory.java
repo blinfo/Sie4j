@@ -87,6 +87,7 @@ class DocumentFactory {
                 .objects(getObjects())
                 .vouchers(getVouchers());
         document = builder.apply();
+        checkVoucherSeriesNumberLength();
     }
 
     private MetaData getMetaData() {
@@ -747,6 +748,15 @@ class DocumentFactory {
             return Optional.of(handleQuotes(lineParts.get(1)));
         }
         return Optional.empty();
+    }
+
+    private void checkVoucherSeriesNumberLength() {
+        if (document.getVouchers().stream()
+                .filter(v -> v.getSeries().orElse("").length() > 1)
+                .findAny()
+                .isPresent()) {
+            addInfo("Filen innehåller verifikationsserie vars nummer är längre än ett tecken");
+        }
     }
 
     private List<List<String>> getLinesParts(String prefix) {
