@@ -34,6 +34,19 @@ public class DocumentFactoryTest {
                 .filter(voucher -> voucher.getNumber().isPresent()).findAny();
         assertFalse("Vouchers should not contain number", optVoucher.isPresent());
     }
+    
+    @Test
+    public void file_with_long_voucher_series_numbers_should_add_info() {
+        DocumentFactory factory = DocumentFactory.from(asByteArray("/sample/SIE_with_long_voucher_series_number.SE"));
+        String message = "Filen innehåller verifikationsserie vars nummer är längre än ett tecken";
+        long count = factory.getDocument().getVouchers()
+                .stream()
+                .filter(voucher -> voucher.getSeries().orElse("").length() > 1)
+                .count();
+        assertEquals(6l, count);
+        assertEquals(1, factory.getLogs().size());
+        assertEquals(message, factory.getLogs().get(0).getMessage());
+    }
 
     @Test
     public void test_file_with_empty_voucher_date() {

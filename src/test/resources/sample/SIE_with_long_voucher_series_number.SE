@@ -1,0 +1,390 @@
+#FLAGGA 0
+#PROGRAM "SieGenerator" "1.0"
+#FORMAT PC8
+#GEN 20230317 "SW"
+#SIETYP 4
+#PROSA "Skapad av SieGenerator v 1.0 - 2023-03-17T11:59:05.194100139"
+#FTYP SCE
+#FNR "4055"
+#ORGNR 555550-3258
+#ADRESS "Saliven Wahlqvist" "Parkgatan 168" "31404 Bj„rred" "076-59597510"
+#FNAMN "Truckservice Ekman"
+#RAR 0 20230101 20231231
+#RAR -1 20220101 20221231
+#TAXAR 2022
+#KPTYP "BAS2016"
+#VALUTA SEK
+#KONTO 1511 "Kundfordringar"
+#KONTO 1630 "Avr„kning f”r skatter och avgifter (skattekonto)"
+#KONTO 1911 "Huvudkassa"
+#KONTO 1912 "Kassa 2"
+#KONTO 1913 "Kassa 3"
+#KONTO 1920 "PlusGiro"
+#KONTO 1930 "Bank"
+#KONTO 2013 "™vriga egna uttag"
+#KONTO 2018 "™vriga egna ins„ttningar"
+#KONTO 2440 "Leverant”rsskulder"
+#KONTO 2611 "Utg†ende moms p† f”rs„ljning inom Sverige, 25%"
+#KONTO 2621 "Utg†ende moms p† f”rs„ljning inom Sverige, 12%"
+#KONTO 2631 "Utg†ende moms p† f”rs„ljning inom Sverige, 6%"
+#KONTO 2640 "Ing†ende moms"
+#KONTO 2641 "Debiterad ing†ende moms"
+#KONTO 2710 "Personalskatt"
+#KONTO 2730 "Lagstadgade sociala avgifter och s„rskild l”neskatt"
+#KONTO 2794 "Fackf”reningsavgifter"
+#KONTO 3001 "F”rs„ljning inom Sverige, 25% moms"
+#KONTO 3002 "F”rs„ljning inom Sverige, 12% moms"
+#KONTO 3003 "F”rs„ljning inom Sverige, 6% moms"
+#KONTO 3011 "F”rs„ljning"
+#KONTO 4000 "Ink”p av varor fr†n Sverige"
+#KONTO 5010 "Lokalhyra"
+#KONTO 6072 "Representation, ej avdragsgill"
+#KONTO 7010 "L”ner till kollektivanst„llda"
+#KONTO 7510 "Arbetsgivaravgifter 31,42 %"
+#KONTO 7632 "Personalrepresentation, ej avdragsgill"
+#IB 0 1511 -198802.00
+#IB 0 1630 -104904.00
+#IB 0 1911 203569.00
+#IB 0 1912 -64993.00
+#IB 0 1913 114033.00
+#IB 0 1920 20372.00
+#IB 0 1930 -122842.00
+#IB 0 2013 279103.00
+#IB 0 2018 -76006.00
+#IB 0 2440 -903703.00
+#IB 0 2611 -207549.00
+#IB 0 2621 -2093.00
+#IB 0 2631 9459.00
+#IB 0 2640 -20695.00
+#IB 0 2641 132999.00
+#IB 0 2710 -10364.00
+#IB 0 2730 -2235.00
+#IB 0 2794 -38823.00
+#IB -1 1511 -894453.00
+#IB -1 1630 -95330.00
+#IB -1 1911 -245730.00
+#IB -1 1912 -20908.00
+#IB -1 1913 169698.00
+#IB -1 1920 9545.00
+#IB -1 1930 -29444.00
+#IB -1 2013 -199293.00
+#IB -1 2018 372613.00
+#IB -1 2440 295264.00
+#IB -1 2611 -11062.00
+#IB -1 2621 7640.00
+#IB -1 2631 -4984.00
+#IB -1 2640 1250.00
+#IB -1 2641 -111114.00
+#IB -1 2710 8467.00
+#IB -1 2730 -3686.00
+#IB -1 2794 30036.00
+#UB 0 1511 -952982.00
+#UB 0 1630 -112480.00
+#UB 0 1911 -385517.00
+#UB 0 1912 -73103.00
+#UB 0 1913 -203008.00
+#UB 0 1920 -42850.00
+#UB 0 1930 411887.00
+#UB 0 2013 281136.00
+#UB 0 2018 -1351605.00
+#UB 0 2440 -950235.00
+#UB 0 2611 214727.00
+#UB 0 2621 12308.00
+#UB 0 2631 13487.00
+#UB 0 2640 31779.00
+#UB 0 2641 201098.00
+#UB 0 2710 -23772.00
+#UB 0 2730 -21734.00
+#UB 0 2794 42850.00
+#UB -1 1511 -678671.00
+#UB -1 1630 -65427.00
+#UB -1 1911 375097.00
+#UB -1 1912 -161.00
+#UB -1 1913 -162505.00
+#UB -1 1920 28557.00
+#UB -1 1930 -141962.00
+#UB -1 2013 -101645.00
+#UB -1 2018 361240.00
+#UB -1 2440 542356.00
+#UB -1 2611 -67005.00
+#UB -1 2621 -11312.00
+#UB -1 2631 6759.00
+#UB -1 2640 27957.00
+#UB -1 2641 -196708.00
+#UB -1 2710 -20041.00
+#UB -1 2730 6897.00
+#UB -1 2794 -39617.00
+#RES 0 3001 96551.00
+#RES 0 3002 102619.00
+#RES 0 3003 224914.00
+#RES 0 3011 762387.00
+#RES 0 4000 1056173.00
+#RES 0 5010 187585.00
+#RES 0 6072 397848.00
+#RES 0 7010 46185.00
+#RES 0 7510 21734.00
+#RES 0 7632 11980.00
+#RES -1 3001 11247.00
+#RES -1 3002 -74618.00
+#RES -1 3003 27747.00
+#RES -1 3011 87455.00
+#RES -1 4000 -738153.00
+#RES -1 5010 -126566.00
+#RES -1 6072 -100948.00
+#RES -1 7010 12261.00
+#RES -1 7510 9283.00
+#RES -1 7632 -6590.00
+#VER "11" 1 20231002 "Kundfaktura" 20231004 "#H" 
+{
+#TRANS 1511 {} 3318.00 "" ""
+#TRANS 2611 {} -663.60 "" ""
+#TRANS 3011 {} -2654.40 "" ""
+}
+#VER "11" 2 20231003 "Uttag ur verksamheten" 20231005 "HU" 
+{
+#TRANS 2013 {} 74798.00 "" ""
+#TRANS 1930 {} -74798.00 "" ""
+}
+#VER "12" 3 20231003 "Kundfaktura" 20231007 "DY" 
+{
+#TRANS 1511 {} 557.81 "" ""
+#TRANS 2611 {} -111.56 "" ""
+#TRANS 3011 {} -446.25 "" ""
+}
+#VER "21" 4 20231004 "Egen ins„ttning" 20231007 "#H" 
+{
+#TRANS 1930 {} 2856.00 "" ""
+#TRANS 2018 {} -2856.00 "" ""
+}
+#VER "22" 5 20231004 "Materialink”p" 20231004 "#E" 
+{
+#TRANS 4000 {} 1668.50 "" ""
+#TRANS 2641 {} 417.12 "" ""
+#TRANS 2440 {} -2085.62 "" ""
+}
+#VER "42" 6 20231007 "Lokalhyra" 20231010 "#E" 
+{
+#TRANS 5010 {} 1715.00 "" ""
+#TRANS 1913 {} -1715.00 "" ""
+}
+#VER "A" 7 20231013 "Materialink”p" 20231016 "DY" 
+{
+#TRANS 4000 {} 63855.20 "" ""
+#TRANS 2641 {} 15963.80 "" ""
+#TRANS 2440 {} -79819.00 "" ""
+}
+#VER "A" 8 20231015 "Varuink”p" 20231019 "#H" 
+{
+#TRANS 4000 {} 1507.80 "" ""
+#TRANS 2641 {} -301.56 "" ""
+#TRANS 1930 {} -1206.24 "" ""
+}
+#VER "A" 9 20231015 "Materialink”p" 20231015 "DY" 
+{
+#TRANS 4000 {} 1100.00 "" ""
+#TRANS 2641 {} 275.00 "" ""
+#TRANS 2440 {} -1375.00 "" ""
+}
+#VER "A" 10 20231015 "Varuink”p" 20231017 "UK" 
+{
+#TRANS 4000 {} 1181.00 "" ""
+#TRANS 2641 {} -236.20 "" ""
+#TRANS 1930 {} -944.80 "" ""
+}
+#VER "A" 11 20231018 "Personalfest 10 personer" 20231020 "HU" 
+{
+#TRANS 7632 {} 5990.00 "" ""
+#TRANS 2640 {} 460.00 "" ""
+#TRANS 2440 {} -6450.00 "" ""
+}
+#VER "A" 12 20231024 "Personalfest 10 personer" 20231027 "DY" 
+{
+#TRANS 7632 {} 5990.00 "" ""
+#TRANS 2640 {} 460.00 "" ""
+#TRANS 2440 {} -6450.00 "" ""
+}
+#VER "A" 13 20231025 "Kreditfaktura fr†n leverant”r" 20231029 "UK" 
+{
+#TRANS 2440 {} 10.25 "" ""
+#TRANS 2641 {} -2.05 "" ""
+#TRANS 4000 {} -8.20 "" ""
+}
+#VER "A" 14 20231026 "F”rs„ljning 12% moms" 20231030 "UK" 
+{
+#TRANS 3002 {} 19452.74 "" ""
+#TRANS 2621 {} 2334.26 "" ""
+#TRANS 1913 {} -21787.00 "" ""
+}
+#VER "A" 15 20231101 "F”rs„ljning 25% moms" 20231101 "SW" 
+{
+#TRANS 3001 {} 2820.00 "" ""
+#TRANS 2611 {} 705.00 "" ""
+#TRANS 1912 {} -3525.00 "" ""
+}
+#VER "A" 16 20231101 "Egen ins„ttning" 20231103 "HU" 
+{
+#TRANS 1930 {} 159962.00 "" ""
+#TRANS 2018 {} -159962.00 "" ""
+}
+#VER "A" 17 20231106 "Kreditfaktura till kund" 20231106 "HU" 
+{
+#TRANS 3011 {} 2746.40 "" ""
+#TRANS 2611 {} 686.60 "" ""
+#TRANS 1511 {} -3433.00 "" ""
+}
+#VER "A" 18 20231106 "F”rs„ljning 12% moms" 20231106 "#E" 
+{
+#TRANS 3002 {} 3979.48 "" ""
+#TRANS 2621 {} 477.52 "" ""
+#TRANS 1911 {} -4457.00 "" ""
+}
+#VER "A" 19 20231111 "Materialink”p" 20231111 "HU" 
+{
+#TRANS 4000 {} 16014.40 "" ""
+#TRANS 2641 {} 4003.60 "" ""
+#TRANS 2440 {} -20018.00 "" ""
+}
+#VER "A" 20 20231112 "Representation, ej avdragsgill" 20231113 "#H" 
+{
+#TRANS 6072 {} 857.84 "" ""
+#TRANS 2640 {} 66.56 "" ""
+#TRANS 1930 {} -924.40 "" ""
+}
+#VER "A" 21 20231112 "Varuink”p" 20231115 "#E" 
+{
+#TRANS 4000 {} 1042.41 "" ""
+#TRANS 2641 {} -208.48 "" ""
+#TRANS 1930 {} -833.93 "" ""
+}
+#VER "A" 22 20231116 "Kundfaktura" 20231119 "#H" 
+{
+#TRANS 1511 {} 33930.00 "" ""
+#TRANS 2611 {} -6786.00 "" ""
+#TRANS 3011 {} -27144.00 "" ""
+}
+#VER "A" 23 20231116 "F”rs„ljning 6% moms" 20231120 "HU" 
+{
+#TRANS 3003 {} 73288.97 "" ""
+#TRANS 2631 {} 4397.03 "" ""
+#TRANS 1911 {} -77686.00 "" ""
+}
+#VER "A" 24 20231118 "Lokalhyra" 20231118 "HU" 
+{
+#TRANS 5010 {} 9385.00 "" ""
+#TRANS 1913 {} -9385.00 "" ""
+}
+#VER "A" 25 20231118 "Varuink”p" 20231122 "SW" 
+{
+#TRANS 4000 {} 60672.00 "" ""
+#TRANS 2641 {} -12134.40 "" ""
+#TRANS 1930 {} -48537.60 "" ""
+}
+#VER "A" 26 20231118 "F”rs„ljning 6% moms" 20231121 "DY" 
+{
+#TRANS 3003 {} 174.33 "" ""
+#TRANS 2631 {} 10.46 "" ""
+#TRANS 1912 {} -184.79 "" ""
+}
+#VER "A" 27 20231118 "Kundfaktura" 20231120 "SW" 
+{
+#TRANS 1511 {} 28711.00 "" ""
+#TRANS 2611 {} -5742.20 "" ""
+#TRANS 3011 {} -22968.80 "" ""
+}
+#VER "A" 28 20231118 "Representation, ej avdragsgill" 20231122 "#H" 
+{
+#TRANS 6072 {} 988.04 "" ""
+#TRANS 2640 {} 76.66 "" ""
+#TRANS 1930 {} -1064.70 "" ""
+}
+#VER "A" 29 20231119 "Egen ins„ttning" 20231119 "DY" 
+{
+#TRANS 1930 {} 14570.00 "" ""
+#TRANS 2018 {} -14570.00 "" ""
+}
+#VER "A" 30 20231119 "Kreditfaktura fr†n leverant”r" 20231122 "HU" 
+{
+#TRANS 2440 {} 2343.00 "" ""
+#TRANS 2641 {} -468.60 "" ""
+#TRANS 4000 {} -1874.40 "" ""
+}
+#VER "A" 31 20231119 "Lokalhyra" 20231122 "SW" 
+{
+#TRANS 5010 {} 70025.00 "" ""
+#TRANS 1913 {} -70025.00 "" ""
+}
+#VER "A" 32 20231120 "Kreditfaktura fr†n leverant”r" 20231124 "HU" 
+{
+#TRANS 2440 {} 68829.00 "" ""
+#TRANS 2641 {} -13765.80 "" ""
+#TRANS 4000 {} -55063.20 "" ""
+}
+#VER "A" 33 20231121 "Materialink”p" 20231121 "#H" 
+{
+#TRANS 4000 {} 35756.00 "" ""
+#TRANS 2641 {} 8939.00 "" ""
+#TRANS 2440 {} -44695.00 "" ""
+}
+#VER "A" 34 20231122 "Kreditfaktura till kund" 20231125 "DY" 
+{
+#TRANS 3011 {} 192.80 "" ""
+#TRANS 2611 {} 48.20 "" ""
+#TRANS 1511 {} -241.00 "" ""
+}
+#VER "A" 35 20231122 "Kreditfaktura till kund" 20231124 "#E" 
+{
+#TRANS 3011 {} 1805.60 "" ""
+#TRANS 2611 {} 451.40 "" ""
+#TRANS 1511 {} -2257.00 "" ""
+}
+#VER "A" 36 20231124 "F”rs„ljning 12% moms" 20231125 "#E" 
+{
+#TRANS 3002 {} 1448.22 "" ""
+#TRANS 2621 {} 173.78 "" ""
+#TRANS 1911 {} -1622.00 "" ""
+}
+#VER "A" 37 20231124 "Egen ins„ttning" 20231125 "HU" 
+{
+#TRANS 1930 {} 27181.00 "" ""
+#TRANS 2018 {} -27181.00 "" ""
+}
+#VER "A" 38 20231128 "Representation, ej avdragsgill" 20231202 "DY" 
+{
+#TRANS 6072 {} 2421.15 "" ""
+#TRANS 2640 {} 187.85 "" ""
+#TRANS 1930 {} -2609.00 "" ""
+}
+#VER "A" 39 20231128 "Kreditfaktura till kund" 20231128 "SW" 
+{
+#TRANS 3011 {} 312.00 "" ""
+#TRANS 2611 {} 78.00 "" ""
+#TRANS 1511 {} -390.00 "" ""
+}
+#VER "A" 40 20231202 "Uttag ur verksamheten" 20231205 "SW" 
+{
+#TRANS 2013 {} 36283.00 "" ""
+#TRANS 1930 {} -36283.00 "" ""
+}
+#VER "A" 41 20231207 "F”rs„ljning 12% moms" 20231210 "SW" 
+{
+#TRANS 3002 {} 33284.93 "" ""
+#TRANS 2621 {} 3994.07 "" ""
+#TRANS 1911 {} -37279.00 "" ""
+}
+#VER "A" 42 20231213 "Uttag ur verksamheten" 20231214 "#H" 
+{
+#TRANS 2013 {} 3.85 "" ""
+#TRANS 1930 {} -3.85 "" ""
+}
+#VER "A" 43 20231214 "Varuink”p" 20231214 "UK" 
+{
+#TRANS 4000 {} 3332.00 "" ""
+#TRANS 2641 {} -666.40 "" ""
+#TRANS 1930 {} -2665.60 "" ""
+}
+#VER "A" 44 20231220 "Materialink”p" 20231221 "#H" 
+{
+#TRANS 4000 {} 869.60 "" ""
+#TRANS 2641 {} 217.40 "" ""
+#TRANS 2440 {} -1087.00 "" ""
+}
