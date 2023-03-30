@@ -13,7 +13,7 @@ import sie.io.LocalDateSerializer;
  * @author Håkan Lidén
  *
  */
-public class Transaction implements Entity {
+public final class Transaction implements Entity {
 
     private final String line;
     private final String accountNumber;
@@ -41,30 +41,30 @@ public class Transaction implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
-    public String getAccountNumber() {
+    public String accountNumber() {
         return accountNumber;
     }
 
-    public BigDecimal getAmount() {
+    public BigDecimal amount() {
         if (amount == null) {
             return null;
         }
         return amount.setScale(SCALE, ROUNDING_MODE);
     }
 
-    public Optional<LocalDate> getDate() {
+    public Optional<LocalDate> optDate() {
         return Optional.ofNullable(date);
     }
 
-    public Optional<String> getText() {
+    public Optional<String> optText() {
         return Optional.ofNullable(text == null || text.isBlank() ? null : text);
     }
 
-    public Optional<Double> getQuantity() {
+    public Optional<Double> optQuantity() {
         return Optional.ofNullable(quantity);
     }
 
@@ -72,34 +72,34 @@ public class Transaction implements Entity {
         return Optional.ofNullable(signature == null || signature.isBlank() ? null : signature);
     }
 
-    public List<ObjectId> getObjectIds() {
+    public List<ObjectId> objectIds() {
         return new ArrayList<>(objectIds);
     }
 
-    public List<String> getCostCentreIds() {
+    public List<String> costCentreIds() {
         return objectIds.stream()
-                .filter(objId -> objId.getDimensionId().equals(AccountingDimension.COST_CENTRE))
-                .map(ObjectId::getObjectNumber)
+                .filter(objId -> objId.dimensionId().equals(AccountingDimension.COST_CENTRE))
+                .map(ObjectId::objectNumber)
                 .collect(Collectors.toList());
     }
 
-    public List<String> getCostBearerIds() {
+    public List<String> costBearerIds() {
         return objectIds.stream()
-                .filter(objId -> objId.getDimensionId().equals(AccountingDimension.COST_BEARER))
-                .map(ObjectId::getObjectNumber)
+                .filter(objId -> objId.dimensionId().equals(AccountingDimension.COST_BEARER))
+                .map(ObjectId::objectNumber)
                 .collect(Collectors.toList());
     }
 
-    public List<String> getProjectIds() {
+    public List<String> projectIds() {
         return objectIds.stream()
-                .filter(objId -> objId.getDimensionId().equals(AccountingDimension.PROJECT))
-                .map(ObjectId::getObjectNumber)
+                .filter(objId -> objId.dimensionId().equals(AccountingDimension.PROJECT))
+                .map(ObjectId::objectNumber)
                 .collect(Collectors.toList());
     }
 
     @Override
     public String toString() {
-        return "Transaction{" 
+        return "Transaction{"
                 + "line=" + line + ", "
                 + "accountNumber=" + accountNumber + ", "
                 + "amount=" + amount + ", "
@@ -108,6 +108,52 @@ public class Transaction implements Entity {
                 + "quantity=" + quantity + ", "
                 + "signature=" + signature + ", "
                 + "objectIds=" + objectIds + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.accountNumber);
+        hash = 19 * hash + Objects.hashCode(this.amount);
+        hash = 19 * hash + Objects.hashCode(this.date);
+        hash = 19 * hash + Objects.hashCode(this.text);
+        hash = 19 * hash + Objects.hashCode(this.quantity);
+        hash = 19 * hash + Objects.hashCode(this.signature);
+        hash = 19 * hash + Objects.hashCode(this.objectIds);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Transaction other = (Transaction) obj;
+        if (!Objects.equals(this.accountNumber, other.accountNumber)) {
+            return false;
+        }
+        if (!Objects.equals(this.text, other.text)) {
+            return false;
+        }
+        if (!Objects.equals(this.signature, other.signature)) {
+            return false;
+        }
+        if (!Objects.equals(this.amount, other.amount)) {
+            return false;
+        }
+        if (!Objects.equals(this.date, other.date)) {
+            return false;
+        }
+        if (!Objects.equals(this.quantity, other.quantity)) {
+            return false;
+        }
+        return Objects.equals(this.objectIds, other.objectIds);
     }
 
     public static class Builder {
@@ -120,6 +166,9 @@ public class Transaction implements Entity {
         private Double quantity;
         private String signature;
         private final List<ObjectId> objectIds = new ArrayList<>();
+
+        private Builder() {
+        }
 
         public Builder line(String line) {
             this.line = line;

@@ -10,7 +10,7 @@ import sie.exception.MissingAccountNumberException;
  * @author Håkan Lidén
  *
  */
-public class Account implements Entity, Comparable<Account> {
+public final class Account implements Entity, Comparable<Account> {
 
     private static final Pattern NUMBER = Pattern.compile("\\d+");
     private final String number;
@@ -84,7 +84,7 @@ public class Account implements Entity, Comparable<Account> {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.empty();
     }
 
@@ -93,7 +93,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @return String the number of the account.
      */
-    public String getNumber() {
+    public String number() {
         return number;
     }
 
@@ -107,7 +107,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @return Optional of the account number as an Integer.
      */
-    public Optional<Integer> getNumberAsInteger() {
+    public Optional<Integer> optNumberAsInteger() {
         return Optional.ofNullable(NUMBER.matcher(number).matches() ? Integer.valueOf(number) : null);
     }
 
@@ -119,7 +119,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @return Optional of the account label.
      */
-    public Optional<String> getLabel() {
+    public Optional<String> optLabel() {
         return Optional.ofNullable(label);
     }
 
@@ -128,7 +128,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @return Optional of the Account Type.
      */
-    public Optional<Type> getType() {
+    public Optional<Type> optType() {
         return Optional.ofNullable(type);
     }
 
@@ -137,7 +137,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @return String unit
      */
-    public Optional<String> getUnit() {
+    public Optional<String> optUnit() {
         return Optional.ofNullable(unit);
     }
 
@@ -152,7 +152,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @return List of SRU codes
      */
-    public List<String> getSruCodes() {
+    public List<String> sruCodes() {
         return new ArrayList<>(sruCodes);
     }
 
@@ -168,7 +168,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @return List of opening balances
      */
-    public List<Balance> getOpeningBalances() {
+    public List<Balance> openingBalances() {
         return new ArrayList<>(openingBalances);
     }
 
@@ -185,8 +185,8 @@ public class Account implements Entity, Comparable<Account> {
      * @param yearIndex Integer - current year: 0, previous year: -1 ...
      * @return Optional of the Balance
      */
-    public Optional<Balance> getOpeningBalanceByYearIndex(Integer yearIndex) {
-        return openingBalances.stream().filter(b -> b.getYearIndex().equals(yearIndex)).findFirst();
+    public Optional<Balance> optOpeningBalanceByYearIndex(Integer yearIndex) {
+        return openingBalances.stream().filter(b -> b.yearIndex().equals(yearIndex)).findFirst();
     }
 
     /**
@@ -201,7 +201,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @return List of opening balances
      */
-    public List<Balance> getClosingBalances() {
+    public List<Balance> closingBalances() {
         return new ArrayList<>(closingBalances);
     }
 
@@ -218,8 +218,8 @@ public class Account implements Entity, Comparable<Account> {
      * @param yearIndex Integer - current year: 0, previous year: -1 ...
      * @return Optional of the balance
      */
-    public Optional<Balance> getClosingBalanceByYearIndex(Integer yearIndex) {
-        return closingBalances.stream().filter(b -> b.getYearIndex().equals(yearIndex)).findFirst();
+    public Optional<Balance> optClosingBalanceByYearIndex(Integer yearIndex) {
+        return closingBalances.stream().filter(b -> b.yearIndex().equals(yearIndex)).findFirst();
     }
 
     /**
@@ -234,7 +234,7 @@ public class Account implements Entity, Comparable<Account> {
      *
      * @return List of results
      */
-    public List<Balance> getResults() {
+    public List<Balance> results() {
         return new ArrayList<>(results);
     }
 
@@ -250,15 +250,15 @@ public class Account implements Entity, Comparable<Account> {
      * @param yearIndex Integer - current year: 0, previous year: -1 ...
      * @return Optional of the result
      */
-    public Optional<Balance> getResultByYearIndex(Integer yearIndex) {
-        return results.stream().filter(b -> b.getYearIndex().equals(yearIndex)).findFirst();
+    public Optional<Balance> optResultByYearIndex(Integer yearIndex) {
+        return results.stream().filter(b -> b.yearIndex().equals(yearIndex)).findFirst();
     }
 
-    public List<ObjectBalance> getObjectOpeningBalances() {
+    public List<ObjectBalance> objectOpeningBalances() {
         return new ArrayList<>(objectOpeningBalances);
     }
 
-    public List<ObjectBalance> getObjectClosingBalances() {
+    public List<ObjectBalance> optObjectClosingBalances() {
         return new ArrayList<>(objectClosingBalances);
     }
 
@@ -274,13 +274,13 @@ public class Account implements Entity, Comparable<Account> {
         return periodicalBudgets.stream().sorted().collect(Collectors.toList());
     }
 
-    public List<PeriodicalBalance> getPeriodicalBalances() {
+    public List<PeriodicalBalance> periodicalBalances() {
         return new ArrayList<>(periodicalBalances);
     }
 
     @Override
     public int compareTo(Account other) {
-        return getNumber().compareTo(other.getNumber());
+        return number().compareTo(other.number());
     }
 
     @Override
@@ -296,6 +296,72 @@ public class Account implements Entity, Comparable<Account> {
                 + "results=" + results + ", "
                 + "periodicalBudgets=" + periodicalBudgets + ", "
                 + "periodicalBalances=" + periodicalBalances + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.number);
+        hash = 79 * hash + Objects.hashCode(this.label);
+        hash = 79 * hash + Objects.hashCode(this.type);
+        hash = 79 * hash + Objects.hashCode(this.unit);
+        hash = 79 * hash + Objects.hashCode(this.sruCodes);
+        hash = 79 * hash + Objects.hashCode(this.openingBalances);
+        hash = 79 * hash + Objects.hashCode(this.closingBalances);
+        hash = 79 * hash + Objects.hashCode(this.results);
+        hash = 79 * hash + Objects.hashCode(this.objectOpeningBalances);
+        hash = 79 * hash + Objects.hashCode(this.objectClosingBalances);
+        hash = 79 * hash + Objects.hashCode(this.periodicalBudgets);
+        hash = 79 * hash + Objects.hashCode(this.periodicalBalances);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Account other = (Account) obj;
+        if (!Objects.equals(this.number, other.number)) {
+            return false;
+        }
+        if (!Objects.equals(this.label, other.label)) {
+            return false;
+        }
+        if (!Objects.equals(this.unit, other.unit)) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        if (!Objects.equals(this.sruCodes, other.sruCodes)) {
+            return false;
+        }
+        if (!Objects.equals(this.openingBalances, other.openingBalances)) {
+            return false;
+        }
+        if (!Objects.equals(this.closingBalances, other.closingBalances)) {
+            return false;
+        }
+        if (!Objects.equals(this.results, other.results)) {
+            return false;
+        }
+        if (!Objects.equals(this.objectOpeningBalances, other.objectOpeningBalances)) {
+            return false;
+        }
+        if (!Objects.equals(this.objectClosingBalances, other.objectClosingBalances)) {
+            return false;
+        }
+        if (!Objects.equals(this.periodicalBudgets, other.periodicalBudgets)) {
+            return false;
+        }
+        return Objects.equals(this.periodicalBalances, other.periodicalBalances);
     }
 
     public static class Builder {
@@ -576,21 +642,47 @@ public class Account implements Entity, Comparable<Account> {
         }
 
         @Override
-        public Optional<String> getLine() {
+        public Optional<String> optLine() {
             return Optional.empty();
         }
 
-        public Integer getDimensionId() {
+        public Integer dimensionId() {
             return dimensionId;
         }
 
-        public String getObjectNumber() {
+        public String objectNumber() {
             return objectNumber;
         }
 
         @Override
         public String toString() {
             return "ObjectId{" + "dimensionId=" + dimensionId + ", objectNumber=" + objectNumber + '}';
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 3;
+            hash = 67 * hash + Objects.hashCode(this.dimensionId);
+            hash = 67 * hash + Objects.hashCode(this.objectNumber);
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final ObjectId other = (ObjectId) obj;
+            if (!Objects.equals(this.objectNumber, other.objectNumber)) {
+                return false;
+            }
+            return Objects.equals(this.dimensionId, other.dimensionId);
         }
     }
 }

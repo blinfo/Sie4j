@@ -1,0 +1,44 @@
+{
+    "company": {
+        "name": "Övningsföretaget AB",
+        "aquisitionNumber": null,
+        "sniCode": null,
+        "type": {
+            "type": "AB",
+            "description": "Aktiebolag"
+        },
+        "address": null,
+        "id": "BLOV",
+        "corporateId": "165571-0918"
+    },
+    "program": {
+        "name": "BL Administration",
+        "version": "2018.2.101"
+    },
+    "generated": {
+        "date": "2018-05-07",
+        "signature": "1 Linda Henriksson"
+    },
+    "sieType": {
+        "type": "E1",
+        "description": "Export av bokslutssaldon"
+    },
+    "comments": null,
+    "taxationYear": "2018",
+    "financialYears": [{
+            "index": 0,
+            "startDate": "2021-03-01",
+            "endDate": "2020-02-28"
+        }, {
+            "index": -1,
+            "startDate": "2020-03-01",
+            "endDate": "2021-02-28"
+        }, {
+            "index": -2,
+            "startDate": "2019-03-01",
+            "endDate": "2020-02-28"
+        }],
+    "periodRange": "2020-02-28",
+    "currency": "SEK",
+    "read": false
+}

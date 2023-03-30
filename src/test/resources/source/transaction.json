@@ -1,0 +1,11 @@
+{
+    "accountNumber": "1930",
+    "amount": -1000.00,
+    "text": null,
+    "date": "2017-01-01",
+    "signature": "JT",
+    "quantity": 12.5,
+    "costCenterIds": [],
+    "costBearerIds": ["TTT"],
+    "projectIds": []
+}

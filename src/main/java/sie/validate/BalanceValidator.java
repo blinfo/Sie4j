@@ -16,7 +16,7 @@ class BalanceValidator extends AbstractValidator<Document> {
             RESULT = "#RES";
 
     private BalanceValidator(Document document) {
-        super(document, document.getMetaData().getSieType());
+        super(document, document.metaData().sieType());
     }
 
     static BalanceValidator from(Document document) {
@@ -31,9 +31,9 @@ class BalanceValidator extends AbstractValidator<Document> {
 
     private void checkBalancesAndResultsAgainstVouchers() {
         if (type.equals(Document.Type.E4)) {
-            entity.getAccountingPlan().ifPresent(plan -> {
-                entity.getMetaData().getFinancialYearByIndex(0).ifPresent(fy -> {
-                    Integer index = fy.getIndex();
+            entity.optAccountingPlan().ifPresent(plan -> {
+                entity.metaData().optFinancialYearByIndex(0).ifPresent(fy -> {
+                    Integer index = fy.index();
                     checkClosingBalance(plan, index);
                     checkResult(plan, index);
                 });
@@ -42,33 +42,33 @@ class BalanceValidator extends AbstractValidator<Document> {
     }
 
     private void checkClosingBalance(AccountingPlan plan, Integer index) {
-        plan.getAccounts().forEach(acc -> {
-            acc.getClosingBalanceByYearIndex(index).ifPresent((balance) -> {
-                BigDecimal sumOfTransactions = new BigDecimal(entity.getVouchers().parallelStream()
-                        .flatMap(voucher -> voucher.getTransactions().parallelStream())
-                        .filter(transaction -> transaction.getAccountNumber().equals(acc.getNumber()))
-                        .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
-                BigDecimal sumWithOpeningBalance = sumOfTransactions.add(acc.getOpeningBalanceByYearIndex(index).map(Balance::getAmount).orElse(BigDecimal.ZERO).setScale(Entity.SCALE, Entity.ROUNDING_MODE));
-                if (!sumWithOpeningBalance.equals(balance.getAmount())) {
-                    addWarning(CLOSING_BALANCE, "Utgående balans för konto " + acc.getNumber()
+        plan.accounts().forEach(acc -> {
+            acc.optClosingBalanceByYearIndex(index).ifPresent((balance) -> {
+                BigDecimal sumOfTransactions = new BigDecimal(entity.vouchers().parallelStream()
+                        .flatMap(voucher -> voucher.transactions().parallelStream())
+                        .filter(transaction -> transaction.accountNumber().equals(acc.number()))
+                        .mapToDouble(transaction -> transaction.amount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
+                BigDecimal sumWithOpeningBalance = sumOfTransactions.add(acc.optOpeningBalanceByYearIndex(index).map(Balance::amount).orElse(BigDecimal.ZERO).setScale(Entity.SCALE, Entity.ROUNDING_MODE));
+                if (!sumWithOpeningBalance.equals(balance.amount())) {
+                    addWarning(CLOSING_BALANCE, "Utgående balans för konto " + acc.number()
                             + " år " + index + " stämmer inte med summering av ingående balans och verifikationerna"
-                            + "\n Balans: " + balance.getAmount() + " Summa: " + sumWithOpeningBalance + balance.getLine().map(l -> "\n " + l).orElse(""));
+                            + "\n Balans: " + balance.amount() + " Summa: " + sumWithOpeningBalance + balance.optLine().map(l -> "\n " + l).orElse(""));
                 }
             });
         });
     }
 
     private void checkResult(AccountingPlan plan, Integer index) {
-        plan.getAccounts().forEach(acc -> {
-            acc.getResultByYearIndex(index).ifPresent((balance) -> {
-                BigDecimal sumOfTransactions = new BigDecimal(entity.getVouchers().parallelStream()
-                        .flatMap(voucher -> voucher.getTransactions().parallelStream())
-                        .filter(transaction -> transaction.getAccountNumber().equals(acc.getNumber()))
-                        .mapToDouble(transaction -> transaction.getAmount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
-                if (!sumOfTransactions.equals(balance.getAmount())) {
-                    addWarning(RESULT, "Resultat för konto " + acc.getNumber()
+        plan.accounts().forEach(acc -> {
+            acc.optResultByYearIndex(index).ifPresent((balance) -> {
+                BigDecimal sumOfTransactions = new BigDecimal(entity.vouchers().parallelStream()
+                        .flatMap(voucher -> voucher.transactions().parallelStream())
+                        .filter(transaction -> transaction.accountNumber().equals(acc.number()))
+                        .mapToDouble(transaction -> transaction.amount().doubleValue()).sum()).setScale(Entity.SCALE, Entity.ROUNDING_MODE);
+                if (!sumOfTransactions.equals(balance.amount())) {
+                    addWarning(RESULT, "Resultat för konto " + acc.number()
                             + " år " + index + " stämmer inte med summering av verifikationerna"
-                            + "\n Resultat: " + balance.getAmount() + " Summa: " + sumOfTransactions + balance.getLine().map(l -> "\n " + l).orElse(""));
+                            + "\n Resultat: " + balance.amount() + " Summa: " + sumOfTransactions + balance.optLine().map(l -> "\n " + l).orElse(""));
                 }
             });
         });
@@ -76,25 +76,25 @@ class BalanceValidator extends AbstractValidator<Document> {
 
     private void checkForIrregularBalancesAndResults() {
         if (type.equals(Document.Type.I4)) {
-            entity.getAccountingPlan().ifPresent(ac -> {
-                ac.getAccounts().stream().flatMap(acc -> acc.getClosingBalances().stream()).findFirst().ifPresent(b -> {
-                    addWarning(CLOSING_BALANCE, "Filer av typen " + type + " får inte innehålla utgående balans" + b.getLine().map(l -> "\n " + l).orElse(""));
+            entity.optAccountingPlan().ifPresent(ac -> {
+                ac.accounts().stream().flatMap(acc -> acc.closingBalances().stream()).findFirst().ifPresent(b -> {
+                    addWarning(CLOSING_BALANCE, "Filer av typen " + type + " får inte innehålla utgående balans" + b.optLine().map(l -> "\n " + l).orElse(""));
                 });
-                ac.getAccounts().stream().flatMap(acc -> acc.getOpeningBalances().stream()).findFirst().ifPresent(b -> {
-                    addWarning(OPENING_BALANCE, "Filer av typen " + type + " får inte innehålla ingående balans" + b.getLine().map(l -> "\n " + l).orElse(""));
+                ac.accounts().stream().flatMap(acc -> acc.openingBalances().stream()).findFirst().ifPresent(b -> {
+                    addWarning(OPENING_BALANCE, "Filer av typen " + type + " får inte innehålla ingående balans" + b.optLine().map(l -> "\n " + l).orElse(""));
                 });
-                ac.getAccounts().stream().flatMap(acc -> acc.getResults().stream()).findFirst().ifPresent(b -> {
-                    addWarning(RESULT, "Filer av typen " + type + " får inte innehålla resultat" + b.getLine().map(l -> "\n " + l).orElse(""));
+                ac.accounts().stream().flatMap(acc -> acc.results().stream()).findFirst().ifPresent(b -> {
+                    addWarning(RESULT, "Filer av typen " + type + " får inte innehålla resultat" + b.optLine().map(l -> "\n " + l).orElse(""));
                 });
             });
         }
         if (!type.equals(Document.Type.E3) && !type.equals(Document.Type.E4)) {
-            entity.getAccountingPlan().ifPresent(ac -> {
-                ac.getAccounts().stream().flatMap(acc -> acc.getObjectClosingBalances().stream()).findFirst().ifPresent(b -> {
-                    addWarning(CLOSING_OBJECT_BALANCE, "Filer av typen " + type + " får inte innehålla utgåend balans för objekt" + b.getLine().map(l -> "\n " + l).orElse(""));
+            entity.optAccountingPlan().ifPresent(ac -> {
+                ac.accounts().stream().flatMap(acc -> acc.optObjectClosingBalances().stream()).findFirst().ifPresent(b -> {
+                    addWarning(CLOSING_OBJECT_BALANCE, "Filer av typen " + type + " får inte innehålla utgåend balans för objekt" + b.optLine().map(l -> "\n " + l).orElse(""));
                 });
-                ac.getAccounts().stream().flatMap(acc -> acc.getObjectOpeningBalances().stream()).findFirst().ifPresent(b -> {
-                    addWarning(OPENING_OBJECT_BALANCE, "Filer av typen " + type + " får inte innehålla ingående balans för objekt" + b.getLine().map(l -> "\n " + l).orElse(""));
+                ac.accounts().stream().flatMap(acc -> acc.objectOpeningBalances().stream()).findFirst().ifPresent(b -> {
+                    addWarning(OPENING_OBJECT_BALANCE, "Filer av typen " + type + " får inte innehålla ingående balans för objekt" + b.optLine().map(l -> "\n " + l).orElse(""));
                 });
             });
         }

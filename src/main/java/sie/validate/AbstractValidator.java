@@ -1,5 +1,6 @@
 package sie.validate;
 
+import sie.log.SieLog;
 import java.util.*;
 import java.util.stream.Collectors;
 import sie.domain.*;

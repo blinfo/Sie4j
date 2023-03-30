@@ -1,49 +1,27 @@
 package sie.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.*;
 import java.math.BigDecimal;
+import java.time.YearMonth;
 import sie.domain.PeriodicalBudget;
+import sie.io.*;
 
 /**
  *
  * @author Håkan Lidén
  */
 @JsonPropertyOrder({"yearIndex", "period", "amount"})
-public class PeriodicalBudgetDTO implements DTO {
-
-    private Integer yearIndex;
-    private String period;
-    private BigDecimal amount;
+public record PeriodicalBudgetDTO(Integer yearIndex,
+        @JsonSerialize(using = YearMonthSerializer.class)
+        @JsonDeserialize(using = YearMonthDeserializer.class)
+        YearMonth period,
+        BigDecimal amount) implements DTO {
 
     public static PeriodicalBudgetDTO from(PeriodicalBudget source) {
-        PeriodicalBudgetDTO dto = new PeriodicalBudgetDTO();
-        dto.setYearIndex(source.getYearIndex());
-        dto.setAmount(source.getAmount());
-        dto.setPeriod(source.getPeriod().toString());
-        return dto;
-    }
-
-    public Integer getYearIndex() {
-        return yearIndex;
-    }
-
-    public void setYearIndex(Integer yearIndex) {
-        this.yearIndex = yearIndex;
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+        return new PeriodicalBudgetDTO(
+                source.yearIndex(),
+                source.period(),
+                source.amount());
     }
 }

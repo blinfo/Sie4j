@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  * @author Håkan Lidén
  *
  */
-public class AccountingPlan implements Entity {
+public final class AccountingPlan implements Entity {
 
     private final String type;
     private final List<Account> accounts;
@@ -28,7 +28,7 @@ public class AccountingPlan implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.empty();
     }
 
@@ -40,7 +40,7 @@ public class AccountingPlan implements Entity {
      *
      * @return Optional String - The name of the type of accounting plan
      */
-    public Optional<String> getType() {
+    public Optional<String> optType() {
         return Optional.ofNullable(type);
     }
 
@@ -52,7 +52,7 @@ public class AccountingPlan implements Entity {
      *
      * @return List Account - The accounts used in the document.
      */
-    public List<Account> getAccounts() {
+    public List<Account> accounts() {
         return accounts.stream().sorted().collect(Collectors.toList());
     }
 
@@ -66,8 +66,8 @@ public class AccountingPlan implements Entity {
      * @return Optional of the Account with the provided number, or an empty
      * optional if not found.
      */
-    public Optional<Account> getAccountByNumber(String number) {
-        return accounts.stream().filter(a -> a.getNumber().equals(number)).findFirst();
+    public Optional<Account> optAccountByNumber(String number) {
+        return accounts.stream().filter(a -> a.number().equals(number)).findFirst();
     }
 
     /**
@@ -80,13 +80,39 @@ public class AccountingPlan implements Entity {
      * @return Optional of the Account with the provided number, or an empty
      * optional if not found.
      */
-    public Optional<Account> getAccountByNumber(Integer number) {
-        return getAccountByNumber(number.toString());
+    public Optional<Account> optAccountByNumber(Integer number) {
+        return AccountingPlan.this.optAccountByNumber(number.toString());
     }
 
     @Override
     public String toString() {
         return "AccountingPlan{" + "accounts=" + accounts + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.type);
+        hash = 53 * hash + Objects.hashCode(this.accounts);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AccountingPlan other = (AccountingPlan) obj;
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        return Objects.equals(this.accounts, other.accounts);
     }
 
     public static class Builder {

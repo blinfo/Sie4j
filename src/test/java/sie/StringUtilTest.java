@@ -1,8 +1,8 @@
 package sie;
 
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -16,13 +16,13 @@ public class StringUtilTest {
         String expectedAmount = "-12513.00";
         List<String> parts = StringUtil.getParts(line);
         long numberOfParts = 6;
-        assertEquals("line should contain " + numberOfParts + "parts", numberOfParts, parts.size());
-        assertEquals("Part 4 should be " + expectedAmount, expectedAmount, parts.get(4));
+        assertEquals(numberOfParts, parts.size());
+        assertEquals(expectedAmount, parts.get(4));
         String secondLine = "#OIB 0 1511 {1 \"HOTELL\"} -295370.00";
         String expectedAmount2 = "-295370.00";
         List<String> parts2 = StringUtil.getParts(secondLine);
-        assertEquals("Second line should contain " + numberOfParts + "parts", numberOfParts, parts.size());
-        assertEquals("Second line part 4 should be " + expectedAmount2, expectedAmount2, parts2.get(4));
+        assertEquals(numberOfParts, parts.size());
+        assertEquals(expectedAmount2, parts2.get(4));
 
     }
 }

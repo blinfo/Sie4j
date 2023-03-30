@@ -16,7 +16,7 @@ import sie.domain.Account.ObjectId;
  * @author Håkan Lidén
  *
  */
-public class ObjectBalance implements Entity {
+public final class ObjectBalance implements Entity {
 
     private final String line;
     private final BigDecimal amount;
@@ -37,7 +37,7 @@ public class ObjectBalance implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
@@ -46,7 +46,7 @@ public class ObjectBalance implements Entity {
      *
      * @return BigDecimal - the Amount for the balance/result
      */
-    public BigDecimal getAmount() {
+    public BigDecimal amount() {
         return amount.setScale(SCALE, ROUNDING_MODE);
     }
 
@@ -56,7 +56,7 @@ public class ObjectBalance implements Entity {
      * @return Integer - the YearIndex for the balance/result. Current year: 0,
      * previous year: -1 ...
      */
-    public Integer getYearIndex() {
+    public Integer yearIndex() {
         return yearIndex;
     }
 
@@ -64,7 +64,7 @@ public class ObjectBalance implements Entity {
      *
      * @return ObjectId
      */
-    public ObjectId getObjectId() {
+    public ObjectId objectId() {
         return objectId;
     }
 
@@ -72,13 +72,47 @@ public class ObjectBalance implements Entity {
      *
      * @return Optional of Double - quantity for the object balance.
      */
-    public Optional<Double> getQuantity() {
+    public Optional<Double> optQuantity() {
         return Optional.ofNullable(quantity);
     }
 
     @Override
     public String toString() {
         return "ObjectBalance{" + "amount=" + amount + ", yearIndex=" + yearIndex + ", objectId=" + objectId + ", quantity=" + quantity + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.amount);
+        hash = 29 * hash + Objects.hashCode(this.yearIndex);
+        hash = 29 * hash + Objects.hashCode(this.objectId);
+        hash = 29 * hash + Objects.hashCode(this.quantity);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ObjectBalance other = (ObjectBalance) obj;
+        if (!Objects.equals(this.amount, other.amount)) {
+            return false;
+        }
+        if (!Objects.equals(this.yearIndex, other.yearIndex)) {
+            return false;
+        }
+        if (!Objects.equals(this.objectId, other.objectId)) {
+            return false;
+        }
+        return Objects.equals(this.quantity, other.quantity);
     }
 
     public static class Builder {

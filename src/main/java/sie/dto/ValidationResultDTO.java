@@ -2,61 +2,47 @@ package sie.dto;
 
 import com.fasterxml.jackson.annotation.*;
 import java.util.List;
-import java.util.stream.Collectors;
-import sie.validate.SieLog;
+import java.util.stream.*;
+import sie.log.SieLog;
 
 /**
  *
  * @author Håkan Lidén
  */
 @JsonPropertyOrder({"document", "logs"})
-public class ValidationResultDTO implements DTO {
+public record ValidationResultDTO(DocumentDTO document, List<SieLogDTO> logs) implements DTO {
 
-    private DocumentDTO document;
-    private List<SieLogDTO> logs;
-
-    public ValidationResultDTO() {
+    public static ValidationResultDTO from(DocumentDTO doc) {
+        return from(doc, List.of());
     }
 
     public static ValidationResultDTO from(DocumentDTO doc, List<SieLogDTO> logs) {
-        ValidationResultDTO dto = new ValidationResultDTO();
-        dto.setDocument(doc);
-        dto.setLogs(logs);
+        ValidationResultDTO dto = new ValidationResultDTO(doc, logs);
         return dto;
     }
 
-    public List<SieLogDTO> getLogs() {
-        return logs;
-    }
-
     @JsonIgnore
-    public List<SieLogDTO> getCriticals() {
+    public List<SieLogDTO> criticals() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL.name())).collect(Collectors.toList());
     }
 
     @JsonIgnore
-    public List<SieLogDTO> getWarnings() {
+    public List<SieLogDTO> warnings() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING.name())).collect(Collectors.toList());
     }
-    
+
     @JsonIgnore
-    public List<SieLogDTO> getInfos() {
+    public List<SieLogDTO> infos() {
         return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.INFO.name())).collect(Collectors.toList());
     }
 
-    public void addLog(SieLogDTO log) {
+    public ValidationResultDTO addLog(SieLogDTO log) {
         this.logs.add(log);
-    } 
-
-    public void setLogs(List<SieLogDTO> logs) {
-        this.logs = logs.stream().distinct().collect(Collectors.toList());
+        List<SieLogDTO> newValue = Stream.concat(logs.stream(), Stream.of(log)).toList();
+        return new ValidationResultDTO(document, newValue);
     }
 
-    public DocumentDTO getDocument() {
-        return document;
-    }
-
-    public void setDocument(DocumentDTO document) {
-        this.document = document;
+    public ValidationResultDTO setLogs(List<SieLogDTO> logs) {
+        return new ValidationResultDTO(document, logs.stream().distinct().toList());
     }
 }

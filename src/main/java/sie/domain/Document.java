@@ -10,7 +10,7 @@ import sie.exception.*;
  * @author Håkan Lidén
  *
  */
-public class Document implements Entity {
+public final class Document implements Entity {
 
     private final MetaData metaData;
     private final AccountingPlan accountingPlan;
@@ -35,51 +35,51 @@ public class Document implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.empty();
     }
 
-    public MetaData getMetaData() {
+    public MetaData metaData() {
         return metaData;
     }
 
-    public Optional<AccountingPlan> getAccountingPlan() {
+    public Optional<AccountingPlan> optAccountingPlan() {
         return Optional.ofNullable(accountingPlan);
     }
 
-    public List<Voucher> getVouchers() {
+    public List<Voucher> vouchers() {
         return vouchers.stream().sorted().collect(Collectors.toList());
     }
 
-    public List<Voucher> getImbalancedVouchers() {
-        return vouchers.stream().filter(voucher -> !voucher.isBalanced()).collect(Collectors.toList());
+    public List<Voucher> imbalancedVouchers() {
+        return vouchers.stream().filter(voucher -> !voucher.balanced()).collect(Collectors.toList());
     }
 
     public Boolean isBalanced() {
-        return getImbalancedVouchers().isEmpty();
+        return imbalancedVouchers().isEmpty();
     }
 
-    public List<AccountingDimension> getDimensions() {
+    public List<AccountingDimension> dimensions() {
         return new ArrayList<>(dimensions);
     }
 
-    public List<AccountingObject> getObjects() {
+    public List<AccountingObject> objects() {
         return new ArrayList<>(objects);
     }
 
-    public List<AccountingObject> getCostCentres() {
-        return getObjects().stream().filter(obj -> obj.getDimensionId().equals(AccountingDimension.COST_CENTRE)).collect(Collectors.toList());
+    public List<AccountingObject> costCentres() {
+        return objects().stream().filter(obj -> obj.dimensionId().equals(AccountingDimension.COST_CENTRE)).collect(Collectors.toList());
     }
 
-    public List<AccountingObject> getCostBearers() {
-        return getObjects().stream().filter(obj -> obj.getDimensionId().equals(AccountingDimension.COST_BEARER)).collect(Collectors.toList());
+    public List<AccountingObject> costBearers() {
+        return objects().stream().filter(obj -> obj.dimensionId().equals(AccountingDimension.COST_BEARER)).collect(Collectors.toList());
     }
 
-    public List<AccountingObject> getProjects() {
-        return getObjects().stream().filter(obj -> obj.getDimensionId().equals(AccountingDimension.PROJECT)).collect(Collectors.toList());
+    public List<AccountingObject> projects() {
+        return objects().stream().filter(obj -> obj.dimensionId().equals(AccountingDimension.PROJECT)).collect(Collectors.toList());
     }
 
-    public Optional<String> getChecksum() {
+    public Optional<String> optChecksum() {
         return Optional.ofNullable(checksum);
     }
 
@@ -91,6 +91,48 @@ public class Document implements Entity {
                 + "vouchers=" + vouchers + '}';
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.metaData);
+        hash = 79 * hash + Objects.hashCode(this.accountingPlan);
+        hash = 79 * hash + Objects.hashCode(this.vouchers);
+        hash = 79 * hash + Objects.hashCode(this.dimensions);
+        hash = 79 * hash + Objects.hashCode(this.objects);
+        hash = 79 * hash + Objects.hashCode(this.checksum);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Document other = (Document) obj;
+        if (!Objects.equals(this.checksum, other.checksum)) {
+            return false;
+        }
+        if (!Objects.equals(this.metaData, other.metaData)) {
+            return false;
+        }
+        if (!Objects.equals(this.accountingPlan, other.accountingPlan)) {
+            return false;
+        }
+        if (!Objects.equals(this.vouchers, other.vouchers)) {
+            return false;
+        }
+        if (!Objects.equals(this.dimensions, other.dimensions)) {
+            return false;
+        }
+        return Objects.equals(this.objects, other.objects);
+    }
+
     public static class Builder {
 
         private MetaData metaData;
@@ -100,7 +142,7 @@ public class Document implements Entity {
         private List<AccountingObject> objects = new ArrayList<>();
         private String checksum;
 
-        public Builder() {
+        private Builder() {
         }
 
         public Builder metaData(MetaData metaData) {

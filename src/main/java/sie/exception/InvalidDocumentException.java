@@ -2,7 +2,7 @@ package sie.exception;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import sie.validate.SieLog;
+import sie.log.SieLog;
 
 /**
  *

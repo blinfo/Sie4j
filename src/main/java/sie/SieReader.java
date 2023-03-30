@@ -92,8 +92,11 @@ class SieReader implements DataReader {
     @Override
     public Document read() {
         if (!validate && !validator.isValid()) {
-            String message = validator.getCriticalErrors().stream().map(log -> log.getMessage() + log.getLine().map(l -> "\n " + l).orElse("")).collect(Collectors.joining("\n"));
-            throw new SieException(message, validator.getCriticalErrors().stream().map(sl -> sl.getTag().orElse(null)).findFirst().orElse(null));
+            String message = validator.getCriticalErrors().stream()
+                    .map(log -> log.getMessage() + log.getLine().map(l -> "\n " + l).orElse(""))
+                    .collect(Collectors.joining("\n"));
+            throw new SieException(message, validator.getCriticalErrors().stream()
+                    .map(sl -> sl.getTag().orElse(null)).findFirst().orElse(null));
         }
         return document;
     }

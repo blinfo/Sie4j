@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author Håkan Lidén
  *
  */
-public class Program implements Entity {
+public final class Program implements Entity {
 
     private final String line;
     private final String name;
@@ -29,15 +29,15 @@ public class Program implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
-    public String getVersion() {
+    public String version() {
         return version;
     }
 

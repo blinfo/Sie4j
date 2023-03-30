@@ -55,5 +55,5 @@ public interface Entity extends DTO {
     public static final Charset CHARSET = Charset.forName("Cp437");
     public static final String DEFAULT_CURRENCY = "SEK";
 
-    Optional<String> getLine();
+    Optional<String> optLine();
 }
