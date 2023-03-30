@@ -32,18 +32,18 @@ public record VoucherDTO(
         List<TransactionDTO> transactions) implements DTO {
 
     public static VoucherDTO from(Voucher source) {
-        if (source.getDate() == null) {
+        if (source.date() == null) {
             throw new MissingVoucherDateException();
         }
         return new VoucherDTO(
-                source.getSeries().orElse(null),
-                source.getNumber().orElse(null),
-                source.getDate(),
-                source.getText().orElse(null),
-                source.getRegistrationDate().orElse(null),
-                source.getSignature().orElse(null),
-                source.isBalanced(),
-                source.getDiff(),
-                source.getTransactions().stream().map(TransactionDTO::from).toList());
+                source.optSeries().orElse(null),
+                source.optNumber().orElse(null),
+                source.date(),
+                source.optText().orElse(null),
+                source.optRegistrationDate().orElse(null),
+                source.optSignature().orElse(null),
+                source.balanced(),
+                source.diff(),
+                source.transactions().stream().map(TransactionDTO::from).toList());
     }
 }

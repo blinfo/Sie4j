@@ -3,7 +3,7 @@ package sie.domain;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.math.BigDecimal;
 import java.time.YearMonth;
-import java.util.Optional;
+import java.util.*;
 import sie.io.YearMonthSerializer;
 
 /**
@@ -11,7 +11,7 @@ import sie.io.YearMonthSerializer;
  * @author Håkan Lidén
  *
  */
-public class PeriodicalBudget implements Entity, Comparable<PeriodicalBudget> {
+public final class PeriodicalBudget implements Entity, Comparable<PeriodicalBudget> {
 
     private final String line;
     private final Integer yearIndex;
@@ -35,30 +35,60 @@ public class PeriodicalBudget implements Entity, Comparable<PeriodicalBudget> {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
-    public Integer getYearIndex() {
+    public Integer yearIndex() {
         return yearIndex;
     }
 
-    public YearMonth getPeriod() {
+    public YearMonth period() {
         return period;
     }
 
-    public BigDecimal getAmount() {
+    public BigDecimal amount() {
         return amount.setScale(SCALE, ROUNDING_MODE);
     }
 
     @Override
     public int compareTo(PeriodicalBudget other) {
-        return this.getPeriod().compareTo(other.getPeriod());
+        return this.period().compareTo(other.period());
     }
 
     @Override
     public String toString() {
         return "PeriodicalBudget{" + "period=" + period + ", amount=" + amount + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.yearIndex);
+        hash = 79 * hash + Objects.hashCode(this.period);
+        hash = 79 * hash + Objects.hashCode(this.amount);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PeriodicalBudget other = (PeriodicalBudget) obj;
+        if (!Objects.equals(this.yearIndex, other.yearIndex)) {
+            return false;
+        }
+        if (!Objects.equals(this.period, other.period)) {
+            return false;
+        }
+        return Objects.equals(this.amount, other.amount);
     }
 
 }

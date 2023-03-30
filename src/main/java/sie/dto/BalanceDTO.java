@@ -12,6 +12,6 @@ import sie.domain.Balance;
 public record BalanceDTO(Integer yearIndex, BigDecimal amount) implements DTO {
 
     public static BalanceDTO from(Balance source) {
-        return new BalanceDTO(source.getYearIndex(), source.getAmount());
+        return new BalanceDTO(source.yearIndex(), source.amount());
     }
 }

@@ -18,13 +18,13 @@ public record CompanyDTO(String name,
 
     public static CompanyDTO from(Company company) {
         return new CompanyDTO(
-                company.getName(),
-                company.getCorporateID().orElse(null),
-                company.getAquisitionNumber().orElse(null),
-                company.getSniCode().orElse(null),
-                company.getType().map(TypeDTO::from).orElse(null),
-                company.getAddress().map(AddressDTO::from).orElse(null),
-                company.getId().orElse(null));
+                company.name(),
+                company.optCorporateId().orElse(null),
+                company.optAquisitionNumber().orElse(null),
+                company.optSniCode().orElse(null),
+                company.optType().map(TypeDTO::from).orElse(null),
+                company.optAddress().map(AddressDTO::from).orElse(null),
+                company.optId().orElse(null));
     }
 
     @JsonPropertyOrder({"type", "description"})

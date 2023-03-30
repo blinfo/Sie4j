@@ -1,12 +1,12 @@
 package sie.domain;
 
-import java.util.Optional;
+import java.util.*;
 
 /**
  *
  * @author Håkan Lidén
  */
-public class AccountingDimension implements Entity, Comparable<AccountingDimension> {
+public final class AccountingDimension implements Entity, Comparable<AccountingDimension> {
 
     /**
      * Reserved dimension id for Cost centre
@@ -57,24 +57,29 @@ public class AccountingDimension implements Entity, Comparable<AccountingDimensi
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
-    public Integer getId() {
+    public Integer id() {
         return id;
     }
 
-    public String getLabel() {
+    public String label() {
         return label;
     }
 
     public Boolean isSubDimension() {
-        return getParentId().isPresent();
+        return optParentId().isPresent();
     }
 
-    public Optional<Integer> getParentId() {
+    public Optional<Integer> optParentId() {
         return Optional.ofNullable(parentId);
+    }
+
+    @Override
+    public int compareTo(AccountingDimension other) {
+        return id.compareTo(other.id);
     }
 
     @Override
@@ -83,7 +88,32 @@ public class AccountingDimension implements Entity, Comparable<AccountingDimensi
     }
 
     @Override
-    public int compareTo(AccountingDimension other) {
-        return id.compareTo(other.id);
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.label);
+        hash = 97 * hash + Objects.hashCode(this.parentId);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AccountingDimension other = (AccountingDimension) obj;
+        if (!Objects.equals(this.label, other.label)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return Objects.equals(this.parentId, other.parentId);
     }
 }

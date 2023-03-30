@@ -18,7 +18,7 @@ class SieStringBuilder {
 
     private SieStringBuilder(Document document) {
         this.document = document;
-        this.sieType = document.getMetaData().getSieType();
+        this.sieType = document.metaData().sieType();
         result = new StringBuilder();
     }
 
@@ -36,22 +36,22 @@ class SieStringBuilder {
     }
 
     private void addVouchers() {
-        document.getVouchers().forEach(voucher -> {
+        document.vouchers().forEach(voucher -> {
             add(Entity.VOUCHER,
-                    "\"" + voucher.getSeries().orElse("") + "\"",
-                    voucher.getNumber().map(num -> num.toString()).orElse("\"\""),
-                    Optional.ofNullable(voucher.getDate()).map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
-                    "\"" + voucher.getText().orElse("") + "\"",
-                    voucher.getRegistrationDate().map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
-                    "\"" + voucher.getSignature().orElse("") + "\"", "\n{");
-            voucher.getTransactions().forEach(trans -> {
+                    "\"" + voucher.optSeries().orElse("") + "\"",
+                    voucher.optNumber().map(num -> num.toString()).orElse("\"\""),
+                    Optional.ofNullable(voucher.date()).map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
+                    "\"" + voucher.optText().orElse("") + "\"",
+                    voucher.optRegistrationDate().map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
+                    "\"" + voucher.optSignature().orElse("") + "\"", "\n{");
+            voucher.transactions().forEach(trans -> {
                 add(Entity.TRANSACTION,
-                        trans.getAccountNumber(),
+                        trans.accountNumber(),
                         "{}",
-                        trans.getAmount().toString(),
-                        trans.getDate().map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
-                        "\"" + trans.getText().orElse("") + "\"",
-                        trans.getQuantity().map(q -> q.toString()).orElse(""),
+                        trans.amount().toString(),
+                        trans.optDate().map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
+                        "\"" + trans.optText().orElse("") + "\"",
+                        trans.optQuantity().map(q -> q.toString()).orElse(""),
                         trans.getSignature().map(sign -> "\"" + sign + "\"").orElse(""));
             });
             result.append("}\n");
@@ -59,38 +59,38 @@ class SieStringBuilder {
     }
 
     private void addAccountingPlan() {
-        document.getAccountingPlan().ifPresent(ac -> {
-            List<Account> accounts = ac.getAccounts();
+        document.optAccountingPlan().ifPresent(ac -> {
+            List<Account> accounts = ac.accounts();
             accounts.sort(Account::compareTo);
             accounts.forEach(account -> {
-                add(Entity.ACCOUNT, account.getNumber(), account.getLabel().map(l -> "\"" + l + "\"").orElse("\"\""));
+                add(Entity.ACCOUNT, account.number(), account.optLabel().map(l -> "\"" + l + "\"").orElse("\"\""));
             });
-            accounts.stream().filter(account -> account.getType().isPresent()).forEach(account -> {
-                add(Entity.ACCOUNT_TYPE, account.getNumber(), account.getType().get().name());
+            accounts.stream().filter(account -> account.optType().isPresent()).forEach(account -> {
+                add(Entity.ACCOUNT_TYPE, account.number(), account.optType().get().name());
             });
-            accounts.stream().filter(account -> account.getUnit().isPresent()).forEach(account -> {
-                add(Entity.ACCOUNT_TYPE, account.getNumber(), "\"" + account.getUnit().get() + "\"");
+            accounts.stream().filter(account -> account.optUnit().isPresent()).forEach(account -> {
+                add(Entity.ACCOUNT_TYPE, account.number(), "\"" + account.optUnit().get() + "\"");
             });
-            accounts.stream().filter(account -> !account.getSruCodes().isEmpty()).forEach(account -> {
-                account.getSruCodes().forEach(sru -> add(Entity.SRU, account.getNumber(), sru));
+            accounts.stream().filter(account -> !account.sruCodes().isEmpty()).forEach(account -> {
+                account.sruCodes().forEach(sru -> add(Entity.SRU, account.number(), sru));
             });
             if (!sieType.equals(Document.Type.I4)) {
-                accounts.stream().filter(account -> !account.getOpeningBalances().isEmpty())
+                accounts.stream().filter(account -> !account.openingBalances().isEmpty())
                         .flatMap(account -> {
-                            return account.getOpeningBalances().stream().map(balance -> new ResultBalance(Entity.OPENING_BALANCE, account.getNumber(), balance));
+                            return account.openingBalances().stream().map(balance -> new ResultBalance(Entity.OPENING_BALANCE, account.number(), balance));
                         }).sorted().forEach(rb -> add(rb.getTag(), rb.getParts()));
-                accounts.stream().filter(account -> !account.getClosingBalances().isEmpty())
+                accounts.stream().filter(account -> !account.closingBalances().isEmpty())
                         .flatMap(account -> {
-                            return account.getClosingBalances().stream().map(balance -> new ResultBalance(Entity.CLOSING_BALANCE, account.getNumber(), balance));
+                            return account.closingBalances().stream().map(balance -> new ResultBalance(Entity.CLOSING_BALANCE, account.number(), balance));
                         }).sorted().forEach(rb -> add(rb.getTag(), rb.getParts()));
-                accounts.stream().filter(account -> !account.getResults().isEmpty())
+                accounts.stream().filter(account -> !account.results().isEmpty())
                         .flatMap(account -> {
-                            return account.getResults().stream().map(balance -> new ResultBalance(Entity.RESULT, account.getNumber(), balance));
+                            return account.results().stream().map(balance -> new ResultBalance(Entity.RESULT, account.number(), balance));
                         }).sorted().forEach(rb -> add(rb.getTag(), rb.getParts()));
                 if (!sieType.equals(Document.Type.E1)) {
                     accounts.stream().filter(account -> !account.getPeriodicalBudgets().isEmpty()).forEach(account -> {
                         account.getPeriodicalBudgets().forEach(budg -> {
-                            add(Entity.PERIODICAL_BUDGET, budg.getYearIndex().toString(), budg.getPeriod().format(Entity.YEAR_MONTH_FORMAT), account.getNumber(), budg.getAmount().toString());
+                            add(Entity.PERIODICAL_BUDGET, budg.yearIndex().toString(), budg.period().format(Entity.YEAR_MONTH_FORMAT), account.number(), budg.amount().toString());
                         });
                     });
                 }
@@ -99,10 +99,10 @@ class SieStringBuilder {
     }
 
     private void addMetaData() {
-        if (document.getMetaData() == null) {
+        if (document.metaData() == null) {
             throw new InvalidDocumentException("MetaData is missing");
         }
-        MetaData data = document.getMetaData();
+        MetaData data = document.metaData();
         add(Entity.READ, "0");
         addProgram();
         add(Entity.FORMAT, Entity.ENCODING_FORMAT);
@@ -110,57 +110,57 @@ class SieStringBuilder {
         add(Entity.TYPE, sieType.getNumber().toString());
         addComment();
         addCompany();
-        data.getFinancialYears().forEach(year -> {
-            add(Entity.FINANCIAL_YEAR, year.getIndex().toString(), year.getStartDate().format(Entity.DATE_FORMAT), year.getEndDate().format(Entity.DATE_FORMAT));
+        data.financialYears().forEach(year -> {
+            add(Entity.FINANCIAL_YEAR, year.index().toString(), year.startDate().format(Entity.DATE_FORMAT), year.endDate().format(Entity.DATE_FORMAT));
         });
-        if (!data.getSieType().equals(Document.Type.E1) && !data.getSieType().equals(Document.Type.I4)) {
-            data.getTaxationYear().ifPresent(year -> add(Entity.TAXATION_YEAR, year.toString()));
-            data.getPeriodRange().ifPresent(period -> add(Entity.PERIOD_RANGE, period.format(Entity.DATE_FORMAT)));
+        if (!data.sieType().equals(Document.Type.E1) && !data.sieType().equals(Document.Type.I4)) {
+            data.optTaxationYear().ifPresent(year -> add(Entity.TAXATION_YEAR, year.toString()));
+            data.optPeriodRange().ifPresent(period -> add(Entity.PERIOD_RANGE, period.format(Entity.DATE_FORMAT)));
         }
         if (!sieType.equals(Document.Type.I4)) {
-            document.getAccountingPlan().ifPresent(ac -> {
-                ac.getType().ifPresent(type -> add(Entity.ACCOUNTING_PLAN_TYPE, "\"" + type + "\""));
+            document.optAccountingPlan().ifPresent(ac -> {
+                ac.optType().ifPresent(type -> add(Entity.ACCOUNTING_PLAN_TYPE, "\"" + type + "\""));
             });
         }
-        data.getCurrency().ifPresent(curr -> add(Entity.CURRENCY, curr));
+        data.optCurrency().ifPresent(curr -> add(Entity.CURRENCY, curr));
     }
 
     private void addProgram() {
-        if (document.getMetaData().getProgram() == null) {
+        if (document.metaData().program() == null) {
             return;
         }
-        Program prog = document.getMetaData().getProgram();
-        add(Entity.PROGRAM, "\"" + prog.getName() + "\"", "\"" + prog.getVersion() + "\"");
+        Program prog = document.metaData().program();
+        add(Entity.PROGRAM, "\"" + prog.name() + "\"", "\"" + prog.version() + "\"");
     }
 
     private void addGenerated() {
-        if (document.getMetaData().getGenerated() == null) {
+        if (document.metaData().generated() == null) {
             return;
         }
-        Generated gen = document.getMetaData().getGenerated();
-        add(Entity.GENERATED, gen.getDate().format(Entity.DATE_FORMAT), gen.getSignature().map(sign -> "\"" + sign + "\"").orElse(""));
+        Generated gen = document.metaData().generated();
+        add(Entity.GENERATED, gen.date().format(Entity.DATE_FORMAT), gen.optSignature().map(sign -> "\"" + sign + "\"").orElse(""));
     }
 
     private void addComment() {
-        document.getMetaData().getComments().ifPresent(comment -> add(Entity.COMMENTS, "\"" + comment + "\""));
+        document.metaData().optComments().ifPresent(comment -> add(Entity.COMMENTS, "\"" + comment + "\""));
     }
 
     private void addCompany() {
-        if (document.getMetaData().getCompany() == null) {
+        if (document.metaData().getCompany() == null) {
             return;
         }
-        Company company = document.getMetaData().getCompany();
-        company.getType().ifPresent(type -> add(Entity.COMPANY_TYPE, type.name()));
-        company.getId().ifPresent(id -> add(Entity.COMPANY_ID, "\"" + id + "\""));
-        company.getCorporateID().ifPresent(id -> add(Entity.CORPORATE_ID, id));
+        Company company = document.metaData().getCompany();
+        company.optType().ifPresent(type -> add(Entity.COMPANY_TYPE, type.name()));
+        company.optId().ifPresent(id -> add(Entity.COMPANY_ID, "\"" + id + "\""));
+        company.optCorporateId().ifPresent(id -> add(Entity.CORPORATE_ID, id));
         if (!sieType.equals(Document.Type.I4)) {
-            company.getSniCode().ifPresent(sni -> add(Entity.COMPANY_SNI_CODE, "\"" + sni + "\""));
+            company.optSniCode().ifPresent(sni -> add(Entity.COMPANY_SNI_CODE, "\"" + sni + "\""));
         }
-        company.getAddress().ifPresent(addr -> add(Entity.ADDRESS, "\"" + addr.getContact() + "\"",
-                "\"" + addr.getStreetAddress() + "\"",
-                "\"" + addr.getPostalAddress() + "\"",
-                "\"" + addr.getPhone() + "\""));
-        add(Entity.COMPANY_NAME, "\"" + company.getName() + "\"");
+        company.optAddress().ifPresent(addr -> add(Entity.ADDRESS, "\"" + addr.contact() + "\"",
+                "\"" + addr.streetAddress() + "\"",
+                "\"" + addr.postalAddress() + "\"",
+                "\"" + addr.phone() + "\""));
+        add(Entity.COMPANY_NAME, "\"" + company.name() + "\"");
     }
 
     private void add(String prefix, String... parts) {
@@ -186,12 +186,12 @@ class SieStringBuilder {
         }
 
         public String[] getParts() {
-            return new String[]{balance.getYearIndex().toString(), number, balance.getAmount().toString()};
+            return new String[]{balance.yearIndex().toString(), number, balance.amount().toString()};
         }
 
         @Override
         public int compareTo(ResultBalance other) {
-            int result = other.balance.getYearIndex().compareTo(this.balance.getYearIndex());
+            int result = other.balance.yearIndex().compareTo(this.balance.yearIndex());
             if (result == 0) {
                 return this.number.compareTo(other.number);
             }

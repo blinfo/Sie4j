@@ -11,7 +11,7 @@ import sie.domain.AccountingDimension;
 public record AccountingDimensionDTO(Integer id, String label, Integer parentId) implements DTO {
 
     public static AccountingDimensionDTO from(AccountingDimension source) {
-        return new AccountingDimensionDTO(source.getId(), source.getLabel(), source.getParentId().orElse(null));
+        return new AccountingDimensionDTO(source.id(), source.label(), source.optParentId().orElse(null));
     }
 
 }

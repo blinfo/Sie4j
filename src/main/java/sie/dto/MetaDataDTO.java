@@ -32,14 +32,14 @@ public record MetaDataDTO(
     public static MetaDataDTO from(MetaData source) {
         return new MetaDataDTO(
                 CompanyDTO.from(source.getCompany()),
-                ProgramDTO.from(source.getProgram()),
-                GeneratedDTO.from(source.getGenerated()),
-                SieTypeDTO.from(source.getSieType()),
-                source.getComments().orElse(null),
-                source.getTaxationYear().orElse(null),
-                source.getFinancialYears().stream().map(FinancialYearDTO::from).toList(),
-                source.getPeriodRange().orElse(null),
-                source.getCurrency().orElse(null),
+                ProgramDTO.from(source.program()),
+                GeneratedDTO.from(source.generated()),
+                SieTypeDTO.from(source.sieType()),
+                source.optComments().orElse(null),
+                source.optTaxationYear().orElse(null),
+                source.financialYears().stream().map(FinancialYearDTO::from).toList(),
+                source.optPeriodRange().orElse(null),
+                source.optCurrency().orElse(null),
                 source.isRead());
     }
 }

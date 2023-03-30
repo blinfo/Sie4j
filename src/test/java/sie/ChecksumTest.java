@@ -1,7 +1,7 @@
 package sie;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import sie.domain.Document;
 
 /**
@@ -30,10 +30,10 @@ public class ChecksumTest {
     @Test
     public void testCalculate_Document() {
         String expResult = "344D614846547151326F2F466962684E6C6E683179413D3D";
-        assertTrue("Document should have checksum", DOCUMENT.getChecksum().isPresent());
-        assertEquals("Document checksum should be " + expResult, expResult, DOCUMENT.getChecksum().get());
-        assertEquals("Document checksum should be " + expResult, expResult, Checksum.calculate(DOCUMENT));
-        assertEquals("InputStream checksum should be " + expResult, expResult, Checksum.calculate(getStream()));
+        assertTrue(DOCUMENT.optChecksum().isPresent());
+        assertEquals(expResult, DOCUMENT.optChecksum().get());
+        assertEquals(expResult, Checksum.calculate(DOCUMENT));
+        assertEquals(expResult, Checksum.calculate(getStream()));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class ChecksumTest {
         Document sieDoc = Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8.SI"));
         String jsonChecksum = Sie4j.calculateChecksum(jsonDoc);
         String sieChecksum = Sie4j.calculateChecksum(sieDoc);
-        assertEquals("Both checksums should match", sieChecksum, jsonChecksum);
+        assertEquals(sieChecksum, jsonChecksum);
     }
 
     @Test
@@ -52,6 +52,6 @@ public class ChecksumTest {
         Document sieDoc = Sie4j.fromSie(getClass().getResourceAsStream("/sample/Arousells_Visning_AB.SE"));
         String jsonChecksum = Sie4j.calculateChecksum(jsonDoc);
         String sieChecksum = Sie4j.calculateChecksum(sieDoc);
-        assertEquals("Both checksums should match", sieChecksum, jsonChecksum);
+        assertEquals(sieChecksum, jsonChecksum);
     }
 }

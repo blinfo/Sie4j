@@ -25,15 +25,15 @@ class AccountingPlanValidator extends AbstractValidator<AccountingPlan> {
     }
 
     private void validate_accounts() {
-        if (!type.equals(Document.Type.I4) && entity.getAccounts().isEmpty()) {
+        if (!type.equals(Document.Type.I4) && entity.accounts().isEmpty()) {
             addInfo(ACCOUNT, "Konton saknas");
             return;
         }
-        entity.getAccounts().forEach(acc -> {
-            if ((type.equals(Document.Type.E1) || type.equals(Document.Type.E2)) && !acc.getSruCodes().isEmpty()) {
-                acc.getSruCodes().forEach(sru -> {
+        entity.accounts().forEach(acc -> {
+            if ((type.equals(Document.Type.E1) || type.equals(Document.Type.E2)) && !acc.sruCodes().isEmpty()) {
+                acc.sruCodes().forEach(sru -> {
                     if (isNullOrBlank(sru)) {
-                        addInfo(SRU, "SRU-kod för konto " + acc.getNumber() + " saknas");
+                        addInfo(SRU, "SRU-kod för konto " + acc.number() + " saknas");
                     }
                 });
             }

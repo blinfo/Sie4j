@@ -1,8 +1,8 @@
 package sie.domain;
 
 import java.util.Optional;
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import sie.exception.*;
 
 /**
@@ -15,16 +15,16 @@ public class AccountTest {
     public void test_account_with_empty_number_throws_exception() {
         String expectedMessage = "Kontonummer saknas";
         String number = "";
-        SieException ex = assertThrows("Builder should throw exception", MissingAccountNumberException.class, () -> Account.builder(number).apply());
-        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+        SieException ex = assertThrows(MissingAccountNumberException.class, () -> Account.builder(number).apply());
+        assertEquals(expectedMessage, ex.getMessage());
     }
 
     @Test
     public void test_account_with_null_number_throws_exception() {
         String expectedMessage = "Kontonummer saknas";
         String number = null;
-        SieException ex = assertThrows("Builder should throw exception", MissingAccountNumberException.class, () -> Account.builder(number).apply());
-        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+        SieException ex = assertThrows(MissingAccountNumberException.class, () -> Account.builder(number).apply());
+        assertEquals(expectedMessage, ex.getMessage());
     }
     
     @Test

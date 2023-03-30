@@ -6,8 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import sie.domain.*;
 
 /**
@@ -25,12 +25,12 @@ public class SieWriterTest {
                 .apply();
         String result = Sie4j.asSie(doc);
         String expectedResult = getResult();
-        assertEquals("Result should be " + expectedResult, expectedResult, result);
+        assertEquals(expectedResult, result);
     }
 
     private MetaData createMetaData() {
         return MetaData.builder()
-                .company(Company.builder("Test av Writer").corporateID("123432-9878").apply())
+                .company(Company.builder("Test av Writer").corporateId("123432-9878").apply())
                 .program(Program.of("SieWriterTest", "0.0.1"))
                 .generated(Generated.of(LocalDate.parse("2021-08-18")))
                 .read(Boolean.FALSE)
@@ -61,7 +61,7 @@ public class SieWriterTest {
                 .addTransaction(Transaction.builder().accountNumber("1001").amount(BigDecimal.ONE.negate()).apply())
                 .apply();
     }
-    
+
     private String getResult() {
         return new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/SieWriterTest-result.si"), StandardCharsets.UTF_8))
                 .lines()

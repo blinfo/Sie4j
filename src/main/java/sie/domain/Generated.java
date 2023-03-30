@@ -2,7 +2,7 @@ package sie.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.*;
 import sie.io.LocalDateSerializer;
 
 /**
@@ -10,7 +10,7 @@ import sie.io.LocalDateSerializer;
  * @author Håkan Lidén
  *
  */
-public class Generated implements Entity {
+public final class Generated implements Entity {
 
     private final String line;
     @JsonSerialize(using = LocalDateSerializer.class)
@@ -40,21 +40,47 @@ public class Generated implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
-    public LocalDate getDate() {
+    public LocalDate date() {
         return date;
     }
 
-    public Optional<String> getSignature() {
+    public Optional<String> optSignature() {
         return Optional.ofNullable(signature);
     }
 
     @Override
     public String toString() {
         return "Generated{" + "date=" + date + ", signature=" + signature + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.date);
+        hash = 37 * hash + Objects.hashCode(this.signature);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Generated other = (Generated) obj;
+        if (!Objects.equals(this.signature, other.signature)) {
+            return false;
+        }
+        return Objects.equals(this.date, other.date);
     }
 
 }

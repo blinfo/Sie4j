@@ -11,6 +11,6 @@ import sie.domain.AccountingObject;
 public record AccountingObjectDTO(Integer dimensionId, String number, String label) implements DTO {
 
     public static AccountingObjectDTO from(AccountingObject source) {
-        return new AccountingObjectDTO(source.getDimensionId(), source.getNumber(), source.getLabel());
+        return new AccountingObjectDTO(source.dimensionId(), source.number(), source.label());
     }
 }

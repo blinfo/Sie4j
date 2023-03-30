@@ -23,10 +23,10 @@ public record PeriodicalBalanceDTO(Integer yearIndex,
 
     public static PeriodicalBalanceDTO from(PeriodicalBalance source) {
         return new PeriodicalBalanceDTO(
-                source.getYearIndex(),
-                source.getPeriod(),
-                source.getObjectId().map(ObjectIdDTO::from).orElse(null),
-                source.getAmount(),
-                source.getQuantity().orElse(null));
+                source.yearIndex(),
+                source.period(),
+                source.optObjectId().map(ObjectIdDTO::from).orElse(null),
+                source.amount(),
+                source.optQuantity().orElse(null));
     }
 }

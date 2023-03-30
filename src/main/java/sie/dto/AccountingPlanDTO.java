@@ -12,7 +12,7 @@ import sie.domain.AccountingPlan;
 public record AccountingPlanDTO(List<AccountDTO> accounts, String type) implements DTO {
 
     public static AccountingPlanDTO from(AccountingPlan source) {
-        List<AccountDTO> accounts = source.getAccounts().stream().map(AccountDTO::from).toList();
-        return new AccountingPlanDTO(accounts, source.getType().orElse(null));
+        List<AccountDTO> accounts = source.accounts().stream().map(AccountDTO::from).toList();
+        return new AccountingPlanDTO(accounts, source.optType().orElse(null));
     }
 }

@@ -16,7 +16,7 @@ import java.util.Optional;
  * @author Håkan Lidén
  *
  */
-public class Balance implements Entity {
+public final class Balance implements Entity {
 
     private final String line;
     private final BigDecimal amount;
@@ -52,7 +52,7 @@ public class Balance implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
@@ -61,7 +61,7 @@ public class Balance implements Entity {
      *
      * @return BigDecimal - the Amount for the balance/result
      */
-    public BigDecimal getAmount() {
+    public BigDecimal amount() {
         return amount.setScale(SCALE, ROUNDING_MODE);
     }
 
@@ -71,7 +71,7 @@ public class Balance implements Entity {
      * @return Integer - the YearIndex for the balance/result. Current year: 0,
      * previous year: -1 ...
      */
-    public Integer getYearIndex() {
+    public Integer yearIndex() {
         return yearIndex;
     }
 
@@ -80,5 +80,31 @@ public class Balance implements Entity {
         return "Balance{"
                 + "amount=" + amount + ", "
                 + "yearIndex=" + yearIndex + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.amount);
+        hash = 53 * hash + Objects.hashCode(this.yearIndex);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Balance other = (Balance) obj;
+        if (!Objects.equals(this.amount, other.amount)) {
+            return false;
+        }
+        return Objects.equals(this.yearIndex, other.yearIndex);
     }
 }

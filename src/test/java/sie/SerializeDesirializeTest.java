@@ -1,8 +1,8 @@
 package sie;
 
 import java.io.InputStream;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import sie.domain.Document;
 
 
@@ -17,7 +17,7 @@ public class SerializeDesirializeTest {
         String jsonFromSie = Sie4j.asJson(getSieSource());
         Document doc = Sie4j.fromJson(jsonFromSie);
         String jsonFromJson = Sie4j.asJson(doc);
-        assertEquals("", jsonFromSie, jsonFromJson);
+        assertEquals(jsonFromSie, jsonFromJson);
     }
 
     private InputStream getSieSource() {

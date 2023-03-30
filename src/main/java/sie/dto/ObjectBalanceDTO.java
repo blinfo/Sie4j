@@ -16,9 +16,9 @@ public record ObjectBalanceDTO(Integer yearIndex,
         Double quantity) implements DTO {
 
     public static ObjectBalanceDTO from(ObjectBalance source) {
-        return new ObjectBalanceDTO(source.getYearIndex(),
-                ObjectIdDTO.from(source.getObjectId()),
-                source.getAmount(),
-                source.getQuantity().orElse(null));
+        return new ObjectBalanceDTO(source.yearIndex(),
+                ObjectIdDTO.from(source.objectId()),
+                source.amount(),
+                source.optQuantity().orElse(null));
     }
 }

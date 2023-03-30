@@ -3,7 +3,6 @@ package sie;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.StandardCharsets;
-import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import sie.domain.*;
@@ -94,7 +93,7 @@ class Deserializer {
             return null;
         }
         return Company.builder(company.name())
-                .corporateID(company.corporateId())
+                .corporateId(company.corporateId())
                 .address(createAddress(company.address()))
                 .aquisitionNumber(company.aquisitionNumber())
                 .sniCode(company.sniCode())

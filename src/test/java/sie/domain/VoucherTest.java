@@ -3,8 +3,8 @@ package sie.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import sie.*;
 import static sie.domain.Entity.*;
 import sie.exception.SieException;
@@ -18,10 +18,10 @@ public class VoucherTest extends Helper {
 
     @Test
     public void test_Vouchers_are_balanced() {
-        getDocument(4, 'I').getVouchers().stream()
+        getDocument(4, 'I').vouchers().stream()
                 .forEach(v -> {
-                    assertTrue("Voucher is balanced", v.isBalanced());
-                    assertTrue("Voucher has transactions", v.getTransactions().size() > 0);
+                    assertTrue(v.balanced());
+                    assertTrue(v.transactions().size() > 0);
                 });
         String expectedMessage = "Verifikationen är i obalans. \n"
                 + " Differens: -0.14\n"
@@ -29,8 +29,8 @@ public class VoucherTest extends Helper {
                 + "Verifikationen är i obalans. \n"
                 + " Differens: 0.55\n"
                 + " #VER \"K\" \"\" 20180502 \"Försäljning 25% (DF:157)\"  20180503";
-        SieException ex = assertThrows("", SieException.class, () -> Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI")));
-        assertEquals("Message should be " + expectedMessage, expectedMessage, ex.getMessage());
+        SieException ex = assertThrows(SieException.class, () -> Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI")));
+        assertEquals(expectedMessage, ex.getMessage());
     }
 
     @Test
@@ -38,11 +38,11 @@ public class VoucherTest extends Helper {
         Transaction t1 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("10.005")).apply();
         Transaction t2 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("-10.00")).apply();
         Voucher v1 = Voucher.builder().addTransaction(t1).addTransaction(t2).date(LocalDate.now()).number(21).series("A").apply();
-        assertFalse("Voucher is imbalanced", v1.isBalanced());
+        assertFalse(v1.balanced());
         Transaction t3 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("10.004")).apply();
         Transaction t4 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("-10.00")).apply();
         Voucher v2 = Voucher.builder().addTransaction(t3).addTransaction(t4).date(LocalDate.now()).number(21).series("A").apply();
-        assertTrue("Voucher is balanced", v2.isBalanced());
+        assertTrue(v2.balanced());
     }
 
     @Test
@@ -50,87 +50,87 @@ public class VoucherTest extends Helper {
         Transaction t1 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("10.005")).apply();
         Transaction t2 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("-10.00")).apply();
         Voucher v1 = Voucher.builder().addTransaction(t1).addTransaction(t2).date(LocalDate.now()).number(21).series("A").apply();
-        assertEquals("", new BigDecimal("0.01"), v1.getDiff());
+        assertEquals(new BigDecimal("0.01"), v1.diff());
         Transaction t3 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("10.004")).apply();
         Transaction t4 = Transaction.builder().accountNumber("1910").amount(new BigDecimal("-10.00")).apply();
         Voucher v2 = Voucher.builder().addTransaction(t3).addTransaction(t4).date(LocalDate.now()).number(21).series("A").apply();
-        assertEquals("", new BigDecimal("0.00"), v2.getDiff());
+        assertEquals(new BigDecimal("0.00"), v2.diff());
     }
 
     @Test
     public void test_Voucher() {
-        List<Voucher> vouchers = getDocument(4, 'E').getVouchers();
+        List<Voucher> vouchers = getDocument(4, 'E').vouchers();
         Voucher firstVoucher = vouchers.get(0);
         String firstText = "Representation måltid utan alkohol";
         String signature = "#6 Linda Henriksson";
         LocalDate firstDate = LocalDate.parse("2017-01-01");
         LocalDate firstRegDate = LocalDate.parse("2017-01-19");
-        assertTrue("First voucher should have a series", firstVoucher.getSeries().isPresent());
-        assertEquals("First voucher series should be A", "A", firstVoucher.getSeries().get());
-        assertTrue("First voucher should have a number", firstVoucher.getNumber().isPresent());
-        assertEquals("First voucher number should be 1", Integer.valueOf(1), firstVoucher.getNumber().get());
-        assertTrue("First voucher should be balanced", firstVoucher.isBalanced());
-        assertEquals("First voucher should have 3 transactions", Integer.valueOf(3), Integer.valueOf(firstVoucher.getTransactions().size()));
-        assertTrue("First voucher should have text", firstVoucher.getText().isPresent());
-        assertEquals("First voucher text should be " + firstText, firstText, firstVoucher.getText().get());
-        assertEquals("First voucher date should be " + firstDate, firstDate, firstVoucher.getDate());
-        assertTrue("First voucher should have registration date", firstVoucher.getRegistrationDate().isPresent());
-        assertEquals("First voucher registration date should be " + firstRegDate, firstRegDate, firstVoucher.getRegistrationDate().get());
-        assertTrue("First voucher should have signature", firstVoucher.getSignature().isPresent());
-        assertEquals("First voucher signature should be " + signature, signature, firstVoucher.getSignature().get());
+        assertTrue(firstVoucher.optSeries().isPresent());
+        assertEquals("A", firstVoucher.optSeries().get());
+        assertTrue(firstVoucher.optNumber().isPresent());
+        assertEquals(Integer.valueOf(1), firstVoucher.optNumber().get());
+        assertTrue(firstVoucher.balanced());
+        assertEquals(Integer.valueOf(3), Integer.valueOf(firstVoucher.transactions().size()));
+        assertTrue(firstVoucher.optText().isPresent());
+        assertEquals(firstText, firstVoucher.optText().get());
+        assertEquals(firstDate, firstVoucher.date());
+        assertTrue(firstVoucher.optRegistrationDate().isPresent());
+        assertEquals(firstRegDate, firstVoucher.optRegistrationDate().get());
+        assertTrue(firstVoucher.optSignature().isPresent());
+        assertEquals(signature, firstVoucher.optSignature().get());
 
         Voucher lastVoucher = vouchers.get(vouchers.size() - 1);
         String lastText = "Löner";
         LocalDate lastDate = LocalDate.parse("2017-01-25");
         LocalDate lastRegDate = LocalDate.parse("2017-03-22");
-        assertTrue("Last voucher should have a series", lastVoucher.getSeries().isPresent());
-        assertEquals("Last voucher series should be N", "N", lastVoucher.getSeries().get());
-        assertTrue("Last voucher should have a number", lastVoucher.getNumber().isPresent());
-        assertEquals("Last voucher number should be 1", Integer.valueOf(1), lastVoucher.getNumber().get());
-        assertTrue("Last voucher should be balanced", lastVoucher.isBalanced());
-        assertEquals("Last voucher should have 5 transactions", Integer.valueOf(5), Integer.valueOf(lastVoucher.getTransactions().size()));
-        assertTrue("Last voucher should have text", lastVoucher.getText().isPresent());
-        assertEquals("Last voucher text should be " + lastText, lastText, lastVoucher.getText().get());
-        assertEquals("Last voucher date should be " + lastDate, lastDate, lastVoucher.getDate());
-        assertTrue("Last voucher should have registration date", lastVoucher.getRegistrationDate().isPresent());
-        assertEquals("Last voucher registration date should be " + lastRegDate, lastRegDate, lastVoucher.getRegistrationDate().get());
-        assertTrue("Last voucher should have signature", lastVoucher.getSignature().isPresent());
-        assertEquals("Last voucher signature should be " + signature, signature, lastVoucher.getSignature().get());
+        assertTrue(lastVoucher.optSeries().isPresent());
+        assertEquals("N", lastVoucher.optSeries().get());
+        assertTrue(lastVoucher.optNumber().isPresent());
+        assertEquals(Integer.valueOf(1), lastVoucher.optNumber().get());
+        assertTrue(lastVoucher.balanced());
+        assertEquals(Integer.valueOf(5), Integer.valueOf(lastVoucher.transactions().size()));
+        assertTrue(lastVoucher.optText().isPresent());
+        assertEquals(lastText, lastVoucher.optText().get());
+        assertEquals(lastDate, lastVoucher.date());
+        assertTrue(lastVoucher.optRegistrationDate().isPresent());
+        assertEquals(lastRegDate, lastVoucher.optRegistrationDate().get());
+        assertTrue(lastVoucher.optSignature().isPresent());
+        assertEquals(signature, lastVoucher.optSignature().get());
     }
 
     @Test
     public void test_Transaction() {
-        List<Voucher> vouchers = getDocument(4, 'E').getVouchers();
-        List<Transaction> transactions = vouchers.get(vouchers.size() - 1).getTransactions();
+        List<Voucher> vouchers = getDocument(4, 'E').vouchers();
+        List<Transaction> transactions = vouchers.get(vouchers.size() - 1).transactions();
         Transaction first = transactions.get(0);
         BigDecimal firstAmount = new BigDecimal(-24268).setScale(SCALE, ROUNDING_MODE);
         LocalDate date = LocalDate.parse("2017-01-25");
-        assertEquals("First transaction should have amount " + firstAmount, firstAmount, first.getAmount());
-        assertEquals("First transaction should have account 1930", "1930", first.getAccountNumber());
-        assertTrue("First transaction should have a date", first.getDate().isPresent());
-        assertEquals("First transaction date should be " + date, date, first.getDate().get());
+        assertEquals(firstAmount, first.amount());
+        assertEquals("1930", first.accountNumber());
+        assertTrue(first.optDate().isPresent());
+        assertEquals(date, first.optDate().get());
 
         Transaction last = transactions.get(transactions.size() - 1);
         BigDecimal lastAmount = new BigDecimal(-10350.38).setScale(SCALE, ROUNDING_MODE);
-        assertEquals("Last transaction should have amount " + lastAmount, lastAmount, last.getAmount());
-        assertEquals("Last transaction should have account 2730 ", "2730", last.getAccountNumber());
-        assertTrue("Last transaction should have a date", last.getDate().isPresent());
-        assertEquals("Last transaction date should be " + date, date, last.getDate().get());
+        assertEquals(lastAmount, last.amount());
+        assertEquals("2730", last.accountNumber());
+        assertTrue(last.optDate().isPresent());
+        assertEquals(date, last.optDate().get());
     }
 
     @Test
     public void test_VoucherText_with_inline_quotes() {
         String expectedResult = "Försäljning 25% \"DF:157\"";
         Document doc = Sie4j.fromSie(getClass().getResourceAsStream("/sample/Quotes_test.si"));
-        assertEquals("Voucher text should be " + expectedResult, expectedResult, doc.getVouchers().get(0).getText().orElse(""));
+        assertEquals(expectedResult, doc.vouchers().get(0).optText().orElse(""));
     }
 
     @Test
     public void test_Voucher_from_strange_sie_file() {
         Document doc = Sie4j.fromSie(getClass().getResourceAsStream("/sample/SIE_with_missing_program_version.se"));
-        List<Voucher> vouchers = doc.getVouchers();
-        assertEquals("First voucher should have eight transaction rows", 8l, vouchers.get(0).getTransactions().size());
-        assertEquals("Second voucher should have seven transaction rows", 7l, vouchers.get(1).getTransactions().size());
-        assertEquals("Third voucher should have eight transaction rows", 8l, vouchers.get(2).getTransactions().size());
+        List<Voucher> vouchers = doc.vouchers();
+        assertEquals(8l, vouchers.get(0).transactions().size());
+        assertEquals(7l, vouchers.get(1).transactions().size());
+        assertEquals(8l, vouchers.get(2).transactions().size());
     }
 }

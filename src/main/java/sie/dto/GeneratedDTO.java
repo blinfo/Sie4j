@@ -17,6 +17,6 @@ public record GeneratedDTO(@JsonSerialize(using = LocalDateSerializer.class)
         String signature) implements DTO {
 
     public static GeneratedDTO from(Generated source) {
-        return new GeneratedDTO(source.getDate(), source.getSignature().map(s -> s == null || s.isBlank() ? null : s).orElse(null));
+        return new GeneratedDTO(source.date(), source.optSignature().map(s -> s == null || s.isBlank() ? null : s).orElse(null));
     }
 }

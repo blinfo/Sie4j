@@ -2,14 +2,14 @@ package sie.domain;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
-import java.util.Optional;
+import java.util.*;
 import sie.domain.Account.ObjectId;
 
 /**
  *
  * @author Håkan Lidén
  */
-public class PeriodicalBalance implements Entity {
+public final class PeriodicalBalance implements Entity {
 
     private final String line;
     private final Integer yearIndex;
@@ -32,27 +32,27 @@ public class PeriodicalBalance implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
-    public Integer getYearIndex() {
+    public Integer yearIndex() {
         return yearIndex;
     }
 
-    public YearMonth getPeriod() {
+    public YearMonth period() {
         return period;
     }
 
-    public Optional<ObjectId> getObjectId() {
+    public Optional<ObjectId> optObjectId() {
         return Optional.ofNullable(objectId);
     }
 
-    public BigDecimal getAmount() {
+    public BigDecimal amount() {
         return amount;
     }
 
-    public Optional<Double> getQuantity() {
+    public Optional<Double> optQuantity() {
         return Optional.ofNullable(quantity);
     }
 
@@ -64,6 +64,44 @@ public class PeriodicalBalance implements Entity {
                 + "objectId=" + objectId + ", "
                 + "amount=" + amount + ", "
                 + "quantity=" + quantity + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.yearIndex);
+        hash = 97 * hash + Objects.hashCode(this.period);
+        hash = 97 * hash + Objects.hashCode(this.objectId);
+        hash = 97 * hash + Objects.hashCode(this.amount);
+        hash = 97 * hash + Objects.hashCode(this.quantity);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PeriodicalBalance other = (PeriodicalBalance) obj;
+        if (!Objects.equals(this.yearIndex, other.yearIndex)) {
+            return false;
+        }
+        if (!Objects.equals(this.period, other.period)) {
+            return false;
+        }
+        if (!Objects.equals(this.objectId, other.objectId)) {
+            return false;
+        }
+        if (!Objects.equals(this.amount, other.amount)) {
+            return false;
+        }
+        return Objects.equals(this.quantity, other.quantity);
     }
 
     public static class Builder {

@@ -603,7 +603,7 @@ class DocumentFactory {
         }
         if (hasLine(Entity.CORPORATE_ID)) {
             List<String> lineParts = getLineParts(Entity.CORPORATE_ID);
-            getCorporateID(lineParts.get(1).replaceAll(REPLACE_STRING, "")).ifPresent(builder::corporateID);
+            getCorporateID(lineParts.get(1).replaceAll(REPLACE_STRING, "")).ifPresent(builder::corporateId);
             if (lineParts.size() > 2 && lineParts.get(2).replaceAll(REPLACE_STRING, "").trim().matches("\\d+")) {
                 builder.aquisitionNumber(Integer.valueOf(lineParts.get(2).replaceAll(REPLACE_STRING, "")));
             }
@@ -677,8 +677,8 @@ class DocumentFactory {
         }
         if (isConversion()) {
             IntStream.range(0, years.size() - 1).forEach(i -> {
-                LocalDate start = years.get(i).getStartDate();
-                LocalDate end = years.get(i + 1).getEndDate();
+                LocalDate start = years.get(i).startDate();
+                LocalDate end = years.get(i + 1).endDate();
                 if (!start.equals(end.plusDays(1))) {
                     throw new NonConsecutiveFinancialYearsException(years.get(i + 1));
                 }
@@ -690,8 +690,8 @@ class DocumentFactory {
     private Optional<Integer> findFinancialYearIndexByPeriod(YearMonth period) {
         LocalDate date = LocalDate.of(period.getYear(), period.getMonth(), 5);
         return getFinancialYears().stream().filter(fy -> {
-            return fy.getStartDate().isBefore(date) && fy.getEndDate().isAfter(date);
-        }).map(FinancialYear::getIndex).findFirst();
+            return fy.startDate().isBefore(date) && fy.endDate().isAfter(date);
+        }).map(FinancialYear::index).findFirst();
     }
 
     private FinancialYear createFinancialYear(List<String> parts) {
@@ -757,8 +757,8 @@ class DocumentFactory {
     }
 
     private void checkVoucherSeriesNumberLength() {
-        if (document.getVouchers().stream()
-                .filter(v -> v.getSeries().orElse("").length() > 1)
+        if (document.vouchers().stream()
+                .filter(v -> v.optSeries().orElse("").length() > 1)
                 .findAny()
                 .isPresent()) {
             addInfo("Filen innehåller verifikationsserie vars nummer är längre än ett tecken");

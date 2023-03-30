@@ -2,7 +2,7 @@ package sie.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.*;
 import sie.io.LocalDateSerializer;
 
 /**
@@ -10,7 +10,7 @@ import sie.io.LocalDateSerializer;
  * @author Håkan Lidén 
  *
  */
-public class FinancialYear implements Entity, Comparable<FinancialYear> {
+public final class FinancialYear implements Entity, Comparable<FinancialYear> {
 
     private final String line;
     private final Integer index;
@@ -35,25 +35,25 @@ public class FinancialYear implements Entity, Comparable<FinancialYear> {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
-    public Integer getIndex() {
+    public Integer index() {
         return index;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDate startDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDate endDate() {
         return endDate;
     }
 
     @Override
     public int compareTo(FinancialYear other) {
-        return other.getIndex().compareTo(getIndex());
+        return other.index().compareTo(index());
     }
 
     @Override
@@ -62,5 +62,35 @@ public class FinancialYear implements Entity, Comparable<FinancialYear> {
                 + "index=" + index + ", "
                 + "startDate=" + startDate + ", "
                 + "endDate=" + endDate + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.index);
+        hash = 73 * hash + Objects.hashCode(this.startDate);
+        hash = 73 * hash + Objects.hashCode(this.endDate);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FinancialYear other = (FinancialYear) obj;
+        if (!Objects.equals(this.index, other.index)) {
+            return false;
+        }
+        if (!Objects.equals(this.startDate, other.startDate)) {
+            return false;
+        }
+        return Objects.equals(this.endDate, other.endDate);
     }
 }

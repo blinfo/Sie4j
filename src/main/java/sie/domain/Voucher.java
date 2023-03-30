@@ -9,7 +9,7 @@ import java.util.*;
  * @author Håkan Lidén
  *
  */
-public class Voucher implements Entity, Comparable<Voucher> {
+public final class Voucher implements Entity, Comparable<Voucher> {
 
     private final String line;
     private final String series;
@@ -36,59 +36,105 @@ public class Voucher implements Entity, Comparable<Voucher> {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
-    public Optional<String> getSeries() {
+    public Optional<String> optSeries() {
         return Optional.ofNullable(series == null || series.isBlank() ? null : series);
     }
 
-    public Optional<Integer> getNumber() {
+    public Optional<Integer> optNumber() {
         return Optional.ofNullable(number);
     }
 
-    public LocalDate getDate() {
+    public LocalDate date() {
         return date;
     }
 
-    public Optional<String> getText() {
+    public Optional<String> optText() {
         return Optional.ofNullable(text == null || text.isBlank() ? null : text);
     }
 
-    public Optional<LocalDate> getRegistrationDate() {
+    public Optional<LocalDate> optRegistrationDate() {
         return Optional.ofNullable(registrationDate);
     }
 
-    public Optional<String> getSignature() {
+    public Optional<String> optSignature() {
         return Optional.ofNullable(signature == null || signature.isBlank() ? null : signature);
     }
 
-    public List<Transaction> getTransactions() {
+    public List<Transaction> transactions() {
         return new ArrayList<>(transactions);
     }
 
-    public Boolean isBalanced() {
-        return getDiff().equals(BigDecimal.ZERO.setScale(Entity.SCALE));
+    public Boolean balanced() {
+        return diff().equals(BigDecimal.ZERO.setScale(Entity.SCALE));
     }
 
-    public BigDecimal getDiff() {
-        return new BigDecimal(getTransactions().stream()
-                .mapToDouble(t -> t.getAmount().doubleValue()).sum())
+    public BigDecimal diff() {
+        return new BigDecimal(transactions().stream()
+                .mapToDouble(t -> t.amount().doubleValue()).sum())
                 .setScale(Entity.SCALE, Entity.ROUNDING_MODE);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.series);
+        hash = 47 * hash + Objects.hashCode(this.number);
+        hash = 47 * hash + Objects.hashCode(this.date);
+        hash = 47 * hash + Objects.hashCode(this.text);
+        hash = 47 * hash + Objects.hashCode(this.registrationDate);
+        hash = 47 * hash + Objects.hashCode(this.signature);
+        hash = 47 * hash + Objects.hashCode(this.transactions);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Voucher other = (Voucher) obj;
+        if (!Objects.equals(this.series, other.series)) {
+            return false;
+        }
+        if (!Objects.equals(this.text, other.text)) {
+            return false;
+        }
+        if (!Objects.equals(this.signature, other.signature)) {
+            return false;
+        }
+        if (!Objects.equals(this.number, other.number)) {
+            return false;
+        }
+        if (!Objects.equals(this.date, other.date)) {
+            return false;
+        }
+        if (!Objects.equals(this.registrationDate, other.registrationDate)) {
+            return false;
+        }
+        return Objects.equals(this.transactions, other.transactions);
     }
 
     @Override
     public int compareTo(Voucher other) {
         int result = 0;
-        if (getSeries().isPresent() && other.getSeries().isPresent()) {
-            result = getSeries().get().compareTo(other.getSeries().get());
+        if (optSeries().isPresent() && other.optSeries().isPresent()) {
+            result = optSeries().get().compareTo(other.optSeries().get());
         }
-        if (result == 0 && getNumber().isPresent() && other.getNumber().isPresent()) {
-            result = getNumber().get().compareTo(other.getNumber().get());
+        if (result == 0 && optNumber().isPresent() && other.optNumber().isPresent()) {
+            result = optNumber().get().compareTo(other.optNumber().get());
         }
-        if (result == 0 && getDate() != null && other.getDate() != null) {
-            result = getDate().compareTo(other.getDate());
+        if (result == 0 && date() != null && other.date() != null) {
+            result = date().compareTo(other.date());
         }
         return result;
     }

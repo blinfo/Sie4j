@@ -1,8 +1,8 @@
 package sie.domain;
 
 import java.time.LocalDate;
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import sie.Helper;
 
 /**
@@ -14,16 +14,16 @@ public class GeneratedTest extends Helper {
 
     @Test
     public void test_Generated_getDate() {
-        Generated generated = getDocument(4, 'E').getMetaData().getGenerated();
+        Generated generated = getDocument(4, 'E').metaData().generated();
         LocalDate expectedResult = LocalDate.parse("2018-05-07");
-        assertEquals("Generated date should be " + expectedResult, expectedResult, generated.getDate());
+        assertEquals(expectedResult, generated.date());
     }
 
     @Test
     public void test_Generated_getSignature() {
-        Generated generated = getDocument(4, 'E').getMetaData().getGenerated();
+        Generated generated = getDocument(4, 'E').metaData().generated();
         String expectedResult = "1 Linda Henriksson";
-        assertTrue("Generated signature should exist", generated.getSignature().isPresent());
-        assertEquals("Generated signature should be " + expectedResult, expectedResult, generated.getSignature().get());
+        assertTrue(generated.optSignature().isPresent());
+        assertEquals( expectedResult, generated.optSignature().get());
     }
 }

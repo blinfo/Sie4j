@@ -11,7 +11,7 @@ import sie.io.*;
  * @author Håkan Lidén
  *
  */
-public class MetaData implements Entity {
+public final class MetaData implements Entity {
 
     private static final Document.Type DEFAULT_TYPE = Document.Type.E1;
     private final Boolean read;
@@ -47,7 +47,7 @@ public class MetaData implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.empty();
     }
 
@@ -72,7 +72,7 @@ public class MetaData implements Entity {
      *
      * @return Program - identification of the exporting program
      */
-    public Program getProgram() {
+    public Program program() {
         return program;
     }
 
@@ -83,15 +83,15 @@ public class MetaData implements Entity {
      *
      * @return Generated - identification of the exporting entity.
      */
-    public Generated getGenerated() {
+    public Generated generated() {
         return generated;
     }
 
-    public Document.Type getSieType() {
+    public Document.Type sieType() {
         return Optional.of(sieType).orElse(DEFAULT_TYPE);
     }
 
-    public Optional<String> getComments() {
+    public Optional<String> optComments() {
         return Optional.ofNullable(comments);
     }
 
@@ -99,23 +99,23 @@ public class MetaData implements Entity {
         return company;
     }
 
-    public Optional<Year> getTaxationYear() {
+    public Optional<Year> optTaxationYear() {
         return Optional.ofNullable(taxationYear);
     }
 
-    public List<FinancialYear> getFinancialYears() {
+    public List<FinancialYear> financialYears() {
         return financialYears.stream().sorted().collect(Collectors.toList());
     }
 
-    public Optional<FinancialYear> getFinancialYearByIndex(Integer index) {
-        return financialYears.stream().filter(fy -> fy.getIndex().equals(index)).findFirst();
+    public Optional<FinancialYear> optFinancialYearByIndex(Integer index) {
+        return financialYears.stream().filter(fy -> fy.index().equals(index)).findFirst();
     }
 
-    public Optional<LocalDate> getPeriodRange() {
+    public Optional<LocalDate> optPeriodRange() {
         return Optional.ofNullable(periodRange);
     }
 
-    public Optional<String> getCurrency() {
+    public Optional<String> optCurrency() {
         return Optional.ofNullable(currency);
     }
 
@@ -132,6 +132,64 @@ public class MetaData implements Entity {
                 + "financialYears=" + financialYears + ", "
                 + "periodRange=" + periodRange + ", "
                 + "currency=" + currency + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.read);
+        hash = 89 * hash + Objects.hashCode(this.program);
+        hash = 89 * hash + Objects.hashCode(this.generated);
+        hash = 89 * hash + Objects.hashCode(this.sieType);
+        hash = 89 * hash + Objects.hashCode(this.comments);
+        hash = 89 * hash + Objects.hashCode(this.company);
+        hash = 89 * hash + Objects.hashCode(this.taxationYear);
+        hash = 89 * hash + Objects.hashCode(this.financialYears);
+        hash = 89 * hash + Objects.hashCode(this.periodRange);
+        hash = 89 * hash + Objects.hashCode(this.currency);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MetaData other = (MetaData) obj;
+        if (!Objects.equals(this.comments, other.comments)) {
+            return false;
+        }
+        if (!Objects.equals(this.currency, other.currency)) {
+            return false;
+        }
+        if (!Objects.equals(this.read, other.read)) {
+            return false;
+        }
+        if (!Objects.equals(this.program, other.program)) {
+            return false;
+        }
+        if (!Objects.equals(this.generated, other.generated)) {
+            return false;
+        }
+        if (this.sieType != other.sieType) {
+            return false;
+        }
+        if (!Objects.equals(this.company, other.company)) {
+            return false;
+        }
+        if (!Objects.equals(this.taxationYear, other.taxationYear)) {
+            return false;
+        }
+        if (!Objects.equals(this.financialYears, other.financialYears)) {
+            return false;
+        }
+        return Objects.equals(this.periodRange, other.periodRange);
     }
 
     public static class Builder {

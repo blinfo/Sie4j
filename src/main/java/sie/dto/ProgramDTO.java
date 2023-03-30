@@ -11,6 +11,6 @@ import sie.domain.Program;
 public record ProgramDTO(String name, String version) implements DTO {
 
     public static ProgramDTO from(Program source) {
-        return new ProgramDTO(source.getName(), source.getVersion());
+        return new ProgramDTO(source.name(), source.version());
     }
 }

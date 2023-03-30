@@ -7,7 +7,7 @@ import java.util.*;
  * @author Håkan Lidén
  *
  */
-public class Company implements Entity {
+public final class Company implements Entity {
 
     private final String name;
     private final String id;
@@ -32,35 +32,35 @@ public class Company implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.empty();
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
-    public Optional<String> getId() {
+    public Optional<String> optId() {
         return Optional.ofNullable(id);
     }
 
-    public Optional<Type> getType() {
+    public Optional<Type> optType() {
         return Optional.ofNullable(type);
     }
 
-    public Optional<String> getCorporateID() {
+    public Optional<String> optCorporateId() {
         return Optional.ofNullable(corporateId);
     }
 
-    public Optional<Integer> getAquisitionNumber() {
+    public Optional<Integer> optAquisitionNumber() {
         return Optional.ofNullable(aquisitionNumber);
     }
     
-    public Optional<String> getSniCode() {
+    public Optional<String> optSniCode() {
         return Optional.ofNullable(sniCode);
     }
 
-    public Optional<Address> getAddress() {
+    public Optional<Address> optAddress() {
         return Optional.ofNullable(address);
     }
 
@@ -70,10 +70,56 @@ public class Company implements Entity {
                 + "name=" + name + ", "
                 + "id=" + id + ", "
                 + "type=" + type + ", "
-                + "corporateId=" + getCorporateID().orElse("") + ", "
+                + "corporateId=" + optCorporateId().orElse("") + ", "
                 + "aquisitionNumber=" + aquisitionNumber + ", "
                 + "sniCode=" + sniCode + ", "
                 + "address=" + address + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.type);
+        hash = 37 * hash + Objects.hashCode(this.corporateId);
+        hash = 37 * hash + Objects.hashCode(this.aquisitionNumber);
+        hash = 37 * hash + Objects.hashCode(this.sniCode);
+        hash = 37 * hash + Objects.hashCode(this.address);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Company other = (Company) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.corporateId, other.corporateId)) {
+            return false;
+        }
+        if (!Objects.equals(this.sniCode, other.sniCode)) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        if (!Objects.equals(this.aquisitionNumber, other.aquisitionNumber)) {
+            return false;
+        }
+        return Objects.equals(this.address, other.address);
     }
 
     public static class Builder {
@@ -81,7 +127,7 @@ public class Company implements Entity {
         private final String name;
         private String id;
         private Type type;
-        private String corporateID;
+        private String corporateId;
         private Integer aquisitionNumber;
         private String sniCode;
         private Address address;
@@ -100,8 +146,8 @@ public class Company implements Entity {
             return this;
         }
 
-        public Builder corporateID(String corporateID) {
-            this.corporateID = corporateID;
+        public Builder corporateId(String corporateId) {
+            this.corporateId = corporateId;
             return this;
         }
 
@@ -121,7 +167,7 @@ public class Company implements Entity {
         }
 
         public Company apply() {
-            return new Company(name, id, type, corporateID, aquisitionNumber, sniCode, address);
+            return new Company(name, id, type, corporateId, aquisitionNumber, sniCode, address);
         }
     }
 
@@ -166,6 +212,5 @@ public class Company implements Entity {
                 return X;
             }
         }
-
     }
 }

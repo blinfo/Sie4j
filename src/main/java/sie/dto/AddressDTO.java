@@ -11,11 +11,11 @@ import sie.domain.Address;
 public record AddressDTO(String line, String contact, String streetAddress, String postalAddress, String phone) implements DTO {
 
     public static AddressDTO from(Address source) {
-        String line = source.getLine().orElse(null);
-        String contact = source.getContact() == null || source.getContact().isBlank() ? null : source.getContact();
-        String streetAddress = source.getStreetAddress() == null || source.getStreetAddress().isBlank() ? null : source.getStreetAddress();
-        String postalAddress = source.getPostalAddress() == null || source.getPostalAddress().isBlank() ? null : source.getPostalAddress();
-        String phone = source.getPhone() == null || source.getPhone().isBlank() ? null : source.getPhone();
+        String line = source.optLine().orElse(null);
+        String contact = source.contact() == null || source.contact().isBlank() ? null : source.contact();
+        String streetAddress = source.streetAddress() == null || source.streetAddress().isBlank() ? null : source.streetAddress();
+        String postalAddress = source.postalAddress() == null || source.postalAddress().isBlank() ? null : source.postalAddress();
+        String phone = source.phone() == null || source.phone().isBlank() ? null : source.phone();
         return new AddressDTO(line, contact, streetAddress, postalAddress, phone);
     }
 }

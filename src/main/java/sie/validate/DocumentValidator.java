@@ -66,7 +66,7 @@ public class DocumentValidator implements Validator {
     }
 
     public Optional<Document.Type> getType() {
-        return Optional.ofNullable(entity).map(e -> e.getMetaData().getSieType());
+        return Optional.ofNullable(entity).map(e -> e.metaData().sieType());
     }
 
     public LocalDateTime getTimestamp() {
@@ -74,7 +74,7 @@ public class DocumentValidator implements Validator {
     }
 
     public Optional<Program> getProgram() {
-        return Optional.ofNullable(entity).map(e -> e.getMetaData().getProgram());
+        return Optional.ofNullable(entity).map(e -> e.metaData().program());
     }
 
     public Boolean hasResultBalanceVsVoucherImbalance() {
@@ -86,7 +86,7 @@ public class DocumentValidator implements Validator {
 
     private void validate() {
         if (entity != null) {
-            logs.addAll(MetaDataValidator.from(entity.getMetaData()).getLogs());
+            logs.addAll(MetaDataValidator.from(entity.metaData()).getLogs());
             validateAccountingPlan();
             validateVouchers();
             if (checkBalances) {
@@ -97,10 +97,10 @@ public class DocumentValidator implements Validator {
 
     private void validateAccountingPlan() {
         getType().ifPresent(type -> {
-            if (!type.equals(Document.Type.I4) && !entity.getAccountingPlan().isPresent()) {
+            if (!type.equals(Document.Type.I4) && !entity.optAccountingPlan().isPresent()) {
                 addWarning("#KONTO", "Inga konton funna");
             } else {
-                entity.getAccountingPlan().ifPresent(plan -> {
+                entity.optAccountingPlan().ifPresent(plan -> {
                     addLogs(AccountingPlanValidator.of(plan, type).getLogs());
                 });
             }
@@ -109,7 +109,7 @@ public class DocumentValidator implements Validator {
 
     private void validateVouchers() {
         getType().ifPresent(type -> {
-            entity.getVouchers().forEach(voucher -> {
+            entity.vouchers().forEach(voucher -> {
                 addLogs(VoucherValidator.of(voucher, type).getLogs());
             });
         });

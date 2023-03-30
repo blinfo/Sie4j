@@ -1,12 +1,12 @@
 package sie.domain;
 
-import java.util.Optional;
+import java.util.*;
 
 /**
  *
  * @author Håkan Lidén
  */
-public class AccountingObject implements Entity, Comparable<AccountingObject> {
+public final class AccountingObject implements Entity, Comparable<AccountingObject> {
 
     private final String line;
     private final Integer dimensionId;
@@ -29,19 +29,19 @@ public class AccountingObject implements Entity, Comparable<AccountingObject> {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
-    public Integer getDimensionId() {
+    public Integer dimensionId() {
         return dimensionId;
     }
 
-    public String getNumber() {
+    public String number() {
         return number;
     }
 
-    public String getLabel() {
+    public String label() {
         return label;
     }
 
@@ -60,5 +60,35 @@ public class AccountingObject implements Entity, Comparable<AccountingObject> {
             return number.compareTo(other.number);
         }
         return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.dimensionId);
+        hash = 89 * hash + Objects.hashCode(this.number);
+        hash = 89 * hash + Objects.hashCode(this.label);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AccountingObject other = (AccountingObject) obj;
+        if (!Objects.equals(this.number, other.number)) {
+            return false;
+        }
+        if (!Objects.equals(this.label, other.label)) {
+            return false;
+        }
+        return Objects.equals(this.dimensionId, other.dimensionId);
     }
 }

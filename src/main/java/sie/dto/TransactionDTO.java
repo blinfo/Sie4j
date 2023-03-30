@@ -28,14 +28,14 @@ public record TransactionDTO(
 
     public static TransactionDTO from(Transaction source) {
         return new TransactionDTO(
-                source.getAccountNumber(),
-                source.getAmount(),
-                source.getDate().orElse(null),
-                source.getText().orElse(null),
+                source.accountNumber(),
+                source.amount(),
+                source.optDate().orElse(null),
+                source.optText().orElse(null),
                 source.getSignature().orElse(null),
-                source.getQuantity().orElse(null),
-                source.getCostCentreIds(),
-                source.getCostBearerIds(),
-                source.getProjectIds());
+                source.optQuantity().orElse(null),
+                source.costCentreIds(),
+                source.costBearerIds(),
+                source.projectIds());
     }
 }

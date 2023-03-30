@@ -20,6 +20,6 @@ public record FinancialYearDTO(Integer index,
         LocalDate endDate) implements DTO {
 
     public static FinancialYearDTO from(FinancialYear source) {
-        return new FinancialYearDTO(source.getIndex(), source.getStartDate(), source.getEndDate());
+        return new FinancialYearDTO(source.index(), source.startDate(), source.endDate());
     }
 }

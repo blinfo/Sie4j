@@ -12,7 +12,7 @@ public class NonConsecutiveFinancialYearsException extends SieException {
     public static final String PREFIX = "Slutdatum för år ";
 
     public NonConsecutiveFinancialYearsException(FinancialYear year) {
-        super(PREFIX + year.getIndex() + SUFFIX, Entity.FINANCIAL_YEAR);
+        super(PREFIX + year.index() + SUFFIX, Entity.FINANCIAL_YEAR);
     }
 
 }

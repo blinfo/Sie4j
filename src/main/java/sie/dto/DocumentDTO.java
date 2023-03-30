@@ -18,13 +18,13 @@ public record DocumentDTO(MetaDataDTO metaData,
         String checksum) implements DTO {
 
     public static DocumentDTO from(Document source) {
-        return new DocumentDTO(MetaDataDTO.from(source.getMetaData()),
-                source.getAccountingPlan().map(AccountingPlanDTO::from).orElse(null),
+        return new DocumentDTO(MetaDataDTO.from(source.metaData()),
+                source.optAccountingPlan().map(AccountingPlanDTO::from).orElse(null),
                 List.of(),
-                source.getVouchers().stream().map(VoucherDTO::from).toList(),
-                source.getDimensions().stream().map(AccountingDimensionDTO::from).toList(),
-                source.getObjects().stream().map(AccountingObjectDTO::from).toList(),
-                source.getChecksum().orElse(null));
+                source.vouchers().stream().map(VoucherDTO::from).toList(),
+                source.dimensions().stream().map(AccountingDimensionDTO::from).toList(),
+                source.objects().stream().map(AccountingObjectDTO::from).toList(),
+                source.optChecksum().orElse(null));
     }
 
     public List<String> voucherNumberSeries() {

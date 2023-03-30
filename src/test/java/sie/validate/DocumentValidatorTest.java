@@ -1,8 +1,8 @@
 package sie.validate;
 
 import sie.log.SieLog;
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import sie.domain.Document;
 import sie.exception.SieException;
 
@@ -19,15 +19,15 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         Class origin = Document.class;
         SieLog.Level level = SieLog.Level.CRITICAL;
         DocumentValidator validator = DocumentValidator.of(new SieException(message, tag), origin);
-        assertEquals("Validator should contain 1 log", 1l, validator.getLogs().size());
-        assertEquals("Validator should contain 1 critical error", 1l, validator.getCriticalErrors().size());
+        assertEquals(1l, validator.getLogs().size());
+        assertEquals(1l, validator.getCriticalErrors().size());
         SieLog critical = validator.getCriticalErrors().get(0);
-        assertEquals("Message should be " + message, message, critical.getMessage());
-        assertEquals("Level should be " + level, level, critical.getLevel());
-        assertTrue("Log should contain origin", critical.getOrigin().isPresent());
-        assertEquals("Origin should be " + origin.getSimpleName(), origin.getSimpleName(), critical.getOrigin().get());
-        assertTrue("Log should contain tag", critical.getTag().isPresent());
-        assertEquals("Tag should be " + tag, tag, critical.getTag().get());
+        assertEquals(message, critical.getMessage());
+        assertEquals(level, critical.getLevel());
+        assertTrue(critical.getOrigin().isPresent());
+        assertEquals(origin.getSimpleName(), critical.getOrigin().get());
+        assertTrue(critical.getTag().isPresent());
+        assertEquals(tag, critical.getTag().get());
     }
 
     @Test
@@ -35,14 +35,15 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         Document document = getDocument("Arousells_Visning_AB.SE");
         DocumentValidator validator = DocumentValidator.of(document, Boolean.TRUE);
         long expectedNumberOfWarnings = 62;
-        String expectedFirstMessage = "Resultat för konto 3001 år 0 stämmer inte med summering av verifikationerna\n"
-                + " Resultat: -25035.36 Summa: 0.00";
+        String expectedFirstMessage = """
+                                      Resultat f\u00f6r konto 3001 \u00e5r 0 st\u00e4mmer inte med summering av verifikationerna
+                                       Resultat: -25035.36 Summa: 0.00""";
         String expectedFirstLine = "#RES 0 3001 -25035.36";
-        assertTrue("Log list should not be empty", validator.getLogs().size() > 0);
-        assertTrue("Validator should show imbalance", validator.hasResultBalanceVsVoucherImbalance());
-        assertEquals("Validator should contain " + expectedNumberOfWarnings + " warnings", expectedNumberOfWarnings, validator.getWarnings().size());
-        assertEquals("First message should be " + expectedFirstMessage, expectedFirstMessage, validator.getWarnings().get(0).getMessage());
-        assertEquals("First line should be " + expectedFirstLine, expectedFirstLine, validator.getWarnings().get(0).getLine().orElse(""));
+        assertTrue(validator.getLogs().size() > 0);
+        assertTrue(validator.hasResultBalanceVsVoucherImbalance());
+        assertEquals(expectedNumberOfWarnings, validator.getWarnings().size());
+        assertEquals(expectedFirstMessage, validator.getWarnings().get(0).getMessage());
+        assertEquals(expectedFirstLine, validator.getWarnings().get(0).getLine().orElse(""));
     }
 
     @Test
@@ -51,9 +52,9 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         DocumentValidator validator = DocumentValidator.from(document);
         String expectedName = "BL Administration";
         String expectedVersion = "2021.2.103";
-        assertTrue("Should have a program", validator.getProgram().isPresent());
-        assertEquals("Name should be " + expectedName, expectedName, validator.getProgram().get().getName());
-        assertEquals("Version should be " + expectedVersion, expectedVersion, validator.getProgram().get().getVersion());
+        assertTrue(validator.getProgram().isPresent());
+        assertEquals(expectedName, validator.getProgram().get().name());
+        assertEquals(expectedVersion, validator.getProgram().get().version());
     }
 
     @Test
@@ -61,8 +62,9 @@ public class DocumentValidatorTest extends AbstractValidatorTest {
         Document document = getDocument("SIE_with_missing_program_version.se");
         DocumentValidator validator = DocumentValidator.from(document);
         SieLog log = validator.getLogs().get(0);
-        String expectedLog = "SieLog{origin=MetaData, level=INFO, tag=#PROGRAM, message=Programversion saknas\n"
-                + " #PROGRAM SIR}";
-        assertEquals("SieLog should be " + expectedLog, expectedLog, log.toString());
+        String expectedLog = """
+                             SieLog{origin=MetaData, level=INFO, tag=#PROGRAM, message=Programversion saknas
+                              #PROGRAM SIR}""";
+        assertEquals(expectedLog, log.toString());
     }
 }

@@ -25,16 +25,16 @@ public record AccountDTO(
         List<PeriodicalBudgetDTO> periodicalBudgets) implements DTO {
 
     public static AccountDTO from(Account source) {
-        return new AccountDTO(source.getNumber(),
-                source.getLabel().orElse(null),
-                source.getUnit().orElse(null),
-                source.getSruCodes(),
-                source.getOpeningBalances().stream().map(BalanceDTO::from).toList(),
-                source.getClosingBalances().stream().map(BalanceDTO::from).toList(),
-                source.getResults().stream().map(BalanceDTO::from).toList(),
-                source.getObjectOpeningBalances().stream().map(ObjectBalanceDTO::from).toList(),
-                source.getObjectClosingBalances().stream().map(ObjectBalanceDTO::from).toList(),
-                source.getPeriodicalBalances().stream().map(PeriodicalBalanceDTO::from).toList(),
+        return new AccountDTO(source.number(),
+                source.optLabel().orElse(null),
+                source.optUnit().orElse(null),
+                source.sruCodes(),
+                source.openingBalances().stream().map(BalanceDTO::from).toList(),
+                source.closingBalances().stream().map(BalanceDTO::from).toList(),
+                source.results().stream().map(BalanceDTO::from).toList(),
+                source.objectOpeningBalances().stream().map(ObjectBalanceDTO::from).toList(),
+                source.optObjectClosingBalances().stream().map(ObjectBalanceDTO::from).toList(),
+                source.periodicalBalances().stream().map(PeriodicalBalanceDTO::from).toList(),
                 source.getPeriodicalBudgets().stream().map(PeriodicalBudgetDTO::from).toList()
         );
     }
@@ -43,7 +43,7 @@ public record AccountDTO(
     public static record ObjectIdDTO(Integer dimensionId, String objectNumber) implements DTO {
 
         public static ObjectIdDTO from(Account.ObjectId source) {
-            return new ObjectIdDTO(source.getDimensionId(), source.getObjectNumber());
+            return new ObjectIdDTO(source.dimensionId(), source.objectNumber());
         }
     }
 }

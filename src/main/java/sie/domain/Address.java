@@ -1,6 +1,6 @@
 package sie.domain;
 
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Address - The address of the Company present in the document.
@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author Håkan Lidén
  *
  */
-public class Address implements Entity {
+public final class Address implements Entity {
 
     private final String line;
     private final String contact;
@@ -47,7 +47,7 @@ public class Address implements Entity {
     }
 
     @Override
-    public Optional<String> getLine() {
+    public Optional<String> optLine() {
         return Optional.ofNullable(line);
     }
 
@@ -58,7 +58,7 @@ public class Address implements Entity {
      *
      * @return String - the contact.
      */
-    public String getContact() {
+    public String contact() {
         return Optional.ofNullable(contact).orElse("");
     }
 
@@ -67,7 +67,7 @@ public class Address implements Entity {
      *
      * @return String - the address.
      */
-    public String getStreetAddress() {
+    public String streetAddress() {
         return Optional.ofNullable(streetAddress).orElse("");
     }
 
@@ -78,7 +78,7 @@ public class Address implements Entity {
      *
      * @return String - the postal address
      */
-    public String getPostalAddress() {
+    public String postalAddress() {
         return Optional.ofNullable(postalAddress).orElse("");
     }
 
@@ -87,7 +87,7 @@ public class Address implements Entity {
      *
      * @return String - the phone number
      */
-    public String getPhone() {
+    public String phone() {
         return Optional.ofNullable(phone).orElse("");
     }
 
@@ -105,6 +105,40 @@ public class Address implements Entity {
                 + "streetAddress=" + streetAddress + ", "
                 + "postalAddress=" + postalAddress + ", "
                 + "phone=" + phone + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.contact);
+        hash = 67 * hash + Objects.hashCode(this.streetAddress);
+        hash = 67 * hash + Objects.hashCode(this.postalAddress);
+        hash = 67 * hash + Objects.hashCode(this.phone);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Address other = (Address) obj;
+        if (!Objects.equals(this.contact, other.contact)) {
+            return false;
+        }
+        if (!Objects.equals(this.streetAddress, other.streetAddress)) {
+            return false;
+        }
+        if (!Objects.equals(this.postalAddress, other.postalAddress)) {
+            return false;
+        }
+        return Objects.equals(this.phone, other.phone);
     }
 
     public static class Builder {

@@ -20,23 +20,23 @@ class VoucherValidator extends AbstractValidator<Voucher> {
 
     @Override
     protected void validate() {
-        if (entity.getDate() == null) {
-            addCritical(VOUCHER, "Verifikationsdatum saknas!" + entity.getLine().map(l -> "\n " + l).orElse(""));
+        if (entity.date() == null) {
+            addCritical(VOUCHER, "Verifikationsdatum saknas!" + entity.optLine().map(l -> "\n " + l).orElse(""));
         }
-        if (!entity.isBalanced()) {
+        if (!entity.balanced()) {
             String message = "Verifikationen är i obalans. "
-                    + entity.getLine().map(l -> "\n " + l + "\n ").orElse(entity.getSeries().map(s -> "Serie: " + s + ". ").orElse("")
-                    + entity.getNumber().map(n -> "Nummer: " + n + ". ").orElse(""))
-                    + "Differens: " + entity.getDiff();
+                    + entity.optLine().map(l -> "\n " + l + "\n ").orElse(entity.optSeries().map(s -> "Serie: " + s + ". ").orElse("")
+                    + entity.optNumber().map(n -> "Nummer: " + n + ". ").orElse(""))
+                    + "Differens: " + entity.diff();
             addCritical(VOUCHER, message);
         }
-        if (entity.getTransactions().isEmpty()) {
+        if (entity.transactions().isEmpty()) {
             String message = "Verifikationen saknar transaktionsrader. "
-                    + entity.getLine().map(l -> "\n " + l).orElse(entity.getSeries().map(s -> "Serie: " + s).orElse("")
-                    + entity.getNumber().map(n -> " Nummer: " + n).orElse(""));
+                    + entity.optLine().map(l -> "\n " + l).orElse(entity.optSeries().map(s -> "Serie: " + s).orElse("")
+                    + entity.optNumber().map(n -> " Nummer: " + n).orElse(""));
             addInfo(VOUCHER, message.trim());
         } else {
-            entity.getTransactions().forEach(trans -> {
+            entity.transactions().forEach(trans -> {
                 addLogs(TransactionValidator.of(trans, type).getLogs());
             });
         }

@@ -20,8 +20,8 @@ public record PeriodicalBudgetDTO(Integer yearIndex,
 
     public static PeriodicalBudgetDTO from(PeriodicalBudget source) {
         return new PeriodicalBudgetDTO(
-                source.getYearIndex(),
-                source.getPeriod(),
-                source.getAmount());
+                source.yearIndex(),
+                source.period(),
+                source.amount());
     }
 }

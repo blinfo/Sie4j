@@ -2,8 +2,8 @@ package sie.dto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  *
