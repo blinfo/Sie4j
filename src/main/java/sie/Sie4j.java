@@ -1,5 +1,6 @@
 package sie;
 
+import sie.dto.SieLogDTO;
 import java.io.*;
 import java.nio.charset.*;
 import java.util.List;
@@ -8,7 +9,7 @@ import sie.domain.Document;
 import sie.dto.*;
 import sie.exception.SieException;
 import sie.validate.DocumentValidator;
-import sie.validate.SieLog.Level;
+import sie.log.SieLog.Level;
 
 /**
  * A java parser for SIE data.
@@ -243,7 +244,7 @@ public class Sie4j {
 
     public static ValidationResultDTO validate(DataReader reader) {
         try {
-            List<SieLogDTO> logs = reader.validate().getLogs().stream().map(SieLogDTO::from).collect(Collectors.toList());
+            List<SieLogDTO> logs = reader.validate().getLogs().stream().map(SieLogDTO::from).toList();
             DocumentDTO doc = DocumentDTO.from(reader.read());
             return ValidationResultDTO.from(doc, logs);
         } catch (SieException ex) {
@@ -251,7 +252,7 @@ public class Sie4j {
             if (ex.getLocalizedMessage().contains("\n") && !ex.getLocalizedMessage().contains("\n #")) {
                 logs = Stream.of(ex.getLocalizedMessage().split("\n")).map(s -> {
                     return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j", null);
-                }).collect(Collectors.toList());
+                }).toList();
             } else if (ex.getLocalizedMessage().contains("\n #")) {
                 String[] parts = ex.getLocalizedMessage().split("\n #");
                 logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), parts[0], ex.getTag().orElse(null), "Sie4j", "#" + parts[1]));
@@ -265,7 +266,7 @@ public class Sie4j {
     public static ValidationResultDTO validate(byte[] input) {
         try {
             DataReader reader = SieReader.from(input);
-            List<SieLogDTO> logs = reader.validate().getLogs().stream().map(SieLogDTO::from).collect(Collectors.toList());
+            List<SieLogDTO> logs = reader.validate().getLogs().stream().map(SieLogDTO::from).toList();
             DocumentDTO doc = DocumentDTO.from(reader.read());
             return ValidationResultDTO.from(doc, logs);
         } catch (SieException ex) {
@@ -273,7 +274,7 @@ public class Sie4j {
             if (ex.getLocalizedMessage().contains("\n") && !ex.getLocalizedMessage().contains("\n #")) {
                 logs = Stream.of(ex.getLocalizedMessage().split("\n")).map(s -> {
                     return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j", null);
-                }).collect(Collectors.toList());
+                }).toList();
             } else if (ex.getLocalizedMessage().contains("\n #")) {
                 String[] parts = ex.getLocalizedMessage().split("\n #");
                 logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), parts[0], ex.getTag().orElse(null), "Sie4j", "#" + parts[1]));
@@ -288,7 +289,7 @@ public class Sie4j {
         try {
             Document document = Sie4j.fromJson(input);
             DocumentValidator validator = DocumentValidator.from(document);
-            List<SieLogDTO> logs = validator.getLogs().stream().map(SieLogDTO::from).collect(Collectors.toList());
+            List<SieLogDTO> logs = validator.getLogs().stream().map(SieLogDTO::from).toList();
             DocumentDTO docDto = DocumentDTO.from(document);
             return ValidationResultDTO.from(docDto, logs);
         } catch (SieException ex) {
@@ -296,7 +297,7 @@ public class Sie4j {
             if (ex.getLocalizedMessage().contains("\n")) {
                 logs = Stream.of(ex.getLocalizedMessage().split("\n")).map(s -> {
                     return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j", null);
-                }).collect(Collectors.toList());
+                }).toList();
             } else {
                 logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j", null));
             }

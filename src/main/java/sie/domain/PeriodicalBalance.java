@@ -58,14 +58,13 @@ public class PeriodicalBalance implements Entity {
 
     @Override
     public String toString() {
-        return "PeriodicalBalance{" + 
-                "yearIndex=" + yearIndex + ", "
+        return "PeriodicalBalance{"
+                + "yearIndex=" + yearIndex + ", "
                 + "period=" + period + ", "
                 + "objectId=" + objectId + ", "
                 + "amount=" + amount + ", "
                 + "quantity=" + quantity + '}';
     }
-    
 
     public static class Builder {
 
@@ -83,6 +82,7 @@ public class PeriodicalBalance implements Entity {
             this.line = line;
             return this;
         }
+
         public Builder yearIndex(Integer yearIndex) {
             this.yearIndex = yearIndex;
             return this;
@@ -93,14 +93,13 @@ public class PeriodicalBalance implements Entity {
             return this;
         }
 
-        public Builder specification(ObjectId objectId) {
+        public Builder objectId(ObjectId objectId) {
             this.objectId = objectId;
             return this;
         }
 
-        public Builder specification(Integer dimensionId, String objectNumber) {
-            this.objectId = ObjectId.of(dimensionId, objectNumber);
-            return this;
+        public Builder objectId(Integer dimensionId, String objectNumber) {
+            return objectId(ObjectId.of(dimensionId, objectNumber));
         }
 
         public Builder amount(BigDecimal amount) {

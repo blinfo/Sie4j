@@ -8,7 +8,7 @@ import java.util.regex.*;
 import java.util.stream.*;
 import sie.domain.*;
 import sie.exception.*;
-import sie.validate.SieLog;
+import sie.log.SieLog;
 
 /**
  *
@@ -68,15 +68,21 @@ class DocumentFactory {
     }
 
     public List<SieLog> getLogs() {
-        return logs.stream().sorted().collect(Collectors.toList());
+        return logs.stream().sorted().toList();
     }
 
     public List<SieLog> getWarnings() {
-        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.WARNING)).sorted().collect(Collectors.toList());
+        return logs.stream()
+                .filter(log -> log.getLevel().equals(SieLog.Level.WARNING))
+                .sorted()
+                .toList();
     }
 
     public List<SieLog> getCriticalErrors() {
-        return logs.stream().filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL)).sorted().collect(Collectors.toList());
+        return logs.stream()
+                .filter(log -> log.getLevel().equals(SieLog.Level.CRITICAL))
+                .sorted()
+                .toList();
     }
 
     private void parse() {
@@ -145,7 +151,7 @@ class DocumentFactory {
         List<String> lines = Stream.of(content.split("\n"))
                 .filter(this::isVoucherOrTransactionLine)
                 .map(this::handleMissingVoucherNumberSeries)
-                .collect(Collectors.toList());
+                .toList();
         Voucher.Builder builder = null;
         if (lines.stream().collect(Collectors.joining()).contains("#" + Entity.TRANSACTION)) {
             for (String line : lines) {
@@ -336,7 +342,7 @@ class DocumentFactory {
                     }
                 })
                 .filter(a -> a != null)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // Mutable list
         accounts.addAll(findMissingAccountNumbers().stream().map(number -> {
             addInfo("Konto " + number + " saknas i kontolistan", Entity.ACCOUNT, null);
             Account.Builder accountBuilder = Account.builder(number).label("Saknas vid import");
@@ -346,7 +352,7 @@ class DocumentFactory {
             handleAccountPeriodicalBudget(number, accountBuilder);
             handleAccountPeriodicalBalance(number, accountBuilder);
             return accountBuilder.apply();
-        }).collect(Collectors.toList()));
+        }).toList());
         if (accounts.isEmpty()) {
             return null;
         }
@@ -403,7 +409,7 @@ class DocumentFactory {
             }
             Matcher matcher = OBJECT_ID_PATTERN.matcher(l.get(4));
             while (matcher.find()) {
-                pbBuilder.specification(Integer.valueOf(matcher.group(2)), matcher.group(3));
+                pbBuilder.objectId(Integer.valueOf(matcher.group(2)), matcher.group(3));
             }
             if (l.size() > 7) {
                 String quantity = l.get(6).replaceAll(REPLACE_STRING, "");
@@ -525,10 +531,10 @@ class DocumentFactory {
             return AccountingDimension.of(line.get(line.size() - 1), Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
                     line.get(2).replaceAll(REPLACE_STRING, ""),
                     parentId);
-        }).collect(Collectors.toList());
+        }).toList();
         if (!dimList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
             addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.DIMENSION, Entity.DIMENSION, null);
-            return Collections.emptyList();
+            return List.of();
         }
         return dimList;
     }
@@ -538,10 +544,10 @@ class DocumentFactory {
             return AccountingObject.of(line.get(line.size() - 1), Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
                     line.get(2).replaceAll(REPLACE_STRING, ""),
                     handleQuotes(line.get(3)));
-        }).collect(Collectors.toList());
+        }).toList();
         if (!objList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
             addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.OBJECT, Entity.OBJECT, null);
-            return Collections.emptyList();
+            return List.of();
         }
         return objList;
     }
@@ -667,7 +673,7 @@ class DocumentFactory {
             years.addAll(getLinesParts(Entity.FINANCIAL_YEAR).stream()
                     .map(this::createFinancialYear)
                     .filter(fy -> fy != null)
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         if (isConversion()) {
             IntStream.range(0, years.size() - 1).forEach(i -> {
@@ -702,7 +708,7 @@ class DocumentFactory {
     }
 
     private List<String> findMissingAccountNumbers() {
-        List<String> existingAccounts = getLinesParts(Entity.ACCOUNT).stream().map(s -> s.get(1)).collect(Collectors.toList());
+        List<String> existingAccounts = getLinesParts(Entity.ACCOUNT).stream().map(s -> s.get(1)).toList();
         Set<String> referredAccounts = new HashSet<>();
         getLinesParts(Entity.ACCOUNT_TYPE).forEach(s -> referredAccounts.add(s.get(1).replaceAll(REPLACE_STRING, "")));
         getLinesParts(Entity.CLOSING_BALANCE).forEach(s -> referredAccounts.add(s.get(2).replaceAll(REPLACE_STRING, "")));
@@ -715,7 +721,7 @@ class DocumentFactory {
         getLinesParts(Entity.SRU).forEach(s -> referredAccounts.add(s.get(1).replaceAll(REPLACE_STRING, "")));
         getLinesParts(Entity.TRANSACTION).forEach(s -> referredAccounts.add(s.get(1).replaceAll(REPLACE_STRING, "")));
         getLinesParts(Entity.UNIT).forEach(s -> referredAccounts.add(s.get(1).replaceAll(REPLACE_STRING, "")));
-        return referredAccounts.stream().filter(s -> !existingAccounts.contains(s)).collect(Collectors.toList());
+        return referredAccounts.stream().filter(s -> !existingAccounts.contains(s)).toList();
     }
 
     private Boolean isRead() {
@@ -764,7 +770,7 @@ class DocumentFactory {
                 .filter(line -> !line.isEmpty())
                 .filter(line -> line.startsWith("#" + prefix))
                 .map(line -> StringUtil.getParts(line))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private List<String> getLineParts(String prefix) {
@@ -799,7 +805,7 @@ class DocumentFactory {
                 })
                 .map(StringUtil::getParts)
                 .filter(line -> line.get(keyIndex).equals(key))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private String handleQuotes(String input) {

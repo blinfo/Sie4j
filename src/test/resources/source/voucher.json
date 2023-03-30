@@ -1,0 +1,43 @@
+{
+    "series": "A",
+    "number": 1,
+    "date": "2017-01-01",
+    "text": "Representation måltid utan alkohol",
+    "registrationDate": "2017-01-19",
+    "signature": "#6 Linda Henriksson",
+    "balanced": true,
+    "diff": null,
+    "transactions": [
+        {
+            "accountNumber": "1930",
+            "amount": -1000.00,
+            "text": null,
+            "date": "2017-01-01",
+            "signature": null,
+            "quantity": null,
+            "costCenterIds": [],
+            "costBearerIds": [],
+            "projectIds": []
+        }, {
+            "accountNumber": "6072",
+            "amount": 928.00,
+            "text": null,
+            "date": "2017-01-01",
+            "signature": null,
+            "quantity": null,
+            "costCenterIds": [],
+            "costBearerIds": [],
+            "projectIds": []
+        }, {
+            "accountNumber": "2640",
+            "amount": 72.00,
+            "text": null,
+            "date": "2017-01-01",
+            "signature": null,
+            "quantity": null,
+            "costCenterIds": [],
+            "costBearerIds": [],
+            "projectIds": []
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 package sie.validate;
 
+import sie.log.SieLog;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import sie.domain.Document;

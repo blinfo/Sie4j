@@ -1,0 +1,21 @@
+{
+    "type": "BAS97",
+    "accounts": [
+        {
+            "number": "1110",
+            "label": "Byggnader",
+            "unit": "st",
+            "sruCodes": ["7214"],
+            "openingBalances": [{
+                    "yearIndex": -1,
+                    "amount": 121.50
+                }],
+            "closingBalances": [],
+            "results": [],
+            "objectOpeningBalances": [],
+            "objectClosingBalances": [],
+            "periodicalBalances": [],
+            "periodicalBudgets": []
+        }
+    ]
+}

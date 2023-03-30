@@ -1,7 +1,6 @@
 package sie;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.*;
 
 /**
@@ -35,7 +34,7 @@ class StringUtil {
             }
             builder.append(c);
         }
-        result.addAll(Stream.of(builder.toString().split("\n")).map(String::trim).collect(Collectors.toList()));
+        result.addAll(Stream.of(builder.toString().split("\n")).map(String::trim).toList());
         result.add(line);
         return result;
     }

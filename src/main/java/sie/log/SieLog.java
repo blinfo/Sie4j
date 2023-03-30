@@ -1,4 +1,4 @@
-package sie.validate;
+package sie.log;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -54,7 +54,7 @@ public class SieLog implements Comparable<SieLog> {
         return builder().origin(origin).message(message).tag(tag).level(Level.INFO).line(line).build();
     }
 
-    static SieLog.Builder builder() {
+    public static SieLog.Builder builder() {
         return new Builder();
     }
 
@@ -141,7 +141,7 @@ public class SieLog implements Comparable<SieLog> {
         public static final Level DEFAULT = INFO;
     }
 
-    static class Builder {
+    public static class Builder {
 
         private String origin;
         private Level level;

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import sie.domain.*;
 import sie.exception.*;
-import sie.validate.SieLog;
+import sie.log.SieLog;
 
 /**
  *

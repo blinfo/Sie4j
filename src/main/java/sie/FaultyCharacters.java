@@ -52,7 +52,7 @@ class FaultyCharacters {
     }
 
     private static List<String> list() {
-        return new ArrayList<>(DEVIATIONS.keySet());
+        return DEVIATIONS.keySet().stream().toList();
     }
 
     private static String getReplacement(String key) {

@@ -1,5 +1,6 @@
 package sie;
 
+import sie.log.SieLog;
 import java.io.InputStream;
 import java.util.*;
 import static org.junit.Assert.*;

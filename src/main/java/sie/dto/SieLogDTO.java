@@ -2,7 +2,7 @@ package sie.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
-import sie.validate.SieLog;
+import sie.log.SieLog;
 
 /**
  *
