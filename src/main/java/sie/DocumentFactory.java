@@ -276,7 +276,10 @@ class DocumentFactory {
                 addCritical(ex, line);
             }
             if (parts.size() > 5) {
-                Optional.ofNullable(parts.get(4) == null || parts.get(4).replaceAll(REPLACE_STRING, "").isEmpty() ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
+                Optional.ofNullable(parts.get(4) == null
+                        || parts.get(4).replaceAll(REPLACE_STRING, "").isEmpty() 
+                        || parts.get(4).length() != 8
+                        ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
                         .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(tb::date);
             }
             if (parts.size() > 6) {
