@@ -37,7 +37,6 @@ public record ValidationResultDTO(DocumentDTO document, List<SieLogDTO> logs) im
     }
 
     public ValidationResultDTO addLog(SieLogDTO log) {
-        this.logs.add(log);
         List<SieLogDTO> newValue = Stream.concat(logs.stream(), Stream.of(log)).toList();
         return new ValidationResultDTO(document, newValue);
     }
