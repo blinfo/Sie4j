@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.time.*;
 import java.util.*;
-import sie.domain.MetaData;
+import sie.domain.*;
 import sie.io.*;
 
 /**
@@ -37,7 +37,7 @@ public record MetaDataDTO(
                 SieTypeDTO.from(source.sieType()),
                 source.optComments().orElse(null),
                 source.optTaxationYear().orElse(null),
-                source.financialYears().stream().map(FinancialYearDTO::from).toList(),
+                source.sieType().equals(Document.Type.I4) ? List.of() : source.financialYears().stream().map(FinancialYearDTO::from).toList(),
                 source.optPeriodRange().orElse(null),
                 source.optCurrency().orElse(null),
                 source.isRead());
