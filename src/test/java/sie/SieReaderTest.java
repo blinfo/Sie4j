@@ -213,7 +213,7 @@ public class SieReaderTest {
     public void test_type4E_with_imbalanced_voucher() {
         DataReader reader = SieReader.of(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_imbalanced_voucher.SE"), true);
         DocumentValidator validator = reader.validate();
-        String expectedMessage = "Verifikationen är i obalans. \n"
+        String expectedMessage = "Verifikationen A 1 är i obalans. \n"
                 + " Differens: 0.10";
         String expectedLine = "#VER \"A\" 1 20170101 \"Representation måltid utan alkohol\" 20170119 \"#6 Linda Henriksson\" ";
         assertEquals(3l, validator.getLogs().size());
