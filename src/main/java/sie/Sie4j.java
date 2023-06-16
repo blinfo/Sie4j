@@ -136,7 +136,6 @@ public class Sie4j {
         return JsonReader.from(input);
     }
 
-
     /**
      * Create a DataReader from JSON as a byte array.
      * <p>
@@ -198,8 +197,7 @@ public class Sie4j {
     }
 
     /**
-     * Produces a String with SIE content with the charset
-     * specified.
+     * Produces a String with SIE content with the charset specified.
      *
      * @param input Document
      * @param charset Charset for the output.
@@ -276,8 +274,9 @@ public class Sie4j {
                     return SieLogDTO.of(Level.CRITICAL.name(), s, ex.getTag().orElse(null), "Sie4j", null);
                 }).toList();
             } else if (ex.getLocalizedMessage().contains("\n #")) {
-                String[] parts = ex.getLocalizedMessage().split("\n #");
-                logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), parts[0], ex.getTag().orElse(null), "Sie4j", "#" + parts[1]));
+                logs = Stream.of(ex.getLocalizedMessage().split("\n - "))
+                        .map(p -> SieLogDTO.of(Level.CRITICAL.name(), p, ex.getTag().orElse(null), "Sie4j"))
+                        .toList();
             } else {
                 logs = List.of(SieLogDTO.of(Level.CRITICAL.name(), ex.getLocalizedMessage(), ex.getTag().orElse(null), "Sie4j", null));
             }
