@@ -192,9 +192,8 @@ class DocumentFactory {
                         ? null : parts.get(voucherNum).replaceAll(REPLACE_STRING, ""));
                 if (getType().equals(Document.Type.I4) && optVoucherNumber.isPresent()) {
                     addInfo(Document.class, "Filer av typen " + getType() + " bör inte innehålla verifikationsnummer", Entity.VOUCHER, line);
-                } else {
-                    optVoucherNumber.map(Integer::valueOf).ifPresent(builder::number);
                 }
+                optVoucherNumber.map(Integer::valueOf).ifPresent(builder::number);
             }
             if (parts.size() > date + 1) {
                 String dateString = parts.get(date).replaceAll(REPLACE_STRING, "");
@@ -277,7 +276,7 @@ class DocumentFactory {
             }
             if (parts.size() > 5) {
                 Optional.ofNullable(parts.get(4) == null
-                        || parts.get(4).replaceAll(REPLACE_STRING, "").isEmpty() 
+                        || parts.get(4).replaceAll(REPLACE_STRING, "").isEmpty()
                         || parts.get(4).length() != 8
                         ? null : parts.get(4).replaceAll(REPLACE_STRING, ""))
                         .map(p -> LocalDate.parse(p, Entity.DATE_FORMAT)).ifPresent(tb::date);
