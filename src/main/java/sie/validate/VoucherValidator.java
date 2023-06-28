@@ -24,7 +24,7 @@ class VoucherValidator extends AbstractValidator<Voucher> {
             addCritical(VOUCHER, "Verifikationsdatum saknas!" + entity.optLine().map(l -> "\n " + l).orElse(""));
         }
         if (!entity.balanced()) {
-            String message = "Verifikationen är i obalans. "
+            String message = "Verifikationen " + entity.optSeries().map(s -> s + " ").orElse("") + entity.optNumber().map(n -> n + " ").orElse("") + "är i obalans. "
                     + entity.optLine().map(l -> "\n " + l + "\n ").orElse(entity.optSeries().map(s -> "Serie: " + s + ". ").orElse("")
                     + entity.optNumber().map(n -> "Nummer: " + n + ". ").orElse(""))
                     + "Differens: " + entity.diff();

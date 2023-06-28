@@ -44,8 +44,16 @@ public final class Voucher implements Entity, Comparable<Voucher> {
         return Optional.ofNullable(series == null || series.isBlank() ? null : series);
     }
 
+    public Voucher series(String newValue) {
+        return new Voucher(line, newValue, number, date, text, registrationDate, signature, transactions);
+    }
+
     public Optional<Integer> optNumber() {
         return Optional.ofNullable(number);
+    }
+
+    public Voucher number(Integer newValue) {
+        return new Voucher(line, series, newValue, date, text, registrationDate, signature, transactions);
     }
 
     public LocalDate date() {

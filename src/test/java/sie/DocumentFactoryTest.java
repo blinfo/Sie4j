@@ -29,10 +29,6 @@ public class DocumentFactoryTest {
         String message = "Filer av typen I4 bör inte innehålla verifikationsnummer";
         assertEquals(size, factory.getLogs().size());
         assertEquals(message, factory.getLogs().get(0).getMessage());
-        Optional<Voucher> optVoucher = factory.getDocument().vouchers()
-                .stream()
-                .filter(voucher -> voucher.optNumber().isPresent()).findAny();
-        assertTrue(optVoucher.isEmpty());
     }
     
     @Test

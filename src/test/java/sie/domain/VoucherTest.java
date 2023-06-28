@@ -23,10 +23,10 @@ public class VoucherTest extends Helper {
                     assertTrue(v.balanced());
                     assertTrue(v.transactions().size() > 0);
                 });
-        String expectedMessage = "Verifikationen är i obalans. \n"
+        String expectedMessage = "Verifikationen K är i obalans. \n"
                 + " Differens: -0.14\n"
                 + " #VER \"K\" \"\" 20180502 \"Försäljning 12% (DF:158)\"  20180503\n"
-                + "Verifikationen är i obalans. \n"
+                + " - Verifikationen K är i obalans. \n"
                 + " Differens: 0.55\n"
                 + " #VER \"K\" \"\" 20180502 \"Försäljning 25% (DF:157)\"  20180503";
         SieException ex = assertThrows(SieException.class, () -> Sie4j.fromSie(getClass().getResourceAsStream("/sample/BLBLOV_SIE4_UTF_8_IMBALANCED.SI")));

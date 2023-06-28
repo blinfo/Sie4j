@@ -38,7 +38,7 @@ public class Sie4jTest {
         List<SieLogDTO> logs = Sie4j.validate(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_missing_account_balance.SE")).logs();
         long numberOfLogs = 1;
         String level = SieLog.Level.CRITICAL.name();
-        String message = "Strängen '' för balans, konto 1119, kan inte hanteras som belopp";
+        String message = "Strängen '' för balans, konto 1119, kan inte hanteras som belopp\n #IB 0 1119 \"\"";
         assertEquals(numberOfLogs, logs.size());
         SieLogDTO log = logs.get(0);
         String origin = Sie4j.class.getSimpleName();
@@ -163,7 +163,8 @@ public class Sie4jTest {
     public void test_too_long_account_number() {
         ValidationResultDTO result = Sie4j.validate(asByteArray("/sample/BLBLOV_SIE4_UTF_8_with_8_digit_account_number.SE"));
         long expectedNumberOfCriticalErrors = 1l;
-        String error = "SieLogDTO{level=CRITICAL, message=Kontot är längre än sex siffror: 11100111, tag=#KONTO, origin=Sie4j, line=#KONTO 11100111 \"Byggnader\"}";
+//        String error = "SieLogDTO{level=CRITICAL, message=Kontot är längre än sex siffror: 11100111, tag=#KONTO, origin=Sie4j, line=#KONTO 11100111 \"Byggnader\"}";
+        String error = "SieLogDTO{level=CRITICAL, message=Kontot är längre än sex siffror: 11100111\n #KONTO 11100111 \"Byggnader\", tag=#KONTO, origin=Sie4j, line=null}";
         assertEquals(expectedNumberOfCriticalErrors, result.criticals().size());
         assertTrue(result.criticals().stream().map(SieLogDTO::toString).collect(Collectors.toList()).contains(error));
     }
