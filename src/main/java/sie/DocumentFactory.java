@@ -415,15 +415,17 @@ class DocumentFactory {
             }
             if (l.size() > 7) {
                 String quantity = l.get(6).replaceAll(REPLACE_STRING, "");
-                if (quantity.contains(",")) {
-                    addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE, l.stream().collect(Collectors.joining(" ")));
-                    quantity = quantity.replaceAll(",", ".");
-                }
-                try {
-                    pbBuilder.quantity(Double.valueOf(quantity));
-                } catch (NumberFormatException e) {
-                    SieException ex = new InvalidQuantityException("Strängen '" + quantity + "' för kvantitet, konto " + number + ", kan inte hanteras som kvantitet\n " + l.get(l.size() - 1), e, Entity.PERIODICAL_BALANCE);
-                    addCritical(ex, l.get(l.size() - 1));
+                if (!quantity.isBlank()) {
+                    if (quantity.contains(",")) {
+                        addInfo("Decimaltal måste anges med punkt", Entity.PERIODICAL_BALANCE, l.stream().collect(Collectors.joining(" ")));
+                        quantity = quantity.replaceAll(",", ".");
+                    }
+                    try {
+                        pbBuilder.quantity(Double.valueOf(quantity));
+                    } catch (NumberFormatException e) {
+                        SieException ex = new InvalidQuantityException("Strängen '" + quantity + "' för kvantitet, konto " + number + ", kan inte hanteras som kvantitet\n " + l.get(l.size() - 1), e, Entity.PERIODICAL_BALANCE);
+                        addCritical(ex, l.get(l.size() - 1));
+                    }
                 }
             }
             accountBuilder.addPeriodicalBalance(pbBuilder.apply());
