@@ -28,11 +28,31 @@ class SieStringBuilder {
 
     private String asString() {
         addMetaData();
+        addObjectDeclarations();
         addAccountingPlan();
         if (sieType.getNumber().equals(4)) {
             addVouchers();
         }
         return result.toString();
+    }
+
+    private void addObjectDeclarations() {
+        document.dimensions().forEach(dim -> {
+            if (dim.isSubDimension()) {
+                add(Entity.SUB_DIMENSION, dim.id().toString(), dim.label(), dim.optParentId().map(id -> id.toString()).orElse(""));
+            } else {
+                add(Entity.DIMENSION, dim.id().toString(), dim.label());
+            }
+        });
+        document.costCentres().forEach(unit -> {
+            add(Entity.OBJECT, unit.dimensionId().toString(), unit.number(), unit.label());
+        });
+        document.costBearers().forEach(unit -> {
+            add(Entity.OBJECT, unit.dimensionId().toString(), unit.number(), unit.label());
+        });
+        document.projects().forEach(unit -> {
+            add(Entity.OBJECT, unit.dimensionId().toString(), unit.number(), unit.label());
+        });
     }
 
     private void addVouchers() {
@@ -45,9 +65,13 @@ class SieStringBuilder {
                     voucher.optRegistrationDate().map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
                     "\"" + voucher.optSignature().orElse("") + "\"", "\n{");
             voucher.transactions().forEach(trans -> {
+                String objects = "{}";
+                if (!trans.objectIds().isEmpty()) {
+                    objects = trans.objectIds().stream().map(o -> "\"" + o.dimensionId() + "\" \"" + o.objectNumber() + "\"").collect(Collectors.joining(" ", "{", "}"));
+                }
                 add(Entity.TRANSACTION,
                         trans.accountNumber(),
-                        "{}",
+                        objects,
                         trans.amount().toString(),
                         trans.optDate().map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
                         "\"" + trans.optText().orElse("") + "\"",
