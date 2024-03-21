@@ -40,6 +40,7 @@ public interface Entity extends DTO {
     public static final String READ = "FLAGGA";
     public static final String RESULT = "RES";
     public static final String SRU = "SRU";
+    public static final String SUB_DIMENSION = "UNDERDIM";
     public static final String TAXATION_YEAR = "TAXAR";
     public static final String TRANSACTION = "TRANS";
     public static final String TYPE = "SIETYP";
