@@ -494,7 +494,7 @@ class DocumentFactory {
                     accountBuilder.addObjectOpeningBalance(obBuilder.apply());
                     break;
                 case Entity.OBJECT_CLOSING_BALANCE:
-                    accountBuilder.addObjectOpeningBalance(obBuilder.apply());
+                    accountBuilder.addObjectClosingBalance(obBuilder.apply());
                     break;
             }
         });
@@ -564,7 +564,7 @@ class DocumentFactory {
         if (lineParts.size() < 3) {
             addWarning("Programnamn saknas", Entity.PROGRAM, getLineFromTag(Entity.PROGRAM).orElse(null));
         }
-        Boolean hasVersion = lineParts.size() > 3 && lineParts.get(2) != null && !handleQuotes(lineParts.get(2)).isEmpty();
+        boolean hasVersion = lineParts.size() > 3 && lineParts.get(2) != null && !handleQuotes(lineParts.get(2)).isEmpty();
         String version = Optional.ofNullable(hasVersion ? handleQuotes(lineParts.get(2)) : null).orElse(null);
         if (version == null) {
             addInfo("Programversion saknas", Entity.PROGRAM, getLineFromTag(Entity.PROGRAM).orElse(null));

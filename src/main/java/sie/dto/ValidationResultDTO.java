@@ -17,8 +17,7 @@ public record ValidationResultDTO(DocumentDTO document, List<SieLogDTO> logs) im
     }
 
     public static ValidationResultDTO from(DocumentDTO doc, List<SieLogDTO> logs) {
-        ValidationResultDTO dto = new ValidationResultDTO(doc, logs);
-        return dto;
+        return new ValidationResultDTO(doc, logs);
     }
 
     @JsonIgnore

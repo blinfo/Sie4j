@@ -24,7 +24,11 @@ public final class ObjectBalance implements Entity {
     private final ObjectId objectId;
     private final Double quantity;
 
-    private ObjectBalance(String line, BigDecimal amount, Integer yearIndex, ObjectId objectId, Double quantity) {
+    private ObjectBalance(String line,
+            BigDecimal amount,
+            Integer yearIndex,
+            ObjectId objectId,
+            Double quantity) {
         this.line = line;
         this.amount = Objects.requireNonNull(amount);
         this.yearIndex = Objects.requireNonNull(yearIndex);

@@ -27,9 +27,16 @@ public final class MetaData implements Entity {
     private final LocalDate periodRange;
     private final String currency;
 
-    private MetaData(Boolean read, Program program, Generated generated,
-            Document.Type sieType, String comments, Company company, Year taxationYear,
-            List<FinancialYear> financialYears, LocalDate periodRange, String currency) {
+    private MetaData(Boolean read,
+            Program program,
+            Generated generated,
+            Document.Type sieType,
+            String comments,
+            Company company,
+            Year taxationYear,
+            List<FinancialYear> financialYears,
+            LocalDate periodRange,
+            String currency) {
         this.read = read;
         this.program = program;
         this.generated = generated;

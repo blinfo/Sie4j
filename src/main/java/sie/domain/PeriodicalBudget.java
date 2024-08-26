@@ -19,7 +19,10 @@ public final class PeriodicalBudget implements Entity, Comparable<PeriodicalBudg
     private final YearMonth period;
     private final BigDecimal amount;
 
-    private PeriodicalBudget(String line, Integer yearIndex, YearMonth period, BigDecimal amount) {
+    private PeriodicalBudget(String line,
+            Integer yearIndex,
+            YearMonth period,
+            BigDecimal amount) {
         this.line = line;
         this.yearIndex = yearIndex;
         this.period = period;

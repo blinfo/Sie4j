@@ -14,6 +14,10 @@ import sie.exception.SieException;
  */
 class SieWriter {
 
+    private SieWriter() {
+
+    }
+
     /**
      * Creates a SIE-string from Document.
      * <p>

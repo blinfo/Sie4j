@@ -13,7 +13,7 @@ import sie.exception.MissingAccountNumberException;
 public final class Account implements Entity, Comparable<Account> {
 
     private static final Pattern NUMBER = Pattern.compile("\\d+");
-    private final String number;
+    private final String nr;
     private final String label;
     private final Type type;
     private final String unit;
@@ -33,7 +33,7 @@ public final class Account implements Entity, Comparable<Account> {
             List<ObjectBalance> objectClosingBalances,
             List<PeriodicalBudget> periodicalBudgets,
             List<PeriodicalBalance> periodicalBalances) {
-        this.number = number;
+        this.nr = number;
         this.label = label;
         this.type = type;
         this.unit = unit;
@@ -94,7 +94,7 @@ public final class Account implements Entity, Comparable<Account> {
      * @return String the number of the account.
      */
     public String number() {
-        return number;
+        return nr;
     }
 
     /**
@@ -108,7 +108,7 @@ public final class Account implements Entity, Comparable<Account> {
      * @return Optional of the account number as an Integer.
      */
     public Optional<Integer> optNumberAsInteger() {
-        return Optional.ofNullable(NUMBER.matcher(number).matches() ? Integer.valueOf(number) : null);
+        return Optional.ofNullable(NUMBER.matcher(nr).matches() ? Integer.valueOf(nr) : null);
     }
 
     /**
@@ -286,7 +286,7 @@ public final class Account implements Entity, Comparable<Account> {
     @Override
     public String toString() {
         return "Account{"
-                + "number=" + number + ", "
+                + "number=" + nr + ", "
                 + "label=" + label + ", "
                 + "type=" + type + ", "
                 + "unit=" + unit + ", "
@@ -301,7 +301,7 @@ public final class Account implements Entity, Comparable<Account> {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.number);
+        hash = 79 * hash + Objects.hashCode(this.nr);
         hash = 79 * hash + Objects.hashCode(this.label);
         hash = 79 * hash + Objects.hashCode(this.type);
         hash = 79 * hash + Objects.hashCode(this.unit);
@@ -328,7 +328,7 @@ public final class Account implements Entity, Comparable<Account> {
             return false;
         }
         final Account other = (Account) obj;
-        if (!Objects.equals(this.number, other.number)) {
+        if (!Objects.equals(this.nr, other.nr)) {
             return false;
         }
         if (!Objects.equals(this.label, other.label)) {

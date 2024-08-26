@@ -147,7 +147,7 @@ class SieReader implements DataReader {
         return result.contains("�");
     }
 
-    private static Boolean isUtf8(String string) {
+    private static boolean isUtf8(String string) {
         return BOX_DRAWING_CHARS.stream().filter(c -> string.contains(c)).findAny().isPresent();
     }
 }

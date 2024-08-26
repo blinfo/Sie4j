@@ -21,10 +21,10 @@ class AccountingPlanValidator extends AbstractValidator<AccountingPlan> {
 
     @Override
     protected void validate() {
-        validate_accounts();
+        validateAccounts();
     }
 
-    private void validate_accounts() {
+    private void validateAccounts() {
         if (!type.equals(Document.Type.I4) && entity.accounts().isEmpty()) {
             addInfo(ACCOUNT, "Konton saknas");
             return;

@@ -9,6 +9,10 @@ import java.util.stream.*;
  */
 class StringUtil {
 
+    private StringUtil() {
+
+    }
+
     public static List<String> getParts(String line) {
         List<String> result = new ArrayList<>();
         String[] chars = line.replaceAll("\\s+", " ").split("");

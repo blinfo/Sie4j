@@ -15,6 +15,9 @@ class Serializer {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
+    private Serializer() {
+    }
+
     public static String asJson(InputStream input) {
         byte[] source = SieReader.streamToByteArray(input);
         return asJson(SieReader.from(source).read());

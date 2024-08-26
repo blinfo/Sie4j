@@ -18,7 +18,12 @@ public final class PeriodicalBalance implements Entity {
     private final BigDecimal amount;
     private final Double quantity;
 
-    private PeriodicalBalance(String line, Integer yearIndex, YearMonth period, ObjectId objectId, BigDecimal amount, Double quantity) {
+    private PeriodicalBalance(String line,
+            Integer yearIndex,
+            YearMonth period,
+            ObjectId objectId,
+            BigDecimal amount,
+            Double quantity) {
         this.line = line;
         this.yearIndex = yearIndex;
         this.period = period;

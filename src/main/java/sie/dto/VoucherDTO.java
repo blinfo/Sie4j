@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 import sie.domain.Voucher;
 import sie.exception.MissingVoucherDateException;
 import sie.io.*;

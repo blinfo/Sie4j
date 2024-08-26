@@ -9,7 +9,7 @@ import java.util.*;
  */
 class FaultyCharacters {
 
-    private final static Map<String, String> DEVIATIONS = new HashMap<>();
+    private static final Map<String, String> DEVIATIONS = new HashMap<>();
 
     static {
         DEVIATIONS.put("α", "à");

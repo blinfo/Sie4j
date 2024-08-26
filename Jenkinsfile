@@ -10,7 +10,7 @@ pipeline {
     stage('Build and Test') {
        agent {
           docker {
-            image "${DOCKER_REGISTRY}/blinfo/maven:3.8.5-jdk-17"
+            image "${DOCKER_REGISTRY}/blinfo/maven:3.9.6-jdk-21-alpine"
           }
        }
        steps {
@@ -26,7 +26,7 @@ pipeline {
     stage('Deploy Artifacts') {
         agent {
           docker {
-            image "${DOCKER_REGISTRY}/blinfo/maven:3.8.5-jdk-17"
+            image "${DOCKER_REGISTRY}/blinfo/maven:3.9.6-jdk-21-alpine"
             args '-e MAVEN_CONFIG=/home/jenkins/.m2'
           }
         }
