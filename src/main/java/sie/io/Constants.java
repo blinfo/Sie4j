@@ -6,7 +6,11 @@ import java.time.format.DateTimeFormatter;
  *
  * @author hl
  */
-interface Constants {
+public final class Constants {
 
     static final DateTimeFormatter YEAR_MONTH_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM");
+
+    private Constants() {
+
+    }
 }

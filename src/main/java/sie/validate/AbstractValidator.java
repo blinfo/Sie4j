@@ -17,7 +17,7 @@ abstract class AbstractValidator<T extends Entity> implements Validator {
     protected final Document.Type type;
     private final List<SieLog> logs;
 
-    public AbstractValidator(T entity, Document.Type type) {
+    protected AbstractValidator(T entity, Document.Type type) {
         this.entity = entity;
         this.type = type;
         logs = new ArrayList<>();

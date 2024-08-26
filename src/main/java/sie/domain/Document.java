@@ -230,7 +230,7 @@ public final class Document implements Entity {
          */
         I4("Import av transaktioner");
 
-        public static Type DEFAULT = E1;
+        public static final Type DEFAULT = E1;
         private final String description;
 
         private Type(String description) {

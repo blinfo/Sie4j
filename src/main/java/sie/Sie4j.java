@@ -50,6 +50,10 @@ import sie.log.SieLog.Level;
  */
 public class Sie4j {
 
+    private Sie4j() {
+
+    }
+
     /**
      * Convert SIE data to JSON.
      *

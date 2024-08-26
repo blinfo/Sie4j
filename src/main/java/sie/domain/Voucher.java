@@ -20,7 +20,14 @@ public final class Voucher implements Entity, Comparable<Voucher> {
     private final String signature;
     private final List<Transaction> transactions;
 
-    private Voucher(String line, String series, Integer number, LocalDate date, String text, LocalDate registrationDate, String signature, List<Transaction> transactions) {
+    private Voucher(String line,
+            String series,
+            Integer number,
+            LocalDate date,
+            String text,
+            LocalDate registrationDate,
+            String signature,
+            List<Transaction> transactions) {
         this.line = line;
         this.series = series;
         this.number = number;

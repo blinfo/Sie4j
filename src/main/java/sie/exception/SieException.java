@@ -9,10 +9,11 @@ import java.util.Optional;
  */
 public class SieException extends RuntimeException {
     
-    private String tag;
+    private final String tag;
     
     public SieException(String message) {
         super(message);
+        this.tag = null;
     }
     
     public SieException(String message, String tag) {
@@ -22,6 +23,7 @@ public class SieException extends RuntimeException {
     
     public SieException(String message, Throwable cause) {
         super(message, cause);
+        this.tag = null;
     }
     
     public SieException(String message, Throwable cause, String tag) {
@@ -31,6 +33,7 @@ public class SieException extends RuntimeException {
     
     public SieException(Throwable cause) {
         super(cause);
+        this.tag = null;
     }
     
     public SieException(Throwable cause, String tag) {

@@ -25,7 +25,14 @@ public final class Transaction implements Entity {
     private final String signature;
     private final List<ObjectId> objectIds;
 
-    private Transaction(String line, String accountNumber, BigDecimal amount, LocalDate date, String text, Double quantity, String signature, List<ObjectId> objectIds) {
+    private Transaction(String line,
+            String accountNumber,
+            BigDecimal amount,
+            LocalDate date,
+            String text,
+            Double quantity,
+            String signature,
+            List<ObjectId> objectIds) {
         this.line = line;
         this.accountNumber = accountNumber;
         this.amount = amount;

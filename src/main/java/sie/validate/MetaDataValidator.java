@@ -130,18 +130,8 @@ class MetaDataValidator extends AbstractValidator<MetaData> {
     }
 
     private void validatePeriodRange() {
-        if (type.equals(Document.Type.E2) || type.equals(Document.Type.E3)) {
-            if (!entity.optPeriodRange().isPresent()) {
-                addWarning(PERIOD_RANGE, "Omfattning saknas");
-            }
+        if ((type.equals(Document.Type.E2) || type.equals(Document.Type.E3)) && !entity.optPeriodRange().isPresent()) {
+            addWarning(PERIOD_RANGE, "Omfattning saknas");
         }
-    }
-
-    private void validateCurrency() {
-        entity.optCurrency().ifPresent(curr -> {
-            if (!CURRENCY_PATTERN.matcher(curr).matches()) {
-                addInfo(CURRENCY, "Valutakoden är felaktig: " + curr);
-            }
-        });
     }
 }
