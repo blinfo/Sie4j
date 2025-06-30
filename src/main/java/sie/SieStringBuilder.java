@@ -1,5 +1,7 @@
 package sie;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.*;
 import sie.domain.*;
@@ -69,11 +71,15 @@ class SieStringBuilder {
                 if (!trans.objectIds().isEmpty()) {
                     objects = trans.objectIds().stream().map(o -> "\"" + o.dimensionId() + "\" \"" + o.objectNumber() + "\"").collect(Collectors.joining(" ", "{", "}"));
                 }
+                String transDate = "\"\"";
+                if (trans.date() != null) {
+                    transDate = trans.date().format(Entity.DATE_FORMAT);
+                }
                 add(Entity.TRANSACTION,
                         trans.accountNumber(),
                         objects,
                         trans.amount().toString(),
-                        trans.optDate().map(date -> date.format(Entity.DATE_FORMAT)).orElse("\"\""),
+                        transDate,
                         "\"" + trans.optText().orElse("") + "\"",
                         trans.optQuantity().map(q -> q.toString()).orElse(""),
                         trans.getSignature().map(sign -> "\"" + sign + "\"").orElse(""));

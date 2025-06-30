@@ -107,15 +107,13 @@ public class VoucherTest extends Helper {
         LocalDate date = LocalDate.parse("2017-01-25");
         assertEquals(firstAmount, first.amount());
         assertEquals("1930", first.accountNumber());
-        assertTrue(first.optDate().isPresent());
-        assertEquals(date, first.optDate().get());
+        assertEquals(date, first.date());
 
         Transaction last = transactions.get(transactions.size() - 1);
         BigDecimal lastAmount = new BigDecimal(-10350.38).setScale(SCALE, ROUNDING_MODE);
         assertEquals(lastAmount, last.amount());
         assertEquals("2730", last.accountNumber());
-        assertTrue(last.optDate().isPresent());
-        assertEquals(date, last.optDate().get());
+        assertEquals(date, last.date());
     }
 
     @Test
