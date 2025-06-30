@@ -627,15 +627,7 @@ public final class Account implements Entity, Comparable<Account> {
         }
     }
 
-    public static class ObjectId implements Entity {
-
-        private final Integer dimensionId;
-        private final String objectNumber;
-
-        private ObjectId(Integer dimensionId, String objectNumber) {
-            this.dimensionId = dimensionId;
-            this.objectNumber = objectNumber;
-        }
+    public static record ObjectId(Integer dimensionId, String objectNumber) implements Entity {
 
         public static ObjectId of(Integer dimensionId, String objectNumber) {
             return new ObjectId(dimensionId, objectNumber);
@@ -644,45 +636,6 @@ public final class Account implements Entity, Comparable<Account> {
         @Override
         public Optional<String> optLine() {
             return Optional.empty();
-        }
-
-        public Integer dimensionId() {
-            return dimensionId;
-        }
-
-        public String objectNumber() {
-            return objectNumber;
-        }
-
-        @Override
-        public String toString() {
-            return "ObjectId{" + "dimensionId=" + dimensionId + ", objectNumber=" + objectNumber + '}';
-        }
-
-        @Override
-        public int hashCode() {
-            int hash = 3;
-            hash = 67 * hash + Objects.hashCode(this.dimensionId);
-            hash = 67 * hash + Objects.hashCode(this.objectNumber);
-            return hash;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            final ObjectId other = (ObjectId) obj;
-            if (!Objects.equals(this.objectNumber, other.objectNumber)) {
-                return false;
-            }
-            return Objects.equals(this.dimensionId, other.dimensionId);
         }
     }
 }

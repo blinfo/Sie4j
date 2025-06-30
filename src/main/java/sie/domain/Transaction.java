@@ -63,8 +63,8 @@ public final class Transaction implements Entity {
         return amount.setScale(SCALE, ROUNDING_MODE);
     }
 
-    public Optional<LocalDate> optDate() {
-        return Optional.ofNullable(date);
+    public LocalDate date() {
+        return date;
     }
 
     public Optional<String> optText() {

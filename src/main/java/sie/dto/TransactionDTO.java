@@ -30,7 +30,7 @@ public record TransactionDTO(
         return new TransactionDTO(
                 source.accountNumber(),
                 source.amount(),
-                source.optDate().orElse(null),
+                source.date(),
                 source.optText().orElse(null),
                 source.getSignature().orElse(null),
                 source.optQuantity().orElse(null),
