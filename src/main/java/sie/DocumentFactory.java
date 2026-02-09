@@ -269,7 +269,7 @@ class DocumentFactory {
                 amount = amount.replaceAll(",", ".");
             }
             try {
-                tb.amount(new BigDecimal(amount));
+                tb.amount(new BigDecimal(amount.replaceAll("\"", "")));
             } catch (NumberFormatException e) {
                 SieException ex = new InvalidAmountException("Strängen '" + amount + "'för balans, konto " + accountNumber + ", kan inte hanteras som belopp", e, Entity.TRANSACTION);
                 addCritical(ex, line);
