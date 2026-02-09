@@ -287,6 +287,7 @@ class DocumentFactory {
             }
             if (parts.size() > 7) {
                 String quantity = parts.get(6);
+                try {
                 Optional.ofNullable(quantity == null || quantity.replaceAll(REPLACE_STRING, "").isEmpty() ? null : quantity.replaceAll(REPLACE_STRING, ""))
                         .map(part -> {
                             if (part.contains(",")) {
@@ -296,6 +297,10 @@ class DocumentFactory {
                             return part;
                         })
                         .map(Double::valueOf).ifPresent(tb::quantity);
+                } catch (NumberFormatException e) {
+                    SieException ex = new SieException("Raden innehåller ett fel: " + e.getClass().getSimpleName() + " " +  e.getMessage(), e, Entity.TRANSACTION);
+                    addCritical(ex, line);
+                }
             }
             if (parts.size() > 8) {
                 Optional.ofNullable(parts.get(7) == null || handleQuotes(parts.get(7)).isEmpty() ? null : handleQuotes(parts.get(7)))
@@ -321,11 +326,11 @@ class DocumentFactory {
                     } else if (!ACCOUNT_NUMBER_PATTERN.matcher(number).matches()) {
                         if (number.length() <= 3) {
                             addWarning(AccountingPlan.class, "Kontonummer ska innehålla minst fyra siffror: " + number, Entity.ACCOUNT, line);
-                        } else if (number.length() > 4 && number.length() <= 6) {
-                            addWarning(AccountingPlan.class, "Kontot har fler än fyra siffror: " + number, Entity.ACCOUNT, line);
                         } else if (number.length() > 6) {
                             SieException ex = new AccountNumberException("Kontot är längre än sex siffror: " + number + "\n " + line);
                             addCritical(ex, line);
+                        } else if (number.length() > 4 && number.length() <= 6) {
+                            addWarning(AccountingPlan.class, "Kontot har fler än fyra siffror: " + number, Entity.ACCOUNT, line);
                         }
                     }
                     try {
@@ -523,7 +528,7 @@ class DocumentFactory {
                         break;
                 }
             } catch (NumberFormatException e) {
-                SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för balans, konto " + number + ", kan inte hanteras som belopp\n " + l.get(l.size() - 1), e, tag);
+                SieException ex = new InvalidAmountException("Strängen '" + amountString + "' för balans, konto " + number + ", kan inte hanteras som belopp: " + l.get(l.size() - 1), e, tag);
                 addCritical(ex, l.get(l.size() - 1));
             }
         });

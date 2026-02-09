@@ -267,7 +267,7 @@ public class Sie4j {
 
     public static ValidationResultDTO validate(byte[] input) {
         try {
-            DataReader reader = SieReader.from(input);
+            DataReader reader = SieReader.of(input, false);
             List<SieLogDTO> logs = reader.validate().getLogs().stream().map(SieLogDTO::from).toList();
             DocumentDTO doc = DocumentDTO.from(reader.read());
             return ValidationResultDTO.from(doc, logs);
