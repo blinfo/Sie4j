@@ -288,17 +288,17 @@ class DocumentFactory {
             if (parts.size() > 7) {
                 String quantity = parts.get(6);
                 try {
-                Optional.ofNullable(quantity == null || quantity.replaceAll(REPLACE_STRING, "").isEmpty() ? null : quantity.replaceAll(REPLACE_STRING, ""))
-                        .map(part -> {
-                            if (part.contains(",")) {
-                                addInfo("Decimaltal måste anges med punkt", Entity.TRANSACTION, line);
-                                part = part.replaceAll(",", ".");
-                            }
-                            return part;
-                        })
-                        .map(Double::valueOf).ifPresent(tb::quantity);
+                    Optional.ofNullable(quantity == null || quantity.replaceAll(REPLACE_STRING, "").isEmpty() ? null : quantity.replaceAll(REPLACE_STRING, ""))
+                            .map(part -> {
+                                if (part.contains(",")) {
+                                    addInfo("Decimaltal måste anges med punkt", Entity.TRANSACTION, line);
+                                    part = part.replaceAll(",", ".");
+                                }
+                                return part;
+                            })
+                            .map(Double::valueOf).ifPresent(tb::quantity);
                 } catch (NumberFormatException e) {
-                    SieException ex = new SieException("Raden innehåller ett fel: " + e.getClass().getSimpleName() + " " +  e.getMessage(), e, Entity.TRANSACTION);
+                    SieException ex = new SieException("Raden innehåller ett fel: " + e.getClass().getSimpleName() + " " + e.getMessage(), e, Entity.TRANSACTION);
                     addCritical(ex, line);
                 }
             }
@@ -550,9 +550,13 @@ class DocumentFactory {
 
     private List<AccountingObject> getObjects() {
         List<AccountingObject> objList = getLinesParts(Entity.OBJECT).stream().map(line -> {
+            String label = null;
+            if (line.size() >= 4) {
+                label = line.get(3);
+            }
             return AccountingObject.of(line.get(line.size() - 1), Integer.valueOf(line.get(1).replaceAll(REPLACE_STRING, "")),
                     line.get(2).replaceAll(REPLACE_STRING, ""),
-                    handleQuotes(line.get(3)));
+                    handleQuotes(label));
         }).toList();
         if (!objList.isEmpty() && getType().equals(Document.Type.E1) || getType().equals(Document.Type.E2)) {
             addWarning("Filer av typen " + getType() + " får inte innehålla taggen " + Entity.OBJECT, Entity.OBJECT, null);
